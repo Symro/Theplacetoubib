@@ -5,7 +5,7 @@ Dataviz sur les déserts médicaux en france.
 
 
 Installation :
-NPM install
+NPM install, 
 bower install
 
 Execution du server :
