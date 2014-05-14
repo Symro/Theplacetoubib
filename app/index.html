@@ -12,6 +12,7 @@
         <!-- endbuild -->
         <!-- build:js scripts/vendor/modernizr.js -->
         <script src="bower_components/modernizr/modernizr.js"></script>
+        <script src="bower_components/d3/d3.min.js"></script>
         <!-- endbuild -->
     </head>
     <body>
@@ -23,9 +24,30 @@
         <div class="hero-unit">
           <h1>Page d'accueil</h1>
           <p>dataviz</p>
-          <a href="#">module 1</a>
+          <a href="#" class="active">module 1</a>
           <a href="#">module 2</a>
           <a href="#">module 3</a>
+        </div>
+        <div id="yo">
+            <script>
+
+                var w = 100;
+                var h = 100;
+                var padding = 2;
+                var dataset = [ 5, 10, 15, 20, 25];
+                var svg = d3.select("body").append("svg")
+                          .attr("width", w)
+                          .attr("height", h);
+
+                svg.selectAll("rect")
+                  .data(dataset)
+                  .enter()
+                  .append("rect")
+                  .attr("x", function(d, i) {return i * (w / dataset.length);})
+                  .attr("y", function(d) {return h - (d*4);})
+                  .attr("width", w / dataset.length - padding)
+                  .attr("height", function(d) {return d*4;});
+            </script>
         </div>
 
 
@@ -38,6 +60,7 @@
             r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
             ga('create','UA-XXXXX-X');ga('send','pageview');
         </script>
+
 
         <!-- build:js scripts/main.js -->
         <script data-main="scripts/main" src="bower_components/requirejs/require.js"></script>

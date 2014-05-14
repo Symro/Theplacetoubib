@@ -4,7 +4,8 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'templates'
+    'templates',
+    'd3'
 ], function ($, _, Backbone, JST) {
     'use strict';
 
