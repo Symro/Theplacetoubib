@@ -37,8 +37,9 @@
           <a href="#">module 2</a>
           <a href="#">module 3</a>
         </div>
-        <div id="map">
-        </div>
+        <div id="map"></div>
+        <div id="info-dep"></div>
+
             <script>
               (function() {
 
@@ -84,7 +85,21 @@
                     .append("path")
                       .attr('class', 'departement')
                       .attr('fill',"#3498db")
-                      .attr("d", path);
+                      .attr("d", path)
+                      .attr('data-code-dep', function(d){
+                        // TEMPORAIRE : 
+                        // juste pour monter comment manipuler les datas
+                        // ajouter des classes ou data attributs avec D3.js..
+                        return d.properties.CODE_DEPT;
+                      })
+                      .attr("data-id-dep", function(d){
+                        return d.properties.ID_GEOFLA;
+                      })
+                      .on("mouseover", function (d){
+                          // Affichage brute des infos concernant le département au survol
+                          var data = "Departement : "+d.properties.NOM_DEPT+" ( "+d.properties.CODE_DEPT+" ) ";
+                          document.getElementById("info-dep").innerHTML = data;
+                      })
                 });
 
               }());
