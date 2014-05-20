@@ -14,6 +14,15 @@
         <script src="bower_components/modernizr/modernizr.js"></script>
         <script src="bower_components/d3/d3.min.js"></script>
         <!-- endbuild -->
+        <style type="text/css">
+          .departement {
+            cursor: pointer;
+          }
+          .departement:hover {
+            stroke: white;
+            stroke-width: .5px;
+          }
+        </style>
     </head>
     <body>
         <!--[if lt IE 10]>
@@ -28,37 +37,68 @@
           <a href="#">module 2</a>
           <a href="#">module 3</a>
         </div>
-        <div id="yo">
-            <script>
-
-                var w = 100;
-                var h = 100;
-                var padding = 2;
-                var dataset = [ 5, 10, 15, 20, 25];
-                var svg = d3.select("body").append("svg")
-                          .attr("width", w)
-                          .attr("height", h);
-
-                svg.selectAll("rect")
-                  .data(dataset)
-                  .enter()
-                  .append("rect")
-                  .attr("x", function(d, i) {return i * (w / dataset.length);})
-                  .attr("y", function(d) {return h - (d*4);})
-                  .attr("width", w / dataset.length - padding)
-                  .attr("height", function(d) {return d*4;});
-            </script>
+        <div id="map">
         </div>
+            <script>
+              (function() {
+
+                var width = 800;
+                var height = 700;
+
+                // Création objet path pour manipuler les données geographiques
+                var path = d3.geo.path();
+
+                // On définit les propriétés de la projection à utiliser
+                var projection = d3.geo.conicConformal()
+                  .center([2.454071, 47.279229]) // On centre la carte sur la France
+                  .scale(4000)
+                  .translate([width / 2, height / 2]);
+
+                path.projection(projection); // On assigne la projection au path
+
+                // Création du svg
+                var svg = d3.select('#map').append("svg")
+                    .attr("width", width)
+                    .attr("height", height);
+
+                // Création d'un groupe qui réuni tous les départements
+                var fra = svg
+                  .append("g")
+                  .attr("id", "france");
+
+                // On récupère les données JSON
+                d3.json('../datas/france.json', function(req, geojson) {
+
+                  // On récupère le path de chaque entrée du tableau
+                  var features = fra
+                    .selectAll("path")
+                    .data(geojson.features);
+
+                  console.log(features[0]);
+
+                  // ColorScale pour plus tard ce qui permet d'assigner une couleur de fond pour chaque departement
+                  var colorScale = d3.scale.category20c();
+
+                  // Pour chaque entrée du tableau on ajoutes plusieurs attributs
+                  features.enter()
+                    .append("path")
+                      .attr('class', path.properties)
+                      .attr('fill',"#3498db")
+                      .attr("d", path);
+                });
+
+              }());
+            </script>
 
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='//www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X');ga('send','pageview');
+            // (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            // function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            // e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            // e.src='//www.google-analytics.com/analytics.js';
+            // r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            // ga('create','UA-XXXXX-X');ga('send','pageview');
         </script>
 
 
