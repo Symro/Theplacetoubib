@@ -63,4 +63,84 @@ $(document).ready(function(){
         });
 
 
+
+      /* ******************************************************** 
+      /   BACKBONE                        
+      / ********************************************************* */
+
+      // Modèle - Data
+      var Data = Backbone.Model.extend();
+
+      // Collection - Parcours les datas
+      var DataList = Backbone.Collection.extend({
+
+          model: Data,
+          url: 'data/data.json',
+
+          initialize: function(){
+              this.fetch({
+                  success: this.fetchSuccess,
+                  error: this.fetchError
+              });
+          },
+
+          fetchSuccess: function (collection, response) {
+              console.log('Collection fetch success', response);
+              console.log('Collection models: ', collection.models);
+          },
+
+          fetchError: function (collection, response) {
+              throw new Error("Datas fetch error");
+          }
+
+      });
+
+      // Vue - Affiche les datas
+      // .. ou pas !?
+      // http://stackoverflow.com/questions/19476317/backbone-collection-fetches-data-but-doesnt-set-models
+
+      var DataView = Backbone.View.extend({
+
+          tagname: 'li',
+
+          initialize: function(){
+              _.bindAll(this, 'render');
+              this.model.bind('change', this.render);
+          },
+
+          render: function(){
+              this.$el.html(this.model.get('Nom_dpt') + ': ' + this.model.get('Num_dpt'));
+              return this;
+          }
+
+      });
+
+      var DataListView = Backbone.View.extend({
+
+          el: $('body'),
+          initialize: function(){
+              _.bindAll(this, 'render');
+
+              this.collection = new DataList();
+              this.collection.bind('reset', this.render)
+              this.collection.fetch();
+              this.render();
+
+          },
+          render: function(){
+              console.log('DataListView.render()');
+              var self = this;
+              this.$el.append('<ul></ul>');
+              _(this.collection.models).each(function(item){
+                  console.log('model: ', item)
+                  self.appendItem(item);
+              }, this);
+          }
+
+      });
+
+      var listView = new DataListView();
+
+
+
 });
