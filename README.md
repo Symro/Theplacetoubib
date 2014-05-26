@@ -5,8 +5,8 @@ Dataviz sur les déserts médicaux en france.
 
 
 Installation :
-NPM install, 
-bower install
+npm install
 
 Execution du server :
-grunt serve
+grunt
+
