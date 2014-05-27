@@ -58,7 +58,15 @@ $(document).ready(function(){
               .on("mouseover", function (d){
                   // Affichage brute des infos concernant le département au survol
                   var data = "Departement : "+d.properties.NOM_DEPT+" ( "+d.properties.CODE_DEPT+" ) ";
-                  document.getElementById("info-dep").innerHTML = data;
+                  document.getElementById("info-dep-survol").innerHTML = data;
+              })
+              .on("click", function(d){
+                  // Appel la fonction d'affiche des infos du dept.
+                  App.displayInfoDept( d.properties.CODE_DEPT );
+
+                  d3.selectAll("path.departement").classed("active", false);
+                  d3.select(this).classed("active", true);
+                 
               })
         });
 
@@ -67,6 +75,10 @@ $(document).ready(function(){
       /* ******************************************************** 
       /   BACKBONE                        
       / ********************************************************* */
+
+      window.App = {
+        data : []
+      }
 
       // Modèle - Data
       var Data = Backbone.Model.extend();
@@ -85,6 +97,7 @@ $(document).ready(function(){
           },
 
           fetchSuccess: function (collection, response) {
+              App.data = response;
               console.log('Collection fetch success', response);
               console.log('Collection models: ', collection.models);
           },
@@ -140,6 +153,29 @@ $(document).ready(function(){
       });
 
       var listView = new DataListView();
+
+
+      // Récupère les datas d'un département
+      App.getInfo = function( num_Departement ){
+        num_Departement = (typeof(num_Departement) != "string") ? num_Departement.toString() : num_Departement;
+        return _.findWhere(App.data, {Num_dpt: num_Departement });
+      }
+
+      // Récupère la data d'un filtre en particulier pour un departement
+      App.getInfoFiltre = function( num_Departement , filtre ){
+        num_Departement = (typeof(num_Departement) != "string") ? num_Departement.toString() : num_Departement;
+        filtre          = (typeof(filtre) != "string") ? filtre.toString() : filtre;
+        return _.findWhere(App.data, {Num_dpt: num_Departement })[filtre];
+      }
+
+      // Affiche les infos d'un departement
+      App.displayInfoDept = function( num_Departement ){
+        var info = App.getInfo(num_Departement);
+        var container = $('#info-dep');
+
+        container.html(JSON.stringify(info, null, "\t"));
+
+      }
 
 
 
