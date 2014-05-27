@@ -12,6 +12,7 @@
 
         <link rel="stylesheet" href="css/normalize.min.css">
         <link rel="stylesheet" href="css/main.css">
+        <link href='http://fonts.googleapis.com/css?family=Arimo:400,700' rel='stylesheet' type='text/css'>
 
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
@@ -20,10 +21,60 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <h1> Dataviz ThePlaceToubib ! </h1>
+    <div id="container">
 
-        <div id="map"></div>
-        <div id="info-dep"></div>
+        <nav>
+            <ul>
+                <li id="logo"><a href="#"><img src="img/picto.png"></a></li>
+                <li class="firstLevel">
+                    <a href="#" data-toggle="tooltip" data-placement="right" title="Tooltip on right">
+                        <img src="img/picto.png"><img src="img/fleche.png">
+                    </a>
+                </li>
+                    <ul class="secondLevel">
+                        <li><span title="Gynecologue" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
+                        <li><span title="Dentistes" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
+                        <li><span title="Médecins généralistes" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
+                    </ul>
+                <li class="firstLevel"><span class="navAlign"><a href="#" ><img src="img/picto.png"><img src="img/fleche.png"></a></span></li>
+                    <ul class="secondLevel">
+                        <li><span title="Gynecologue" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
+                        <li><span class="nav"><a href="#"><img src="img/picto.png"></a></li>
+                        <li><span class="nav"><a href="#"><img src="img/picto.png"></a></li>
+                    </ul>
+                <li><a href="#"><img src="img/picto.png"></a></li>
+            </ul>
+        </nav>
+
+        <section id="leftSide">
+            <div class="content">
+                <h2 class="text-center">Nombre de médecins généraliste</h2>
+                <div id="map"></div>
+                <div id="info-dep"></div>
+            </div>
+        </section>
+
+        <section id="rightSide">
+            <div class="content">
+                <h2 class="dept  text-center">Saône et Loire</h2>
+                <div class="col2 text-center">
+                    <h3>Département</h3>
+                    <p>523</p>
+                </div>
+                <div class="col2 text-center">
+                    <h3>Moyenne Française</h3>
+                    <p>1026</p>
+                </div>
+                <p>Evolution du nombre de médecins</p>
+
+                <footer>
+                    <a href="#">Dictionnaire</a>
+                    <a href="#">Crédits</a>
+                    <a href="#">?</a>
+                </footer>
+            </div>
+        </section>
+    </div>
 
 
         <script src="js/vendor/jquery.js"></script>
@@ -31,6 +82,17 @@
         <script src="js/vendor/backbone.js"></script>
         <script src="js/vendor/d3.js"></script>    
         <script src="js/app.js"></script>
+
+        <script src='http://code.jquery.com/jquery-1.9.1.min.js'></script> 
+        <script src='js/vendor/jquery.tooltip.js'></script> 
+        <script>
+            $('.firstLevel').click(function(e){
+            e.preventDefault();
+            $(this).next(".secondLevel").toggle('400');
+            });
+
+            $('.right').tooltip({align: 'right'});
+        </script>
 
         <script src="//localhost:35729/livereload.js"></script>
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

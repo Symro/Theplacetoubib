@@ -72,6 +72,172 @@ textarea {
 }
 
 
+body{
+    margin:0;
+    font-family: 'Arimo', sans-serif;
+}
+
+ /*Nav -Styles */
+
+nav{
+    position: absolute;
+    display: inline-block;
+    width:70px;
+    height: 100%;
+    background-color: #63b1be;
+    list-style: none;
+    float:left;
+}
+nav ul{
+    list-style: none;
+    margin:0;
+    padding:0;
+}
+nav li{
+    height: 65px;
+    float: left;
+    border-bottom: 1px solid #51919b;
+}
+nav li:hover{
+    background-color: #82c1cb;
+    }
+
+nav span{
+    margin-top: 22px;
+}
+nav a{
+    line-height: 80px;
+    margin:0;
+    display: block;
+    height: 100%;
+    text-align: center;
+    vertical-align:middle;
+    width: 70px;
+}
+.secondLevel{
+    display: none;
+}
+
+
+#logo{
+    background-color: black;
+}
+
+#container{
+    float: left;
+    width: 100%;
+    background-color: #e7f0f3;
+}
+.content{
+    margin:60px;
+}
+.text-center {
+  text-align: center;
+}
+/*Left Side Style*/
+#leftSide{
+    float: left;
+    width: 50%;
+    padding: 0px 0 0 50px;
+    margin: 0 0 0 0;
+    /*background-color: red;*/
+}
+
+
+/*Right Side Style*/
+#rightSide{
+    float: right;
+    width: 45%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    right: 0;
+    display: inline;
+    background-color: #1f1e1e;
+    color: white;
+}
+#rightSide p{
+    color: white;
+
+}
+#rightSide h2 {
+    font-weight: 400;
+
+}
+#rightSide h3 {
+    font-weight: 400;
+    color: #888888;
+
+}
+.col2{
+    width:50%;
+    float: left;
+
+}
+
+.col2 p{
+    font-size: 40px;
+    font-weight: 700;
+    margin: 0 0 50px 0;
+}
+
+#rightSide footer{
+    display: inline;
+    height: 55px;
+    width: 100%;
+    background-color:#1d1c1c;
+    position:absolute;
+    bottom: 0px;
+    right: 0px;
+    text-align: right;
+
+}
+ #rightSide footer a{
+    text-decoration: none;
+    color:white;
+    line-height: 55px;
+    padding-right: 30px;
+    text-align: right;
+ }
+
+
+/* Tooltip -Styles */
+.tooltip {
+    margin-top: 12px;
+    margin-left: 75px;
+    padding: 5px;
+    font-size: 14px;
+    opacity: 0.85;
+    filter: alpha(opacity=85);
+    background-repeat: no-repeat;
+    background-image: url(tooltip.gif);
+}
+.tooltip-inner {
+    padding: 10px 15px;
+    max-width: 200px;
+    pointer-events: none;
+    color: white;
+    text-align: center;
+    background-color: black;
+    border-radius: 3px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+}
+
+.tooltip-bottom {
+background-position: top center;
+}
+.tooltip-top {
+background-position: bottom center;
+}
+.tooltip-left {
+background-position: right center;
+}
+.tooltip-right {
+background-position: left center;
+}
+
+
 
 
 
