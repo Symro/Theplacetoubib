@@ -27,18 +27,20 @@
         <nav>
             <ul>
                 <li id="logo"><a href="#"><img src="img/picto.png"></a></li>
-                <li class="firstLevel"><span title="Habitants" class="right">
-                    <a href="#" data-toggle="tooltip" data-placement="right" title="Tooltip on right">
-                        <img src="img/picto.png"><img src="img/fleche.png">
-                    </a></span>
+                <li class="firstLevel">
+                    <span title="Habitants" class="right">
+                        <a href="#" data-toggle="tooltip" data-placement="right" title="Tooltip on right">
+                            <img src="img/picto.png"><img src="img/fleche.png">
+                        </a>
+                    </span>
                 </li>
-                    <ul class="secondLevel">
-                        <li><span title="Nombre d’habitants de + de 60 ans" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
-                        <li><span title="Revenu moyen / habitants" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
-                        <li><span title="Temps d’accès médecins généralistes" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
+                    <ul class="secondLevel" data-has-sub-lvl="no">
+                        <li><span title="Nombre d’habitants de + de 60 ans" class="right"><a href="#/filtre/NbHab60Plus" data-chart-type="pie" data-url="NbHab60Plus"><img src="img/picto.png"></a></span></li>
+                        <li><span title="Revenu moyen / habitants" class="right"><a href="#" data-chart-type="loader" data-url="RevenuMoyHab"><img src="img/picto.png"></a></span></li>
+                        <li><span title="Temps d’accès médecins généralistes" class="right"><a href="#" data-chart-type="bar" data-url="TpsAccesMedecin"><img src="img/picto.png"></a></span></li>
                     </ul>
                 <li class="firstLevel"><span title="Praticiens de santé" class="right"><a href="#" ><img src="img/picto.png"><img src="img/fleche.png"></a></span></li>
-                    <ul class="secondLevel">
+                    <ul class="secondLevel" data-has-sub-lvl="yes">
                         <li><span title="Médecins généralistes" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
                         <li><span title="Gynécologues" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
                         <li><span title="Dentistes" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
@@ -68,6 +70,10 @@
         </section>
 
         <section id="rightSide">
+            <div class="tuto">
+                
+
+            </div>
             <div class="content">
                 <h2 class="dept text-center">
                     Saône et Loire
@@ -108,8 +114,11 @@
             $(this).next(".secondLevel").toggle('400');
             });
             $('.secondLevel li').click(function(e){
-                e.preventDefault();
-                $(".thirdLevel ul").removeClass('hidden');
+                if($(this).parents(".secondLevel").data("has-sub-lvl") == "yes"){
+                    e.preventDefault();
+                    $(".thirdLevel ul").removeClass('hidden');
+                }
+                
             });
 
             $('.right').tooltip({align: 'right'});

@@ -139,8 +139,35 @@ $(document).ready(function() {
       / ********************************************************* */
 
     window.App = {
-        data: []
+        data    : [],
+        filtre  : null,
+        dept    : null
     }
+
+    var Routeur = Backbone.Router.extend({
+
+      routes: {
+        "": "home",
+        "filtre/:filtre" : "filtre",
+        "filtre/:filtre/dept:dept": "filtreAndDept"
+      }
+
+    });
+
+    App.router = new Routeur;
+
+    App.router.on("route:home", function() {
+        console.log("Welcome Home ! ");
+    });
+
+    App.router.on("route:filtre", function(filtre) {
+        console.log("Filtre "+filtre);
+    });
+
+    App.router.on("route:filtreAndDept", function(filtre, dept) {
+        console.log("Filtre : "+filtre+"  Dept : "+dept);
+    });
+
 
     // Modèle - Data
     var Data = Backbone.Model.extend();
@@ -257,12 +284,14 @@ $(document).ready(function() {
         var chiffre_fra_container = $('#chiffreFrance p');
         chiffre_fra_container.countTo({from: parseInt(chiffre_fra_container.text()), to: chiffre_fra});
 
-        
+
 
         container.html(JSON.stringify(info_dept, null, "\t"));
 
     }
 
 
+
+    Backbone.history.start();
 
 });
