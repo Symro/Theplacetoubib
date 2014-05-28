@@ -61,19 +61,20 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-
-
+/* Map */
 .departement {
     cursor: pointer;
+    stroke :white;
+    stroke-width : .2px;
 }
 .departement:hover {
     stroke: white;
-    stroke-width: .5px;
+    stroke-width: 1px;
 }
 .departement.active{
     fill:#44B4FF;
     stroke: white;
-    stroke-width: .5px;
+    stroke-width: 1px;
 }
 
 
