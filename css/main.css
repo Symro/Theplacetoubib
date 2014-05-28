@@ -11,6 +11,7 @@ textarea {
 html {
     font-size: 1em;
     line-height: 1.4;
+    background-color: #e7f0f3;
 }
 
 ::-moz-selection {
@@ -114,9 +115,28 @@ nav a{
     vertical-align:middle;
     width: 70px;
 }
+nav ul ul li{
+    background-color: #51919b;
+}
 .secondLevel{
     display: none;
 }
+
+.thirdLevel{
+    position:absolute;
+    display: inline-block;
+    float:left;
+    width:70px;
+    left: 90px;
+    top: 25%;
+    
+}
+
+.thirdLevel li{
+    list-style-type: none; 
+    padding-bottom: 50px;
+}
+
 
 
 #logo{
@@ -204,18 +224,18 @@ nav a{
 
 /* Tooltip -Styles */
 .tooltip {
-    margin-top: 12px;
+    margin-top: 35px;
     margin-left: 75px;
     padding: 5px;
     font-size: 14px;
     opacity: 0.85;
     filter: alpha(opacity=85);
     background-repeat: no-repeat;
-    background-image: url(tooltip.gif);
+    background-image: url(../img/tooltip.gif);
 }
 .tooltip-inner {
     padding: 10px 15px;
-    max-width: 200px;
+    width: auto;
     pointer-events: none;
     color: white;
     text-align: center;
@@ -223,7 +243,7 @@ nav a{
     border-radius: 3px;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
 }
-
+/*
 .tooltip-bottom {
 background-position: top center;
 }
@@ -232,7 +252,7 @@ background-position: bottom center;
 }
 .tooltip-left {
 background-position: right center;
-}
+}*/
 .tooltip-right {
 background-position: left center;
 }

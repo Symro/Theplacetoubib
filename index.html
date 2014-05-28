@@ -26,25 +26,37 @@
         <nav>
             <ul>
                 <li id="logo"><a href="#"><img src="img/picto.png"></a></li>
-                <li class="firstLevel">
+                <li class="firstLevel"><span title="Habitants" class="right">
                     <a href="#" data-toggle="tooltip" data-placement="right" title="Tooltip on right">
                         <img src="img/picto.png"><img src="img/fleche.png">
-                    </a>
+                    </a></span>
                 </li>
                     <ul class="secondLevel">
-                        <li><span title="Gynecologue" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
-                        <li><span title="Dentistes" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
-                        <li><span title="Médecins généralistes" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
+                        <li><span title="Nombre d’habitants de + de 60 ans" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
+                        <li><span title="Revenu moyen / habitants" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
+                        <li><span title="Temps d’accès médecins généralistes" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
                     </ul>
-                <li class="firstLevel"><span class="navAlign"><a href="#" ><img src="img/picto.png"><img src="img/fleche.png"></a></span></li>
+                <li class="firstLevel"><span title="Praticiens de santé" class="right"><a href="#" ><img src="img/picto.png"><img src="img/fleche.png"></a></span></li>
                     <ul class="secondLevel">
-                        <li><span title="Gynecologue" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
-                        <li><span class="nav"><a href="#"><img src="img/picto.png"></a></li>
-                        <li><span class="nav"><a href="#"><img src="img/picto.png"></a></li>
+                        <li><span title="Médecins généralistes" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
+                        <li><span title="Gynécologues" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
+                        <li><span title="Dentistes" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
+                        <li><span title="Ophtalmologues" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
+                        <li><span title="Infirmiers" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
                     </ul>
-                <li><a href="#"><img src="img/picto.png"></a></li>
+                <li><span title="Hôpitaux" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
             </ul>
         </nav>
+
+        <div class="thirdLevel ">
+            <ul class="hidden">
+                <li><span title="Nombres" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
+                <li><span title="Age moyen" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
+                <li><span title="Prix Moyen de la consultation" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
+                <li><span title="Nombre de patients par praticiens" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
+            </ul>
+        </div>
+
 
         <section id="leftSide">
             <div class="content">
@@ -90,6 +102,11 @@
             e.preventDefault();
             $(this).next(".secondLevel").toggle('400');
             });
+            $('.secondLevel li').click(function(e){
+                e.preventDefault();
+                $(".thirdLevel ul").removeClass('hidden');
+            });
+
 
             $('.right').tooltip({align: 'right'});
         </script>
