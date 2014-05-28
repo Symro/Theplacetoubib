@@ -76,16 +76,9 @@ textarea {
     stroke: white;
     stroke-width: 1px;
 }
-
-
-
-
-
-
-
-
-
-
+#paris{
+    display: none;
+}
 
 /* ==========================================================================
    Media Queries

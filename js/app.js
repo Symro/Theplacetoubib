@@ -1,147 +1,218 @@
 $(document).ready(function() {
 
-
     /* ********************************************************
-		/ 	D3 MAP
-		/ ********************************************************* */
+	/ 	D3 MAP Orienté Objet
+	/ ********************************************************* */
 
-    var width = 800;
-    var height = 700;
+    var mapObject = {
 
-    // Création objet path pour manipuler les données geographiques
-    var path = d3.geo.path();
+        defaults: {
+            map: '#map',
+            width: 800,
+            height: 800,
+            center: {
+                x: 2.454071,
+                y: 47.279229
+            },
+            scale: 4000,
+            color: '#3498db',
+            widthParis: 200,
+            heightParis: 200,
+            centerParis: {
+                x: 2.454071,
+                y: 47.279229
+            },
+            scaleParis: 30000,
+            translate: {
+                x: 390,
+                y: 1050
+            },
+            circle: {
+                x: 360,
+                y: 300,
+                r: 100,
+                stroke: '#000',
+                fill: 'white',
+                strokeWidth: '2',
+                opacity: '.4'
+            }
+        },
 
-    // On définit les propriétés de la projection à utiliser
-    var projection = d3.geo.conicConformal()
-        .center([2.454071, 47.279229])
-        .scale(4000)
-        .translate([width / 2, height / 2]);
+        init: function(options) {
 
-    path.projection(projection); // On assigne la projection au path
+            this.params = $.extend(this.defaults, options);
 
-    // Création du svg
-    var svg = d3.select('#map').append("svg")
-        .attr("width", width)
-        .attr("height", height);
+            // Création objet path pour manipuler les données geographiques
+            $path = d3.geo.path();
 
-    // Création d'un groupe qui réuni tous les départements
-    var fra = svg
-        .append("g")
-        .attr("id", "france");
+            // On définit les propriétés de la projection à utiliser
+            var projection = d3.geo.conicConformal()
+                .center([this.params.center.x, this.params.center.y])
+                .scale(this.params.scale)
+                .translate([this.params.height / 2, this.params.width / 2]);
 
-    // On récupère les données JSON
-    d3.json('data/france.json', function(req, geojson) {
+            // On assigne la projection au path
+            $path.projection(projection);
 
-        // On récupère le path de chaque entrée du tableau
-        var features = fra
-            .selectAll("path")
-            .data(geojson.features);
+            // Création du svg
+            $svg = d3.select(this.params.map).append("svg")
+                .attr("width", this.params.width)
+                .attr("height", this.params.height);
 
-        // ColorScale pour plus tard ce qui permet d'assigner une couleur de fond pour chaque departement
-        var colorScale = d3.scale.category20c();
+            // Création d'un groupe qui réuni tous les départements
+            $fra = $svg
+                .append("g")
+                .attr("id", "france");
 
-        // Pour chaque entrée du tableau on ajoutes plusieurs attributs
-        features.enter()
-            .append("path")
-            .attr('class', 'departement')
-            .attr('fill', "#3498db")
-            .attr("d", path)
-            .attr('data-code-dep', function(d) {
-                // TEMPORAIRE :
-                // juste pour monter comment manipuler les datas
-                // ajouter des classes ou data attributs avec D3.js..
-                return d.properties.CODE_DEPT;
-            })
-            .attr("data-id-dep", function(d) {
-                return d.properties.ID_GEOFLA;
-            })
-            .on("mouseover", function(d) {
-                // Affichage brute des infos concernant le département au survol
-                var data = "Departement : " + d.properties.NOM_DEPT + " ( " + d.properties.CODE_DEPT + " ) ";
-                document.getElementById("info-dep-survol").innerHTML = data;
-
-                // Appel de fonction pour un zoom sur Paris
-                if (d.properties.CODE_DEPT == 75 || d.properties.CODE_DEPT == 92 || d.properties.CODE_DEPT == 93 || d.properties.CODE_DEPT == 94) {
-                    zoomParis();
-                }
-            })
-            .on("click", function(d) {
-                // Appel la fonction d'affiche des infos du dept.
-                App.displayInfoDept(d.properties.CODE_DEPT);
-
-                d3.selectAll("path.departement").classed("active", false);
-                d3.select(this).classed("active", true);
-
-            })
-    });
-
-    function zoomParis() {
-
-        var width = 200,
-            height = 200;
-
-        // On définit les propriétés de la projection à utiliser
-        var projection = d3.geo.conicConformal()
-            .center([2.454071, 47.279229])
-            .scale(30000)
-            .translate([440, 990]);
-
-        path.projection(projection);
-
-        console.log('hover sur paris' + width);
-        var paris = svg.append("g")
-            .attr("id", "paris")
-            .on("mouseleave", function() {
-                console.log($("#paris").remove());
-            });
-
-        var circle = paris.append("circle")
-            .attr("cx", 410)
-            .attr("cy", 250)
-            .attr("r", 100)
-            .style("stroke", "#000")
-            .style("fill", "white")
-            .style("stroke-width", "2")
-            .style("opacity", ".4");
-
-        d3.json('data/paris.json', function(req, geojson) {
-
-            // On récupère le path de chaque entrée du tableau
-            var features = paris
-                .selectAll("path")
-                .data(geojson.features);
-
-            var colorScale = d3.scale.category20c();
-
-            features.enter()
-                .append("path")
-                .attr('class', 'departement')
-                .attr('fill', "#3498db")
-                .attr('d', path)
-                .attr('data-code-dep', function(d) {
-                    return d.properties.CODE_DEPT;
-                })
-                .attr("data-id-dep", function(d) {
-                    return d.properties.ID_GEOFLA;
-                })
-                .on("mouseover", function(d) {
-                    // Affichage brute des infos concernant le département au survol
-                    var data = "Departement : " + d.properties.NOM_DEPT + " ( " + d.properties.CODE_DEPT + " ) ";
-                    document.getElementById("info-dep-survol").innerHTML = data;
-                })
-                .on("click", function(d) {
-                    // Appel la fonction d'affiche des infos du dept.
-                    App.displayInfoDept(d.properties.CODE_DEPT);
-
-                    d3.selectAll("path.departement").classed("active", false);
-                    d3.select(this).classed("active", true);
+            // Groupe pour le zoom sur carte
+            $paris = $svg.append("g")
+                .attr("id", "paris")
+                .on("mouseleave", function() {
+                    console.log($("#paris").css("display", "none"));
                 });
 
-        });
+        },
 
+        // Affichage map
+        render: function() {
+
+            // On récupère les données JSON
+            d3.json('data/france.json', function(req, geojson) {
+
+                // On récupère le path de chaque entrée du tableau
+                $features = $fra
+                    .selectAll("path")
+                    .data(geojson.features);
+
+                // ColorScale pour plus tard ce qui permet d'assigner une couleur de fond pour chaque departement
+                var colorScale = d3.scale.category20c();
+
+                // Pour chaque entrée du tableau on ajoutes plusieurs attributs
+                $features.enter()
+                    .append("path")
+                    .attr('class', 'departement')
+                    .attr('fill', mapObject.params.color)
+                    .attr("d", $path)
+                    .attr('data-code-dep', function(d) {
+                        // TEMPORAIRE :
+                        // juste pour monter comment manipuler les datas
+                        // ajouter des classes ou data attributs avec D3.js..
+                        return d.properties.CODE_DEPT;
+                    })
+                    .attr("data-id-dep", function(d) {
+                        return d.properties.ID_GEOFLA;
+                    })
+                    .on("mouseover", function(d) {
+                        mapObject.cursorOverRegion(d);
+                    })
+                    .on("click", function(d) {
+                        // mapObject.clickOnRegion(d);
+                        // Appel la fonction d'affiche des infos du dept.
+                        App.displayInfoDept(d.properties.CODE_DEPT);
+
+                        d3.selectAll("path.departement").classed("active", false);
+                        d3.select(this).classed("active", true);
+                    })
+            });
+
+            // Cercle zoom
+            var circle = $paris.append("circle")
+                .attr("cx", this.params.circle.x)
+                .attr("cy", this.params.circle.y)
+                .attr("r", this.params.circle.r)
+                .style("stroke", this.params.circle.stroke)
+                .style("fill", this.params.circle.fill)
+                .style("stroke-width", this.params.circle.strokeWidth)
+                .style("opacity", this.params.circle.opacity);
+
+            // Callback
+            mapObject.params.rendered.call();
+
+        },
+
+        cursorOverRegion: function(d) {
+            // Affichage brute des infos concernant le département au survol
+            var data = "Departement : " + d.properties.NOM_DEPT + " ( " + d.properties.CODE_DEPT + " ) ";
+            document.getElementById("info-dep-survol").innerHTML = data;
+
+            // Appel de fonction pour un zoom sur Paris
+            if (d.properties.CODE_DEPT == 75 || d.properties.CODE_DEPT == 92 || d.properties.CODE_DEPT == 93 || d.properties.CODE_DEPT == 94) {
+                mapObject.renderZoom();
+            }
+        },
+
+        renderZoom: function() {
+
+            // On définit les propriétés de la projection à utiliser
+            var projectionParis = d3.geo.conicConformal()
+                .center([this.params.centerParis.x, this.params.centerParis.y])
+                .scale(this.params.scaleParis)
+                .translate([this.params.translate.x, this.params.translate.y]);
+
+            $path.projection(projectionParis);
+
+            d3.json('data/paris.json', function(req, geojson) {
+
+                // On récupère le path de chaque entrée du tableau
+                var features = $paris
+                    .selectAll("path")
+                    .data(geojson.features);
+
+                var colorScale = d3.scale.category20c();
+
+                features.enter()
+                    .append("path")
+                    .attr('class', 'departement')
+                    .attr('fill', "#3498db")
+                    .attr('d', $path)
+                    .attr('data-code-dep', function(d) {
+                        return d.properties.CODE_DEPT;
+                    })
+                    .attr("data-id-dep", function(d) {
+                        return d.properties.ID_GEOFLA;
+                    })
+                    .on("mouseover", function(d) {
+                        // Affichage brute des infos concernant le département au survol
+                        var data = "Departement : " + d.properties.NOM_DEPT + " ( " + d.properties.CODE_DEPT + " ) ";
+                        document.getElementById("info-dep-survol").innerHTML = data;
+                    })
+                    .on("click", function(d) {
+                        // Appel la fonction d'affiche des infos du dept.
+                        App.displayInfoDept(d.properties.CODE_DEPT);
+
+                        d3.selectAll("path.departement").classed("active", false);
+                        d3.select(this).classed("active", true);
+                    });
+
+            });
+
+            mapObject.zoomParis();
+
+        },
+
+        zoomParis: function() {
+
+            $("body #paris").css("display", "inline");
+
+            // Callback
+            mapObject.params.rendered.call();
+
+        }
     }
 
+    mapObject.init({
 
+        rendered: function() {
+            console.log('map rendered');
+        },
+
+        zoomed: function() {
+            console.log('Zoom sur paris');
+        }
+
+    });
+
+    mapObject.render();
 
     /* ********************************************************
       /   BACKBONE
@@ -169,8 +240,8 @@ $(document).ready(function() {
 
         fetchSuccess: function(collection, response) {
             App.data = response;
-            console.log('Collection fetch success', response);
-            console.log('Collection models: ', collection.models);
+            // console.log('Collection fetch success', response);
+            // console.log('Collection models: ', collection.models);
         },
 
         fetchError: function(collection, response) {
@@ -212,7 +283,7 @@ $(document).ready(function() {
 
         },
         render: function() {
-            console.log('DataListView.render()');
+            // console.log('DataListView.render()');
             var self = this;
             this.$el.append('<ul></ul>');
             _(this.collection.models).each(function(item) {
@@ -251,7 +322,5 @@ $(document).ready(function() {
         container.html(JSON.stringify(info, null, "\t"));
 
     }
-
-
 
 });
