@@ -2,8 +2,8 @@ $(document).ready(function() {
 
 
     /* ********************************************************
-		/ 	D3 MAP
-		/ ********************************************************* */
+	/ 	D3 MAP
+	/ ********************************************************* */
 
     var width = 800;
     var height = 700;
@@ -47,19 +47,10 @@ $(document).ready(function() {
             .attr('fill', "#3498db")
             .attr("d", path)
             .attr('data-code-dep', function(d) {
-                // TEMPORAIRE :
-                // juste pour monter comment manipuler les datas
                 // ajouter des classes ou data attributs avec D3.js..
                 return d.properties.CODE_DEPT;
             })
-            .attr("data-id-dep", function(d) {
-                return d.properties.ID_GEOFLA;
-            })
             .on("mouseover", function(d) {
-                // Affichage brute des infos concernant le département au survol
-                var data = "Departement : " + d.properties.NOM_DEPT + " ( " + d.properties.CODE_DEPT + " ) ";
-                document.getElementById("info-dep-survol").innerHTML = data;
-
                 // Appel de fonction pour un zoom sur Paris
                 if (d.properties.CODE_DEPT == 75 || d.properties.CODE_DEPT == 92 || d.properties.CODE_DEPT == 93 || d.properties.CODE_DEPT == 94) {
                     zoomParis();
@@ -126,8 +117,8 @@ $(document).ready(function() {
                 })
                 .on("mouseover", function(d) {
                     // Affichage brute des infos concernant le département au survol
-                    var data = "Departement : " + d.properties.NOM_DEPT + " ( " + d.properties.CODE_DEPT + " ) ";
-                    document.getElementById("info-dep-survol").innerHTML = data;
+                    // var data = "Departement : " + d.properties.NOM_DEPT + " ( " + d.properties.CODE_DEPT + " ) ";
+                    // document.getElementById("info-dep-survol").innerHTML = data;
                 })
                 .on("click", function(d) {
                     // Appel la fonction d'affiche des infos du dept.
@@ -213,12 +204,12 @@ $(document).ready(function() {
         },
         render: function() {
             console.log('DataListView.render()');
-            var self = this;
-            this.$el.append('<ul></ul>');
-            _(this.collection.models).each(function(item) {
-                console.log('model: ', item)
-                self.appendItem(item);
-            }, this);
+            // var self = this;
+            // this.$el.append('<ul></ul>');
+            // _(this.collection.models).each(function(item) {
+            //     console.log('model: ', item)
+            //     self.appendItem(item);
+            // }, this);
         }
 
     });
@@ -245,10 +236,30 @@ $(document).ready(function() {
 
     // Affiche les infos d'un departement
     App.displayInfoDept = function(num_Departement) {
-        var info = App.getInfo(num_Departement);
+        var info_dept   = App.getInfo(num_Departement);
+        var info_france = App.getInfo(100);
         var container = $('#info-dep');
 
-        container.html(JSON.stringify(info, null, "\t"));
+        // Update Nom Dept.
+        var nom_dept = info_dept.Nom_dpt;
+        var nom_dept_container = $('#rightSide .dept');
+        nom_dept_container.addClass('animated fadeOutDown', 600, function(){
+            $(this).text(nom_dept).removeClass('fadeOutDown').addClass('fadeInUp');
+        });
+
+        // Update Chiffre Dept.
+        var chiffre_dept = parseInt(info_dept.Nb_hab_plus_60_ans);
+        var chiffre_dept_container = $('#chiffreDept p');
+        chiffre_dept_container.countTo({from: parseInt(chiffre_dept_container.text()), to: chiffre_dept});
+
+        // Update Chiffre Dept.
+        var chiffre_fra = parseInt(info_france.Nb_hab_plus_60_ans);
+        var chiffre_fra_container = $('#chiffreFrance p');
+        chiffre_fra_container.countTo({from: parseInt(chiffre_fra_container.text()), to: chiffre_fra});
+
+        
+
+        container.html(JSON.stringify(info_dept, null, "\t"));
 
     }
 
