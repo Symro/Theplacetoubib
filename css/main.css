@@ -157,6 +157,9 @@ nav ul{
     margin:0;
     padding:0;
 }
+nav ul.open{
+    display:block;
+}
 nav li{
     height: 65px;
     float: left;
@@ -170,7 +173,7 @@ nav span{
     margin-top: 22px;
 }
 nav a{
-    line-height: 80px;
+    line-height:65px;
     margin:0;
     display: block;
     height: 100%;
