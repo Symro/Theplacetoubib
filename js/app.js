@@ -1,32 +1,31 @@
 $(document).ready(function() {
 
-
     /* ********************************************************
     /   BACKBONE
     / ********************************************************* */
 
     window.App = {
-        data        : [],
-        filtre      : null,
-        dept        : null,
-        menuEtat    : ["","",""],
-        dom         : {
+        data: [],
+        filtre: null,
+        dept: null,
+        menuEtat: ["", "", ""],
+        dom: {
 
-            chiffre_dept    : $('#chiffreDept p'),
-            chiffre_france  : $('#chiffreFrance p'),
-            nom_dept        : $('#rightSide .dept'),
-            nom_filtre      : $('#leftSide .content h2:first'),
-            info_filtre     : $('#infoFiltre p'),
+            chiffre_dept: $('#chiffreDept p'),
+            chiffre_france: $('#chiffreFrance p'),
+            nom_dept: $('#rightSide .dept'),
+            nom_filtre: $('#leftSide .content h2:first'),
+            info_filtre: $('#infoFiltre p'),
 
         }
     }
 
     var Routeur = Backbone.Router.extend({
 
-      routes: {
-        "": "home",
-        "filtre/:filtre(/dept_:dept)": "filtre"
-      }
+        routes: {
+            "": "home",
+            "filtre/:filtre(/dept_:dept)": "filtre"
+        }
 
     });
 
@@ -37,7 +36,7 @@ $(document).ready(function() {
     });
 
     App.router.on("route:filtre", function(filtre, dept) {
-        console.log("Filtre : "+filtre+"  Dept : "+dept);
+        console.log("Filtre : " + filtre + "  Dept : " + dept);
     });
 
 
@@ -73,31 +72,33 @@ $(document).ready(function() {
     // http://www.codebeerstartups.com/2012/12/how-to-use-templates-in-backbone-js-learning-backbone-js
 
     var Menu = Backbone.Model.extend({
-        defaults:{
-            dept:null,
-            menu:["","",""]
+        defaults: {
+            dept: null,
+            menu: ["", "", ""]
         }
     });
 
     var MenuView = Backbone.View.extend({
-        el : $("#menu"),
-        initialize: function () {
+        el: $("#menu"),
+        initialize: function() {
             //pass model:your_model when creating instance
             this.render();
             this.model.on("change", this.render, this);
         },
-        render: function(){
-            var data = { 
-                dept : App.dept || null,
-                menu : App.menuEtat
+        render: function() {
+            var data = {
+                dept: App.dept || null,
+                menu: App.menuEtat
             };
-            this.$el.html( _.template( $("#menu_template").html(), data ) );
+            this.$el.html(_.template($("#menu_template").html(), data));
         }
 
     });
 
     App.menu = new Menu;
-    App.menuView = new MenuView({model:App.menu});
+    App.menuView = new MenuView({
+        model: App.menu
+    });
 
 
     // Récupère les datas d'un département
@@ -119,26 +120,32 @@ $(document).ready(function() {
 
     // Affiche les infos d'un departement
     App.displayInfoDept = function(num_Departement) {
-        var info_dept   = App.getInfo(num_Departement);
+        var info_dept = App.getInfo(num_Departement);
         var info_france = App.getInfo(100);
         var container = $('#info-dep');
 
         // Update Nom Dept.
         var nom_dept = info_dept.Nom_dpt;
         var nom_dept_container = $('#rightSide .dept');
-        nom_dept_container.addClass('animated fadeOutDown', 600, function(){
+        nom_dept_container.addClass('animated fadeOutDown', 600, function() {
             $(this).text(nom_dept).removeClass('fadeOutDown').addClass('fadeInUp');
         });
 
         // Update Chiffre Dept.
         var chiffre_dept = parseInt(info_dept.Nb_hab_plus_60_ans);
         var chiffre_dept_container = $('#chiffreDept p');
-        chiffre_dept_container.countTo({from: parseInt(chiffre_dept_container.text()), to: chiffre_dept});
+        chiffre_dept_container.countTo({
+            from: parseInt(chiffre_dept_container.text()),
+            to: chiffre_dept
+        });
 
         // Update Chiffre Dept.
         var chiffre_fra = parseInt(info_france.Nb_hab_plus_60_ans);
         var chiffre_fra_container = $('#chiffreFrance p');
-        chiffre_fra_container.countTo({from: parseInt(chiffre_fra_container.text()), to: chiffre_fra});
+        chiffre_fra_container.countTo({
+            from: parseInt(chiffre_fra_container.text()),
+            to: chiffre_fra
+        });
 
 
 
@@ -146,9 +153,9 @@ $(document).ready(function() {
 
     }
 
-    App.checkHash = function(){
+    App.checkHash = function() {
 
-        console.log("HASH ACTUEL  : "+window.location.hash);
+        console.log("HASH ACTUEL  : " + window.location.hash);
 
         var hash = window.location.hash;
         // analyse du hash actuel
@@ -159,19 +166,21 @@ $(document).ready(function() {
 
         // l'utilisateur a cliqué sur un departement car (App.dept != null)
         //  > A t-on un filtre actif & valide ?
-        // 
-        // 
+        //
+        //
         // l'utilisateur n'a pas cliqué > URL direct donc..
         //  > Affichage du filtre et dept de l'URL
 
 
-        if(customRegExp){
-            console.log('on a un filtre : '+customRegExp[1]);
+        if (customRegExp) {
+            console.log('on a un filtre : ' + customRegExp[1]);
 
-            App.router.navigate("#/filtre/"+customRegExp[1]+"/dept_"+App.dept, {trigger: true});
+            App.router.navigate("#/filtre/" + customRegExp[1] + "/dept_" + App.dept, {
+                trigger: true
+            });
 
-            if(customRegExp[3]){
-                console.log(" on a un departement dans l'URL : "+customRegExp[3]);
+            if (customRegExp[3]) {
+                console.log(" on a un departement dans l'URL : " + customRegExp[3]);
                 //App.router.navigate("#/filtre/"+customRegExp[1]+"/dept_"+customRegExp[3], {trigger: true});
             }
         }
@@ -186,147 +195,225 @@ $(document).ready(function() {
 	/ 	D3 MAP
 	/ ********************************************************* */
 
-    var width = 800;
-    var height = 700;
+    var mapObject = {
 
-    // Création objet path pour manipuler les données geographiques
-    var path = d3.geo.path();
+        defaults: {
+            map: '#map',
+            width: 800,
+            height: 800,
+            center: {
+                x: 2.454071,
+                y: 47.279229
+            },
+            scale: 4000,
+            color: '#3498db',
+            widthParis: 200,
+            heightParis: 200,
+            centerParis: {
+                x: 2.454071,
+                y: 47.279229
+            },
+            scaleParis: 30000,
+            translate: {
+                x: 430,
+                y: 1040
+            },
+            circle: {
+                x: 400,
+                y: 300,
+                r: 100,
+                stroke: '#000',
+                fill: 'white',
+                strokeWidth: '2',
+                opacity: '.4'
+            }
+        },
 
-    // On définit les propriétés de la projection à utiliser
-    var projection = d3.geo.conicConformal()
-        .center([2.454071, 47.279229])
-        .scale(4000)
-        .translate([width / 2, height / 2]);
+        init: function(options) {
 
-    path.projection(projection); // On assigne la projection au path
+            this.params = $.extend(this.defaults, options);
 
-    // Création du svg
-    var svg = d3.select('#map').append("svg")
-        .attr("width", width)
-        .attr("height", height);
+            // Création objet path pour manipuler les données geographiques
+            $path = d3.geo.path();
 
-    // Création d'un groupe qui réuni tous les départements
-    var fra = svg
-        .append("g")
-        .attr("id", "france");
+            // On définit les propriétés de la projection à utiliser
+            var projection = d3.geo.conicConformal()
+                .center([this.params.center.x, this.params.center.y])
+                .scale(this.params.scale)
+                .translate([this.params.height / 2, this.params.width / 2]);
 
-    // On récupère les données JSON
-    d3.json('data/france.json', function(req, geojson) {
+            // On assigne la projection au path
+            $path.projection(projection);
 
-        // On récupère le path de chaque entrée du tableau
-        var features = fra
-            .selectAll("path")
-            .data(geojson.features);
+            // Création du svg
+            $svg = d3.select(this.params.map).append("svg")
+                .attr("width", this.params.width)
+                .attr("height", this.params.height);
 
-        // ColorScale pour plus tard ce qui permet d'assigner une couleur de fond pour chaque departement
-        var colorScale = d3.scale.category20c();
+            // Création d'un groupe qui réuni tous les départements
+            $fra = $svg
+                .append("g")
+                .attr("id", "france");
 
-        // Pour chaque entrée du tableau on ajoutes plusieurs attributs
-        features.enter()
-            .append("path")
-            .attr('class', 'departement')
-            .attr('fill', "#3498db")
-            .attr("d", path)
-            .attr('data-code-dep', function(d) {
-                // ajouter des classes ou data attributs avec D3.js..
-                return d.properties.CODE_DEPT;
-            })
-            .on("mouseover", function(d) {
-                // Appel de fonction pour un zoom sur Paris
-                if (d.properties.CODE_DEPT == 75 || d.properties.CODE_DEPT == 92 || d.properties.CODE_DEPT == 93 || d.properties.CODE_DEPT == 94) {
-                    zoomParis();
-                }
-            })
-            .on("click", function(d) {
-                // Appel la fonction d'affiche des infos du dept.
-                // App.displayInfoDept(d.properties.CODE_DEPT);
-
-/* _____________ DEBUT AJOUT FLORENT - A GARDER _____________________________________ */
-                App.dept = d.properties.CODE_DEPT;
-                // modification du modèle et donc des liens du menu
-                App.menu.set({dept: d.properties.CODE_DEPT, menu: App.menuEtat});
-                App.checkHash();
-/* _____________ FIN   AJOUT FLORENT - A GARDER _____________________________________ */
-
-                //App.router.navigate("#/filtre/nb_habitants_plus_60_ans/dept_14", {trigger: true});
-
-                d3.selectAll("path.departement").classed("active", false);
-                d3.select(this).classed("active", true);
-
-            })
-    });
-
-    function zoomParis() {
-
-        var width = 200,
-            height = 200;
-
-        // On définit les propriétés de la projection à utiliser
-        var projection = d3.geo.conicConformal()
-            .center([2.454071, 47.279229])
-            .scale(30000)
-            .translate([440, 990]);
-
-        path.projection(projection);
-
-        console.log('hover sur paris' + width);
-        var paris = svg.append("g")
-            .attr("id", "paris")
-            .on("mouseleave", function() {
-                console.log($("#paris").remove());
-            });
-
-        var circle = paris.append("circle")
-            .attr("cx", 410)
-            .attr("cy", 250)
-            .attr("r", 100)
-            .style("stroke", "#000")
-            .style("fill", "white")
-            .style("stroke-width", "2")
-            .style("opacity", ".4");
-
-        d3.json('data/paris.json', function(req, geojson) {
-
-            // On récupère le path de chaque entrée du tableau
-            var features = paris
-                .selectAll("path")
-                .data(geojson.features);
-
-            var colorScale = d3.scale.category20c();
-
-            features.enter()
-                .append("path")
-                .attr('class', 'departement')
-                .attr('fill', "#3498db")
-                .attr('d', path)
-                .attr('data-code-dep', function(d) {
-                    return d.properties.CODE_DEPT;
-                })
-                .attr("data-id-dep", function(d) {
-                    return d.properties.ID_GEOFLA;
-                })
-                .on("mouseover", function(d) {
-                    // Affichage brute des infos concernant le département au survol
-                    // var data = "Departement : " + d.properties.NOM_DEPT + " ( " + d.properties.CODE_DEPT + " ) ";
-                    // document.getElementById("info-dep-survol").innerHTML = data;
-                })
-                .on("click", function(d) {
-                    // Appel la fonction d'affiche des infos du dept.
-
-                    App.displayInfoDept(d.properties.CODE_DEPT);
-
-                    d3.selectAll("path.departement").classed("active", false);
-                    d3.select(this).classed("active", true);
+            // Groupe pour le zoom sur carte
+            $paris = $svg.append("g")
+                .attr("id", "paris")
+                .on("mouseleave", function() {
+                    $("#paris").css("display", "none");
                 });
 
-        });
+        },
 
+        // Affichage map
+        render: function() {
+
+            // On récupère les données JSON
+            d3.json('data/france.json', function(req, geojson) {
+
+                // On récupère le path de chaque entrée du tableau
+                $features = $fra
+                    .selectAll("path")
+                    .data(geojson.features);
+
+                // ColorScale pour plus tard ce qui permet d'assigner une couleur de fond pour chaque departement
+                var colorScale = d3.scale.category20c();
+
+                // Pour chaque entrée du tableau on ajoutes plusieurs attributs
+                $features.enter()
+                    .append("path")
+                    .attr('class', 'departement')
+                    .attr('fill', mapObject.params.color)
+                    .attr("d", $path)
+                    .attr('data-code-dep', function(d) {
+                        // TEMPORAIRE :
+                        // juste pour monter comment manipuler les datas
+                        // ajouter des classes ou data attributs avec D3.js..
+                        return d.properties.CODE_DEPT;
+                    })
+                    .attr("data-id-dep", function(d) {
+                        return d.properties.ID_GEOFLA;
+                    })
+                    .on("mouseover", function(d) {
+                        mapObject.cursorOverRegion(d);
+                    })
+                    .on("click", function(d) {
+                        // Appel la fonction d'affiche des infos du dept.
+                        // App.displayInfoDept(d.properties.CODE_DEPT);
+
+                        mapObject.clickOnRegion(d);
+
+                        //App.router.navigate("#/filtre/nb_habitants_plus_60_ans/dept_14", {trigger: true});
+
+                        d3.selectAll("path.departement").classed("active", false);
+                        d3.select(this).classed("active", true);
+                    });
+            });
+
+            // Cercle zoom
+            var circle = $paris.append("circle")
+                .attr("cx", this.params.circle.x)
+                .attr("cy", this.params.circle.y)
+                .attr("r", this.params.circle.r)
+                .style("stroke", this.params.circle.stroke)
+                .style("fill", this.params.circle.fill)
+                .style("stroke-width", this.params.circle.strokeWidth)
+                .style("opacity", this.params.circle.opacity);
+
+            // Callback
+            mapObject.params.rendered.call();
+
+        },
+
+        cursorOverRegion: function(d) {
+
+            // Appel de fonction pour un zoom sur Paris
+            if (d.properties.CODE_DEPT == 75 || d.properties.CODE_DEPT == 92 || d.properties.CODE_DEPT == 93 || d.properties.CODE_DEPT == 94) {
+                mapObject.renderZoom();
+            }
+
+        },
+
+        renderZoom: function() {
+
+            // On définit les propriétés de la projection à utiliser
+            var projectionParis = d3.geo.conicConformal()
+                .center([this.params.centerParis.x, this.params.centerParis.y])
+                .scale(this.params.scaleParis)
+                .translate([this.params.translate.x, this.params.translate.y]);
+
+            $path.projection(projectionParis);
+
+            d3.json('data/paris.json', function(req, geojson) {
+
+                // On récupère le path de chaque entrée du tableau
+                var features = $paris
+                    .selectAll("path")
+                    .data(geojson.features);
+
+                var colorScale = d3.scale.category20c();
+
+                features.enter()
+                    .append("path")
+                    .attr('class', 'departement')
+                    .attr('fill', "#3498db")
+                    .attr('d', $path)
+                    .attr('data-code-dep', function(d) {
+                        return d.properties.CODE_DEPT;
+                    })
+                    .attr("data-id-dep", function(d) {
+                        return d.properties.ID_GEOFLA;
+                    })
+                    .on("click", function(d) {
+                        // Appel la fonction d'affiche des infos du dept.
+                        // App.displayInfoDept(d.properties.CODE_DEPT);
+
+                        mapObject.clickOnRegion(d);
+
+                        d3.selectAll("path.departement").classed("active", false);
+                        d3.select(this).classed("active", true);
+                    });
+
+            });
+
+            mapObject.zoomParis();
+
+        },
+
+        clickOnRegion: function(d) {
+            /* _____________ DEBUT AJOUT FLORENT - A GARDER _____________________________________ */
+            App.dept = d.properties.CODE_DEPT;
+            // modification du modèle et donc des liens du menu
+            App.menu.set({
+                dept: d.properties.CODE_DEPT,
+                menu: App.menuEtat
+            });
+            App.checkHash();
+            /* _____________ FIN   AJOUT FLORENT - A GARDER _____________________________________ */
+        },
+
+        zoomParis: function() {
+
+            $("body #paris").css("display", "inline");
+
+            // Callback
+            mapObject.params.zoomed.call();
+
+        }
     }
 
+    mapObject.init({
 
+        rendered: function() {
+            console.log('map rendered');
+        },
 
-    
+        zoomed: function() {
+            console.log('Zoom sur paris');
+        }
 
+    });
+
+    mapObject.render();
 
     Backbone.history.start();
 

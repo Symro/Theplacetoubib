@@ -80,19 +80,19 @@ textarea {
   text-align: center;
   color:#FFF;
   /* opacity: .8; */
- 
+
   /* For safety - reset parent styles, that can break glyph codes*/
   font-variant: normal;
   text-transform: none;
-     
+
   /* fix buttons height, for twitter bootstrap */
   line-height: 1em;
- 
+
   /* Animation center compensation - margins should be symmetric */
   /* remove if not needed */
   margin-left: .2em;
 }
- 
+
 .icon-niv2_nombre:before { content: '\e800'; }
 .icon-niv2_nbpatients:before { content: '\e801'; }
 .icon-niv2_plus60:before { content: '\e802'; }
@@ -138,7 +138,9 @@ body,html{
     stroke: white;
     stroke-width: 1px;
 }
-
+#paris{
+    display: none;
+}
 
  /*Nav -Styles */
 
@@ -195,11 +197,11 @@ nav ul ul li{
     width:70px;
     left: 90px;
     top: 25%;
-    
+
 }
 
 .thirdLevel li{
-    list-style-type: none; 
+    list-style-type: none;
     padding-bottom: 50px;
 }
 
@@ -320,18 +322,8 @@ background-position: bottom center;
 background-position: right center;
 }*/
 .tooltip-right {
-background-position: left center;
+    background-position: left center;
 }
-
-
-
-
-
-
-
-
-
-
 
 /* ==========================================================================
    Media Queries
