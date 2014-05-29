@@ -6,6 +6,7 @@ $(document).ready(function() {
 
     window.App = {
         data: [],
+        dataInfo : [],
         filtre: null,
         dept: null,
         menuEtat: ["", "", ""],
@@ -58,8 +59,8 @@ $(document).ready(function() {
 
         fetchSuccess: function(collection, response) {
             App.data = response;
-            console.log('Collection fetch success', response);
-            console.log('Collection models: ', collection.models);
+            // console.log('Collection fetch success', response);
+            // console.log('Collection models: ', collection.models);
         },
 
         fetchError: function(collection, response) {
@@ -90,7 +91,8 @@ $(document).ready(function() {
             this.data = {
                 dept: App.dept || null,
                 menu: App.menuEtat,
-                prefiltre: null
+                prefiltre: null,
+                prefixe: null
             };
             this.$el.find('div:eq(0)').html(_.template($("#menu_niveau1_2_template").html(), this.data));
             this.$el.find('div:eq(1)').html(_.template($("#menu_niveau3_template").html(), this.data ));
@@ -101,6 +103,7 @@ $(document).ready(function() {
         },
         prefiltre:function(event){
             this.data.prefiltre = $(event.target).parents(".prefiltre").data("prefiltre");
+            this.data.prefixe = $(event.target).parents(".prefiltre").data("prefixe");
             this.$el.find('div:eq(1)').html(_.template($("#menu_niveau3_template").html(), this.data ));
         }
 
@@ -217,12 +220,30 @@ $(document).ready(function() {
         e.preventDefault();
         
     });
-     $('#menu').on("click", ".secondLevel li", function(e){
+    
+    $('#menu').on("click", ".secondLevel li", function(e){
         if($(this).parents(".secondLevel").data("has-sub-lvl") == "yes"){
             e.preventDefault();
             $(".thirdLevel ul").removeClass('hidden');
         }
     });
+
+    $('#menu').on("click", "li a", function(e){
+
+        if($(this).data('info-json')){
+
+            App.dom.nom_filtre.text(App.dataInfo[$(this).data('info-json')][1]);
+        }
+    });
+
+    /* ********************************************************
+    /   RÉCUPERATION JSON
+    / ********************************************************* */
+
+    $.getJSON( "data/data_info.json", function( data ) {
+        App.dataInfo = data;
+    });
+
 
 
     /* ********************************************************

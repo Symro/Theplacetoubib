@@ -38,17 +38,17 @@
                         <ul class="secondLevel <%= menu[0] %>" data-has-sub-lvl="no">
                             <li>
                                 <span title="Nombre d’habitants de + de 60 ans" class="right">
-                                    <a href="#/filtre/nb_habitants_plus_60_ans<%= dept == null ? "" : "/dept_"+dept %>" data-chart-type="pie" data-url="NbHab60Plus"><i class="icon-niv2_plus60"></i></a>
+                                    <a href="#/filtre/nb_habitants_plus_60_ans<%= dept == null ? "" : "/dept_"+dept %>" data-chart-type="pie" data-info-json="Nb_hab_plus_60_ans"><i class="icon-niv2_plus60"></i></a>
                                 </span>
                             </li>
                             <li>
                                 <span title="Revenu moyen / habitants" class="right">
-                                    <a href="#/filtre/revenu_moyen_par_habitant<%= dept == null ? "" : "/dept_"+dept %>" data-chart-type="loader" data-url="RevenuMoyHab"><i class="icon-niv2_revenumoyen"></i></a>
+                                    <a href="#/filtre/revenu_moyen_par_habitant<%= dept == null ? "" : "/dept_"+dept %>" data-chart-type="loader" data-info-json="Revenus_moyen_nets_par_mois"><i class="icon-niv2_revenumoyen"></i></a>
                                 </span>
                             </li>
                             <li>
                                 <span title="Temps d’accès médecins généralistes" class="right">
-                                    <a href="#/filtre/temps_acces_medecin_generaliste<%= dept == null ? "" : "/dept_"+dept %>" data-chart-type="bar" data-url="TpsAccesMedecin"><i class="icon-niv2_tempsacces"></i></a>
+                                    <a href="#/filtre/temps_acces_medecin_generaliste<%= dept == null ? "" : "/dept_"+dept %>" data-chart-type="bar" data-info-json="Temps_acces_medecin_generaliste"><i class="icon-niv2_tempsacces"></i></a>
                                 </span>
                             </li>
                         </ul>
@@ -58,12 +58,12 @@
                         </span>
                     </li>
                         <ul class="secondLevel <%= menu[1] %>" data-has-sub-lvl="yes">
-                            <li class="prefiltre" data-prefiltre="nombre"><span title="Nombres" class="right"><a href="#"><i class="icon-niv2_nombre"></i></a></span></li>
-                            <li class="prefiltre" data-prefiltre="age_moyen"><span title="Age moyen" class="right"><a href="#"><i class="icon-niv2_agemoyen"></i></a></span></li>
-                            <li class="prefiltre" data-prefiltre="prix_moyen_consultation"><span title="Prix Moyen de la consultation" class="right"><a href="#"><i class="icon-niv2_prixconsultation"></i></a></span></li>
-                            <li class="prefiltre" data-prefiltre="nombre_patients_par"><span title="Nombre de patients par praticiens" class="right"><a href="#"><i class="icon-niv2_nbpatients"></i></a></span></li>
+                            <li class="prefiltre" data-prefiltre="nombre" data-prefixe="Nb_"><span title="Nombres" class="right"><a href="#"><i class="icon-niv2_nombre"></i></a></span></li>
+                            <li class="prefiltre" data-prefiltre="age_moyen" data-prefixe="Age_moyen_"><span title="Age moyen" class="right"><a href="#"><i class="icon-niv2_agemoyen"></i></a></span></li>
+                            <li class="prefiltre" data-prefiltre="prix_moyen_consultation" data-prefixe="Prix_moyen_consultation_"><span title="Prix Moyen de la consultation" class="right"><a href="#"><i class="icon-niv2_prixconsultation"></i></a></span></li>
+                            <li class="prefiltre" data-prefiltre="nombre_patients_par" data-prefixe="Nb_"><span title="Nombre de patients par praticiens" class="right"><a href="#"><i class="icon-niv2_nbpatients"></i></a></span></li>
                         </ul>
-                    <li><span title="Hôpitaux" class="right"><a href="#/filtre/hopitaux<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv1_hopitaux"></i></a></span></li>
+                    <li><span title="Hôpitaux" class="right"><a href="#/filtre/hopitaux<%= dept == null ? "" : "/dept_"+dept %>" data-info-json="Temps_acces_medecin_generaliste"><i class="icon-niv1_hopitaux"></i></a></span></li>
                 </ul>
             </nav>
 
@@ -73,11 +73,11 @@
 
             <div class="thirdLevel <%= menu[2] %>">
                 <ul class="hidden">
-                    <li><span title="Médecins généralistes" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>generaliste<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv3_medecin"></i></a></span></li>
-                    <li><span title="Gynécologues" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>gynecologue<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv3_gyneco"></i></a></span></li>
-                    <li><span title="Dentistes" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>dentiste<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv3_dentiste"></i></a></span></li>
-                    <li><span title="Ophtalmologues" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>ophtalmologue<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv3_ophtalmo"></i></a></span></li>
-                    <li><span title="Infirmiers" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>infirmier<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv3_infirmier"></i></a></span></li>
+                    <li><span title="Médecins généralistes" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>generaliste<%= dept == null ? "" : "/dept_"+dept %>" data-info-json="<%= prefixe %>medecin"><i class="icon-niv3_medecin"></i></a></span></li>
+                    <li><span title="Gynécologues" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>gynecologue<%= dept == null ? "" : "/dept_"+dept %>" data-info-json="<%= prefixe %>gyneco"><i class="icon-niv3_gyneco"></i></a></span></li>
+                    <li><span title="Dentistes" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>dentiste<%= dept == null ? "" : "/dept_"+dept %>" data-info-json="<%= prefixe %>dentiste"><i class="icon-niv3_dentiste"></i></a></span></li>
+                    <li><span title="Ophtalmologues" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>ophtalmologue<%= dept == null ? "" : "/dept_"+dept %>" data-info-json="<%= prefixe %>ophtalmo"><i class="icon-niv3_ophtalmo"></i></a></span></li>
+                    <li><span title="Infirmiers" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>infirmier<%= dept == null ? "" : "/dept_"+dept %>" data-info-json="<%= prefixe %>infirmier"><i class="icon-niv3_infirmier"></i></a></span></li>
                 </ul>
             </div>
 
@@ -148,7 +148,7 @@
             // e=o.createElement(i);r=o.getElementsByTagName(i)[0];
             // e.src='//www.google-analytics.com/analytics.js';
             // r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            // ga('create','UA-XXXXX-X');ga('send','pageview');
+            // ga('create','UA-51415785-1', 'theplacetoubib.fr');ga('send','pageview');
         </script>
     </body>
 </html>
