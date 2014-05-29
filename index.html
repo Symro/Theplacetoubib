@@ -63,17 +63,17 @@
                             <li><span title="Prix Moyen de la consultation" class="right"><a href="#"><i class="icon-niv2_prixconsultation"></i></a></span></li>
                             <li><span title="Nombre de patients par praticiens" class="right"><a href="#"><i class="icon-niv2_nbpatients"></i></a></span></li>
                         </ul>
-                    <li><span title="Hôpitaux" class="right"><a href="#"><i class="icon-niv1_hopitaux"></i></span></li>
+                    <li><span title="Hôpitaux" class="right"><a href="#/filtre/hopitaux<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv1_hopitaux"></i></span></li>
                 </ul>
             </nav>
 
             <div class="thirdLevel <%= menu[2] %>">
                 <ul class="hidden">
-                    <li><span title="Médecins généralistes" class="right"><a href="#"><i class="icon-niv3_medecin"></i></a></span></li>
-                    <li><span title="Gynécologues" class="right"><a href="#"><i class="icon-niv3_gyneco"></i></a></span></li>
-                    <li><span title="Dentistes" class="right"><a href="#"><i class="icon-niv3_dentiste"></i></a></span></li>
-                    <li><span title="Ophtalmologues" class="right"><a href="#"><i class="icon-niv3_ophtalmo"></i></a></span></li>
-                    <li><span title="Infirmiers" class="right"><a href="#"><i class="icon-niv3_infirmier"></i></a></span></li>
+                    <li><span title="Médecins généralistes" class="right"><a href="#/filtre/generalistes<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv3_medecin"></i></a></span></li>
+                    <li><span title="Gynécologues" class="right"><a href="#/filtre/gynecologues<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv3_gyneco"></i></a></span></li>
+                    <li><span title="Dentistes" class="right"><a href="#/filtre/dentistes<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv3_dentiste"></i></a></span></li>
+                    <li><span title="Ophtalmologues" class="right"><a href="#/filtre/ophtalmologues<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv3_ophtalmo"></i></a></span></li>
+                    <li><span title="Infirmiers" class="right"><a href="#/filtre/infirmiers<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv3_infirmier"></i></a></span></li>
                 </ul>
             </div>
         </script>
