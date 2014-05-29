@@ -26,37 +26,53 @@
 
         <nav>
             <ul>
-                <li id="logo"><a href="#"><img src="img/picto.png"></a></li>
+                <li id="logo"><a href="#"><i class="icon-logo"></i></a></li>
                 <li class="firstLevel">
                     <span title="Habitants" class="right">
                         <a href="#" data-toggle="tooltip" data-placement="right" title="Tooltip on right">
-                            <img src="img/picto.png"><img src="img/fleche.png">
+                            <i class="icon-niv1_habitants"></i><img src="img/fleche.png">
                         </a>
                     </span>
                 </li>
                     <ul class="secondLevel" data-has-sub-lvl="no">
-                        <li><span title="Nombre d’habitants de + de 60 ans" class="right"><a href="#/filtre/NbHab60Plus" data-chart-type="pie" data-url="NbHab60Plus"><img src="img/picto.png"></a></span></li>
-                        <li><span title="Revenu moyen / habitants" class="right"><a href="#" data-chart-type="loader" data-url="RevenuMoyHab"><img src="img/picto.png"></a></span></li>
-                        <li><span title="Temps d’accès médecins généralistes" class="right"><a href="#" data-chart-type="bar" data-url="TpsAccesMedecin"><img src="img/picto.png"></a></span></li>
+                        <li>
+                            <span title="Nombre d’habitants de + de 60 ans" class="right">
+                                <a href="#/filtre/NbHab60Plus" data-chart-type="pie" data-url="NbHab60Plus"><i class="icon-niv2_plus60"></i></a>
+                            </span>
+                        </li>
+                        <li>
+                            <span title="Revenu moyen / habitants" class="right">
+                                <a href="#" data-chart-type="loader" data-url="RevenuMoyHab"><i class="icon-niv2_revenumoyen"></i></a>
+                            </span>
+                        </li>
+                        <li>
+                            <span title="Temps d’accès médecins généralistes" class="right">
+                                <a href="#" data-chart-type="bar" data-url="TpsAccesMedecin"><i class="icon-niv2_tempsacces"></i></a>
+                            </span>
+                        </li>
                     </ul>
-                <li class="firstLevel"><span title="Praticiens de santé" class="right"><a href="#" ><img src="img/picto.png"><img src="img/fleche.png"></a></span></li>
+                <li class="firstLevel">
+                    <span title="Praticiens de santé" class="right">
+                        <a href="#" ><i class="icon-niv1_praticiens"></i><img src="img/fleche.png"></a>
+                    </span>
+                </li>
                     <ul class="secondLevel" data-has-sub-lvl="yes">
-                        <li><span title="Médecins généralistes" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
-                        <li><span title="Gynécologues" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
-                        <li><span title="Dentistes" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
-                        <li><span title="Ophtalmologues" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
-                        <li><span title="Infirmiers" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
+                        <li><span title="Nombres" class="right"><a href="#"><i class="icon-niv2_nombre"></i></a></span></li>
+                        <li><span title="Age moyen" class="right"><a href="#"><i class="icon-niv2_agemoyen"></i></a></span></li>
+                        <li><span title="Prix Moyen de la consultation" class="right"><a href="#"><i class="icon-niv2_prixconsultation"></i></a></span></li>
+                        <li><span title="Nombre de patients par praticiens" class="right"><a href="#"><i class="icon-niv2_nbpatients"></i></a></span></li>
                     </ul>
-                <li><span title="Hôpitaux" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
+                <li><span title="Hôpitaux" class="right"><a href="#"><i class="icon-niv1_hopitaux"></i></span></li>
             </ul>
         </nav>
 
         <div class="thirdLevel">
             <ul class="hidden">
-                <li><span title="Nombres" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
-                <li><span title="Age moyen" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
-                <li><span title="Prix Moyen de la consultation" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
-                <li><span title="Nombre de patients par praticiens" class="right"><a href="#"><img src="img/picto.png"></a></span></li>
+                <li><span title="Médecins généralistes" class="right"><a href="#"><i class="icon-niv3_medecin"></i></a></span></li>
+                <li><span title="Gynécologues" class="right"><a href="#"><i class="icon-niv3_gyneco"></i></a></span></li>
+                <li><span title="Dentistes" class="right"><a href="#"><i class="icon-niv3_dentiste"></i></a></span></li>
+                <li><span title="Ophtalmologues" class="right"><a href="#"><i class="icon-niv3_ophtalmo"></i></a></span></li>
+                <li><span title="Infirmiers" class="right"><a href="#"><i class="icon-niv3_infirmier"></i></a></span></li>
             </ul>
         </div>
 
@@ -86,7 +102,9 @@
                     <h3>Moyenne Française</h3>
                     <p>1026</p>
                 </div>
-                <p>Evolution du nombre de médecins</p>
+                <div id="infoFiltre">
+                    <p>Evolution du nombre de médecins</p>
+                </div>
 
                 <footer>
                     <a href="#">Dictionnaire</a>

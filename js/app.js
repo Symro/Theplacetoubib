@@ -141,7 +141,15 @@ $(document).ready(function() {
     window.App = {
         data    : [],
         filtre  : null,
-        dept    : null
+        dept    : null,
+        dom     : {
+            chiffre_dept    : $('#chiffreDept p'),
+            chiffre_france  : $('#chiffreFrance p'),
+            nom_dept        : $('#rightSide .dept'),
+            nom_filtre      : $('#leftSide .content h2:first'),
+            info_filtre     : $('#infoFiltre p'),
+
+        }
     }
 
     var Routeur = Backbone.Router.extend({
