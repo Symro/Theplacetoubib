@@ -24,11 +24,11 @@ $(document).ready(function() {
             },
             scaleParis: 30000,
             translate: {
-                x: 390,
-                y: 1050
+                x: 430,
+                y: 1040
             },
             circle: {
-                x: 360,
+                x: 400,
                 y: 300,
                 r: 100,
                 stroke: '#000',
@@ -68,7 +68,7 @@ $(document).ready(function() {
             $paris = $svg.append("g")
                 .attr("id", "paris")
                 .on("mouseleave", function() {
-                    console.log($("#paris").css("display", "none"));
+                    $("#paris").css("display", "none");
                 });
 
         },
@@ -195,7 +195,7 @@ $(document).ready(function() {
             $("body #paris").css("display", "inline");
 
             // Callback
-            mapObject.params.rendered.call();
+            mapObject.params.zoomed.call();
 
         }
     }
