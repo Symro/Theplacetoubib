@@ -84,6 +84,8 @@ $(document).ready(function() {
             //pass model:your_model when creating instance
             this.render();
             this.model.on("change", this.render, this);
+            $('#menu .right').tooltip({align: 'right'});
+            
         },
         render: function() {
             var data = {
@@ -189,6 +191,29 @@ $(document).ready(function() {
 
     App.checkHash();
 
+
+    /* ********************************************************
+    /   MENU NAVIGATON
+    / ********************************************************* */
+
+    $('#menu').on("click", ".firstLevel", function(e){
+        $(this).next(".secondLevel").toggle('400').toggleClass('open');
+
+        // Récupère et actualise l'état du menu, pour savoir ce qui est ouvert ou non
+        var status1 = ($('#menu .secondLevel').eq(0).hasClass('open') ) ? "open" : "";
+        var status2 = ($('#menu .secondLevel').eq(1).hasClass('open') ) ? "open" : "";
+        var status3 = ($('#menu .thirdLevel').hasClass('open') ) ? "open" : "";
+        App.menuEtat = [status1, status2, status3];
+
+        e.preventDefault();
+        
+    });
+     $('#menu').on("click", ".secondLevel li", function(e){
+        if($(this).parents(".secondLevel").data("has-sub-lvl") == "yes"){
+            e.preventDefault();
+            $(".thirdLevel ul").removeClass('hidden');
+        }
+    });
 
 
     /* ********************************************************
