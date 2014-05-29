@@ -24,7 +24,7 @@
 
     <div id="container">
 
-        <script type="text/template" id="menu_template">
+        <script type="text/template" id="menu_niveau1_2_template">
             <nav>
                 <ul>
                     <li id="logo"><a href="#"><i class="icon-logo"></i></a></li>
@@ -58,27 +58,35 @@
                         </span>
                     </li>
                         <ul class="secondLevel <%= menu[1] %>" data-has-sub-lvl="yes">
-                            <li><span title="Nombres" class="right"><a href="#"><i class="icon-niv2_nombre"></i></a></span></li>
-                            <li><span title="Age moyen" class="right"><a href="#"><i class="icon-niv2_agemoyen"></i></a></span></li>
-                            <li><span title="Prix Moyen de la consultation" class="right"><a href="#"><i class="icon-niv2_prixconsultation"></i></a></span></li>
-                            <li><span title="Nombre de patients par praticiens" class="right"><a href="#"><i class="icon-niv2_nbpatients"></i></a></span></li>
+                            <li class="prefiltre" data-prefiltre="nombre"><span title="Nombres" class="right"><a href="#"><i class="icon-niv2_nombre"></i></a></span></li>
+                            <li class="prefiltre" data-prefiltre="age_moyen"><span title="Age moyen" class="right"><a href="#"><i class="icon-niv2_agemoyen"></i></a></span></li>
+                            <li class="prefiltre" data-prefiltre="prix_moyen_consultation"><span title="Prix Moyen de la consultation" class="right"><a href="#"><i class="icon-niv2_prixconsultation"></i></a></span></li>
+                            <li class="prefiltre" data-prefiltre="nombre_patients_par"><span title="Nombre de patients par praticiens" class="right"><a href="#"><i class="icon-niv2_nbpatients"></i></a></span></li>
                         </ul>
-                    <li><span title="Hôpitaux" class="right"><a href="#/filtre/hopitaux<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv1_hopitaux"></i></span></li>
+                    <li><span title="Hôpitaux" class="right"><a href="#/filtre/hopitaux<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv1_hopitaux"></i></a></span></li>
                 </ul>
             </nav>
 
-            <div class="thirdLevel <%= menu[2] %>">
-                <ul class="hidden">
-                    <li><span title="Médecins généralistes" class="right"><a href="#/filtre/generalistes<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv3_medecin"></i></a></span></li>
-                    <li><span title="Gynécologues" class="right"><a href="#/filtre/gynecologues<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv3_gyneco"></i></a></span></li>
-                    <li><span title="Dentistes" class="right"><a href="#/filtre/dentistes<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv3_dentiste"></i></a></span></li>
-                    <li><span title="Ophtalmologues" class="right"><a href="#/filtre/ophtalmologues<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv3_ophtalmo"></i></a></span></li>
-                    <li><span title="Infirmiers" class="right"><a href="#/filtre/infirmiers<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv3_infirmier"></i></a></span></li>
-                </ul>
-            </div>
         </script>
 
-        <div id="menu"></div>       
+        <script type="text/template" id="menu_niveau3_template">
+
+            <div class="thirdLevel <%= menu[2] %>">
+                <ul class="hidden">
+                    <li><span title="Médecins généralistes" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>generaliste<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv3_medecin"></i></a></span></li>
+                    <li><span title="Gynécologues" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>gynecologue<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv3_gyneco"></i></a></span></li>
+                    <li><span title="Dentistes" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>dentiste<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv3_dentiste"></i></a></span></li>
+                    <li><span title="Ophtalmologues" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>ophtalmologue<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv3_ophtalmo"></i></a></span></li>
+                    <li><span title="Infirmiers" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>infirmier<%= dept == null ? "" : "/dept_"+dept %>"><i class="icon-niv3_infirmier"></i></a></span></li>
+                </ul>
+            </div>
+
+        </script>
+
+        <div id="menu">
+            <div></div>
+            <div></div>
+        </div>       
 
 
 

@@ -81,18 +81,27 @@ $(document).ready(function() {
     var MenuView = Backbone.View.extend({
         el: $("#menu"),
         initialize: function() {
-            //pass model:your_model when creating instance
             this.render();
             this.model.on("change", this.render, this);
             $('#menu .right').tooltip({align: 'right'});
-            
+
         },
         render: function() {
-            var data = {
+            this.data = {
                 dept: App.dept || null,
-                menu: App.menuEtat
+                menu: App.menuEtat,
+                prefiltre: null
             };
-            this.$el.html(_.template($("#menu_template").html(), data));
+            this.$el.find('div:eq(0)').html(_.template($("#menu_niveau1_2_template").html(), this.data));
+            this.$el.find('div:eq(1)').html(_.template($("#menu_niveau3_template").html(), this.data ));
+        
+        },
+        events:{
+            'click .prefiltre':'prefiltre'
+        },
+        prefiltre:function(event){
+            this.data.prefiltre = $(event.target).parents(".prefiltre").data("prefiltre");
+            this.$el.find('div:eq(1)').html(_.template($("#menu_niveau3_template").html(), this.data ));
         }
 
     });
@@ -182,7 +191,7 @@ $(document).ready(function() {
             });
 
             if (customRegExp[3]) {
-                console.log(" on a un departement dans l'URL : " + customRegExp[3]);
+                //console.log(" on a un departement dans l'URL : " + customRegExp[3]);
                 //App.router.navigate("#/filtre/"+customRegExp[1]+"/dept_"+customRegExp[3], {trigger: true});
             }
         }
