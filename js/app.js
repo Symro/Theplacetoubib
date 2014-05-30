@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     /* ********************************************************
-    /   BACKBONE
+    /   Initialisation Application
     / ********************************************************* */
 
     window.App = {
@@ -20,6 +20,31 @@ $(document).ready(function() {
 
         }
     }
+
+    /* ********************************************************
+    /   RÉCUPERATION JSON
+    / ********************************************************* */
+
+    function getJson(url) {
+     return JSON.parse($.ajax({
+         type: 'GET',
+         url: url,
+         dataType: 'json',
+         global: false,
+         async:false,
+         success: function(data) {
+             return data;
+         }
+     }).responseText);
+    }
+
+    App.data = getJson("data/data.json");
+    App.dataInfo = getJson("data/data_info.json");
+
+
+    /* ********************************************************
+    /   BACKBONE
+    / ********************************************************* */
 
     var Routeur = Backbone.Router.extend({
 
@@ -41,33 +66,6 @@ $(document).ready(function() {
     });
 
 
-    // Modèle - Data
-    var Data = Backbone.Model.extend();
-
-    // Collection - Parcours les datas
-    var DataList = Backbone.Collection.extend({
-
-        model: Data,
-        url: 'data/data.json',
-
-        initialize: function() {
-            this.fetch({
-                success: this.fetchSuccess,
-                error: this.fetchError
-            });
-        },
-
-        fetchSuccess: function(collection, response) {
-            App.data = response;
-            // console.log('Collection fetch success', response);
-            // console.log('Collection models: ', collection.models);
-        },
-
-        fetchError: function(collection, response) {
-            throw new Error("Datas fetch error");
-        }
-
-    });
 
     // Vue - Affiche et met à jour le menu
     // http://www.codebeerstartups.com/2012/12/how-to-use-templates-in-backbone-js-learning-backbone-js
@@ -234,14 +232,6 @@ $(document).ready(function() {
 
             App.dom.nom_filtre.text(App.dataInfo[$(this).data('info-json')][1]);
         }
-    });
-
-    /* ********************************************************
-    /   RÉCUPERATION JSON
-    / ********************************************************* */
-
-    $.getJSON( "data/data_info.json", function( data ) {
-        App.dataInfo = data;
     });
 
 
