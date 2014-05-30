@@ -205,7 +205,7 @@ $(document).ready(function() {
             // + Update Titre Filtre
             var HrefActive = $('#menu').find('a[href*="'+customRegExp[1]+'"]');
             if(HrefActive.length > 0){
-                App.dom.nom_filtre.text( App.dataInfo[HrefActive.data('info-json')][1] );
+                App.dom.nom_filtre.text( App.dataInfo[HrefActive.data('info-json')][0] );
                 HrefActive.parents("li").addClass("active");
             }
 
@@ -256,7 +256,7 @@ $(document).ready(function() {
 
         if($(this).data('info-json')){
 
-            App.dom.nom_filtre.text(App.dataInfo[$(this).data('info-json')][1]);
+            App.dom.nom_filtre.text(App.dataInfo[$(this).data('info-json')][0]);
         }
     });
 
