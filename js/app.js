@@ -63,6 +63,11 @@ $(document).ready(function() {
 
     App.router.on("route:filtre", function(filtre, dept) {
         console.log("Filtre : " + filtre + "  Dept : " + dept);
+
+        if(dept){
+            App.displayInfoDept(dept);
+        }
+
     });
 
 
@@ -132,9 +137,14 @@ $(document).ready(function() {
 
     // Affiche les infos d'un departement
     App.displayInfoDept = function(num_Departement) {
-        var info_dept = App.getInfo(num_Departement);
+        var info_dept = App.getInfo(parseInt(num_Departement));
         var info_france = App.getInfo(100);
         var container = $('#info-dep');
+
+        // Modal Choisissez un Dept.
+        if(App.dept == null){
+            App.displayStep2();
+        }
 
         // Update Nom Dept.
         var nom_dept = info_dept.Nom_dpt;
@@ -156,10 +166,10 @@ $(document).ready(function() {
         var chiffre_fra_container = $('#chiffreFrance p');
         chiffre_fra_container.countTo({
             from: parseInt(chiffre_fra_container.text()),
-            to: chiffre_fra
+            to: chiffre_fra,
+            speed: 800,
+            refreshInterval: 50
         });
-
-
 
         container.html(JSON.stringify(info_dept, null, "\t"));
 
@@ -191,13 +201,26 @@ $(document).ready(function() {
                 trigger: true
             });
 
+            // + Update Menu Filtre > Active 
+            // + Update Titre Filtre
+            var HrefActive = $('#menu').find('a[href*="'+customRegExp[1]+'"]');
+            if(HrefActive.length > 0){
+                App.dom.nom_filtre.text( App.dataInfo[HrefActive.data('info-json')][1] );
+                HrefActive.parents("li").addClass("active");
+            }
+
             if (customRegExp[3]) {
-                //console.log(" on a un departement dans l'URL : " + customRegExp[3]);
-                //App.router.navigate("#/filtre/"+customRegExp[1]+"/dept_"+customRegExp[3], {trigger: true});
+                console.log(" on a un depart. : " + customRegExp[3]);
+                App.dept = customRegExp[3];
             }
         }
 
     }
+
+    App.displayStep2 = function(){
+        alert("Choisissez un département svp");
+    }
+
 
     App.checkHash();
 
@@ -230,6 +253,9 @@ $(document).ready(function() {
     });
 
     $('#menu').on("click", "li a", function(e){
+        
+        // Changement URL - checkons le HASH
+        App.checkHash();
 
         if($(this).data('info-json')){
 
