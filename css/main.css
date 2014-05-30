@@ -187,10 +187,17 @@ nav a{
 nav ul ul li{
     background-color: #51919b;
 }
+
+menu, ol, ul{
+    padding: 0;
+}
 .secondLevel{
     display: none;
 }
+.colorSecondLevel{
+    background-color: #89c3cd;
 
+}
 .thirdLevel{
     position:absolute;
     display: inline-block;

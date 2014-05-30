@@ -243,6 +243,9 @@ $(document).ready(function() {
     });
     
     $('#menu').on("click", ".secondLevel li", function(e){
+        $(this).siblings().removeClass('colorSecondLevel');
+        $(this).addClass('colorSecondLevel');
+
         if($(this).parents(".secondLevel").data("has-sub-lvl") == "yes"){
             e.preventDefault();
             $(".thirdLevel ul").removeClass('hidden');
