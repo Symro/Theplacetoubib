@@ -231,6 +231,14 @@ $(document).ready(function() {
 
     $('#menu').on("click", ".firstLevel", function(e){
         $(this).next(".secondLevel").toggle('400').toggleClass('open');
+        $(".thirdLevel ul").addClass('hidden');
+        $(".secondLevel li").removeClass("colorSecondLevel");
+        if($(this).siblings().next(".secondLevel").hasClass('open')){
+            $(this).siblings().next(".secondLevel").removeClass('open');
+            $(".thirdLevel ul").addClass('hidden ');
+            $(this).siblings().next(".secondLevel").slideUp();
+
+        }
 
         // Récupère et actualise l'état du menu, pour savoir ce qui est ouvert ou non
         var status1 = ($('#menu .secondLevel').eq(0).hasClass('open') ) ? "open" : "";
@@ -248,9 +256,16 @@ $(document).ready(function() {
 
         if($(this).parents(".secondLevel").data("has-sub-lvl") == "yes"){
             e.preventDefault();
+            $(".thirdLevel ul").addClass('animated fadeInLeft',400);
             $(".thirdLevel ul").removeClass('hidden');
         }
     });
+
+
+     $('#menu').on("click", ".thirdLevel li", function(e){
+        $(this).siblings().removeClass("selected");
+        $(this).addClass("selected");
+     });
 
     $('#menu').on("click", "li a", function(e){
         

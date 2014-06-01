@@ -204,21 +204,29 @@ menu, ol, ul{
     float:left;
     width:70px;
     left: 90px;
-    top: 25%;
+    top:203px;
 
 }
 
 .thirdLevel li{
     list-style-type: none;
-    padding-bottom: 50px;
+    padding-bottom: 41px;
 }
 
 .thirdLevel [class^="icon-"]:before, [class*=" icon-"]:before {
     color:#858a8b;
 }
 
+.thirdLevel li.selected [class^="icon-"]:before, [class*=" icon-"]:before {
+    color:#89c3cd;
+}
+
 #logo{
     background-color: black;
+    background-image: url(../img/logo.png);
+    background-repeat: no-repeat;
+    background-size: 55%;
+    background-position: 50% 50%; 
 }
 
 #container{
