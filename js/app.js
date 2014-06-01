@@ -231,11 +231,10 @@ $(document).ready(function() {
 
     $('#menu').on("click", ".firstLevel", function(e){
         $(this).next(".secondLevel").toggle('400').toggleClass('open');
-        $(".thirdLevel ul").addClass('hidden');
+        $(".thirdLevel ul").addClass('animated fadeOutLeft',0);
         $(".secondLevel li").removeClass("colorSecondLevel");
         if($(this).siblings().next(".secondLevel").hasClass('open')){
             $(this).siblings().next(".secondLevel").removeClass('open');
-            $(".thirdLevel ul").addClass('hidden ');
             $(this).siblings().next(".secondLevel").slideUp();
 
         }
@@ -251,12 +250,15 @@ $(document).ready(function() {
     });
     
     $('#menu').on("click", ".secondLevel li", function(e){
+
         $(this).siblings().removeClass('colorSecondLevel');
+   
         $(this).addClass('colorSecondLevel');
+
 
         if($(this).parents(".secondLevel").data("has-sub-lvl") == "yes"){
             e.preventDefault();
-            $(".thirdLevel ul").addClass('animated fadeInLeft',400);
+            $(".thirdLevel").addClass('animated fadeInLeft',400);
             $(".thirdLevel ul").removeClass('hidden');
         }
     });
