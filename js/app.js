@@ -250,21 +250,16 @@ $(document).ready(function() {
     });
     
     $('#menu').on("click", ".secondLevel li", function(e){
-
         $(this).siblings().removeClass('colorSecondLevel');
-   
         $(this).addClass('colorSecondLevel');
-
-
         if($(this).parents(".secondLevel").data("has-sub-lvl") == "yes"){
             e.preventDefault();
-            $(".thirdLevel").addClass('animated fadeInLeft',400);
+            $(".thirdLevel").addClass('animated fadeInLeft',0);
             $(".thirdLevel ul").removeClass('hidden');
         }
     });
 
-
-     $('#menu').on("click", ".thirdLevel li", function(e){
+    $('#menu').on("click", ".thirdLevel li", function(e){
         $(this).siblings().removeClass("selected");
         $(this).addClass("selected");
      });
