@@ -11,7 +11,8 @@ textarea {
 html {
     font-size: 1em;
     line-height: 1.4;
-    background-color: #e7f0f3;
+/*    background-color: #e7f0f3;*/
+
 }
 
 ::-moz-selection {
@@ -125,6 +126,7 @@ body,html{
     height:100%;
     margin:0;padding:0;
     font-family: 'Arimo', sans-serif;
+
 }
 
 .departement {
@@ -246,6 +248,8 @@ menu, ol, ul{
     width: 50%;
     padding: 0px 0 0 50px;
     margin: 0 0 0 0;
+    background-image:url(../img/backgroundLeftSide.png); 
+    background-size: 100%;
     /*background-color: red;*/
 }
 
