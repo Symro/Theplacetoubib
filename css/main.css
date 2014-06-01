@@ -124,10 +124,108 @@ textarea {
 
 body,html{
     height:100%;
-    margin:0;padding:0;
+    margin:0;
+    padding:0;
     font-family: 'Arimo', sans-serif;
+}
+
+/* ==========================================================================
+   Splashscreen
+   ========================================================================== */
+
+
+
+.splashscreen{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #e7f1f3;
+    color:#6f9298;
+    font:69.5%;
+    z-index: 10;
+}
+section.splashscreen{
+    background-color: #e7f1f3;
+    font:700 17px 'Arimo' sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+
 
 }
+section.splashscreen canvas{
+    position:absolute;
+    z-index:0;
+    left:22%;
+}
+section.splashscreen .presentation{
+    z-index: 999999;
+    position: absolute;
+    display: block;
+    left: 22%;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    width: 55%;
+    background-color: transparent;
+    background-image:url(../img/backgroundSplash.png); 
+    background-size: auto 100%; 
+    background-position:center;
+        background-repeat:no-repeat; 
+
+
+}
+section.splashscreen h1{
+    text-transform: uppercase;
+    font-size: 31px;
+    background: url('../img/logoSplash.png') no-repeat;
+    background-size: 230px;
+    background-position: 50%;
+    padding-top: 245px;
+    margin-bottom: 65px;
+}
+    section.splashscreen h1 span{
+        color: #e05161;
+    }
+    section.splashscreen h1::after{
+        display: block;
+        content: '';
+        background: #6f9298;
+
+        width: 40px;
+        height: 3px;
+
+        left: 50%;
+        position: absolute;
+        margin-top: 25px;
+    }
+
+section.splashscreen p{
+    font-size: 17px;
+    font-weight: 400;
+    margin-bottom: 45px;
+}
+
+section.splashscreen a{
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #6f9298;
+    border: 4px solid #6f9298;
+    padding:6px 9px;
+        -webkit-transition: 1s all ;
+    -moz-transition: 1s all ;
+    -o-transition: 1s all ;
+    transition: 1s all ;
+}
+    section.splashscreen a:hover{
+    -webkit-transition: .5s all ;
+    -moz-transition: .5s all ;
+    -o-transition: .5s all ;
+    transition: .5s all ;
+        background-color: #6f9298;
+        color:#fff;
+    }
+
 
 .departement {
     cursor: pointer;
@@ -225,7 +323,7 @@ menu, ol, ul{
 
 #logo{
     background-color: black;
-    background-image: url(../img/logo.png);
+    background-image: url(../img/logoNav.png);
     background-repeat: no-repeat;
     background-size: 55%; 
     background-position: 50% 50%; 
@@ -249,10 +347,11 @@ menu, ol, ul{
     padding: 0px 0 0 50px;
     margin: 0 0 0 0;
     background-image:url(../img/backgroundLeftSide.png); 
-    background-size: 100%;
-    /*background-color: red;*/
+    background-size: cover;
+        -webkit-background-size: cover; 
+        -moz-background-size: cover; 
+        -o-background-size: cover; 
 }
-
 
 /*Right Side Style*/
 #rightSide{
@@ -311,6 +410,9 @@ menu, ol, ul{
     text-align: right;
  }
 
+ #rightSide footer a:hover{
+    color:#63b1be;
+ }
 
 /* Tooltip -Styles */
 .tooltip {
@@ -491,76 +593,4 @@ background-position: right center;
     }
 }
 
-/* ==========================================================================
-   Splashscreen
-   ========================================================================== */
 
-
-
-.splashscreen{
-    background-color: #e7f1f3;
-    color:#6f9298;
-    font:69.5%;
-    display:none;
-}
-section.splashscreen{
-    font:700 17px 'Arimo' sans-serif;
-    -webkit-font-smoothing: antialiased;
-    text-align: center;
-}
-section.splashscreen canvas{
-    position:absolute;
-    z-index:0;
-    left:22%;
-}
-section.splashscreen .presentation{
-    z-index: 999999;
-    position: absolute;
-    display: block;
-    left: 22%;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    width: 55%;
-    background-color: transparent;
-}
-section.splashscreen h1{
-    text-transform: uppercase;
-    font-size: 31px;
-    background: url('../img/logo.png') no-repeat;
-    background-position: 50%;
-    padding-top: 245px;
-    margin-bottom: 65px;
-}
-    section.splashscreen h1 span{
-        color: #e05161;
-    }
-    section.splashscreen h1::after{
-        display: block;
-        content: '';
-        background: #6f9298;
-
-        width: 40px;
-        height: 3px;
-
-        left: 50%;
-        position: absolute;
-        margin-top: 25px;
-    }
-
-section.splashscreen p{
-    font-size: 17px;
-    font-weight: 400;
-    margin-bottom: 45px;
-}
-
-section.splashscreen a{
-    text-decoration: none; text-transform: uppercase;
-    border: 4px solid #6f9298;
-    padding:6px 9px;
-}
-    section.splashscreen a:hover{
-        background-color: #6f9298;
-        color:#fff;
-    }

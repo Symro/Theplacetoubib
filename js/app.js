@@ -275,6 +275,12 @@ $(document).ready(function() {
         }
     });
 
+    $('.splaschscreen').on("click", ".presentation a", function(e){
+        e.preventDefault();
+        $(this).parents(".splaschscreen").fadeOut("slow");
+        $("#rightSide").fadeIn("slow");
+    });
+
 
 
     /* ********************************************************
