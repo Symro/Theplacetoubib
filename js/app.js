@@ -17,7 +17,8 @@ $(document).ready(function() {
             chiffre_france: $('#chiffreFrance p'),
             nom_dept: $('#rightSide .dept'),
             nom_filtre: $('#leftSide .content h2:first'),
-            info_filtre: $('#infoFiltre p'),
+            info_filtre: $('#infoFiltre > p:first'),
+            tooltip_filtre : $('#infoFiltre .tooltipCSS')
 
         }
     }
@@ -190,7 +191,12 @@ $(document).ready(function() {
             }
         });
 
-        // Update Nom du Filtre
+        // Update Info Tooltip Provenance Données
+        var tooltip_url = App.dom.tooltip_filtre.find("a");
+        var tooltip_annee = App.dom.tooltip_filtre.find('p+p span+span');
+        tooltip_url.attr("href", App.dataInfo[App.filtre][4]).attr("title", App.dataInfo[App.filtre][3]).text( App.dataInfo[App.filtre][3] );
+        tooltip_annee.text(App.dataInfo[App.filtre][2]);
+
         //App.dom.nom_filtre.text( App.dataInfo[HrefActive.data('info-json')][0] );
 
         container.html(JSON.stringify(info_dept, null, "\t"));
