@@ -65,7 +65,7 @@ $(document).ready(function() {
     App.router.on("route:filtre", function(filtre, dept) {
         console.log("Filtre : " + filtre + "  Dept : " + dept);
 
-        if(dept){
+        if(dept != "null" && (dept > 0 && dept < 96) ){
             App.displayInfoDept(dept);
         }
         else{
@@ -104,7 +104,7 @@ $(document).ready(function() {
                 
             };
             this.$el.find('div:eq(0)').html(_.template($("#menu_niveau1_2_template").html(), this.data));
-            this.$el.find('div:eq(1)').html(_.template($("#menu_niveau3_template").html(), this.data ));
+            //this.$el.find('div:eq(1)').html(_.template($("#menu_niveau3_template").html(), this.data ));
         
         },
         events:{
@@ -113,7 +113,6 @@ $(document).ready(function() {
         prefiltre:function(event){
             this.data.prefiltre = $(event.target).parents(".prefiltre").data("prefiltre");
             this.data.prefixe   = $(event.target).parents(".prefiltre").data("prefixe");
-            this.data.prefiltreActive = $(event.target).parents(".prefiltre").index();
             this.$el.find('div:eq(1)').html(_.template($("#menu_niveau3_template").html(), this.data ));
         }
 
@@ -160,7 +159,6 @@ $(document).ready(function() {
             $(this).text(nom_dept).removeClass('fadeOutDown').addClass('fadeInUp');
         });
 
-
         // Update Chiffre Dept.
         var chiffre_dept = parseInt(info_dept.Nb_hab_plus_60_ans);
         var chiffre_dept_container = $('#chiffreDept p');
@@ -179,13 +177,16 @@ $(document).ready(function() {
             refreshInterval: 50
         });
 
+        // Update Nom du Filtre
+        //App.dom.nom_filtre.text( App.dataInfo[HrefActive.data('info-json')][0] );
+
         container.html(JSON.stringify(info_dept, null, "\t"));
 
     }
 
     App.checkHash = function() {
 
-        console.log("HASH ACTUEL  : " + window.location.hash);
+        //console.log("HASH ACTUEL  : " + window.location.hash);
 
         var hash = window.location.hash;
         // analyse du hash actuel
@@ -214,22 +215,19 @@ $(document).ready(function() {
             // + Update Info filtre (Right Side)
             var HrefActive = $('#menu').find('a[href*="'+customRegExp[1]+'"]');
             if(HrefActive.length > 0){
+
                 App.dom.nom_filtre.text( App.dataInfo[HrefActive.data('info-json')][0] );
                 HrefActive.parents("li").addClass("active");
 
-                
                 App.dom.info_filtre.text( App.dataInfo[HrefActive.data('info-json')][1] );
 
             }
 
             if (customRegExp[3]) {
                 
-                $('#rightSide .tuto').fadeOut(1000, function(){
-                    $('#rightSide .content').fadeIn();
-                });
-
                 console.log(" on a un depart. : " + customRegExp[3]);
                 App.dept = customRegExp[3];
+
             }
 
         }
@@ -286,11 +284,12 @@ $(document).ready(function() {
     $('#menu').on("click", ".secondLevel li a", function(e){
         e.preventDefault();
         var $this = $(this);
-        var url = $this.attr("href");
-        var li  = $this.parents("li");
+        var url   = $this.attr("href");
+        var li    = $this.parents("li");
+        var info  = $this.data('info-json');
 
         $('#menu ul li').removeClass('active');
-        $(this).parents('li').addClass('active');
+        li.addClass('active');
 
         if(li.hasClass('prefiltre') == true){
             console.log("Prefiltre");
@@ -303,24 +302,34 @@ $(document).ready(function() {
             // $(".thirdLevel").addClass('animated fadeInLeft');
         }
         else{
+            App.filtre = info;
             App.router.navigate( url , { trigger: true });
         }
 
     });
 
     $('#menu').on("click", ".thirdLevel li a", function(e){
-        $this = $(this);
-        var li  = $this.parents("li");
+        e.preventDefault();
 
-        li.siblings().find("a").removeClass("selected");
+        var $this   = $(this);
+        var url     = $this.attr("href");
+        var li      = $this.parents("li");
+        var info    = $this.data('info-json');
+
+        li.siblings().removeClass("active").find("a").removeClass("selected");
+        li.addClass("active");
         $this.addClass("selected");
+        
+        App.filtre = info;
+        App.router.navigate( url , { trigger: true });
 
      });
 
     $('#menu').on("click", "li a", function(e){
         
         // Changement URL - checkons le HASH
-        // App.checkHash();
+        console.log('App.checkHash() from Ligne 320');
+        App.checkHash();
 
         // if($(this).data('info-json')){
         //     App.dom.nom_filtre.text(App.dataInfo[$(this).data('info-json')][0]);
@@ -529,7 +538,7 @@ $(document).ready(function() {
             App.dept = d.properties.CODE_DEPT;
             // modification du modèle et donc des liens du menu
             App.menu.set({
-                dept: d.properties.CODE_DEPT,
+                dept: App.dept,
                 menu: App.menuEtat
             });
             App.checkHash();

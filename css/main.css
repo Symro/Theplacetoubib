@@ -300,9 +300,11 @@ menu, ol, ul{
 .secondLevel{
     display: none;
 }
-#menu li.active,
-.colorSecondLevel{
+#menu li.active{
     background-color: #89c3cd;
+}
+#menu .thirdLevel li.active{
+    background:none;
 }
 
 .thirdLevel{
@@ -320,6 +322,7 @@ menu, ol, ul{
     padding-bottom: 41px;
     background:none;
 }
+
 
 .thirdLevel [class^="icon-"]:before, [class*=" icon-"]:before {
     color:#858a8b;
@@ -356,9 +359,14 @@ menu, ol, ul{
     margin: 0 0 0 0;
     background-image:url(../img/backgroundLeftSide.png); 
     background-size: cover;
-        -webkit-background-size: cover; 
-        -moz-background-size: cover; 
-        -o-background-size: cover; 
+    -webkit-background-size: cover; 
+    -moz-background-size: cover; 
+    -o-background-size: cover; 
+}
+
+#leftSide #map svg{
+    position:absolute;
+    top:0;
 }
 
 /*Right Side Style*/
