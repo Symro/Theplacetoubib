@@ -68,6 +68,9 @@ $(document).ready(function() {
         if(dept){
             App.displayInfoDept(dept);
         }
+        else{
+            App.displayStep2();
+        }
 
     });
 
@@ -145,10 +148,10 @@ $(document).ready(function() {
         var info_france = App.getInfo(100);
         var container = $('#info-dep');
 
-        // Modal Choisissez un Dept.
-        if(App.dept == null){
-            //App.displayStep2();
-        }
+        // Affichage Right Side - Content
+        $('#rightSide .tuto').fadeOut(1000, function(){
+            $('#rightSide .content').fadeIn();
+        });
 
         // Update Nom Dept.
         var nom_dept = info_dept.Nom_dpt;
@@ -228,19 +231,18 @@ $(document).ready(function() {
                 console.log(" on a un depart. : " + customRegExp[3]);
                 App.dept = customRegExp[3];
             }
-            else{
 
-                $('#rightSide .content').fadeOut(1000, function(){
-                    $('#rightSide .tuto').fadeIn();
-                });
-
-            }
         }
 
     }
 
     App.displayStep2 = function(){
-        alert("Choisissez un département svp");
+
+        $('#rightSide .content').fadeOut(1000, function(){
+            $('#rightSide .tuto').fadeIn();
+        });
+
+        console.log("TUTO STEP 2 : Choisissez un département svp");
     }
 
 
@@ -250,9 +252,6 @@ $(document).ready(function() {
     /* ********************************************************
     /   MENU NAVIGATON
     / ********************************************************* */
-
-    
-    $(".thirdLevel").addClass('hidden');
 
     $('#menu').on("click", ".firstLevel a", function(e){
         e.preventDefault();
@@ -298,8 +297,10 @@ $(document).ready(function() {
             App.prefiltreEtat = ["","","",""];
             App.prefiltreEtat[li.index()] = "active";
 
-            $(".thirdLevel ul").removeClass('hidden');
-            $(".thirdLevel").addClass('animated fadeInLeft');
+            $(".thirdLevel").addClass('open');
+
+            // $(".thirdLevel ul").removeClass('hidden');
+            // $(".thirdLevel").addClass('animated fadeInLeft');
         }
         else{
             App.router.navigate( url , { trigger: true });
