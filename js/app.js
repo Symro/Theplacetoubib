@@ -65,7 +65,7 @@ $(document).ready(function() {
     App.router.on("route:filtre", function(filtre, dept) {
         console.log("Filtre : " + filtre + "  Dept : " + dept);
 
-        if(dept != "null" && (dept > 0 && dept < 96) ){
+        if(dept != "null" && (dept > 0 && dept < 96 || dept == "2A" || dept == "2B") ){
             App.displayInfoDept(dept);
         }
         else{
@@ -141,9 +141,12 @@ $(document).ready(function() {
         })[filtre];
     }
 
+
     // Affiche les infos d'un departement
     App.displayInfoDept = function(num_Departement) {
-        var info_dept = App.getInfo(parseInt(num_Departement));
+        num_Departement = (num_Departement == "2A" || num_Departement == "2B") ? num_Departement : parseInt(num_Departement);
+
+        var info_dept = App.getInfo( num_Departement );
         var info_france = App.getInfo(100);
         var container = $('#info-dep');
 
@@ -160,21 +163,31 @@ $(document).ready(function() {
         });
 
         // Update Chiffre Dept.
-        var chiffre_dept = parseInt(info_dept.Nb_hab_plus_60_ans);
+        var chiffre_dept = App.getInfoFiltre( num_Departement , App.filtre);
         var chiffre_dept_container = $('#chiffreDept p');
+        var suffixe = App.dataInfo[App.filtre][5] != "NC" ? App.dataInfo[App.filtre][5] : "";
+
         chiffre_dept_container.countTo({
             from: parseInt(chiffre_dept_container.text()),
-            to: chiffre_dept
+            to: chiffre_dept,
+            speed: 800,
+            refreshInterval: 50,
+            formatter: function (value, options) {
+                return value.toFixed(options.decimals)+" "+suffixe;
+            }
         });
 
         // Update Chiffre Dept.
-        var chiffre_fra = parseInt(info_france.Nb_hab_plus_60_ans);
+        var chiffre_fra = App.getInfoFiltre(100, App.filtre);
         var chiffre_fra_container = $('#chiffreFrance p');
         chiffre_fra_container.countTo({
             from: parseInt(chiffre_fra_container.text()),
             to: chiffre_fra,
             speed: 800,
-            refreshInterval: 50
+            refreshInterval: 50,
+            formatter: function (value, options) {
+                return value.toFixed(options.decimals)+" "+suffixe;
+            }
         });
 
         // Update Nom du Filtre
@@ -226,7 +239,7 @@ $(document).ready(function() {
             if (customRegExp[3]) {
                 
                 console.log(" on a un depart. : " + customRegExp[3]);
-                App.dept = customRegExp[3];
+                //App.dept = customRegExp[3];
 
             }
 
@@ -319,7 +332,7 @@ $(document).ready(function() {
         li.siblings().removeClass("active").find("a").removeClass("selected");
         li.addClass("active");
         $this.addClass("selected");
-        
+
         App.filtre = info;
         App.router.navigate( url , { trigger: true });
 
