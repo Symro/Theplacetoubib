@@ -10,6 +10,7 @@ $(document).ready(function() {
         filtre: null,
         dept: null,
         menuEtat: ["", "", ""],
+        prefiltreEtat : ["","","",""],
         dom: {
 
             chiffre_dept: $('#chiffreDept p'),
@@ -94,8 +95,10 @@ $(document).ready(function() {
             this.data = {
                 dept: App.dept || null,
                 menu: App.menuEtat,
+                prefiltreEtat: App.prefiltreEtat,
                 prefiltre: null,
                 prefixe: null
+                
             };
             this.$el.find('div:eq(0)').html(_.template($("#menu_niveau1_2_template").html(), this.data));
             this.$el.find('div:eq(1)').html(_.template($("#menu_niveau3_template").html(), this.data ));
@@ -106,7 +109,8 @@ $(document).ready(function() {
         },
         prefiltre:function(event){
             this.data.prefiltre = $(event.target).parents(".prefiltre").data("prefiltre");
-            this.data.prefixe = $(event.target).parents(".prefiltre").data("prefixe");
+            this.data.prefixe   = $(event.target).parents(".prefiltre").data("prefixe");
+            this.data.prefiltreActive = $(event.target).parents(".prefiltre").index();
             this.$el.find('div:eq(1)').html(_.template($("#menu_niveau3_template").html(), this.data ));
         }
 
@@ -143,7 +147,7 @@ $(document).ready(function() {
 
         // Modal Choisissez un Dept.
         if(App.dept == null){
-            App.displayStep2();
+            //App.displayStep2();
         }
 
         // Update Nom Dept.
@@ -152,6 +156,7 @@ $(document).ready(function() {
         nom_dept_container.addClass('animated fadeOutDown', 600, function() {
             $(this).text(nom_dept).removeClass('fadeOutDown').addClass('fadeInUp');
         });
+
 
         // Update Chiffre Dept.
         var chiffre_dept = parseInt(info_dept.Nb_hab_plus_60_ans);
@@ -202,16 +207,33 @@ $(document).ready(function() {
             });
 
             // + Update Menu Filtre > Active 
-            // + Update Titre Filtre
+            // + Update Titre Filtre (Left Site)
+            // + Update Info filtre (Right Side)
             var HrefActive = $('#menu').find('a[href*="'+customRegExp[1]+'"]');
             if(HrefActive.length > 0){
                 App.dom.nom_filtre.text( App.dataInfo[HrefActive.data('info-json')][0] );
                 HrefActive.parents("li").addClass("active");
+
+                
+                App.dom.info_filtre.text( App.dataInfo[HrefActive.data('info-json')][1] );
+
             }
 
             if (customRegExp[3]) {
+                
+                $('#rightSide .tuto').fadeOut(1000, function(){
+                    $('#rightSide .content').fadeIn();
+                });
+
                 console.log(" on a un depart. : " + customRegExp[3]);
                 App.dept = customRegExp[3];
+            }
+            else{
+
+                $('#rightSide .content').fadeOut(1000, function(){
+                    $('#rightSide .tuto').fadeIn();
+                });
+
             }
         }
 
@@ -229,57 +251,87 @@ $(document).ready(function() {
     /   MENU NAVIGATON
     / ********************************************************* */
 
-    $('#menu').on("click", ".firstLevel", function(e){
-        $(this).next(".secondLevel").toggle('400').toggleClass('open');
-        $(".thirdLevel ul").addClass('animated fadeOutLeft',0);
-        $(".secondLevel li").removeClass("colorSecondLevel");
-        if($(this).siblings().next(".secondLevel").hasClass('open')){
-            $(this).siblings().next(".secondLevel").removeClass('open');
-            $(this).siblings().next(".secondLevel").slideUp();
+    
+    $(".thirdLevel").addClass('hidden');
 
+    $('#menu').on("click", ".firstLevel a", function(e){
+        e.preventDefault();
+        var firstLevel = $(this).parents(".firstLevel");
+
+        firstLevel.next(".secondLevel").toggle('400').toggleClass('open');
+
+        $(".thirdLevel").addClass('hidden');
+        $(".thirdLevel ul").addClass('animated fadeOutLeft');
+
+        if(firstLevel.siblings().next(".secondLevel").hasClass('open')){
+            firstLevel.siblings().next(".secondLevel").removeClass('open');
+            firstLevel.siblings().next(".secondLevel").slideUp();
         }
+
+        // if(firstLevel.next(".secondLevel").data('has-sub-lvl') == "yes"){
+
+        // }
+        // else{
+        //     $(".thirdLevel ul").removeClass('hidden');
+        //     $(".thirdLevel").addClass('animated fadeOutLeft');
+        // }
 
         // Récupère et actualise l'état du menu, pour savoir ce qui est ouvert ou non
         var status1 = ($('#menu .secondLevel').eq(0).hasClass('open') ) ? "open" : "";
         var status2 = ($('#menu .secondLevel').eq(1).hasClass('open') ) ? "open" : "";
         var status3 = ($('#menu .thirdLevel').hasClass('open') ) ? "open" : "";
         App.menuEtat = [status1, status2, status3];
-
-        e.preventDefault();
         
     });
     
-    $('#menu').on("click", ".secondLevel li", function(e){
-        $(this).siblings().removeClass('colorSecondLevel');
-        $(this).addClass('colorSecondLevel');
-        if($(this).parents(".secondLevel").data("has-sub-lvl") == "yes"){
-            e.preventDefault();
-            $(".thirdLevel").addClass('animated fadeInLeft',0);
+    $('#menu').on("click", ".secondLevel li a", function(e){
+        e.preventDefault();
+        var $this = $(this);
+        var url = $this.attr("href");
+        var li  = $this.parents("li");
+
+        $('#menu ul li').removeClass('active');
+        $(this).parents('li').addClass('active');
+
+        if(li.hasClass('prefiltre') == true){
+            console.log("Prefiltre");
+            App.prefiltreEtat = ["","","",""];
+            App.prefiltreEtat[li.index()] = "active";
+
             $(".thirdLevel ul").removeClass('hidden');
+            $(".thirdLevel").addClass('animated fadeInLeft');
         }
+        else{
+            App.router.navigate( url , { trigger: true });
+        }
+
     });
 
-    $('#menu').on("click", ".thirdLevel li", function(e){
-        $(this).siblings().removeClass("selected");
-        $(this).addClass("selected");
+    $('#menu').on("click", ".thirdLevel li a", function(e){
+        $this = $(this);
+        var li  = $this.parents("li");
+
+        li.siblings().find("a").removeClass("selected");
+        $this.addClass("selected");
+
      });
 
     $('#menu').on("click", "li a", function(e){
         
         // Changement URL - checkons le HASH
-        App.checkHash();
+        // App.checkHash();
 
-        if($(this).data('info-json')){
-
-            App.dom.nom_filtre.text(App.dataInfo[$(this).data('info-json')][0]);
-        }
+        // if($(this).data('info-json')){
+        //     App.dom.nom_filtre.text(App.dataInfo[$(this).data('info-json')][0]);
+        // }
     });
 
-    $('.splaschscreen').on("click", ".presentation a", function(e){
-        e.preventDefault();
-        $(this).parents(".splaschscreen").fadeOut("slow");
-        $("#rightSide").fadeIn("slow");
-    });
+
+    // $('.splashscreen').on("click", ".presentation a", function(e){
+    //     e.preventDefault();
+    //     $(this).parents(".splashscreen").fadeOut("slow");
+    //     $("#rightSide").fadeIn("slow");
+    // });
 
 
 

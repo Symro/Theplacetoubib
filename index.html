@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>The Place Toubib - Dataviz accès au soin en France</title>
+        <title>The Place Toubib - Datavizualisation sur l'accès aux soins en France</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -17,12 +17,13 @@
         <link href='http://fonts.googleapis.com/css?family=Arimo:400,700' rel='stylesheet' type='text/css'>
 
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-        <script type="text/javascript" src="../js/particles.js"></script>
+        
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+
 <!--     <div class="splaschscreen">
         <section class="splashscreen">
             <div class="presentation">
@@ -41,7 +42,7 @@
         <script type="text/template" id="menu_niveau1_2_template">
             <nav>
                 <ul>
-                    <li id="logo"><a href="#"></a></li>
+                    <li id="logo"><a href="#/accueil"></a></li>
                     <li class="firstLevel">
                         <span title="Habitants" class="right">
                             <a href="#" data-toggle="tooltip" data-placement="right" title="Tooltip on right">
@@ -72,21 +73,22 @@
                         </span>
                     </li>
                         <ul class="secondLevel <%= menu[1] %>" data-has-sub-lvl="yes">
-                            <li class="prefiltre" data-prefiltre="nombre" data-prefixe="Nb_"><span title="Nombres" class="right"><a href="#"><i class="icon-niv2_nombre"></i></a></span></li>
-                            <li class="prefiltre" data-prefiltre="age_moyen" data-prefixe="Age_moyen_"><span title="Age moyen" class="right"><a href="#"><i class="icon-niv2_agemoyen"></i></a></span></li>
-                            <li class="prefiltre" data-prefiltre="prix_moyen_consultation" data-prefixe="Prix_moyen_consultation_"><span title="Prix Moyen de la consultation" class="right"><a href="#"><i class="icon-niv2_prixconsultation"></i></a></span></li>
-                            <li class="prefiltre" data-prefiltre="nombre_patients_par" data-prefixe="Nb_"><span title="Nombre de patients par praticiens" class="right"><a href="#"><i class="icon-niv2_nbpatients"></i></a></span></li>
+                            <li class="prefiltre <%= prefiltreEtat[0] != "" ? "active" : "" %>" data-prefiltre="nombre" data-prefixe="Nb_"><span title="Nombres" class="right"><a href="#"><i class="icon-niv2_nombre"></i></a></span></li>
+                            <li class="prefiltre <%= prefiltreEtat[1] != "" ? "active" : "" %>" data-prefiltre="age_moyen" data-prefixe="Age_moyen_"><span title="Age moyen" class="right"><a href="#"><i class="icon-niv2_agemoyen"></i></a></span></li>
+                            <li class="prefiltre <%= prefiltreEtat[2] != "" ? "active" : "" %>" data-prefiltre="prix_moyen_consultation" data-prefixe="Prix_moyen_consultation_"><span title="Prix Moyen de la consultation" class="right"><a href="#"><i class="icon-niv2_prixconsultation"></i></a></span></li>
+                            <li class="prefiltre <%= prefiltreEtat[3] != "" ? "active" : "" %>" data-prefiltre="nombre_patients_par" data-prefixe="Nb_"><span title="Nombre de patients par praticiens" class="right"><a href="#"><i class="icon-niv2_nbpatients"></i></a></span></li>
                         </ul>
                     <li><span title="Hôpitaux" class="right"><a href="#/filtre/hopitaux<%= dept == null ? "" : "/dept_"+dept %>" data-info-json="Nb_hopital_public"><i class="icon-niv1_hopitaux"></i></a></span></li>
                 </ul>
             </nav>
 
+
         </script>
 
         <script type="text/template" id="menu_niveau3_template">
 
-            <div class="thirdLevel <%= menu[2] %>">
-                <ul class="hidden">
+            <div class="thirdLevel">
+                <ul>
                     <li><span title="Médecins généralistes" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>generaliste<%= dept == null ? "" : "/dept_"+dept %>" data-info-json="<%= prefixe %>medecin"><i class="icon-niv3_medecin"></i></a></span></li>
                     <li><span title="Gynécologues" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>gynecologue<%= dept == null ? "" : "/dept_"+dept %>" data-info-json="<%= prefixe %>gyneco"><i class="icon-niv3_gyneco"></i></a></span></li>
                     <li><span title="Dentistes" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>dentiste<%= dept == null ? "" : "/dept_"+dept %>" data-info-json="<%= prefixe %>dentiste"><i class="icon-niv3_dentiste"></i></a></span></li>
@@ -116,6 +118,8 @@
         <section id="rightSide">
             <div class="tuto">
                 
+                Choisissez un département 
+                << 
 
             </div>
             <div class="content">
@@ -150,7 +154,9 @@
         <script src='js/vendor/jquery.countTo.js'></script> 
         <script src="js/vendor/underscore.js"></script>
         <script src="js/vendor/backbone.js"></script>
-        <script src="js/vendor/d3.js"></script>    
+        <script src="js/vendor/d3.js"></script>
+        <script src="js/particles.js"></script>
+
         <script src="js/app.js"></script>
 
 

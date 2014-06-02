@@ -284,6 +284,12 @@ nav a{
     vertical-align:middle;
     width: 70px;
 }
+nav a,
+nav a:active,
+nav a:focus{
+    ouline:none;
+    -moz-outline-style: none;
+}
 nav ul ul li{
     background-color: #51919b;
 }
@@ -294,10 +300,11 @@ menu, ol, ul{
 .secondLevel{
     display: none;
 }
+#menu li.active,
 .colorSecondLevel{
     background-color: #89c3cd;
-
 }
+
 .thirdLevel{
     position:absolute;
     display: inline-block;
@@ -311,13 +318,14 @@ menu, ol, ul{
 .thirdLevel li{
     list-style-type: none;
     padding-bottom: 41px;
+    background:none;
 }
 
 .thirdLevel [class^="icon-"]:before, [class*=" icon-"]:before {
     color:#858a8b;
 }
 
-.thirdLevel li.selected [class^="icon-"]:before, [class*=" icon-"]:before {
+.thirdLevel li a.selected [class^="icon-"]:before, [class*=" icon-"]:before {
     color:#89c3cd;
 }
 
