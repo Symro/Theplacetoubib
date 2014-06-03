@@ -11,13 +11,18 @@ $(document).ready(function() {
         dept: null,
         menuEtat: ["", "", ""],
         prefiltreEtat : ["","","",""],
+        tuto : false,
         dom: {
 
-            chiffre_dept: $('#chiffreDept p'),
-            chiffre_france: $('#chiffreFrance p'),
-            nom_dept: $('#rightSide .dept'),
-            nom_filtre: $('#leftSide .content h2:first'),
-            info_filtre: $('#infoFiltre p'),
+            chiffre_dept:       $('#chiffreDept p'),
+            chiffre_france:     $('#chiffreFrance p'),
+            nom_dept:           $('#rightSide .dept'),
+            nom_filtre:         $('#leftSide .content h2:first'),
+            info_filtre:        $('#infoFiltre > p:first'),
+            tooltip_filtre :    $('#infoFiltre .tooltipCSS'),
+            info_graph:         $('#infoGraph > p:first'),
+            tooltip_graph :     $('#infoGraph .tooltipCSS'),
+            tuto :              $('section.tuto')
 
         }
     }
@@ -50,7 +55,9 @@ $(document).ready(function() {
     var Routeur = Backbone.Router.extend({
 
         routes: {
-            "": "home",
+            ""          : "home",
+            "accueil"   : "home",
+            "tutoriel"  : "tutoriel",
             "filtre/:filtre(/dept_:dept)": "filtre"
         }
 
@@ -59,17 +66,34 @@ $(document).ready(function() {
     App.router = new Routeur;
 
     App.router.on("route:home", function() {
+        App.tuto = false;
+        App.dom.tuto.fadeOut();
+
+        App.displayChoisirDept();
+
         console.log("Welcome Home ! ");
     });
 
+    App.router.on("route:tutoriel", function() {
+        App.tuto = true;
+        App.dom.tuto
+            .find('.tutoSecondStep, .tutoThirdStep').addClass('hidden').removeClass('animated fadeIn').end()
+            .find('.tutoFirstStep').removeClass('hidden').addClass('animated fadeIn').end()
+            .fadeIn();
+
+        console.log("Affichage Tuto ");
+    });
+
     App.router.on("route:filtre", function(filtre, dept) {
+        App.tuto = false;
+        App.dom.tuto.fadeOut();
         console.log("Filtre : " + filtre + "  Dept : " + dept);
 
         if(dept != "null" && (dept > 0 && dept < 96 || dept == "2A" || dept == "2B") ){
             App.displayInfoDept(dept);
         }
         else{
-            App.displayStep2();
+            App.displayChoisirDept();
         }
 
     });
@@ -151,7 +175,7 @@ $(document).ready(function() {
         var container = $('#info-dep');
 
         // Affichage Right Side - Content
-        $('#rightSide .tuto').fadeOut(1000, function(){
+        $('#rightSide .tutoDepartement').fadeOut(1000, function(){
             $('#rightSide .content').fadeIn();
         });
 
@@ -190,7 +214,12 @@ $(document).ready(function() {
             }
         });
 
-        // Update Nom du Filtre
+        // Update Info Tooltip Provenance Données
+        var tooltip_url = App.dom.tooltip_filtre.find("a");
+        var tooltip_annee = App.dom.tooltip_filtre.find('p+p span+span');
+        tooltip_url.attr("href", App.dataInfo[App.filtre][4]).attr("title", App.dataInfo[App.filtre][3]).text( App.dataInfo[App.filtre][3] );
+        tooltip_annee.text(App.dataInfo[App.filtre][2]);
+
         //App.dom.nom_filtre.text( App.dataInfo[HrefActive.data('info-json')][0] );
 
         container.html(JSON.stringify(info_dept, null, "\t"));
@@ -232,7 +261,7 @@ $(document).ready(function() {
                 App.dom.nom_filtre.text( App.dataInfo[HrefActive.data('info-json')][0] );
                 HrefActive.parents("li").addClass("active");
 
-                App.dom.info_filtre.text( App.dataInfo[HrefActive.data('info-json')][1] );
+                App.dom.info_graph.text( App.dataInfo[HrefActive.data('info-json')][1] );
 
             }
 
@@ -247,13 +276,13 @@ $(document).ready(function() {
 
     }
 
-    App.displayStep2 = function(){
+    App.displayChoisirDept = function(){
+        console.log("TUTO STEP 2 : Choisissez un département svp");
 
-        $('#rightSide .content').fadeOut(1000, function(){
-            $('#rightSide .tuto').fadeIn();
+        $('#rightSide .content').fadeOut(0, function(){
+            $('#rightSide .tutoDepartement').fadeIn();
         });
 
-        console.log("TUTO STEP 2 : Choisissez un département svp");
     }
 
 
@@ -272,6 +301,11 @@ $(document).ready(function() {
 
         $(".thirdLevel").addClass('hidden');
         $(".thirdLevel ul").addClass('animated fadeOutLeft');
+
+        //Affiche la deuxième étape du tuto
+        $(".tutoSecondStep").removeClass('hidden').addClass('animated fadeIn');
+        $(".tutoFirstStep").addClass('hidden');
+
 
         if(firstLevel.siblings().next(".secondLevel").hasClass('open')){
             firstLevel.siblings().next(".secondLevel").removeClass('open');
@@ -301,6 +335,10 @@ $(document).ready(function() {
         var li    = $this.parents("li");
         var info  = $this.data('info-json');
 
+        // Affiche la deuxième étape du tuto
+        $(".tutoSecondStep").addClass('hidden');
+        
+
         $('#menu ul li').removeClass('active');
         li.addClass('active');
 
@@ -311,10 +349,15 @@ $(document).ready(function() {
 
             $(".thirdLevel").addClass('open');
 
+            // Affiche la troisieme étape du tuto
+            $(".tutoThirdStep").removeClass('hidden').addClass('animated fadeIn');
+
             // $(".thirdLevel ul").removeClass('hidden');
             // $(".thirdLevel").addClass('animated fadeInLeft');
         }
         else{
+            $('.tuto').fadeOut();
+
             App.filtre = info;
             App.router.navigate( url , { trigger: true });
         }
@@ -323,6 +366,8 @@ $(document).ready(function() {
 
     $('#menu').on("click", ".thirdLevel li a", function(e){
         e.preventDefault();
+
+        $('.tuto').fadeOut();
 
         var $this   = $(this);
         var url     = $this.attr("href");
@@ -350,12 +395,23 @@ $(document).ready(function() {
     });
 
 
-    // $('.splashscreen').on("click", ".presentation a", function(e){
-    //     e.preventDefault();
-    //     $(this).parents(".splashscreen").fadeOut("slow");
-    //     $("#rightSide").fadeIn("slow");
-    // });
+    $('.splashscreen').on("click", ".presentation a", function(e){
+        e.preventDefault();
+        $(this).parents(".splashscreen").fadeOut("slow");
+        $("#rightSide").fadeIn("slow");
 
+        App.router.navigate( $(this).attr("href") , { trigger: true });
+    });
+
+    /* ********************************************************
+    /   TUTO
+    / ********************************************************* */
+
+    $('.tutoLeftSide').on("click", "a", function(e){
+
+        //App.router.navigate( $(this).attr("href") , { trigger: true });
+
+    });
 
 
     /* ********************************************************
