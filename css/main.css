@@ -259,7 +259,7 @@ section.splashscreen a{
     background-color: #030303;
     background-image:url(../img/logoTuto.svg);
     background-repeat:  no-repeat;
-    background-position: 50% ; 
+    background-position: 50% ;
 
 }
 .tutoLeftSide{
@@ -333,14 +333,16 @@ section.splashscreen a{
 
 .departement {
     cursor: pointer;
+    stroke: #64888f;
+    stroke-width:.5px;
 }
 .departement:hover {
-    stroke: white;
-    stroke-width: .5px;
+    stroke: #64888f;
+    stroke-width: 1px;
 }
 .departement.active{
-    fill:#44B4FF;
-    stroke: white;
+    fill:#fff;
+    stroke: #64888f;
     stroke-width: 1px;
 }
 #paris{
@@ -441,15 +443,15 @@ menu, ol, ul{
     background-color: black;
     background-image: url(../img/logoNav.png);
     background-repeat: no-repeat;
-    background-size: 55%; 
-    background-position: 50% 50%; 
+    background-size: 55%;
+    background-position: 50% 50%;
 }
 
 #container{
     float: left;
     width: 100%;
     background-color: #e7f0f3;
-    background-image:url(../img/fondBoucle.svg); 
+    background-image:url(../img/fondBoucle.svg);
 }
 .content{
     margin:60px;
