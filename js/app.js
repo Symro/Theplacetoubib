@@ -11,6 +11,7 @@ $(document).ready(function() {
         dept: null,
         menuEtat: ["", "", ""],
         prefiltreEtat : ["","","",""],
+        tuto : false,
         dom: {
 
             chiffre_dept: $('#chiffreDept p'),
@@ -18,8 +19,8 @@ $(document).ready(function() {
             nom_dept: $('#rightSide .dept'),
             nom_filtre: $('#leftSide .content h2:first'),
             info_filtre: $('#infoFiltre > p:first'),
-            tooltip_filtre : $('#infoFiltre .tooltipCSS')
-
+            tooltip_filtre : $('#infoFiltre .tooltipCSS'),
+            tuto : $('section.tuto')
         }
     }
 
@@ -51,7 +52,9 @@ $(document).ready(function() {
     var Routeur = Backbone.Router.extend({
 
         routes: {
-            "": "home",
+            ""          : "home",
+            "accueil"   : "home",
+            "tutoriel"  : "tutoriel",
             "filtre/:filtre(/dept_:dept)": "filtre"
         }
 
@@ -60,10 +63,24 @@ $(document).ready(function() {
     App.router = new Routeur;
 
     App.router.on("route:home", function() {
+        App.tuto = false;
+        App.dom.tuto.fadeOut();
+
         console.log("Welcome Home ! ");
     });
 
+    App.router.on("route:tutoriel", function() {
+        App.tuto = true;
+        App.dom.tuto
+            .find('.tutoSecondStep, .tutoThirdStep').addClass('hidden').removeClass('animated fadeIn').end()
+            .find('.tutoFirstStep').removeClass('hidden').addClass('animated fadeIn').end()
+            .fadeIn();
+        console.log("Affichage Tuto ");
+    });
+
     App.router.on("route:filtre", function(filtre, dept) {
+        App.tuto = false;
+        App.dom.tuto.fadeOut();
         console.log("Filtre : " + filtre + "  Dept : " + dept);
 
         if(dept != "null" && (dept > 0 && dept < 96 || dept == "2A" || dept == "2B") ){
@@ -334,7 +351,7 @@ $(document).ready(function() {
         }
         else{
             $('.tuto').fadeOut();
-            
+
             App.filtre = info;
             App.router.navigate( url , { trigger: true });
         }
@@ -376,18 +393,20 @@ $(document).ready(function() {
         e.preventDefault();
         $(this).parents(".splashscreen").fadeOut("slow");
         $("#rightSide").fadeIn("slow");
+
+        App.router.navigate( $(this).attr("href") , { trigger: true });
     });
 
     /* ********************************************************
     /   TUTO
     / ********************************************************* */
 
-
     $('.tutoLeftSide').on("click", "a", function(e){
-        e.preventDefault();
-        $('.tuto').fadeOut();
-        $("#rightSide").fadeIn("slow");
+
+        //App.router.navigate( $(this).attr("href") , { trigger: true });
+
     });
+
 
     /* ********************************************************
 	/ 	D3 MAP
