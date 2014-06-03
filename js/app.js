@@ -14,13 +14,16 @@ $(document).ready(function() {
         tuto : false,
         dom: {
 
-            chiffre_dept: $('#chiffreDept p'),
-            chiffre_france: $('#chiffreFrance p'),
-            nom_dept: $('#rightSide .dept'),
-            nom_filtre: $('#leftSide .content h2:first'),
-            info_filtre: $('#infoFiltre > p:first'),
-            tooltip_filtre : $('#infoFiltre .tooltipCSS'),
-            tuto : $('section.tuto')
+            chiffre_dept:       $('#chiffreDept p'),
+            chiffre_france:     $('#chiffreFrance p'),
+            nom_dept:           $('#rightSide .dept'),
+            nom_filtre:         $('#leftSide .content h2:first'),
+            info_filtre:        $('#infoFiltre > p:first'),
+            tooltip_filtre :    $('#infoFiltre .tooltipCSS'),
+            info_graph:         $('#infoGraph > p:first'),
+            tooltip_graph :     $('#infoGraph .tooltipCSS'),
+            tuto :              $('section.tuto')
+
         }
     }
 
@@ -65,6 +68,8 @@ $(document).ready(function() {
     App.router.on("route:home", function() {
         App.tuto = false;
         App.dom.tuto.fadeOut();
+
+        App.displayChoisirDept();
 
         console.log("Welcome Home ! ");
     });
@@ -256,7 +261,7 @@ $(document).ready(function() {
                 App.dom.nom_filtre.text( App.dataInfo[HrefActive.data('info-json')][0] );
                 HrefActive.parents("li").addClass("active");
 
-                App.dom.info_filtre.text( App.dataInfo[HrefActive.data('info-json')][1] );
+                App.dom.info_graph.text( App.dataInfo[HrefActive.data('info-json')][1] );
 
             }
 
@@ -277,7 +282,7 @@ $(document).ready(function() {
         $('#rightSide .content').fadeOut(0, function(){
             $('#rightSide .tutoDepartement').fadeIn();
         });
-        
+
     }
 
 
