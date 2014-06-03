@@ -198,17 +198,18 @@ section.splashscreen h1{
     }
 
 section.splashscreen p{
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 400;
     margin-bottom: 45px;
+    line-height: 25px;
 }
 
 section.splashscreen a{
     text-decoration: none;
     text-transform: uppercase;
     color: #6f9298;
-    border: 4px solid #6f9298;
-    padding:6px 9px;
+    border: 3px solid #6f9298;
+    padding:9px 13px;
         -webkit-transition: 1s all ;
     -moz-transition: 1s all ;
     -o-transition: 1s all ;
@@ -313,8 +314,8 @@ section.splashscreen a{
     text-decoration: none;
     text-transform: uppercase;
     color: #63b1be;
-    border: 4px solid #63b1be;
-    padding: 6px 9px;
+    border: 3px solid #63b1be;
+    padding: 9px 13px;
     -webkit-transition: 1s all;
     -moz-transition: 1s all;
     -o-transition: 1s all;
@@ -431,6 +432,10 @@ menu, ol, ul{
 
 .thirdLevel [class^="icon-"]:before, [class*=" icon-"]:before {
     color:#858a8b;
+}
+
+.color [class^="icon-"]:before, [class*=" icon-"]:before {
+    color:#FFF;
 }
 
 .thirdLevel li a.selected [class^="icon-"]:before, [class*=" icon-"]:before {
