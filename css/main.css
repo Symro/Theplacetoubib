@@ -143,6 +143,7 @@ body,html{
     color:#6f9298;
     font:69.5%;
     z-index: 30;
+
 }
 section.splashscreen{
     background-color: #e7f1f3;
@@ -224,6 +225,72 @@ section.splashscreen a{
         color:#fff;
     }
 
+/* ==========================================================================
+   Crédits
+   ========================================================================== */
+#credits{
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.9);
+    color:#6f9298;
+}
+.credits{
+    height: 100%;
+    text-align: center;
+    position: relative;
+    top:5%;
+-webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+}
+.credits h2.title_credits{
+    font: 700 25px 'Arimo' sans-serif;
+    color:#fff;
+    text-transform: uppercase;
+}
+    .credits h2.title_credits::after{
+            display: block;
+            content: '';
+            background: #e13144;
+
+            width: 40px;
+            height: 3px;
+
+            left: 48%;
+            position: absolute;
+            margin-top: 20px;
+        }
+.credits h2,
+.credits p,
+.credits ul.role_credits,
+.credits a{
+    width: 55%;
+    position: relative;
+    display: block;
+    left: 22%;
+    top: 50%;
+    
+}
+.credits p,
+.credits ul.role_credits li,
+.credits a{
+    font:400 15px 'Arimo' sans-serif;
+}
+.credits ul.role_credits li span.name_credits{
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.credits .after_line{
+    margin-top: 20px;
+}
+.credits h2{
+    padding-bottom: 20px;
+    padding-top: 50px;
+}
+.credits .phone{
+    margin-top:5px;
+}
+
 
 .tuto{
     z-index: 9;
@@ -260,7 +327,7 @@ section.splashscreen a{
     background-color: #030303;
     background-image:url(../img/logoTuto.svg);
     background-repeat:  no-repeat;
-    background-position: 50% ; 
+    background-position: 50% ;
 
 }
 .tutoLeftSide{
@@ -334,14 +401,16 @@ section.splashscreen a{
 
 .departement {
     cursor: pointer;
+    stroke: #64888f;
+    stroke-width:.5px;
 }
 .departement:hover {
-    stroke: white;
-    stroke-width: .5px;
+    stroke: #64888f;
+    stroke-width: 1px;
 }
 .departement.active{
-    fill:#44B4FF;
-    stroke: white;
+    fill:#fff;
+    stroke: #64888f;
     stroke-width: 1px;
 }
 #paris{
@@ -446,18 +515,24 @@ menu, ol, ul{
     background-color: black;
     background-image: url(../img/logoNav.png);
     background-repeat: no-repeat;
-    background-size: 55%; 
-    background-position: 50% 50%; 
+    background-size: 55%;
+    background-position: 50% 50%;
 }
 
 #container{
     float: left;
     width: 100%;
     background-color: #e7f0f3;
-    background-image:url(../img/fondBoucle.svg); 
+    background-image:url(../img/fondBoucle.svg);
 }
 .content{
-    margin:60px;
+    position:relative;
+    height:100%;
+    padding:60px;
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box; 
+    box-sizing: border-box;
+
 }
 
 .text-center {
@@ -579,6 +654,11 @@ background-position: right center;
 }
 
 #infoFiltre{
+    position:absolute;
+    right:60px;top:157px;
+    clear:both;
+}
+#infoGraph{
     position:relative;
     clear:both;
 }

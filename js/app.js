@@ -6,21 +6,22 @@ $(document).ready(function() {
 
     window.App = {
         data: [],
-        dataInfo : [],
+        dataInfo: [],
         filtre: null,
         dept: null,
         menuEtat: ["", "", ""],
-        prefiltreEtat : ["","","",""],
-        tuto : false,
+        prefiltreEtat: ["", "", "", ""],
+        tuto: false,
         dom: {
-
             chiffre_dept: $('#chiffreDept p'),
             chiffre_france: $('#chiffreFrance p'),
             nom_dept: $('#rightSide .dept'),
             nom_filtre: $('#leftSide .content h2:first'),
             info_filtre: $('#infoFiltre > p:first'),
-            tooltip_filtre : $('#infoFiltre .tooltipCSS'),
-            tuto : $('section.tuto')
+            tooltip_filtre: $('#infoFiltre .tooltipCSS'),
+            info_graph: $('#infoGraph > p:first'),
+            tooltip_graph: $('#infoGraph .tooltipCSS'),
+            tuto: $('section.tuto')
         }
     }
 
@@ -29,16 +30,16 @@ $(document).ready(function() {
     / ********************************************************* */
 
     function getJson(url) {
-     return JSON.parse($.ajax({
-         type: 'GET',
-         url: url,
-         dataType: 'json',
-         global: false,
-         async:false,
-         success: function(data) {
-             return data;
-         }
-     }).responseText);
+        return JSON.parse($.ajax({
+            type: 'GET',
+            url: url,
+            dataType: 'json',
+            global: false,
+            async: false,
+            success: function(data) {
+                return data;
+            }
+        }).responseText);
     }
 
     App.data = getJson("data/data.json");
@@ -52,9 +53,9 @@ $(document).ready(function() {
     var Routeur = Backbone.Router.extend({
 
         routes: {
-            ""          : "home",
-            "accueil"   : "home",
-            "tutoriel"  : "tutoriel",
+            "": "home",
+            "accueil": "home",
+            "tutoriel": "tutoriel",
             "filtre/:filtre(/dept_:dept)": "filtre"
         }
 
@@ -65,6 +66,8 @@ $(document).ready(function() {
     App.router.on("route:home", function() {
         App.tuto = false;
         App.dom.tuto.fadeOut();
+
+        App.displayChoisirDept();
 
         console.log("Welcome Home ! ");
     });
@@ -84,10 +87,9 @@ $(document).ready(function() {
         App.dom.tuto.fadeOut();
         console.log("Filtre : " + filtre + "  Dept : " + dept);
 
-        if(dept != "null" && (dept > 0 && dept < 96 || dept == "2A" || dept == "2B") ){
+        if (dept != "null" && (dept > 0 && dept < 96 || dept == "2A" || dept == "2B")) {
             App.displayInfoDept(dept);
-        }
-        else{
+        } else {
             App.displayChoisirDept();
         }
 
@@ -110,7 +112,9 @@ $(document).ready(function() {
         initialize: function() {
             this.render();
             this.model.on("change", this.render, this);
-            $('#menu .right').tooltip({align: 'right'});
+            $('#menu .right').tooltip({
+                align: 'right'
+            });
 
         },
         render: function() {
@@ -120,19 +124,19 @@ $(document).ready(function() {
                 prefiltreEtat: App.prefiltreEtat,
                 prefiltre: null,
                 prefixe: null
-                
+
             };
             this.$el.find('div:eq(0)').html(_.template($("#menu_niveau1_2_template").html(), this.data));
             //this.$el.find('div:eq(1)').html(_.template($("#menu_niveau3_template").html(), this.data ));
-        
+
         },
-        events:{
-            'click .prefiltre':'prefiltre'
+        events: {
+            'click .prefiltre': 'prefiltre'
         },
-        prefiltre:function(event){
+        prefiltre: function(event) {
             this.data.prefiltre = $(event.target).parents(".prefiltre").data("prefiltre");
-            this.data.prefixe   = $(event.target).parents(".prefiltre").data("prefixe");
-            this.$el.find('div:eq(1)').html(_.template($("#menu_niveau3_template").html(), this.data ));
+            this.data.prefixe = $(event.target).parents(".prefiltre").data("prefixe");
+            this.$el.find('div:eq(1)').html(_.template($("#menu_niveau3_template").html(), this.data));
         }
 
     });
@@ -165,12 +169,12 @@ $(document).ready(function() {
     App.displayInfoDept = function(num_Departement) {
         num_Departement = (num_Departement == "2A" || num_Departement == "2B") ? num_Departement : parseInt(num_Departement);
 
-        var info_dept = App.getInfo( num_Departement );
+        var info_dept = App.getInfo(num_Departement);
         var info_france = App.getInfo(100);
         var container = $('#info-dep');
 
         // Affichage Right Side - Content
-        $('#rightSide .tutoDepartement').fadeOut(1000, function(){
+        $('#rightSide .tutoDepartement').fadeOut(1000, function() {
             $('#rightSide .content').fadeIn();
         });
 
@@ -182,7 +186,7 @@ $(document).ready(function() {
         });
 
         // Update Chiffre Dept.
-        var chiffre_dept = App.getInfoFiltre( num_Departement , App.filtre);
+        var chiffre_dept = App.getInfoFiltre(num_Departement, App.filtre);
         var chiffre_dept_container = $('#chiffreDept p');
         var suffixe = App.dataInfo[App.filtre][5] != "NC" ? App.dataInfo[App.filtre][5] : "";
 
@@ -191,8 +195,8 @@ $(document).ready(function() {
             to: chiffre_dept,
             speed: 800,
             refreshInterval: 50,
-            formatter: function (value, options) {
-                return value.toFixed(options.decimals)+" "+suffixe;
+            formatter: function(value, options) {
+                return value.toFixed(options.decimals) + " " + suffixe;
             }
         });
 
@@ -204,15 +208,15 @@ $(document).ready(function() {
             to: chiffre_fra,
             speed: 800,
             refreshInterval: 50,
-            formatter: function (value, options) {
-                return value.toFixed(options.decimals)+" "+suffixe;
+            formatter: function(value, options) {
+                return value.toFixed(options.decimals) + " " + suffixe;
             }
         });
 
         // Update Info Tooltip Provenance Données
         var tooltip_url = App.dom.tooltip_filtre.find("a");
         var tooltip_annee = App.dom.tooltip_filtre.find('p+p span+span');
-        tooltip_url.attr("href", App.dataInfo[App.filtre][4]).attr("title", App.dataInfo[App.filtre][3]).text( App.dataInfo[App.filtre][3] );
+        tooltip_url.attr("href", App.dataInfo[App.filtre][4]).attr("title", App.dataInfo[App.filtre][3]).text(App.dataInfo[App.filtre][3]);
         tooltip_annee.text(App.dataInfo[App.filtre][2]);
 
         //App.dom.nom_filtre.text( App.dataInfo[HrefActive.data('info-json')][0] );
@@ -247,21 +251,21 @@ $(document).ready(function() {
                 trigger: true
             });
 
-            // + Update Menu Filtre > Active 
+            // + Update Menu Filtre > Active
             // + Update Titre Filtre (Left Site)
             // + Update Info filtre (Right Side)
-            var HrefActive = $('#menu').find('a[href*="'+customRegExp[1]+'"]');
-            if(HrefActive.length > 0){
+            var HrefActive = $('#menu').find('a[href*="' + customRegExp[1] + '"]');
+            if (HrefActive.length > 0) {
 
-                App.dom.nom_filtre.text( App.dataInfo[HrefActive.data('info-json')][0] );
+                App.dom.nom_filtre.text(App.dataInfo[HrefActive.data('info-json')][0]);
                 HrefActive.parents("li").addClass("active");
 
-                App.dom.info_filtre.text( App.dataInfo[HrefActive.data('info-json')][1] );
+                App.dom.info_graph.text(App.dataInfo[HrefActive.data('info-json')][1]);
 
             }
 
             if (customRegExp[3]) {
-                
+
                 console.log(" on a un depart. : " + customRegExp[3]);
                 //App.dept = customRegExp[3];
 
@@ -271,13 +275,13 @@ $(document).ready(function() {
 
     }
 
-    App.displayChoisirDept = function(){
+    App.displayChoisirDept = function() {
         console.log("TUTO STEP 2 : Choisissez un département svp");
 
-        $('#rightSide .content').fadeOut(0, function(){
+        $('#rightSide .content').fadeOut(0, function() {
             $('#rightSide .tutoDepartement').fadeIn();
         });
-        
+
     }
 
 
@@ -288,7 +292,7 @@ $(document).ready(function() {
     /   MENU NAVIGATON
     / ********************************************************* */
 
-    $('#menu').on("click", ".firstLevel a", function(e){
+    $('#menu').on("click", ".firstLevel a", function(e) {
         e.preventDefault();
         var firstLevel = $(this).parents(".firstLevel");
 
@@ -302,7 +306,7 @@ $(document).ready(function() {
         $(".tutoFirstStep").addClass('hidden');
 
 
-        if(firstLevel.siblings().next(".secondLevel").hasClass('open')){
+        if (firstLevel.siblings().next(".secondLevel").hasClass('open')) {
             firstLevel.siblings().next(".secondLevel").removeClass('open');
             firstLevel.siblings().next(".secondLevel").slideUp();
         }
@@ -316,30 +320,30 @@ $(document).ready(function() {
         // }
 
         // Récupère et actualise l'état du menu, pour savoir ce qui est ouvert ou non
-        var status1 = ($('#menu .secondLevel').eq(0).hasClass('open') ) ? "open" : "";
-        var status2 = ($('#menu .secondLevel').eq(1).hasClass('open') ) ? "open" : "";
-        var status3 = ($('#menu .thirdLevel').hasClass('open') ) ? "open" : "";
+        var status1 = ($('#menu .secondLevel').eq(0).hasClass('open')) ? "open" : "";
+        var status2 = ($('#menu .secondLevel').eq(1).hasClass('open')) ? "open" : "";
+        var status3 = ($('#menu .thirdLevel').hasClass('open')) ? "open" : "";
         App.menuEtat = [status1, status2, status3];
-        
+
     });
-    
-    $('#menu').on("click", ".secondLevel li a", function(e){
+
+    $('#menu').on("click", ".secondLevel li a", function(e) {
         e.preventDefault();
         var $this = $(this);
-        var url   = $this.attr("href");
-        var li    = $this.parents("li");
-        var info  = $this.data('info-json');
+        var url = $this.attr("href");
+        var li = $this.parents("li");
+        var info = $this.data('info-json');
 
         // Affiche la deuxième étape du tuto
         $(".tutoSecondStep").addClass('hidden');
-        
+
 
         $('#menu ul li').removeClass('active');
         li.addClass('active');
 
-        if(li.hasClass('prefiltre') == true){
+        if (li.hasClass('prefiltre') == true) {
             console.log("Prefiltre");
-            App.prefiltreEtat = ["","","",""];
+            App.prefiltreEtat = ["", "", "", ""];
             App.prefiltreEtat[li.index()] = "active";
 
             $(".thirdLevel").addClass('open');
@@ -349,37 +353,40 @@ $(document).ready(function() {
 
             // $(".thirdLevel ul").removeClass('hidden');
             // $(".thirdLevel").addClass('animated fadeInLeft');
-        }
-        else{
+        } else {
             $('.tuto').fadeOut();
 
             App.filtre = info;
-            App.router.navigate( url , { trigger: true });
+            App.router.navigate(url, {
+                trigger: true
+            });
         }
 
     });
 
-    $('#menu').on("click", ".thirdLevel li a", function(e){
+    $('#menu').on("click", ".thirdLevel li a", function(e) {
         e.preventDefault();
 
         $('.tuto').fadeOut();
 
-        var $this   = $(this);
-        var url     = $this.attr("href");
-        var li      = $this.parents("li");
-        var info    = $this.data('info-json');
+        var $this = $(this);
+        var url = $this.attr("href");
+        var li = $this.parents("li");
+        var info = $this.data('info-json');
 
         li.siblings().removeClass("active").find("a").removeClass("selected");
         li.addClass("active");
         $this.addClass("selected");
 
         App.filtre = info;
-        App.router.navigate( url , { trigger: true });
+        App.router.navigate(url, {
+            trigger: true
+        });
 
-     });
+    });
 
-    $('#menu').on("click", "li a", function(e){
-        
+    $('#menu').on("click", "li a", function(e) {
+
         // Changement URL - checkons le HASH
         console.log('App.checkHash() from Ligne 320');
         App.checkHash();
@@ -390,19 +397,21 @@ $(document).ready(function() {
     });
 
 
-    $('.splashscreen').on("click", ".presentation a", function(e){
+    $('.splashscreen').on("click", ".presentation a", function(e) {
         e.preventDefault();
         $(this).parents(".splashscreen").fadeOut("slow");
         $("#rightSide").fadeIn("slow");
 
-        App.router.navigate( $(this).attr("href") , { trigger: true });
+        App.router.navigate($(this).attr("href"), {
+            trigger: true
+        });
     });
 
     /* ********************************************************
     /   TUTO
     / ********************************************************* */
 
-    $('.tutoLeftSide').on("click", "a", function(e){
+    $('.tutoLeftSide').on("click", "a", function(e) {
 
         //App.router.navigate( $(this).attr("href") , { trigger: true });
 
@@ -424,7 +433,7 @@ $(document).ready(function() {
                 y: 47.279229
             },
             scale: 4000,
-            color: '#3498db',
+            color: '#e7f0f3',
             widthParis: 200,
             heightParis: 200,
             centerParis: {
@@ -443,7 +452,7 @@ $(document).ready(function() {
                 stroke: '#000',
                 fill: 'white',
                 strokeWidth: '2',
-                opacity: '.4'
+                opacity: '.7'
             }
         },
 
@@ -532,9 +541,7 @@ $(document).ready(function() {
                 .attr("cx", this.params.circle.x)
                 .attr("cy", this.params.circle.y)
                 .attr("r", this.params.circle.r)
-                .style("stroke", this.params.circle.stroke)
                 .style("fill", this.params.circle.fill)
-                .style("stroke-width", this.params.circle.strokeWidth)
                 .style("opacity", this.params.circle.opacity);
 
             // Callback
@@ -573,7 +580,7 @@ $(document).ready(function() {
                 features.enter()
                     .append("path")
                     .attr('class', 'departement')
-                    .attr('fill', "#3498db")
+                    .attr('fill', "#e7f0f3")
                     .attr('d', $path)
                     .attr('data-code-dep', function(d) {
                         return d.properties.CODE_DEPT;
