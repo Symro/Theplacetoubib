@@ -75,6 +75,7 @@ $(document).ready(function() {
             .find('.tutoSecondStep, .tutoThirdStep').addClass('hidden').removeClass('animated fadeIn').end()
             .find('.tutoFirstStep').removeClass('hidden').addClass('animated fadeIn').end()
             .fadeIn();
+
         console.log("Affichage Tuto ");
     });
 
@@ -87,7 +88,7 @@ $(document).ready(function() {
             App.displayInfoDept(dept);
         }
         else{
-            App.displayStep2();
+            App.displayChoisirDept();
         }
 
     });
@@ -169,7 +170,7 @@ $(document).ready(function() {
         var container = $('#info-dep');
 
         // Affichage Right Side - Content
-        $('#rightSide .tuto').fadeOut(1000, function(){
+        $('#rightSide .tutoDepartement').fadeOut(1000, function(){
             $('#rightSide .content').fadeIn();
         });
 
@@ -270,13 +271,13 @@ $(document).ready(function() {
 
     }
 
-    App.displayStep2 = function(){
-
-        // $('#rightSide .content').fadeOut(1000, function(){
-        //     $('#rightSide .tuto').fadeIn();
-        // });
-
+    App.displayChoisirDept = function(){
         console.log("TUTO STEP 2 : Choisissez un département svp");
+
+        $('#rightSide .content').fadeOut(0, function(){
+            $('#rightSide .tutoDepartement').fadeIn();
+        });
+        
     }
 
 
