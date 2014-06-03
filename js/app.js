@@ -236,9 +236,9 @@ $(document).ready(function() {
 
     App.displayStep2 = function(){
 
-        $('#rightSide .content').fadeOut(1000, function(){
-            $('#rightSide .tuto').fadeIn();
-        });
+        // $('#rightSide .content').fadeOut(1000, function(){
+        //     $('#rightSide .tuto').fadeIn();
+        // });
 
         console.log("TUTO STEP 2 : Choisissez un département svp");
     }
@@ -259,6 +259,11 @@ $(document).ready(function() {
 
         $(".thirdLevel").addClass('hidden');
         $(".thirdLevel ul").addClass('animated fadeOutLeft');
+
+        //Affiche la deuxième étape du tuto
+        $(".tutoSecondStep").removeClass('hidden').addClass('animated fadeIn');
+        $(".tutoFirstStep").addClass('hidden');
+
 
         if(firstLevel.siblings().next(".secondLevel").hasClass('open')){
             firstLevel.siblings().next(".secondLevel").removeClass('open');
@@ -288,6 +293,10 @@ $(document).ready(function() {
         var li    = $this.parents("li");
         var info  = $this.data('info-json');
 
+        //Affiche les la troisieme étape du tuto
+        $(".tutoSecondStep").addClass('hidden');
+        $(".tutoThirdStep").removeClass('hidden').addClass('animated fadeIn');;
+
         $('#menu ul li').removeClass('active');
         li.addClass('active');
 
@@ -310,6 +319,10 @@ $(document).ready(function() {
 
     $('#menu').on("click", ".thirdLevel li a", function(e){
         e.preventDefault();
+
+        $('.tuto').fadeOut();
+
+
 
         var $this   = $(this);
         var url     = $this.attr("href");
@@ -337,13 +350,22 @@ $(document).ready(function() {
     });
 
 
-    // $('.splashscreen').on("click", ".presentation a", function(e){
-    //     e.preventDefault();
-    //     $(this).parents(".splashscreen").fadeOut("slow");
-    //     $("#rightSide").fadeIn("slow");
-    // });
+    $('.splashscreen').on("click", ".presentation a", function(e){
+        e.preventDefault();
+        $(this).parents(".splashscreen").fadeOut("slow");
+        $("#rightSide").fadeIn("slow");
+    });
+
+    /* ********************************************************
+    /   TUTO
+    / ********************************************************* */
 
 
+    $('.tutoLeftSide').on("click", "a", function(e){
+        e.preventDefault();
+        $('.tuto').fadeOut();
+        $("#rightSide").fadeIn("slow");
+    });
 
     /* ********************************************************
 	/ 	D3 MAP
