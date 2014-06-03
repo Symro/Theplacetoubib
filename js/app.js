@@ -312,9 +312,9 @@ $(document).ready(function() {
         var li    = $this.parents("li");
         var info  = $this.data('info-json');
 
-        //Affiche les la troisieme étape du tuto
+        // Affiche la deuxième étape du tuto
         $(".tutoSecondStep").addClass('hidden');
-        $(".tutoThirdStep").removeClass('hidden').addClass('animated fadeIn');;
+        
 
         $('#menu ul li').removeClass('active');
         li.addClass('active');
@@ -326,10 +326,15 @@ $(document).ready(function() {
 
             $(".thirdLevel").addClass('open');
 
+            // Affiche la troisieme étape du tuto
+            $(".tutoThirdStep").removeClass('hidden').addClass('animated fadeIn');
+
             // $(".thirdLevel ul").removeClass('hidden');
             // $(".thirdLevel").addClass('animated fadeInLeft');
         }
         else{
+            $('.tuto').fadeOut();
+            
             App.filtre = info;
             App.router.navigate( url , { trigger: true });
         }
@@ -340,8 +345,6 @@ $(document).ready(function() {
         e.preventDefault();
 
         $('.tuto').fadeOut();
-
-
 
         var $this   = $(this);
         var url     = $this.attr("href");
