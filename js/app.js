@@ -12,6 +12,7 @@ $(document).ready(function() {
         menuEtat: ["", "", ""],
         prefiltreEtat: ["", "", "", ""],
         tuto: false,
+        counterDecimal : 0,
         dom: {
             chiffre_dept: $('#chiffreDept p'),
             chiffre_france: $('#chiffreFrance p'),
@@ -195,8 +196,9 @@ $(document).ready(function() {
             to: chiffre_dept,
             speed: 800,
             refreshInterval: 50,
+            decimals:App.counterDecimal,
             formatter: function(value, options) {
-                return value.toFixed(options.decimals) + " " + suffixe;
+                return value.toFixed(options.decimals) + " <span>" + suffixe + "</span>";
             }
         });
 
@@ -208,8 +210,9 @@ $(document).ready(function() {
             to: chiffre_fra,
             speed: 800,
             refreshInterval: 50,
+            decimals:App.counterDecimal,
             formatter: function(value, options) {
-                return value.toFixed(options.decimals) + " " + suffixe;
+                return value.toFixed(options.decimals) + " <span>" + suffixe + "</span>";
             }
         });
 
@@ -340,11 +343,13 @@ $(document).ready(function() {
 
         $('#menu ul li').removeClass('active');
         li.addClass('active');
+        
 
         if (li.hasClass('prefiltre') == true) {
             console.log("Prefiltre");
             App.prefiltreEtat = ["", "", "", ""];
             App.prefiltreEtat[li.index()] = "active";
+            App.counterDecimal = li.data('counter-decimal');
 
             $(".thirdLevel").addClass('open');
 
@@ -356,6 +361,7 @@ $(document).ready(function() {
         } else {
             $('.tuto').fadeOut();
 
+            App.counterDecimal = $this.data('counter-decimal');
             App.filtre = info;
             App.router.navigate(url, {
                 trigger: true
@@ -437,6 +443,7 @@ $(document).ready(function() {
     /* ********************************************************
     /   CREDIT
     / ********************************************************* */
+
     $('footer').on("click", "#dicoLink", function(e) {
         e.preventDefault();
         $(".dico").removeClass('hidden fadeOut').addClass('animated fadeIn');  
@@ -449,8 +456,6 @@ $(document).ready(function() {
             next(); 
         });
     });  
-
-
 
 
 

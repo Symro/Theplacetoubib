@@ -58,7 +58,7 @@
 
 			function render(value) {
 				var formattedValue = settings.formatter.call(self, value, settings);
-				$self.text(formattedValue);
+				$self.html(formattedValue);
 			}
 		});
 	};

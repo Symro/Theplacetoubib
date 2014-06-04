@@ -715,6 +715,11 @@ section#leftSide{
     color:#63b1be;
  }
 
+ #rightSide #chiffreDept span,
+ #rightSide #chiffreFrance span{
+    font-size:0.55em;
+ }
+
 /* Tooltip -Styles */
 .tooltip {
     margin-top: 35px;
