@@ -11,6 +11,7 @@ textarea {
 html {
     font-size: 1em;
     line-height: 1.4;
+    cursor: auto;
 /*    background-color: #e7f0f3;*/
 
 }
@@ -211,7 +212,7 @@ section.splashscreen a{
     color: #6f9298;
     border: 3px solid #6f9298;
     padding:9px 13px;
-        -webkit-transition: 1s all ;
+    -webkit-transition: 1s all ;
     -moz-transition: 1s all ;
     -o-transition: 1s all ;
     transition: 1s all ;
@@ -229,12 +230,17 @@ section.splashscreen a{
    Crédits
    ========================================================================== */
 #credits{
+    position: absolute;
     height: 100%;
     width: 100%;
     background-color: rgba(0,0,0,0.9);
     color:#6f9298;
+    z-index: 40;
+    cursor: url(../img/cursor.png), auto;
+    
 }
 .credits{
+
     height: 100%;
     text-align: center;
     position: relative;
@@ -243,6 +249,13 @@ section.splashscreen a{
     -ms-transform: translateY(-50%);
         transform: translateY(-50%);
 }
+.credits a{
+    color:#6f9298;
+    text-decoration: none;
+    text-transform: uppercase;
+    line-height: 27px;
+}
+
 .credits h2.title_credits{
     font: 700 25px 'Arimo' sans-serif;
     color:#fff;
@@ -262,8 +275,9 @@ section.splashscreen a{
         }
 .credits h2,
 .credits p,
-.credits ul.role_credits,
-.credits a{
+.credits ul.role_credits{
+    text-decoration: none;
+    list-style-type: none;
     width: 55%;
     position: relative;
     display: block;
@@ -274,7 +288,9 @@ section.splashscreen a{
 .credits p,
 .credits ul.role_credits li,
 .credits a{
-    font:400 15px 'Arimo' sans-serif;
+    font:15px 'Arimo' sans-serif;
+    line-height: 25px;
+
 }
 .credits ul.role_credits li span.name_credits{
     font-weight: 700;
@@ -290,7 +306,9 @@ section.splashscreen a{
 .credits .phone{
     margin-top:5px;
 }
-
+/* ==========================================================================
+   Tuto
+   ========================================================================== */
 
 .tuto{
     z-index: 9;
@@ -298,7 +316,7 @@ section.splashscreen a{
     display: block;
     width: 100%;
     width: calc(100% - 70px);
-    height: 100%;
+    height: 100%; 
     left:70px;
     background-color: rgba(0,0,0, 0.9);
 }
@@ -397,6 +415,85 @@ section.splashscreen a{
     background-color: #63b1be;
     color:#fff;
 }
+/* ==========================================================================
+   Dico
+   ========================================================================== */
+
+   .dico{
+    background-color: #1f1e1e;
+    width: calc(45% - 10px);
+    height: 100%;
+    padding: 0 10px 0 0;
+    margin: 0;
+    position: absolute;
+    right: 0;
+    z-index: 30;
+    color: #fff;
+}
+.dico p{
+    color:#9a9b9b;
+}
+.dico h2{
+    padding:80px 0 40px 0;
+}
+.dico h3{
+    color: #f4f2f2;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing:1px;
+}
+.dico a{
+    color: #525151;
+    text-decoration: none;
+    padding-bottom: 20px;
+}
+
+.dico a:hover{
+    color:#f4f2f2;
+}
+.dico a:hover .icon-source:before { 
+    color:#f4f2f2; 
+}
+.dico .content{
+    width:98%;
+    height: 70%;
+    overflow: auto;
+    padding: 0px 80px;
+}
+.dico .icon-source:before { 
+    color:#525151;
+    font-size: 13px; 
+}
+
+
+.dico .content::-webkit-scrollbar { 
+    padding-left: 20px;
+    border-right-width: 8px;
+    width: 10px; 
+    height: 5px; 
+    background-color: #000000;}
+
+.dico .content::-webkit-scrollbar-track { 
+    background-color: #302f2f;
+    border-radius: 10px; 
+}
+
+.dico .content::-webkit-scrollbar-thumb { 
+    background-color: #464545; 
+    border-radius: 10px;
+}
+.dicoClose{
+    position: absolute;
+    top: 21px;
+    right: 20px;
+    font-size: 10px;
+}
+
+
+
+
+
+
 
 
 .departement {

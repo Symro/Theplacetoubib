@@ -417,6 +417,42 @@ $(document).ready(function() {
 
     });
 
+    /* ********************************************************
+    /   CREDIT
+    / ********************************************************* */
+
+    $('footer').on("click", "#creditLink", function(e) {
+        e.preventDefault();
+        $("#credits").removeClass('hidden fadeOut').addClass('animated fadeIn');    
+    });
+
+    $('#credits').on("click", "div", function(e){
+        e.preventDefault();
+        $(this).parent('#credits').addClass('animated fadeOut').delay(800).queue(function(next){
+            $(this).addClass('hidden'); 
+            next(); 
+        });
+    });
+
+    /* ********************************************************
+    /   CREDIT
+    / ********************************************************* */
+    $('footer').on("click", "#dicoLink", function(e) {
+        e.preventDefault();
+        $(".dico").removeClass('hidden fadeOut').addClass('animated fadeIn');  
+        });  
+    $('.dico').on("click", ".dicoClose", function(e) {
+        e.preventDefault();
+
+        $(".dico").addClass('animated fadeOut').delay(1000).queue(function(next){
+            $(this).addClass('hidden'); 
+            next(); 
+        });
+    });  
+
+
+
+
 
     /* ********************************************************
 	/ 	D3 MAP

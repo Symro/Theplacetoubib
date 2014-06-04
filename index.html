@@ -23,7 +23,7 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-
+<!-- 
    <div class="splashscreen">
         <section class="splashscreen">
             <div class="presentation">
@@ -56,29 +56,30 @@
         </div>
         <div class="tutoRightSide">
         </div>
-    </section>
+    </section> -->
 
 
-<!--     <section id="credits">
+    <section id="credits" class="hidden">
       <div class="credits">
         <h2 class="title_credits">Le projet</h2>
         <p class="after_line">The Place Toubib’ est un projet scolaire axé sur la datavizualisation et conçu par des étudiants d’HETIC.
 La majorité des données utilisées proviennent du site ecosante.fr et datent de 2013. Certaines sont également issues de l’INSEE et du Conseil National des Médecins, tandis que d’autres ont été calculées directement par nos soins, comme le prix moyen d’une consultation ou le nombre d’habitants pour un praticien.</p>
         <h2 class="title_credits">L'équipe</h2>
         <ul class="role_credits after_line">
-            <li><span class="name_credits">Audrey Turquand</span> - Chef de projet / UI Designer</li>
-            <li><span class="name_credits">Augustin Menou</span> - UX designer / UI designer</li>
-            <li><span class="name_credits">Alexandre Guérard</span> - Statisticien / Front-end développeur</li>
-            <li><span class="name_credits">Audrey Chauprade</span> - Statisticien / Front-end développeur</li>
-            <li><span class="name_credits">Florent Grandval</span> - Back-end développeur</li>
-            <li><span class="name_credits">Sylvain Mroczko</span> - Back-end développeur</li>
+            <li><a href="http://www.audreyturquand.fr/" target="_BLANK"><span class="name_credits">Audrey Turquand</span></a> - Chef de projet / UI Designer</li>
+            <li><a href="http://www.augustinmenou.fr/" target="_BLANK"><span class="name_credits">Augustin Menou</span></a> - UX designer / UI designer</li>
+            <li><a href="http://alexandreguerard.fr/" target="_BLANK"><span class="name_credits">Alexandre Guérard</span></a> - Statisticien / Front-end développeur</li>
+            <li><a href=""><span class="name_credits" target="_BLANK">Audrey Chauprade</span></a> - Statisticien / Front-end développeur</li>
+            <li><a href="http://florent-grandval.fr/" target="_BLANK"><span class="name_credits">Florent Grandval</span></a> - Back-end développeur</li>
+            <li><a href="http://www.sylvainmroczko.fr/"><span class="name_credits">
+                Sylvain Mroczko</span></a> - Back-end développeur</li>
         </ul>
         <h2 class="title_credits">Nous contacter</h2>
         <p class="after_line">contact@theplacetoubib.fr</p>
         <p class="phone">06 80 77 76 63</p>
     </div>
   </section>
- -->
+
     <div id="container">
 
         <script type="text/template" id="menu_niveau1_2_template">
@@ -203,13 +204,45 @@ La majorité des données utilisées proviennent du site ecosante.fr et datent d
                 </div>
 
                 <footer>
-                    <a href="#">Dictionnaire</a>
-                    <a href="#">Crédits</a>
+                    <a id="dicoLink" href="#">Dictionnaire</a>
+                    <a id="creditLink" href="#">Crédits</a>
                     <a href="#">?</a>
                 </footer>
             </div>
         </section>
     </div>
+
+
+    <section class="dico hidden">
+        <a href="" class="dicoClose"><i class="icon-close"></i></a>
+        <h2 class="text-center">Dictionnaire médical</h2>
+        <div class="content">
+            
+            <h3>Hopital / clinique/ polyclinique </h3>
+            <p>L’hôpital est un établissement public de santé La clinique est un établissement privé de santé qui peut être soit une société commerciale (à but lucratif), soit une association (à but non lucratif). Une poly-clinique est une clinique qui pratique des soins divers dans plusieurs spécialités médicales (poly : plusieurs).</p>
+            <a href=""><i class="icon-source"></i>Source</a>
+
+            <h3>gynécologue : médical / obstétricien</h3>
+            <p>La gynécologie médicale se préoccupe essentiellement des troubles fonctionnels du cycle de la contraception, de la ménopause et du dépistage des cancers génitaux. Une solide formation psychologique est demandée. (Les médecins généralistes ont également cette formation dans leur cursus.) L’obstétrique, qui comprend la surveillance de la grossesse, des maladies intercurrentes au cours de celle-ci et l’accouchement, et les suites de couches.
+            </p>
+            <a href=""><i class="icon-source"></i>Source</a>
+
+                        <h3>gynécologue : médical / obstétricien</h3>
+            <p>La gynécologie médicale se préoccupe essentiellement des troubles fonctionnels du cycle de la contraception, de la ménopause et du dépistage des cancers génitaux. Une solide formation psychologique est demandée. (Les médecins généralistes ont également cette formation dans leur cursus.) L’obstétrique, qui comprend la surveillance de la grossesse, des maladies intercurrentes au cours de celle-ci et l’accouchement, et les suites de couches.
+            </p>
+            <a href=""><i class="icon-source"></i>Source</a>
+
+                        <h3>gynécologue : médical / obstétricien</h3>
+            <p>La gynécologie médicale se préoccupe essentiellement des troubles fonctionnels du cycle de la contraception, de la ménopause et du dépistage des cancers génitaux. Une solide formation psychologique est demandée. (Les médecins généralistes ont également cette formation dans leur cursus.) L’obstétrique, qui comprend la surveillance de la grossesse, des maladies intercurrentes au cours de celle-ci et l’accouchement, et les suites de couches.
+            </p>
+            <a href=""><i class="icon-source"></i>Source</a>
+
+                        <h3>gynécologue : médical / obstétricien</h3>
+            <p>La gynécologie médicale se préoccupe essentiellement des troubles fonctionnels du cycle de la contraception, de la ménopause et du dépistage des cancers génitaux. Une solide formation psychologique est demandée. (Les médecins généralistes ont également cette formation dans leur cursus.) L’obstétrique, qui comprend la surveillance de la grossesse, des maladies intercurrentes au cours de celle-ci et l’accouchement, et les suites de couches.
+            </p>
+            <a href=""><i class="icon-source"></i>Source</a>
+        </div>
+    </section>
 
 
         <script src="js/vendor/jquery.js"></script>
