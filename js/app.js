@@ -231,6 +231,20 @@ $(document).ready(function() {
         var graph_data = (App.dataInfo[App.filtre][6] != "NC") ? JSON.parse(App.dataInfo[App.filtre][6]) : false;
         App.displayGraph(graph_data);
 
+        // Update ToolTip Graph
+        if(graph_data){
+            var graph_data_info = [];
+            var graph_data_tooltip;
+
+            $.each(graph_data, function(index, value){
+                graph_data_info[index] = App.dataInfo[value];
+            });
+            graph_data_tooltip = _.difference(graph_data_info);
+
+            console.dir(graph_data_info);
+            console.dir(graph_data_tooltip);
+        }
+
     }
 
     App.checkHash = function() {
