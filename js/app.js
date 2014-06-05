@@ -22,7 +22,8 @@ $(document).ready(function() {
             tooltip_filtre: $('#infoFiltre .tooltipCSS'),
             info_graph: $('#infoGraph > p:first'),
             tooltip_graph: $('#infoGraph .tooltipCSS'),
-            tuto: $('section.tuto')
+            tuto: $('section.tuto'),
+            graph: $('#rightSide #graph')
         }
     }
 
@@ -226,6 +227,24 @@ $(document).ready(function() {
 
         container.html(JSON.stringify(info_dept, null, "\t"));
 
+        // Affichage du/des Graph
+        var graph_data = (App.dataInfo[App.filtre][6] != "NC") ? JSON.parse(App.dataInfo[App.filtre][6]) : false;
+        App.displayGraph(graph_data);
+
+        // Update ToolTip Graph
+        if(graph_data){
+            var graph_data_info = [];
+            var graph_data_tooltip;
+
+            $.each(graph_data, function(index, value){
+                graph_data_info[index] = App.dataInfo[value];
+            });
+            graph_data_tooltip = _.difference(graph_data_info);
+
+            console.dir(graph_data_info);
+            console.dir(graph_data_tooltip);
+        }
+
     }
 
     App.checkHash = function() {
@@ -285,6 +304,26 @@ $(document).ready(function() {
             $('#rightSide .tutoDepartement').fadeIn();
         });
 
+    }
+
+    // Prend en paramètre "data" un Array comprennant le nom des colonnes de datas à manipuler dans les graphs
+    App.displayGraph = function(data){
+        App.dom.graph.empty();
+
+        if(data){
+
+            App.dom.graph.append("__ OK on va jouer avec les datas suivantes  : <br/> ");
+
+            $.each(data, function(index, value){
+                App.dom.graph.append("Index : "+index+" Value : "+value+" <br/> ");
+            });
+
+        }
+        else{
+
+            App.dom.graph.append("__ ARGGGHH on n'a pas les datas ! :'( <br/> ");
+
+        }
     }
 
 
