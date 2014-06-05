@@ -586,13 +586,14 @@ menu, ol, ul{
     left: 90px;
     top:203px;
     z-index: 15;
-
 }
-
 .thirdLevel li{
     list-style-type: none;
     padding-bottom: 41px;
     background:none;
+}
+.thirdLevel li a.inactive i:before{
+    color:rgba(133,138,139,0.2);
 }
 
 

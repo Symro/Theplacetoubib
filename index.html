@@ -136,7 +136,7 @@ La majorité des données utilisées proviennent du site ecosante.fr et datent d
                     <li><span title="Gynécologues" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>gynecologue<%= dept == null ? "" : "/dept_"+dept %>" data-info-json="<%= prefixe %>gyneco"><i class="icon-niv3_gyneco"></i></a></span></li>
                     <li><span title="Dentistes" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>dentiste<%= dept == null ? "" : "/dept_"+dept %>" data-info-json="<%= prefixe %>dentiste"><i class="icon-niv3_dentiste"></i></a></span></li>
                     <li><span title="Ophtalmologues" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>ophtalmologue<%= dept == null ? "" : "/dept_"+dept %>" data-info-json="<%= prefixe %>ophtalmo"><i class="icon-niv3_ophtalmo"></i></a></span></li>
-                    <li><span title="Infirmiers" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>infirmier<%= dept == null ? "" : "/dept_"+dept %>" data-info-json="<%= prefixe %>infirmier"><i class="icon-niv3_infirmier"></i></a></span></li>
+                    <li><span title="<%= prefixe == "Prix_moyen_consultation_" ? "Indisponible" : "Infirmiers" %>" class="right"><a href="#/filtre/<%= prefiltre == null ? "" : prefiltre+"_" %>infirmier<%= dept == null ? "" : "/dept_"+dept %>" <%= prefixe == "Prix_moyen_consultation_" ? 'class="inactive"' : "" %> data-info-json="<%= prefixe %>infirmier"><i class="icon-niv3_infirmier"></i></a></span></li>
                 </ul>
             </div>
 
@@ -201,6 +201,9 @@ La majorité des données utilisées proviennent du site ecosante.fr et datent d
 
                     </div>
                     
+                </div>
+                <div id="graph">
+
                 </div>
 
                 <footer>
