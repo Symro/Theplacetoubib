@@ -12,7 +12,7 @@ $(document).ready(function() {
         menuEtat: ["", "", ""],
         prefiltreEtat: ["", "", "", ""],
         tuto: false,
-        counterDecimal : 0,
+        counterDecimal: 0,
         dom: {
             chiffre_dept: $('#chiffreDept p'),
             chiffre_france: $('#chiffreFrance p'),
@@ -196,7 +196,7 @@ $(document).ready(function() {
             to: chiffre_dept,
             speed: 800,
             refreshInterval: 50,
-            decimals:App.counterDecimal,
+            decimals: App.counterDecimal,
             formatter: function(value, options) {
                 return value.toFixed(options.decimals) + " <span>" + suffixe + "</span>";
             }
@@ -210,7 +210,7 @@ $(document).ready(function() {
             to: chiffre_fra,
             speed: 800,
             refreshInterval: 50,
-            decimals:App.counterDecimal,
+            decimals: App.counterDecimal,
             formatter: function(value, options) {
                 return value.toFixed(options.decimals) + " <span>" + suffixe + "</span>";
             }
@@ -343,7 +343,7 @@ $(document).ready(function() {
 
         $('#menu ul li').removeClass('active');
         li.addClass('active');
-        
+
 
         if (li.hasClass('prefiltre') == true) {
             console.log("Prefiltre");
@@ -429,14 +429,14 @@ $(document).ready(function() {
 
     $('footer').on("click", "#creditLink", function(e) {
         e.preventDefault();
-        $("#credits").removeClass('hidden fadeOut').addClass('animated fadeIn');    
+        $("#credits").removeClass('hidden fadeOut').addClass('animated fadeIn');
     });
 
-    $('#credits').on("click", "div", function(e){
+    $('#credits').on("click", "div", function(e) {
         e.preventDefault();
-        $(this).parent('#credits').addClass('animated fadeOut').delay(800).queue(function(next){
-            $(this).addClass('hidden'); 
-            next(); 
+        $(this).parent('#credits').addClass('animated fadeOut').delay(800).queue(function(next) {
+            $(this).addClass('hidden');
+            next();
         });
     });
 
@@ -446,16 +446,16 @@ $(document).ready(function() {
 
     $('footer').on("click", "#dicoLink", function(e) {
         e.preventDefault();
-        $(".dico").removeClass('hidden fadeOut').addClass('animated fadeIn');  
-        });  
+        $(".dico").removeClass('hidden fadeOut').addClass('animated fadeIn');
+    });
     $('.dico').on("click", ".dicoClose", function(e) {
         e.preventDefault();
 
-        $(".dico").addClass('animated fadeOut').delay(1000).queue(function(next){
-            $(this).addClass('hidden'); 
-            next(); 
+        $(".dico").addClass('animated fadeOut').delay(1000).queue(function(next) {
+            $(this).addClass('hidden');
+            next();
         });
-    });  
+    });
 
 
 
@@ -568,7 +568,7 @@ $(document).ready(function() {
                         // Appel la fonction d'affiche des infos du dept.
                         // App.displayInfoDept(d.properties.CODE_DEPT);
 
-                        mapObject.clickOnRegion(d);
+                        mapObject.clickOnRegion(d, this);
 
                         //App.router.navigate("#/filtre/nb_habitants_plus_60_ans/dept_14", {trigger: true});
 
@@ -633,10 +633,20 @@ $(document).ready(function() {
                         // Appel la fonction d'affiche des infos du dept.
                         // App.displayInfoDept(d.properties.CODE_DEPT);
 
+                        $depData = d3.select(this).attr("data-code-dep");
+
                         mapObject.clickOnRegion(d);
 
                         d3.selectAll("path.departement").classed("active", false);
                         d3.select(this).classed("active", true);
+
+                        // On rend acif le departement cliqué a partir du zoom
+                        d3.selectAll("#france path.departement")
+                            .filter(function(d) {
+                                return d.properties.CODE_DEPT == $depData;
+                            })
+                            .classed("active", true);
+
                     });
 
             });
@@ -646,6 +656,7 @@ $(document).ready(function() {
         },
 
         clickOnRegion: function(d) {
+
             /* _____________ DEBUT AJOUT FLORENT - A GARDER _____________________________________ */
             App.dept = d.properties.CODE_DEPT;
             // modification du modèle et donc des liens du menu
