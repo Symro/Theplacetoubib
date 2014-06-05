@@ -232,11 +232,11 @@ $(document).ready(function() {
         App.displayGraph(graph_data);
 
         // Update ToolTip Graph
-        if(graph_data){
+        if (graph_data) {
             var graph_data_info = [];
             var graph_data_tooltip;
 
-            $.each(graph_data, function(index, value){
+            $.each(graph_data, function(index, value) {
                 graph_data_info[index] = App.dataInfo[value];
             });
             graph_data_tooltip = _.difference(graph_data_info);
@@ -307,19 +307,18 @@ $(document).ready(function() {
     }
 
     // Prend en paramètre "data" un Array comprennant le nom des colonnes de datas à manipuler dans les graphs
-    App.displayGraph = function(data){
+    App.displayGraph = function(data) {
         App.dom.graph.empty();
 
-        if(data){
+        if (data) {
 
             App.dom.graph.append("__ OK on va jouer avec les datas suivantes  : <br/> ");
 
-            $.each(data, function(index, value){
-                App.dom.graph.append("Index : "+index+" Value : "+value+" <br/> ");
+            $.each(data, function(index, value) {
+                App.dom.graph.append("Index : " + index + " Value : " + value + " <br/> ");
             });
 
-        }
-        else{
+        } else {
 
             App.dom.graph.append("__ ARGGGHH on n'a pas les datas ! :'( <br/> ");
 
