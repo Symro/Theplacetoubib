@@ -439,7 +439,7 @@ $(document).ready(function() {
         var $this = $(this);
         var url = $this.attr("href");
         var li = $this.parents("li");
-        var info = $this.data('info-json');
+        var info = $this.data("info-json");
 
         li.siblings().removeClass("active").find("a").removeClass("selected");
         li.addClass("active");
@@ -453,13 +453,28 @@ $(document).ready(function() {
     });
 
     $('#menu').on("click", "li a", function(e) {
+        $this = $(this);
+        var info = $this.data("info-json");
 
-        // Vérifions que nous ne sommes pas sur un préfiltre
-        if($(this).parents("li").hasClass("prefiltre") == false){
+        // Vérifions que nous ne sommes pas sur un préfiltre OU notre exception
+        if($this.parents("li").hasClass("prefiltre") == false && info != "Nombre_hopitaux"){
             // Changement URL - checkons le HASH
             console.log('App.checkHash() from Ligne ~460');
             App.checkHash();
         }
+        // Exception du menu : le nombre d'hopitaux
+        // > seul filtre accessible en niveau 1
+        if(info == "Nombre_hopitaux"){
+            e.preventDefault();
+            $this.parents("li").addClass("active");
+            App.counterDecimal = $this.data("counter-decimal");
+            App.filtre = info;
+            App.router.navigate($this.attr("href"), {
+                trigger: true
+            });
+            App.checkHash();
+        }
+
 
     });
 
