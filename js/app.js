@@ -454,13 +454,13 @@ $(document).ready(function() {
 
     $('#menu').on("click", "li a", function(e) {
 
-        // Changement URL - checkons le HASH
-        console.log('App.checkHash() from Ligne 320');
-        App.checkHash();
+        // Vérifions que nous ne sommes pas sur un préfiltre
+        if($(this).parents("li").hasClass("prefiltre") == false){
+            // Changement URL - checkons le HASH
+            console.log('App.checkHash() from Ligne ~460');
+            App.checkHash();
+        }
 
-        // if($(this).data('info-json')){
-        //     App.dom.nom_filtre.text(App.dataInfo[$(this).data('info-json')][0]);
-        // }
     });
 
 
@@ -626,8 +626,6 @@ $(document).ready(function() {
                         mapObject.cursorOverRegion(d);
                     })
                     .on("click", function(d) {
-                        // Appel la fonction d'affiche des infos du dept.
-                        // App.displayInfoDept(d.properties.CODE_DEPT);
 
                         mapObject.clickOnRegion(d, this);
 
@@ -691,8 +689,6 @@ $(document).ready(function() {
                         return d.properties.ID_GEOFLA;
                     })
                     .on("click", function(d) {
-                        // Appel la fonction d'affiche des infos du dept.
-                        // App.displayInfoDept(d.properties.CODE_DEPT);
 
                         $depData = d3.select(this).attr("data-code-dep");
 
