@@ -799,7 +799,7 @@ background-position: right center;
 .tooltipCSS > div:after{
     content:"";
     position:absolute;
-    top: 50%;
+    top: 56px;
     right:-13px;
     width:15px;
     height:15px;
@@ -822,6 +822,9 @@ background-position: right center;
 .tooltipCSS div p a{
     color:#979696;
     text-decoration:none;
+}
+.tooltipCSS div div+div{
+    margin-top:8px;
 }
 
 

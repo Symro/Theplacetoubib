@@ -233,17 +233,40 @@ $(document).ready(function() {
 
         // Update ToolTip Graph
         if (graph_data) {
-            var graph_data_info = [];
-            var graph_data_tooltip;
+            var graph_data_info             = [];
+            var graph_data_tooltip_source   = [];
+            var graph_data_tooltip_url      = [];
+            var graph_data_tooltip_annee    = [];
 
+            // récupère les infos concernant toutes les datas et vire les doublons
             $.each(graph_data, function(index, value) {
                 graph_data_info[index] = App.dataInfo[value];
+                graph_data_tooltip_annee.push( App.dataInfo[value][2] );
+                graph_data_tooltip_source.push( App.dataInfo[value][3] );
+                graph_data_tooltip_url.push( App.dataInfo[value][4] );
             });
-            graph_data_tooltip = _.difference(graph_data_info);
 
-            console.dir(graph_data_info);
-            console.dir(graph_data_tooltip);
+            graph_data_tooltip_source = _.uniq(graph_data_tooltip_source);
+            graph_data_tooltip_url    = _.uniq(graph_data_tooltip_url);
+            graph_data_tooltip_annee  = _.uniq(graph_data_tooltip_annee);
+            graph_data_tooltip        = _.zip(graph_data_tooltip_source,graph_data_tooltip_url,graph_data_tooltip_annee);
+
+
+            // affichage des datas dans la tooltip
+            var tooltip_container = App.dom.tooltip_graph.find("div:first");
+            tooltip_container.empty().append("<h5>Provenance des datas</h5>");
+            for(var i=0; i< graph_data_tooltip.length; i++){
+                if(graph_data_tooltip[i][1] != "NC"){
+                    tooltip_container.append("<div><p><span>Source : </span><a href=\""+graph_data_tooltip[i][1]+"\" title=\""+graph_data_tooltip[i][0]+"\" target=\"_blank\">"+graph_data_tooltip[i][0]+"</a></p> <p><span>Année : </span><span>"+graph_data_tooltip[i][2]+"</span></p></div>");
+                }
+                else{
+                    tooltip_container.append("<div><p><span>Source : </span>"+graph_data_tooltip[i][0]+"</p> </div>");
+                }
+            }                
+
         }
+
+
 
     }
 
