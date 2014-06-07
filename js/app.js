@@ -493,7 +493,7 @@ $(document).ready(function() {
         $("#credits").removeClass('hidden fadeOut').addClass('animated fadeIn');
     });
 
-    $('#credits').on("click", "div", function(e) {
+    $('body').on("click", ".credits", function(e) {
         e.preventDefault();
         $(this).parent('#credits').addClass('animated fadeOut').delay(800).queue(function(next) {
             $(this).addClass('hidden');
@@ -501,8 +501,9 @@ $(document).ready(function() {
         });
     });
 
+
     /* ********************************************************
-    /   CREDIT
+    /   Dico
     / ********************************************************* */
 
     $('footer').on("click", "#dicoLink", function(e) {
@@ -518,6 +519,22 @@ $(document).ready(function() {
         });
     });
 
+    /* ********************************************************
+    /   Help
+    / ********************************************************* */
+
+    $('footer').on("click", "#helpLink", function(e) {
+        e.preventDefault();
+        $(".help").removeClass('hidden fadeOut').addClass('animated fadeIn');
+    });
+
+    $('body').on("click", ".help", function(e) {
+        e.preventDefault();
+        $(this).addClass('animated fadeOut').delay(800).queue(function(next) {
+            $(this).addClass('hidden');
+            next();
+        });
+    });
 
 
     /* ********************************************************
