@@ -19,6 +19,7 @@ module.exports = function(grunt) {
     'js/vendor/underscore.js',
     'js/vendor/backbone.js',
     'js/vendor/d3.js',
+    'js/vendor/d3.tip.js',
     'js/vendor/c3.js',
     'js/app.js'
 
