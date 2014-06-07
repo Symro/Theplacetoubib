@@ -116,6 +116,11 @@ textarea {
 .icon-niv2_agemoyen:before { content: '\e811'; }
 .icon-niv1_habitants:before { content: '\e812'; }
 .icon-source:before { content: '\e813'; }
+.icon-triangle:before { content: '\e814'; }
+.icon-dico:before { content: '\e815'; }
+.icon-facebook:before { content: '\e816'; }
+.icon-projet:before { content: '\e817'; }
+.icon-twitter:before { content: '\e818'; }
 
 
 /* ==========================================================================
@@ -151,8 +156,6 @@ section.splashscreen{
     font:700 17px 'Arimo' sans-serif;
     -webkit-font-smoothing: antialiased;
     text-align: center;
-
-
 }
 section.splashscreen canvas{
     position:absolute;
@@ -306,6 +309,118 @@ section.splashscreen a{
 .credits .phone{
     margin-top:5px;
 }
+
+
+
+.help{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.7);
+    color:#fff;
+    z-index: 40;
+    cursor: url(../img/cursor.png), auto;
+}
+
+.help div {
+    width: 222px;
+}
+.help p, h1{
+    margin:0;
+    /*width:235px;*/
+}
+
+.help article{
+    width: 50px;
+}
+.help div:nth-child(1){
+    position:relative;
+    top:120px;
+    left:35%;
+}
+.help div:nth-child(1) h1::after{
+    left: -55px;
+    bottom:32px;
+}
+.help div:nth-child(1) h1::before{
+    bottom:67px;
+}
+
+.help div:nth-child(2){
+    position:relative;
+    width:100px;
+    top:0px;
+    left:88%;
+}
+.help div:nth-child(2) h1::after{
+    border-left: 0px solid white;
+}
+.help div:nth-child(3){
+    position:relative;
+    top:96px;
+    left:72%;
+}
+.help div:nth-child(3) h1::after{
+    left: -55px;
+    bottom:75px;
+}
+.help div:nth-child(3) h1::before{
+    bottom:107px;
+}
+.help div:nth-child(4){
+    position:relative;
+    top:330px;
+    left:75%;
+}
+.help h1{
+    margin:0;
+    width:10%;
+}
+.help h1::after{
+    display: block;
+    content: '';
+    background-color: transparent;
+    width:40px;
+    height:40px;
+    border-bottom: 1px solid white;
+    border-left: 1px solid white;
+    left: -55px;
+    bottom:53px;
+    position: absolute;
+}
+
+.help h1::before{
+    display: block;
+    content: '';
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255,255,255,1);
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -o-border-radius: 10px;
+    border-radius: 10px;
+    position: absolute;
+    left: -60px;
+    bottom: 88px;
+}
+.help div:nth-child(2) h1::after{
+    border-left: 0px solid white;
+}
+
+.help div:nth-child(2) h1::before{
+    display: block;
+    content: '';
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255,255,255,1);
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -o-border-radius: 10px;
+    border-radius: 10px;
+    position: absolute;
+    left: -60px;
+    bottom: 48px;
+}
 /* ==========================================================================
    Tuto
    ========================================================================== */
@@ -419,7 +534,7 @@ section.splashscreen a{
    Dico
    ========================================================================== */
 
-   .dico{
+.dico{
     background-color: #1f1e1e;
     width: calc(45% - 10px);
     height: 100%;
@@ -432,26 +547,43 @@ section.splashscreen a{
 }
 .dico p{
     color:#9a9b9b;
+    line-height: 26px;
 }
 .dico h2{
-    padding:80px 0 40px 0;
+    padding:40px 0 40px 0;
 }
 .dico h3{
     color: #f4f2f2;
     font-weight: 400;
     text-transform: uppercase;
-    letter-spacing:1px;
+    letter-spacing : 0.1em;
+    font-size : 1em;
 }
 .dico a{
     color: #525151;
     text-decoration: none;
-    padding-bottom: 20px;
+
+}
+
+.dico article{
+    padding-bottom: 25px;
 }
 
 .dico a:hover{
     color:#f4f2f2;
 }
+.dico .icon-source:before { 
+    color:#525151;
+    font-size: 13px; 
+}
 .dico a:hover .icon-source:before { 
+    color:#f4f2f2; 
+}
+.dico .icon-close:before { 
+    color:#525151;
+    font-size: 13px; 
+}
+.dico a:hover .icon-close:before { 
     color:#f4f2f2; 
 }
 .dico .content{
@@ -459,12 +591,13 @@ section.splashscreen a{
     height: 70%;
     overflow: auto;
     padding: 0px 80px;
+    text-align: justify;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    -o-hyphens: auto;
+    hyphens: auto;
 }
-.dico .icon-source:before { 
-    color:#525151;
-    font-size: 13px; 
-}
-
 
 .dico .content::-webkit-scrollbar { 
     padding-left: 20px;
@@ -514,8 +647,9 @@ section.splashscreen a{
     display: none;
 }
 
- /*Nav -Styles */
-
+/* ==========================================================================
+   Nav
+   ========================================================================== */
 nav{
     display: inline-block;
     width:70px;
@@ -620,6 +754,8 @@ menu, ol, ul{
 #container{
     float: left;
     width: 100%;
+    height: 100%;
+    overflow: hidden;
     background-color: #e7f0f3;
     background-image:url(../img/fondBoucle.svg);
 }
@@ -693,6 +829,11 @@ section#leftSide{
     margin: 0 0 50px 0;
 }
 
+
+/* ==========================================================================
+   Footer & Partage
+   ========================================================================== */
+
 #rightSide footer{
     display: inline;
     height: 55px;
@@ -702,24 +843,110 @@ section#leftSide{
     bottom: 0px;
     right: 0px;
     text-align: right;
-
 }
- #rightSide footer a{
+
+#rightSide footer a, #rightSide footer a:hover, #rightSide footer i:before, #rightSide footer i:hover:before, footer .partage, footer .partage:hover{
+    -webkit-transition: .5s all;
+    -moz-transition: .5s all;
+    -o-transition: .5s all;
+    transition: .5s all;
+}
+
+#rightSide footer a{
     text-decoration: none;
-    color:white;
     line-height: 55px;
     padding-right: 30px;
     text-align: right;
- }
+    color:#a9a9a9;
+}
+#rightSide footer a:hover{
+    color:#fff;
+}
 
- #rightSide footer a:hover{
-    color:#63b1be;
- }
+#rightSide footer i:before{
+    color:#a9a9a9;
+    font-size: 16px;
+}
+#rightSide footer i:hover:before{
+    color:#fff;   
+}
+footer .partage{
+    text-align: center;
+    padding-left: 30px;
+    float: left;
+    height: 55px;
+    width: 170px;
+    z-index: 60;
+    background-color: #31393b;
+    cursor: pointer;
+}
+footer .partage:hover{
+    background-color:#586b71;
+}
+
+#rightSide footer a:nth-child(1){
+    display: block;
+    padding-right: 0;
+    width: 100%;
+    text-align: left;
+}
+
+#rightSide footer .partage .buttonShare a{
+    font-size: 20px;
+}
+
+.buttonShare{
+    opacity: 0;
+    font-size: 18px;
+    display: inline-flex;
+    float: left;
+    position: absolute;
+    bottom: 35px;
+    left: 50px;
+    -webkit-transition: .2s all;
+    -moz-transition: .2s all;
+    -o-transition: .2s all;
+    transition: .2s all;
+}
+.buttonShare .triangle{
+    position: absolute;
+    top: 40px;
+    left: 45px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #546871;
+}
+#rightSide footer .buttonShare i:before{
+    font-size: 1.5em;
+    color:#586b71;
+}
+#rightSide footer .buttonShare i:hover:before{
+    color:#fff;
+}
+footer .partage:hover .buttonShare{
+    opacity:1;
+    -webkit-transform: translate(0, -15px);
+    -moz-transform: translate(0, -15px);
+    -o-transform: translate(0, -15px);
+    -ms-transform: translate(0, -15px);
+    transform: translate(0, -15px);
+
+    -webkit-transition: .5s all;
+    -moz-transition: .5s all;
+    -o-transition: .5s all;
+    transition: .5s all;
+}
+
 
  #rightSide #chiffreDept span,
  #rightSide #chiffreFrance span{
     font-size:0.55em;
  }
+
+
+
+
+
 
 /* Tooltip -Styles */
 .tooltip {
@@ -765,6 +992,10 @@ background-position: right center;
     position:relative;
     clear:both;
 }
+
+/* ==========================================================================
+   Tooltip
+   ========================================================================== */
 
 .tooltipCSS{
     position:absolute;
@@ -844,6 +1075,62 @@ background-position: right center;
 .tutoDepartement .icon-loupe:before{
     font-size:2.2em;
 }
+
+/* ==========================================================================
+   D3.js / D3.tip.js / Graph
+   ========================================================================== */
+
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: orange;
+}
+
+.bar:hover {
+  fill: orangered ;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+
+
 
 /* ==========================================================================
    Media Queries
