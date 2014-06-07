@@ -116,6 +116,11 @@ textarea {
 .icon-niv2_agemoyen:before { content: '\e811'; }
 .icon-niv1_habitants:before { content: '\e812'; }
 .icon-source:before { content: '\e813'; }
+.icon-triangle:before { content: '\e814'; }
+.icon-dico:before { content: '\e815'; }
+.icon-facebook:before { content: '\e816'; }
+.icon-projet:before { content: '\e817'; }
+.icon-twitter:before { content: '\e818'; }
 
 
 /* ==========================================================================
