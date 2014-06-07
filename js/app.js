@@ -71,7 +71,7 @@ $(document).ready(function() {
 
         App.displayChoisirDept();
 
-        console.log("Welcome Home ! ");
+        // console.log("Welcome Home ! ");
     });
 
     App.router.on("route:tutoriel", function() {
@@ -87,7 +87,9 @@ $(document).ready(function() {
     App.router.on("route:filtre", function(filtre, dept) {
         App.tuto = false;
         App.dom.tuto.fadeOut();
-        console.log("Filtre : " + filtre + "  Dept : " + dept);
+        // console.log("Filtre : " + filtre + "  Dept : " + dept);
+
+        App.colorDisplay();
 
         if (dept != "null" && (dept > 0 && dept < 96 || dept == "2A" || dept == "2B")) {
             App.displayInfoDept(dept);
@@ -233,36 +235,35 @@ $(document).ready(function() {
 
         // Update ToolTip Graph
         if (graph_data) {
-            var graph_data_info             = [];
-            var graph_data_tooltip_source   = [];
-            var graph_data_tooltip_url      = [];
-            var graph_data_tooltip_annee    = [];
+            var graph_data_info = [];
+            var graph_data_tooltip_source = [];
+            var graph_data_tooltip_url = [];
+            var graph_data_tooltip_annee = [];
 
             // récupère les infos concernant toutes les datas et vire les doublons
             $.each(graph_data, function(index, value) {
                 graph_data_info[index] = App.dataInfo[value];
-                graph_data_tooltip_annee.push( App.dataInfo[value][2] );
-                graph_data_tooltip_source.push( App.dataInfo[value][3] );
-                graph_data_tooltip_url.push( App.dataInfo[value][4] );
+                graph_data_tooltip_annee.push(App.dataInfo[value][2]);
+                graph_data_tooltip_source.push(App.dataInfo[value][3]);
+                graph_data_tooltip_url.push(App.dataInfo[value][4]);
             });
 
             graph_data_tooltip_source = _.uniq(graph_data_tooltip_source);
-            graph_data_tooltip_url    = _.uniq(graph_data_tooltip_url);
-            graph_data_tooltip_annee  = _.uniq(graph_data_tooltip_annee);
-            graph_data_tooltip        = _.zip(graph_data_tooltip_source,graph_data_tooltip_url,graph_data_tooltip_annee);
+            graph_data_tooltip_url = _.uniq(graph_data_tooltip_url);
+            graph_data_tooltip_annee = _.uniq(graph_data_tooltip_annee);
+            graph_data_tooltip = _.zip(graph_data_tooltip_source, graph_data_tooltip_url, graph_data_tooltip_annee);
 
 
             // affichage des datas dans la tooltip
             var tooltip_container = App.dom.tooltip_graph.find("div:first");
             tooltip_container.empty().append("<h5>Provenance des datas</h5>");
-            for(var i=0; i< graph_data_tooltip.length; i++){
-                if(graph_data_tooltip[i][1] != "NC"){
-                    tooltip_container.append("<div><p><span>Source : </span><a href=\""+graph_data_tooltip[i][1]+"\" title=\""+graph_data_tooltip[i][0]+"\" target=\"_blank\">"+graph_data_tooltip[i][0]+"</a></p> <p><span>Année : </span><span>"+graph_data_tooltip[i][2]+"</span></p></div>");
+            for (var i = 0; i < graph_data_tooltip.length; i++) {
+                if (graph_data_tooltip[i][1] != "NC") {
+                    tooltip_container.append("<div><p><span>Source : </span><a href=\"" + graph_data_tooltip[i][1] + "\" title=\"" + graph_data_tooltip[i][0] + "\" target=\"_blank\">" + graph_data_tooltip[i][0] + "</a></p> <p><span>Année : </span><span>" + graph_data_tooltip[i][2] + "</span></p></div>");
+                } else {
+                    tooltip_container.append("<div><p><span>Source : </span>" + graph_data_tooltip[i][0] + "</p> </div>");
                 }
-                else{
-                    tooltip_container.append("<div><p><span>Source : </span>"+graph_data_tooltip[i][0]+"</p> </div>");
-                }
-            }                
+            }
 
         }
 
@@ -287,7 +288,6 @@ $(document).ready(function() {
         //
         // l'utilisateur n'a pas cliqué > URL direct donc..
         //  > Affichage du filtre et dept de l'URL
-
 
         if (customRegExp) {
             console.log('on a un filtre : ' + customRegExp[1]);
@@ -321,7 +321,7 @@ $(document).ready(function() {
     }
 
     App.displayChoisirDept = function() {
-        console.log("TUTO STEP 2 : Choisissez un département svp");
+        // console.log("TUTO STEP 2 : Choisissez un département svp");
 
         $('#rightSide .content').fadeOut(0, function() {
             $('#rightSide .tutoDepartement').fadeIn();
@@ -346,6 +346,90 @@ $(document).ready(function() {
             App.dom.graph.append("__ ARGGGHH on n'a pas les datas ! :'( <br/> ");
 
         }
+    }
+
+    App.colorDisplay = function() {
+
+        var activeFilter = App.filtre;
+
+        var scale = App.dataInfo[activeFilter][7];
+        scale = JSON.parse(scale);
+        console.log(scale);
+
+        for (i = 95; i > -1; i--) {
+
+            var data = App.data[i][activeFilter];
+            var numDept = App.data[i].Num_dpt;
+
+            if (data <= scale[0]) {
+
+                d3.selectAll("#france path.departement")
+                    .filter(function(d) {
+                        return d.properties.CODE_DEPT == numDept;
+                    })
+                    .transition().duration(500)
+                    .attr("fill", "#dff0f2");
+
+                d3.selectAll("#paris path.departement")
+                    .filter(function(d) {
+                        return d.properties.CODE_DEPT == numDept;
+                    })
+                    .transition().duration(500)
+                    .attr("fill", "#dff0f2");
+
+            } else if (data <= scale[1] && data > scale[0]) {
+
+                d3.selectAll("#france path.departement")
+                    .filter(function(d) {
+                        return d.properties.CODE_DEPT == numDept;
+                    })
+                    .transition().duration(500)
+                    .attr("fill", "#bee0e4");
+
+                d3.selectAll("#paris path.departement")
+                    .filter(function(d) {
+                        return d.properties.CODE_DEPT == numDept;
+                    })
+                    .transition().duration(500)
+                    .attr("fill", "#bee0e4");
+
+            } else if (data <= scale[2] && data > scale[1]) {
+
+                d3.selectAll("#france path.departement")
+                    .filter(function(d) {
+                        return d.properties.CODE_DEPT == numDept;
+                    })
+                    .transition().duration(500)
+                    .attr("fill", "#8ec9d0");
+
+                d3.selectAll("#paris path.departement")
+                    .filter(function(d) {
+                        return d.properties.CODE_DEPT == numDept;
+                    })
+                    .transition().duration(500)
+                    .attr("fill", "#8ec9d0");
+
+
+            } else if (data > scale[2]) {
+
+                d3.selectAll("#france path.departement")
+                    .filter(function(d) {
+                        return d.properties.CODE_DEPT == numDept;
+                    })
+                    .transition().duration(500)
+                    .attr("fill", "#63b1be");
+
+                d3.selectAll("#paris path.departement")
+                    .filter(function(d) {
+                        return d.properties.CODE_DEPT == numDept;
+                    })
+                    .transition().duration(500)
+                    .attr("fill", "#63b1be");
+
+            }
+
+        }
+
     }
 
 
@@ -407,7 +491,7 @@ $(document).ready(function() {
 
 
         if (li.hasClass('prefiltre') == true) {
-            console.log("Prefiltre");
+            // console.log("Prefiltre");
             App.prefiltreEtat = ["", "", "", ""];
             App.prefiltreEtat[li.index()] = "active";
             App.counterDecimal = li.data('counter-decimal');
@@ -455,9 +539,9 @@ $(document).ready(function() {
     $('#menu').on("click", "li a", function(e) {
 
         // Vérifions que nous ne sommes pas sur un préfiltre
-        if($(this).parents("li").hasClass("prefiltre") == false){
+        if ($(this).parents("li").hasClass("prefiltre") == false) {
             // Changement URL - checkons le HASH
-            console.log('App.checkHash() from Ligne ~460');
+            // console.log('App.checkHash() from Ligne ~460');
             App.checkHash();
         }
 
@@ -634,6 +718,9 @@ $(document).ready(function() {
                         d3.selectAll("path.departement").classed("active", false);
                         d3.select(this).classed("active", true);
                     });
+
+                // Callback
+                mapObject.params.rendered.call();
             });
 
             // Cercle zoom
@@ -643,9 +730,6 @@ $(document).ready(function() {
                 .attr("r", this.params.circle.r)
                 .style("fill", this.params.circle.fill)
                 .style("opacity", this.params.circle.opacity);
-
-            // Callback
-            mapObject.params.rendered.call();
 
         },
 
@@ -732,13 +816,41 @@ $(document).ready(function() {
             // Callback
             mapObject.params.zoomed.call();
 
+        },
+
+        displayActiveDept: function(deptId) {
+
+            // On rend acif le departement indiqué dans l'url
+            d3.selectAll("#france path.departement")
+                .filter(function(d) {
+                    return d.properties.CODE_DEPT == deptId;
+                })
+                .classed("active", true);
+
         }
+
     }
 
     mapObject.init({
 
         rendered: function() {
+
             console.log('map rendered');
+
+            // var hash = window.location.hash;
+            // // analyse du hash actuel
+            // var customRegExp = hash.match("#/filtre/([A-Za-z0-9_]+)(/dept_([0-9]{2}))?");
+
+            // if (customRegExp[3]) {
+
+            //     mapObject.displayActiveDept(customRegExp[3]);
+
+            // }
+
+            mapObject.renderZoom();
+
+            $("#paris").css("display", "none");
+
         },
 
         zoomed: function() {
