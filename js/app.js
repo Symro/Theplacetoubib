@@ -333,19 +333,134 @@ $(document).ready(function() {
     App.displayGraph = function(data) {
         App.dom.graph.empty();
 
+        function ArrayToJSON(ArrayNumbers, ArrayLegends){
+            if( !_.isArray(ArrayNumbers) || !_.isArray(ArrayLegends) || ArrayNumbers.length != ArrayLegends.length ){
+                alert("Problème avec les array ou leurs contenus");
+            }
+
+            var tab = [];
+            for(var i=0; i<ArrayNumbers.length; i++){
+                tab.push( { "nb": ArrayNumbers[i] , "legende" : ArrayLegends[i] } );
+            }
+            return tab;
+        }
+
         if (data) {
 
             App.dom.graph.append("__ OK on va jouer avec les datas suivantes  : <br/> ");
 
+            var dataGraph = [];
+
+            // On produit un tableau des valeurs de chaque filtre
             $.each(data, function(index, value) {
-                App.dom.graph.append("Index : " + index + " Value : " + value + " <br/> ");
+                //App.dom.graph.append("Index : " + index + " Value : " + value + " <br/> ");
+                console.log("Index : " + index + " Value : " + value + " <br/> ");
+                dataGraph.push( parseInt(App.getInfoFiltre(App.dept, value)) );
             });
+
+            App.dom.graph.append("<br/> dataGraph : " + dataGraph );
+
+            if(App.filtre == "Temps_acces_medecin"){
+                var legendes = ["Gynecologue","Ophtalmogue","Dentiste","Infirmier"];
+                dataGraph = ArrayToJSON(dataGraph, legendes);
+                App.displayBarChart(dataGraph);
+            }
+
+
+
+
+            // var chart = c3.generate({
+            //     bindto: '#chart',
+            //     data: {
+            //         columns: [
+            //             ['data1', 30, 200, 100, 400, 150, 250]
+            //         ],
+            //         type: 'bar'
+            //     },
+            //     bar: {
+            //         width: {
+            //             ratio: 0.5 // this makes bar width 50% of length between ticks
+            //         }
+            //         // or
+            //         //width: 100 // this makes bar width 100px
+            //     }
+            // });
 
         } else {
 
             App.dom.graph.append("__ ARGGGHH on n'a pas les datas ! :'( <br/> ");
 
         }
+    }
+
+    App.displayBarChart = function(data){
+        /* 
+        - TO DO : 
+            couleurs
+            http://stackoverflow.com/questions/17734502/rounded-values-for-color-in-d3-scale 
+        */
+
+        var margin = {top: 40, right: 20, bottom: 30, left: 40},
+            width = 740 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
+
+        var x = d3.scale.ordinal()
+            .rangeRoundBands([0, width], .1);
+
+        var y = d3.scale.linear()
+            .range([height, 0]);
+
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom");
+
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left");
+
+        var tip = d3.tip()
+          .attr('class', 'd3-tip')
+          .offset([-10, 0])
+          .html(function(d) {
+            return "<strong>" + d.nb + " "+App.dataInfo[App.filtre][5]+"</strong>";
+          })
+
+        var svg = d3.select("#graph").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        svg.call(tip);
+
+          x.domain(data.map(function(d) { console.log(d); return d.legende; }));
+          y.domain([0, d3.max(data, function(d) { return d.nb; })]);
+
+          svg.append("g")
+              .attr("class", "x axis")
+              .attr("transform", "translate(0," + height + ")")
+              .call(xAxis);
+
+          svg.append("g")
+              .attr("class", "y axis")
+              .call(yAxis);
+
+          svg.selectAll(".bar")
+              .data(data)
+            .enter().append("rect")
+              .attr("class", "bar")
+              .attr("x", function(d) { return x(d.legende); })
+              .attr("width", x.rangeBand())
+              .attr("y", function(d) { return y(d.nb); })
+              .attr("height", function(d) { return height - y(d.nb); })
+              .on('mouseover', tip.show)
+              .on('mouseout', tip.hide);
+
+          
+            var ticks = svg.selectAll(".y.axis .tick");
+            ticks.each(function() { d3.select(this).append("circle").attr("r", 4); });
+            ticks.selectAll("line").remove();
+
     }
 
 
