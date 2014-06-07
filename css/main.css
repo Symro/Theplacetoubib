@@ -321,9 +321,13 @@ section.splashscreen a{
     z-index: 40;
     cursor: url(../img/cursor.png), auto;
 }
-.help p{
+
+.help div {
+    width: 222px;
+}
+.help p, h1{
     margin:0;
-    width:235px;
+    /*width:235px;*/
 }
 
 .help article{
@@ -331,19 +335,37 @@ section.splashscreen a{
 }
 .help div:nth-child(1){
     position:relative;
-    top:90px;
+    top:120px;
     left:35%;
 }
+.help div:nth-child(1) h1::after{
+    left: -55px;
+    bottom:32px;
+}
+.help div:nth-child(1) h1::before{
+    bottom:67px;
+}
+
 .help div:nth-child(2){
     position:relative;
-    top:26px;
-    left:80%;
-
+    width:100px;
+    top:0px;
+    left:88%;
+}
+.help div:nth-child(2) h1::after{
+    border-left: 0px solid white;
 }
 .help div:nth-child(3){
     position:relative;
-    top:85px;
-    left:75%;
+    top:96px;
+    left:72%;
+}
+.help div:nth-child(3) h1::after{
+    left: -55px;
+    bottom:75px;
+}
+.help div:nth-child(3) h1::before{
+    bottom:107px;
 }
 .help div:nth-child(4){
     position:relative;
@@ -362,7 +384,7 @@ section.splashscreen a{
     height:40px;
     border-bottom: 1px solid white;
     border-left: 1px solid white;
-    left: -45px;
+    left: -55px;
     bottom:53px;
     position: absolute;
 }
@@ -378,8 +400,26 @@ section.splashscreen a{
     -o-border-radius: 10px;
     border-radius: 10px;
     position: absolute;
-    left: -50px;
-    bottom: 78px;
+    left: -60px;
+    bottom: 88px;
+}
+.help div:nth-child(2) h1::after{
+    border-left: 0px solid white;
+}
+
+.help div:nth-child(2) h1::before{
+    display: block;
+    content: '';
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255,255,255,1);
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -o-border-radius: 10px;
+    border-radius: 10px;
+    position: absolute;
+    left: -60px;
+    bottom: 48px;
 }
 /* ==========================================================================
    Tuto
@@ -494,7 +534,7 @@ section.splashscreen a{
    Dico
    ========================================================================== */
 
-   .dico{
+.dico{
     background-color: #1f1e1e;
     width: calc(45% - 10px);
     height: 100%;
@@ -810,6 +850,20 @@ section#leftSide{
  #rightSide footer a:hover{
     color:#63b1be;
  }
+
+footer .partage{
+    text-align: center;
+    padding-left: 30px;
+    float: left;
+    background-color: #31393b;
+
+}
+footer .partage:hover{
+    background-color:#586b71;
+}
+#rightSide footer .partage a:hover{
+    color:white;
+}
 
  #rightSide #chiffreDept span,
  #rightSide #chiffreFrance span{

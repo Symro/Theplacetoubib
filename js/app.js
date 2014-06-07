@@ -625,7 +625,7 @@ $(document).ready(function() {
 
     $('body').on("click", ".credits", function(e) {
         e.preventDefault();
-        $(this).parent('#credits').addClass('animated fadeOut').delay(800).queue(function(next) {
+        $(this).parent('#credits').addClass('animated fadeOut').delay(700).queue(function(next) {
             $(this).addClass('hidden');
             next();
         });
@@ -660,7 +660,7 @@ $(document).ready(function() {
 
     $('body').on("click", ".help", function(e) {
         e.preventDefault();
-        $(this).addClass('animated fadeOut').delay(800).queue(function(next) {
+        $(this).addClass('animated fadeOut').delay(700).queue(function(next) {
             $(this).addClass('hidden');
             next();
         });
