@@ -233,6 +233,9 @@ $(document).ready(function() {
         var graph_data = (App.dataInfo[App.filtre][6] != "NC") ? JSON.parse(App.dataInfo[App.filtre][6]) : false;
         App.displayGraph(graph_data);
 
+        // Affichage GaugeChart
+        // App.displayGaugeChart(".chart-gauge", 40);
+
         // Update ToolTip Graph
         if (graph_data) {
             var graph_data_info = [];
@@ -631,6 +634,96 @@ $(document).ready(function() {
             .attr("r", 12);
 
     }
+
+
+
+    // Source initiale : http://bl.ocks.org/mbostock/5100636
+
+    // Fonction avec 2 paramètres obligatoires : 
+    //      - 1 string  > selecteur CSS du conteneur
+    //      - 1 number OU string entre 0 et 100 > pourcentage
+    App.displayGaugeChart = function( container, pourcentage ){
+
+        pourcentage = parseFloat(pourcentage)/100;
+        $(container).empty();
+
+        var width = 240,
+        height = 240,
+        τ = 2 * Math.PI;
+
+        var arc = d3.svg.arc()
+            .innerRadius(85)
+            .outerRadius(110)
+            .startAngle(0);
+
+        var svg = d3.select(container).append("svg")
+            .attr("width", width)
+            .attr("height", height)
+          .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+
+        svg.append("circle")
+            .attr("cx", 0)
+            .attr("cy", 0)
+            .attr("r", 96.5)
+            .style({
+                "fill":"transparent","stroke":"#383838","stroke-dasharray":"1, 15",
+                "stroke-width":"3px","stroke-linecap":"round"
+            });
+
+        svg.append("circle")
+            .attr("cx", 0)
+            .attr("cy", 0)
+            .attr("r", 52)
+            .style("fill","#282828");
+
+        var foreground = svg.append("path")
+            .attr("class","progressionPourcentage")
+            .datum({endAngle: pourcentage * τ})
+            .style("fill", "#ff3636")
+            .style("opacity",".5")
+            .attr("d", arc);
+
+        var rectangle = svg.append("rect")
+            .attr("x",0)
+            .attr("y",-109)
+            .attr("width", 4)
+            .attr("height", 24)
+            .style("fill","#FFF");
+
+    }
+
+    // Fonction avec 2 paramètres obligatoires (cf plus haut > App.displayGaugeChart)
+    App.updateGaugeChart = function( container, pourcentage ){
+        pourcentage = parseFloat(pourcentage)/100;
+
+        if($(container).length == 0){
+            console.log("/!\ Ce container ("+container+") n'existe pas dans le DOM..");
+            return false;
+        }
+
+        var arc = d3.svg.arc()
+            .innerRadius(85)
+            .outerRadius(110)
+            .startAngle(0);
+
+        d3.select(container+" .progressionPourcentage").transition()
+            .duration(750)
+            .call(arcTween, pourcentage * 2 * Math.PI);
+
+        function arcTween(transition, newAngle) {
+            transition.attrTween("d", function(d) {
+                var interpolate = d3.interpolate(d.endAngle, newAngle);
+                return function(t) {
+                  d.endAngle = interpolate(t);
+                  return arc(d);
+                };
+            });
+        }
+
+    }
+
+
 
     App.checkHash();
 
