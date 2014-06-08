@@ -310,6 +310,9 @@ section.splashscreen a{
     margin-top:5px;
 }
 
+/* ==========================================================================
+   Help
+   ========================================================================== */
 
 
 .help{
@@ -481,6 +484,8 @@ section.splashscreen a{
 .tutoLeftSide h1{
     position:relative;
 }
+
+
 .tutoLeftSide h1::after{
     display: block;
     content: '';
@@ -769,10 +774,14 @@ menu, ol, ul{
 
 }
 
+
 .text-center {
   text-align: center;
 }
-/*Left Side Style*/
+/* ==========================================================================
+   Left Side
+   ========================================================================== */
+
 section#leftSide{
     height: 100%;
 
@@ -780,8 +789,12 @@ section#leftSide{
 #leftSide{
     float: left;
     width: 50%;
-    padding: 0px 0 0 50px;
+    padding: 0;
     margin: 0 0 0 0;
+}
+#leftSide .content h2{
+    color:#546871;
+    text-shadow:1px 1px 1px white;
 }
 
 #leftSide #map svg{
@@ -789,7 +802,56 @@ section#leftSide{
     top:0;
 }
 
-/*Right Side Style*/
+
+#echelle{
+    width:50%;
+    height: 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: flex-start;
+    border:1px solid #86a3aa;
+    position: absolute;
+    left:25%;
+    bottom: 8%;
+
+}
+
+.firstPart{
+    width: 25%;
+    height:10px;
+    position: relative;
+    left:0px;
+    background-color: #dff0f2;
+    border-radius:10px 0px 0px 10px; 
+}
+#echelle span{
+    position: relative;
+    top:10px;
+    left:90%;
+}
+.secondPart{
+    width: 25%;
+    height:10px;
+    margin: auto;
+    background-color: #bee0e4;
+}
+.thirdPart{
+    width: 25%;
+    height:10px;
+margin: auto;
+    background-color: #8ec9d0;
+}
+.fourthPart{
+    width: 25%;
+    height:10px;
+    margin: auto;
+    background-color: #63b1be;
+    border-radius:0px 10px 10px 0px; 
+}
+/* ==========================================================================
+   Right Side
+   ========================================================================== */
+
 #rightSide{
     float: right;
     width: 45%;
@@ -802,12 +864,25 @@ section#leftSide{
     background-color: #1f1e1e;
     color: white;
 }
-
+#rightSide::before{
+    display: block;
+    content: '';
+    position: absolute;   
+    width: 0; 
+    height: 0; 
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    
+    border-left: 10px solid #e7f0f3;
+    left: 0px;
+    top:87px;
+}
 
 #rightSide p{
     color: white;
 
 }
+
 #rightSide h2 {
     font-weight: 400;
 
@@ -892,7 +967,7 @@ footer .partage:hover{
 }
 
 #rightSide footer .partage .buttonShare a{
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .buttonShare{
@@ -902,7 +977,7 @@ footer .partage:hover{
     float: left;
     position: absolute;
     bottom: 35px;
-    left: 50px;
+    left: 60px;
     -webkit-transition: .2s all;
     -moz-transition: .2s all;
     -o-transition: .2s all;
@@ -911,7 +986,7 @@ footer .partage:hover{
 .buttonShare .triangle{
     position: absolute;
     top: 40px;
-    left: 45px;
+    left: 33px;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-bottom: 10px solid #546871;
