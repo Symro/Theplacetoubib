@@ -1245,6 +1245,25 @@ svg.barChart .circleTopTransparent{
     opacity:0.5;
 }
 
+
+/* GAUGE CHART ou Arc Tween */ 
+
+.chart-gauge{
+  width: 100%;
+  margin: 50px auto; 
+} 
+.chart-filled{
+    fill: steelblue;
+}
+.chart-empty{
+    fill: #dedede;
+}
+.needle, .needle-center{
+    fill: #464A4F;
+}
+
+
+
 /* ==========================================================================
    Media Queries
    ========================================================================== */
