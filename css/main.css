@@ -1104,7 +1104,7 @@ background-position: right center;
   line-height: 1;
   font-weight: bold;
   padding: 12px;
-  background: rgba(0, 0, 0, 0.8);
+  background: #2b2b2b;
   color: #fff;
   border-radius: 2px;
 }
@@ -1113,10 +1113,10 @@ background-position: right center;
 .d3-tip:after {
   box-sizing: border-box;
   display: inline;
-  font-size: 10px;
+  font-size: 13px;
   width: 100%;
-  line-height: 1;
-  color: rgba(0, 0, 0, 0.8);
+  line-height: 0.5;
+  color: #2b2b2b;
   content: "\25BC";
   position: absolute;
   text-align: center;
@@ -1130,7 +1130,29 @@ background-position: right center;
 }
 
 
+/* BAR CHART */
 
+svg.barChart{
+
+}
+svg.barChart text{
+    fill:#898989;
+}
+svg.barChart path.domain{
+    stroke:none;
+}
+svg.barChart .x.axis text{
+    font-size:13px;
+    text-transform:uppercase;
+}
+svg.barChart .barTop,
+svg.barChart .circleTop,
+svg.barChart .circleTopTransparent{
+    fill:#FFF;
+}
+svg.barChart .circleTopTransparent{
+    opacity:0.5;
+}
 
 /* ==========================================================================
    Media Queries

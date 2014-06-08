@@ -364,7 +364,7 @@ $(document).ready(function() {
             App.dom.graph.append("<br/> dataGraph : " + dataGraph);
 
             if (App.filtre == "Temps_acces_medecin") {
-                var legendes = ["Gynecologue", "Ophtalmogue", "Dentiste", "Infirmier"];
+                var legendes = ["Gynécologue", "Ophtalmologiste", "Dentiste", "Infirmier"];
                 dataGraph = ArrayToJSON(dataGraph, legendes);
                 App.displayBarChart(dataGraph);
             }
@@ -481,11 +481,8 @@ $(document).ready(function() {
     }
 
     App.displayBarChart = function(data) {
-        /*
-        - TO DO :
-            couleurs
-            http://stackoverflow.com/questions/17734502/rounded-values-for-color-in-d3-scale
-        */
+
+        $('.d3-tip').remove();
 
         var margin = {
             top: 40,
@@ -493,11 +490,11 @@ $(document).ready(function() {
             bottom: 30,
             left: 40
         },
-            width = 740 - margin.left - margin.right,
-            height = 400 - margin.top - margin.bottom;
+            width = 640 - margin.left - margin.right,
+            height = 300 - margin.top - margin.bottom;
 
         var x = d3.scale.ordinal()
-            .rangeRoundBands([0, width], .1);
+            .rangeRoundBands([0, width], .4);
 
         var y = d3.scale.linear()
             .range([height, 0]);
@@ -508,11 +505,12 @@ $(document).ready(function() {
 
         var yAxis = d3.svg.axis()
             .scale(y)
-            .orient("left");
+            .orient("left")
+            .ticks(7);
 
         var tip = d3.tip()
             .attr('class', 'd3-tip')
-            .offset([-10, 0])
+            .offset([-25, 0])
             .html(function(d) {
                 return "<strong>" + d.nb + " " + App.dataInfo[App.filtre][5] + "</strong>";
             })
@@ -520,18 +518,22 @@ $(document).ready(function() {
         var svg = d3.select("#graph").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
+            .attr("class", "barChart")
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         svg.call(tip);
 
         x.domain(data.map(function(d) {
-            console.log(d);
             return d.legende;
         }));
         y.domain([0, d3.max(data, function(d) {
             return d.nb;
         })]);
+
+        var valMax = d3.max(data, function(d){
+            return d.nb;
+        });
 
         svg.append("g")
             .attr("class", "x axis")
@@ -539,9 +541,17 @@ $(document).ready(function() {
             .call(xAxis);
 
         svg.append("g")
+            .attr("class", "fakeXY")
+            .append("line").attr({"x1":"0","x2":"0","y1":"0","y2":height}).style("stroke","#2b2b2b");
+
+        svg.select(".fakeXY")
+            .append("line").attr({"x1":"0","x2":"580","y1":height,"y2":height}).style("stroke","#2b2b2b");
+
+        svg.append("g")
             .attr("class", "y axis")
             .call(yAxis);
-
+         
+        // affiche les bars  
         svg.selectAll(".bar")
             .data(data)
             .enter().append("rect")
@@ -556,18 +566,71 @@ $(document).ready(function() {
             .attr("height", function(d) {
                 return height - y(d.nb);
             })
+            .style("fill", function(d){
+                var step = valMax/4;
+
+                if(d.nb == valMax){ return "#22352c"; }
+                else if(d.nb < step*4 && d.nb >= step*3){ return "#295741"; }
+                else if(d.nb < step*3 && d.nb >= step*2){ return "#286d4c"; }
+                else if(d.nb < step*2 && d.nb >= step){ return "#278759"; }
+                else{ return "#219e62"; }
+
+            })
             .on('mouseover', tip.show)
             .on('mouseout', tip.hide);
 
+        // ajout les triangles sous chaque bar
+        svg.selectAll(".triangle")
+            .data(data)
+            .enter()    
+            .append("svg:path")
+            .attr("transform", function(d) { return "translate(" + ( x( d.legende )+x.rangeBand()/2 ) + ", "+ (height+6) +")"; })
+            .attr("d", d3.svg.symbol().type("triangle-down"))
+            .style("fill", "#2b2b2b");
 
+        // remplace les tirets par des ronds
         var ticks = svg.selectAll(".y.axis .tick");
         ticks.each(function() {
-            d3.select(this).append("circle").attr("r", 4);
+            d3.select(this).append("circle").attr("r", 4).attr("fill","#4c4c4c");
+            d3.select(this).selectAll("text").attr("x", -16);
         });
         ticks.selectAll("line").remove();
 
-    }
+        // descend les labels
+        var ticksText = svg.selectAll(".x.axis .tick");
+        ticksText.each(function() {
+            d3.select(this).selectAll("text").attr("y", 18);
+        });
 
+        // ajoute le trait blanc au dessus de chaque Bar
+        svg.selectAll(".barTop")
+            .data(data)
+            .enter().append("rect")
+            .attr("class", "barTop")
+            .attr("x", function(d) {return x(d.legende);})
+            .attr("width", x.rangeBand())
+            .attr("y", function(d) {return y(d.nb)-3;})
+            .attr("height", function(d) {return 5;})
+
+        // ajoute le cercle blanc en haut & au centre de chaque Bar
+        svg.selectAll(".circleTop")
+            .data(data)
+            .enter().append("circle")
+            .attr("class", "circleTop")
+            .attr("cx", function(d) {return x(d.legende)+x.rangeBand()/2;})
+            .attr("cy", function(d) {return y(d.nb)-1;})
+            .attr("r", 8);
+
+        // ajoute le cercle blanc transparent en haut & au centre de chaque Bar
+        svg.selectAll(".circleTopTransparent")
+            .data(data)
+            .enter().append("circle")
+            .attr("class", "circleTopTransparent")
+            .attr("cx", function(d) {return x(d.legende)+x.rangeBand()/2;})
+            .attr("cy", function(d) {return y(d.nb)-1;})
+            .attr("r", 12);
+
+    }
 
     App.checkHash();
 
