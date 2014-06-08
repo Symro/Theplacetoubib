@@ -71,7 +71,7 @@ $(document).ready(function() {
 
         App.displayChoisirDept();
 
-        console.log("Welcome Home ! ");
+        // console.log("Welcome Home ! ");
     });
 
     App.router.on("route:tutoriel", function() {
@@ -87,7 +87,9 @@ $(document).ready(function() {
     App.router.on("route:filtre", function(filtre, dept) {
         App.tuto = false;
         App.dom.tuto.fadeOut();
-        console.log("Filtre : " + filtre + "  Dept : " + dept);
+        // console.log("Filtre : " + filtre + "  Dept : " + dept);
+
+        App.colorDisplay();
 
         if (dept != "null" && (dept > 0 && dept < 96 || dept == "2A" || dept == "2B")) {
             App.displayInfoDept(dept);
@@ -233,36 +235,35 @@ $(document).ready(function() {
 
         // Update ToolTip Graph
         if (graph_data) {
-            var graph_data_info             = [];
-            var graph_data_tooltip_source   = [];
-            var graph_data_tooltip_url      = [];
-            var graph_data_tooltip_annee    = [];
+            var graph_data_info = [];
+            var graph_data_tooltip_source = [];
+            var graph_data_tooltip_url = [];
+            var graph_data_tooltip_annee = [];
 
             // récupère les infos concernant toutes les datas et vire les doublons
             $.each(graph_data, function(index, value) {
                 graph_data_info[index] = App.dataInfo[value];
-                graph_data_tooltip_annee.push( App.dataInfo[value][2] );
-                graph_data_tooltip_source.push( App.dataInfo[value][3] );
-                graph_data_tooltip_url.push( App.dataInfo[value][4] );
+                graph_data_tooltip_annee.push(App.dataInfo[value][2]);
+                graph_data_tooltip_source.push(App.dataInfo[value][3]);
+                graph_data_tooltip_url.push(App.dataInfo[value][4]);
             });
 
             graph_data_tooltip_source = _.uniq(graph_data_tooltip_source);
-            graph_data_tooltip_url    = _.uniq(graph_data_tooltip_url);
-            graph_data_tooltip_annee  = _.uniq(graph_data_tooltip_annee);
-            graph_data_tooltip        = _.zip(graph_data_tooltip_source,graph_data_tooltip_url,graph_data_tooltip_annee);
+            graph_data_tooltip_url = _.uniq(graph_data_tooltip_url);
+            graph_data_tooltip_annee = _.uniq(graph_data_tooltip_annee);
+            graph_data_tooltip = _.zip(graph_data_tooltip_source, graph_data_tooltip_url, graph_data_tooltip_annee);
 
 
             // affichage des datas dans la tooltip
             var tooltip_container = App.dom.tooltip_graph.find("div:first");
             tooltip_container.empty().append("<h5>Provenance des datas</h5>");
-            for(var i=0; i< graph_data_tooltip.length; i++){
-                if(graph_data_tooltip[i][1] != "NC"){
-                    tooltip_container.append("<div><p><span>Source : </span><a href=\""+graph_data_tooltip[i][1]+"\" title=\""+graph_data_tooltip[i][0]+"\" target=\"_blank\">"+graph_data_tooltip[i][0]+"</a></p> <p><span>Année : </span><span>"+graph_data_tooltip[i][2]+"</span></p></div>");
+            for (var i = 0; i < graph_data_tooltip.length; i++) {
+                if (graph_data_tooltip[i][1] != "NC") {
+                    tooltip_container.append("<div><p><span>Source : </span><a href=\"" + graph_data_tooltip[i][1] + "\" title=\"" + graph_data_tooltip[i][0] + "\" target=\"_blank\">" + graph_data_tooltip[i][0] + "</a></p> <p><span>Année : </span><span>" + graph_data_tooltip[i][2] + "</span></p></div>");
+                } else {
+                    tooltip_container.append("<div><p><span>Source : </span>" + graph_data_tooltip[i][0] + "</p> </div>");
                 }
-                else{
-                    tooltip_container.append("<div><p><span>Source : </span>"+graph_data_tooltip[i][0]+"</p> </div>");
-                }
-            }                
+            }
 
         }
 
@@ -287,7 +288,6 @@ $(document).ready(function() {
         //
         // l'utilisateur n'a pas cliqué > URL direct donc..
         //  > Affichage du filtre et dept de l'URL
-
 
         if (customRegExp) {
             console.log('on a un filtre : ' + customRegExp[1]);
@@ -321,7 +321,7 @@ $(document).ready(function() {
     }
 
     App.displayChoisirDept = function() {
-        console.log("TUTO STEP 2 : Choisissez un département svp");
+        // console.log("TUTO STEP 2 : Choisissez un département svp");
 
         $('#rightSide .content').fadeOut(0, function() {
             $('#rightSide .tutoDepartement').fadeIn();
@@ -333,14 +333,17 @@ $(document).ready(function() {
     App.displayGraph = function(data) {
         App.dom.graph.empty();
 
-        function ArrayToJSON(ArrayNumbers, ArrayLegends){
-            if( !_.isArray(ArrayNumbers) || !_.isArray(ArrayLegends) || ArrayNumbers.length != ArrayLegends.length ){
+        function ArrayToJSON(ArrayNumbers, ArrayLegends) {
+            if (!_.isArray(ArrayNumbers) || !_.isArray(ArrayLegends) || ArrayNumbers.length != ArrayLegends.length) {
                 alert("Problème avec les array ou leurs contenus");
             }
 
             var tab = [];
-            for(var i=0; i<ArrayNumbers.length; i++){
-                tab.push( { "nb": ArrayNumbers[i] , "legende" : ArrayLegends[i] } );
+            for (var i = 0; i < ArrayNumbers.length; i++) {
+                tab.push({
+                    "nb": ArrayNumbers[i],
+                    "legende": ArrayLegends[i]
+                });
             }
             return tab;
         }
@@ -355,13 +358,13 @@ $(document).ready(function() {
             $.each(data, function(index, value) {
                 //App.dom.graph.append("Index : " + index + " Value : " + value + " <br/> ");
                 console.log("Index : " + index + " Value : " + value + " <br/> ");
-                dataGraph.push( parseInt(App.getInfoFiltre(App.dept, value)) );
+                dataGraph.push(parseInt(App.getInfoFiltre(App.dept, value)));
             });
 
-            App.dom.graph.append("<br/> dataGraph : " + dataGraph );
+            App.dom.graph.append("<br/> dataGraph : " + dataGraph);
 
-            if(App.filtre == "Temps_acces_medecin"){
-                var legendes = ["Gynecologue","Ophtalmogue","Dentiste","Infirmier"];
+            if (App.filtre == "Temps_acces_medecin") {
+                var legendes = ["Gynécologue", "Ophtalmologiste", "Dentiste", "Infirmier"];
                 dataGraph = ArrayToJSON(dataGraph, legendes);
                 App.displayBarChart(dataGraph);
             }
@@ -393,19 +396,105 @@ $(document).ready(function() {
         }
     }
 
-    App.displayBarChart = function(data){
-        /* 
-        - TO DO : 
-            couleurs
-            http://stackoverflow.com/questions/17734502/rounded-values-for-color-in-d3-scale 
-        */
+    App.colorDisplay = function() {
 
-        var margin = {top: 40, right: 20, bottom: 30, left: 40},
-            width = 740 - margin.left - margin.right,
-            height = 400 - margin.top - margin.bottom;
+        var activeFilter = App.filtre;
+
+        var scale = App.dataInfo[activeFilter][7];
+        scale = JSON.parse(scale);
+        console.log(scale);
+
+        for (i = 95; i > -1; i--) {
+
+            var data = App.data[i][activeFilter];
+            var numDept = App.data[i].Num_dpt;
+
+            if (data <= scale[0]) {
+
+                d3.selectAll("#france path.departement")
+                    .filter(function(d) {
+                        return d.properties.CODE_DEPT == numDept;
+                    })
+                    .transition().duration(500)
+                    .attr("fill", "#dff0f2");
+
+                d3.selectAll("#paris path.departement")
+                    .filter(function(d) {
+                        return d.properties.CODE_DEPT == numDept;
+                    })
+                    .transition().duration(500)
+                    .attr("fill", "#dff0f2");
+
+            } else if (data <= scale[1] && data > scale[0]) {
+
+                d3.selectAll("#france path.departement")
+                    .filter(function(d) {
+                        return d.properties.CODE_DEPT == numDept;
+                    })
+                    .transition().duration(500)
+                    .attr("fill", "#bee0e4");
+
+                d3.selectAll("#paris path.departement")
+                    .filter(function(d) {
+                        return d.properties.CODE_DEPT == numDept;
+                    })
+                    .transition().duration(500)
+                    .attr("fill", "#bee0e4");
+
+            } else if (data <= scale[2] && data > scale[1]) {
+
+                d3.selectAll("#france path.departement")
+                    .filter(function(d) {
+                        return d.properties.CODE_DEPT == numDept;
+                    })
+                    .transition().duration(500)
+                    .attr("fill", "#8ec9d0");
+
+                d3.selectAll("#paris path.departement")
+                    .filter(function(d) {
+                        return d.properties.CODE_DEPT == numDept;
+                    })
+                    .transition().duration(500)
+                    .attr("fill", "#8ec9d0");
+
+
+            } else if (data > scale[2]) {
+
+                d3.selectAll("#france path.departement")
+                    .filter(function(d) {
+                        return d.properties.CODE_DEPT == numDept;
+                    })
+                    .transition().duration(500)
+                    .attr("fill", "#63b1be");
+
+                d3.selectAll("#paris path.departement")
+                    .filter(function(d) {
+                        return d.properties.CODE_DEPT == numDept;
+                    })
+                    .transition().duration(500)
+                    .attr("fill", "#63b1be");
+
+            }
+
+        }
+
+    }
+
+    App.displayBarChart = function(data) {
+
+        $('.d3-tip').remove();
+
+        var margin = {
+            top: 40,
+            right: 20,
+            bottom: 30,
+            left: 40
+        },
+            width = 640 - margin.left - margin.right,
+            height = 300 - margin.top - margin.bottom;
 
         var x = d3.scale.ordinal()
-            .rangeRoundBands([0, width], .1);
+            .rangeRoundBands([0, width], .4);
 
         var y = d3.scale.linear()
             .range([height, 0]);
@@ -416,53 +505,132 @@ $(document).ready(function() {
 
         var yAxis = d3.svg.axis()
             .scale(y)
-            .orient("left");
+            .orient("left")
+            .ticks(7);
 
         var tip = d3.tip()
-          .attr('class', 'd3-tip')
-          .offset([-10, 0])
-          .html(function(d) {
-            return "<strong>" + d.nb + " "+App.dataInfo[App.filtre][5]+"</strong>";
-          })
+            .attr('class', 'd3-tip')
+            .offset([-25, 0])
+            .html(function(d) {
+                return "<strong>" + d.nb + " " + App.dataInfo[App.filtre][5] + "</strong>";
+            })
 
         var svg = d3.select("#graph").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
-          .append("g")
+            .attr("class", "barChart")
+            .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         svg.call(tip);
 
-          x.domain(data.map(function(d) { console.log(d); return d.legende; }));
-          y.domain([0, d3.max(data, function(d) { return d.nb; })]);
+        x.domain(data.map(function(d) {
+            return d.legende;
+        }));
+        y.domain([0, d3.max(data, function(d) {
+            return d.nb;
+        })]);
 
-          svg.append("g")
-              .attr("class", "x axis")
-              .attr("transform", "translate(0," + height + ")")
-              .call(xAxis);
+        var valMax = d3.max(data, function(d){
+            return d.nb;
+        });
 
-          svg.append("g")
-              .attr("class", "y axis")
-              .call(yAxis);
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
 
-          svg.selectAll(".bar")
-              .data(data)
+        svg.append("g")
+            .attr("class", "fakeXY")
+            .append("line").attr({"x1":"0","x2":"0","y1":"0","y2":height}).style("stroke","#2b2b2b");
+
+        svg.select(".fakeXY")
+            .append("line").attr({"x1":"0","x2":"580","y1":height,"y2":height}).style("stroke","#2b2b2b");
+
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis);
+         
+        // affiche les bars  
+        svg.selectAll(".bar")
+            .data(data)
             .enter().append("rect")
-              .attr("class", "bar")
-              .attr("x", function(d) { return x(d.legende); })
-              .attr("width", x.rangeBand())
-              .attr("y", function(d) { return y(d.nb); })
-              .attr("height", function(d) { return height - y(d.nb); })
-              .on('mouseover', tip.show)
-              .on('mouseout', tip.hide);
+            .attr("class", "bar")
+            .attr("x", function(d) {
+                return x(d.legende);
+            })
+            .attr("width", x.rangeBand())
+            .attr("y", function(d) {
+                return y(d.nb);
+            })
+            .attr("height", function(d) {
+                return height - y(d.nb);
+            })
+            .style("fill", function(d){
+                var step = valMax/4;
 
-          
-            var ticks = svg.selectAll(".y.axis .tick");
-            ticks.each(function() { d3.select(this).append("circle").attr("r", 4); });
-            ticks.selectAll("line").remove();
+                if(d.nb == valMax){ return "#22352c"; }
+                else if(d.nb < step*4 && d.nb >= step*3){ return "#295741"; }
+                else if(d.nb < step*3 && d.nb >= step*2){ return "#286d4c"; }
+                else if(d.nb < step*2 && d.nb >= step){ return "#278759"; }
+                else{ return "#219e62"; }
+
+            })
+            .on('mouseover', tip.show)
+            .on('mouseout', tip.hide);
+
+        // ajout les triangles sous chaque bar
+        svg.selectAll(".triangle")
+            .data(data)
+            .enter()    
+            .append("svg:path")
+            .attr("transform", function(d) { return "translate(" + ( x( d.legende )+x.rangeBand()/2 ) + ", "+ (height+6) +")"; })
+            .attr("d", d3.svg.symbol().type("triangle-down"))
+            .style("fill", "#2b2b2b");
+
+        // remplace les tirets par des ronds
+        var ticks = svg.selectAll(".y.axis .tick");
+        ticks.each(function() {
+            d3.select(this).append("circle").attr("r", 4).attr("fill","#4c4c4c");
+            d3.select(this).selectAll("text").attr("x", -16);
+        });
+        ticks.selectAll("line").remove();
+
+        // descend les labels
+        var ticksText = svg.selectAll(".x.axis .tick");
+        ticksText.each(function() {
+            d3.select(this).selectAll("text").attr("y", 18);
+        });
+
+        // ajoute le trait blanc au dessus de chaque Bar
+        svg.selectAll(".barTop")
+            .data(data)
+            .enter().append("rect")
+            .attr("class", "barTop")
+            .attr("x", function(d) {return x(d.legende);})
+            .attr("width", x.rangeBand())
+            .attr("y", function(d) {return y(d.nb)-3;})
+            .attr("height", function(d) {return 5;})
+
+        // ajoute le cercle blanc en haut & au centre de chaque Bar
+        svg.selectAll(".circleTop")
+            .data(data)
+            .enter().append("circle")
+            .attr("class", "circleTop")
+            .attr("cx", function(d) {return x(d.legende)+x.rangeBand()/2;})
+            .attr("cy", function(d) {return y(d.nb)-1;})
+            .attr("r", 8);
+
+        // ajoute le cercle blanc transparent en haut & au centre de chaque Bar
+        svg.selectAll(".circleTopTransparent")
+            .data(data)
+            .enter().append("circle")
+            .attr("class", "circleTopTransparent")
+            .attr("cx", function(d) {return x(d.legende)+x.rangeBand()/2;})
+            .attr("cy", function(d) {return y(d.nb)-1;})
+            .attr("r", 12);
 
     }
-
 
     App.checkHash();
 
@@ -522,7 +690,7 @@ $(document).ready(function() {
 
 
         if (li.hasClass('prefiltre') == true) {
-            console.log("Prefiltre");
+            // console.log("Prefiltre");
             App.prefiltreEtat = ["", "", "", ""];
             App.prefiltreEtat[li.index()] = "active";
             App.counterDecimal = li.data('counter-decimal');
@@ -572,14 +740,14 @@ $(document).ready(function() {
         var info = $this.data("info-json");
 
         // Vérifions que nous ne sommes pas sur un préfiltre OU notre exception
-        if($this.parents("li").hasClass("prefiltre") == false && info != "Nombre_hopitaux"){
+        if ($this.parents("li").hasClass("prefiltre") == false && info != "Nombre_hopitaux") {
             // Changement URL - checkons le HASH
-            console.log('App.checkHash() from Ligne ~460');
+            // console.log('App.checkHash() from Ligne ~460');
             App.checkHash();
         }
         // Exception du menu : le nombre d'hopitaux
         // > seul filtre accessible en niveau 1
-        if(info == "Nombre_hopitaux"){
+        if (info == "Nombre_hopitaux") {
             e.preventDefault();
             $this.parents("li").addClass("active");
             App.counterDecimal = $this.data("counter-decimal");
@@ -781,6 +949,9 @@ $(document).ready(function() {
                         d3.selectAll("path.departement").classed("active", false);
                         d3.select(this).classed("active", true);
                     });
+
+                // Callback
+                mapObject.params.rendered.call();
             });
 
             // Cercle zoom
@@ -790,9 +961,6 @@ $(document).ready(function() {
                 .attr("r", this.params.circle.r)
                 .style("fill", this.params.circle.fill)
                 .style("opacity", this.params.circle.opacity);
-
-            // Callback
-            mapObject.params.rendered.call();
 
         },
 
@@ -879,13 +1047,41 @@ $(document).ready(function() {
             // Callback
             mapObject.params.zoomed.call();
 
+        },
+
+        displayActiveDept: function(deptId) {
+
+            // On rend acif le departement indiqué dans l'url
+            d3.selectAll("#france path.departement")
+                .filter(function(d) {
+                    return d.properties.CODE_DEPT == deptId;
+                })
+                .classed("active", true);
+
         }
+
     }
 
     mapObject.init({
 
         rendered: function() {
+
             console.log('map rendered');
+
+            // var hash = window.location.hash;
+            // // analyse du hash actuel
+            // var customRegExp = hash.match("#/filtre/([A-Za-z0-9_]+)(/dept_([0-9]{2}))?");
+
+            // if (customRegExp[3]) {
+
+            //     mapObject.displayActiveDept(customRegExp[3]);
+
+            // }
+
+            mapObject.renderZoom();
+
+            $("#paris").css("display", "none");
+
         },
 
         zoomed: function() {
