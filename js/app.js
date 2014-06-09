@@ -334,17 +334,32 @@ $(document).ready(function() {
     App.displayGraph = function(data) {
         App.dom.graph.empty();
 
-        function ArrayToJSON(ArrayNumbers, ArrayLegends) {
+        // Permet d'assembler 2 tableaux de même longueur ensemble
+        // et éventuellement de convertir le premier (les chiffres) en %
+        function ArrayToJSON(ArrayNumbers, ArrayLegends, ConvertInPourcent) {
             if (!_.isArray(ArrayNumbers) || !_.isArray(ArrayLegends) || ArrayNumbers.length != ArrayLegends.length) {
                 alert("Problème avec les array ou leurs contenus");
             }
 
             var tab = [];
+            var total = 0;
+            $.each(ArrayNumbers, function() {
+                total += this;
+            });
+
             for (var i = 0; i < ArrayNumbers.length; i++) {
-                tab.push({
-                    "nb": ArrayNumbers[i],
-                    "legende": ArrayLegends[i]
-                });
+                if (ConvertInPourcent === true) {
+                    var nb2pourc = ArrayNumbers[i] * 100 / total;
+                    tab.push({
+                        "nb": nb2pourc.toFixed(2),
+                        "legende": ArrayLegends[i]
+                    });
+                } else {
+                    tab.push({
+                        "nb": ArrayNumbers[i],
+                        "legende": ArrayLegends[i]
+                    });
+                }
             }
             return tab;
         }
@@ -367,24 +382,49 @@ $(document).ready(function() {
             if (App.filtre == "Temps_acces_medecin") {
                 var legendes = ["Gynécologue", "Ophtalmologiste", "Dentiste", "Infirmier"];
                 dataGraph = ArrayToJSON(dataGraph, legendes);
+                console.log(dataGraph);
                 App.displayBarChart(dataGraph);
+            } else if (App.filtre == "Nb_medecin") {
+
+                var legendes = ["Libéraux", "Salariés"];
+
+                App.displayPieChart(dataGraph);
+
             }
 
             // Gestion du Gauge Chart
-            if(App.filtre == "Revenus_moyen_nets_par_mois"){
+            if (App.filtre == "Revenus_moyen_nets_par_mois") {
 
                 var leftGauge = ".gaugeLeft";
-                if( $(leftGauge).html().trim().length == 0 ){
-                      App.displayGaugeChart(leftGauge, dataGraph[0]); }
-                else{ App.updateGaugeChart(leftGauge, dataGraph[0]); }
+                if ($(leftGauge).html().trim().length == 0) {
+                    App.displayGaugeChart(leftGauge, dataGraph[0]);
+                } else {
+                    App.updateGaugeChart(leftGauge, dataGraph[0]);
+                }
 
                 var rightGauge = ".gaugeRight";
-                if( $(rightGauge).html().trim().length == 0 ){
-                    App.displayGaugeChart(rightGauge, App.getInfoFiltre(100, "Taux_chomage")); }
-                else{ App.updateGaugeChart(rightGauge, App.getInfoFiltre(100, "Taux_chomage")); }
-                
+                if ($(rightGauge).html().trim().length == 0) {
+                    App.displayGaugeChart(rightGauge, App.getInfoFiltre(100, "Taux_chomage"));
+                } else {
+                    App.updateGaugeChart(rightGauge, App.getInfoFiltre(100, "Taux_chomage"));
+                }
+
+            } else {
+                App.hideGaugeChart();
             }
-            else{   App.hideGaugeChart();  }
+
+            // /!\      // condition à remplacer ultérieurement par un regExp
+            if (App.filtre == "Age_moyen_medecin" || App.filtre == "Age_moyen_gyneco") {
+                var legendes = ["moins de 40 ans", "de 41 à 54 ans", "plus de 55 ans"];
+                dataGraph = ArrayToJSON(dataGraph, legendes, true);
+
+                if ($("#chartGaugeMultiple").html().trim().length == 0) {
+                    App.displayGaugeChartMultiple("#chartGaugeMultiple", dataGraph);
+                } else {
+                    App.updateGaugeChartMultiple("#chartGaugeMultiple", dataGraph);
+                }
+
+            }
 
 
 
@@ -419,14 +459,32 @@ $(document).ready(function() {
 
         var scale = App.dataInfo[activeFilter][7];
         scale = JSON.parse(scale);
-        console.log(scale);
 
         for (i = 95; i > -1; i--) {
 
             var data = App.data[i][activeFilter];
             var numDept = App.data[i].Num_dpt;
 
-            if (data <= scale[0]) {
+            console.log(data);
+
+
+            if (data == "NC") {
+
+                d3.selectAll("#france path.departement")
+                    .filter(function(d) {
+                        return d.properties.CODE_DEPT == numDept;
+                    })
+                    .transition().duration(500)
+                    .attr("fill", "#fff");
+
+                d3.selectAll("#paris path.departement")
+                    .filter(function(d) {
+                        return d.properties.CODE_DEPT == numDept;
+                    })
+                    .transition().duration(500)
+                    .attr("fill", "#fff");
+
+            } else if (data <= scale[0]) {
 
                 d3.selectAll("#france path.departement")
                     .filter(function(d) {
@@ -535,7 +593,7 @@ $(document).ready(function() {
             .attr('class', 'd3-tip')
             .offset([-25, 0])
             .html(function(d) {
-                return "<strong>" + d.nb + " " + App.dataInfo[App.filtre][5] + "</strong>";
+                return "<strong>" + parseInt(d.nb) + " " + App.dataInfo[App.filtre][5] + "</strong>";
             })
 
         var svg = d3.select("#graph").append("svg")
@@ -551,11 +609,11 @@ $(document).ready(function() {
             return d.legende;
         }));
         y.domain([0, d3.max(data, function(d) {
-            return d.nb;
+            return parseInt(d.nb);
         })]);
 
-        var valMax = d3.max(data, function(d){
-            return d.nb;
+        var valMax = d3.max(data, function(d) {
+            return parseInt(d.nb);
         });
 
         svg.append("g")
@@ -565,16 +623,26 @@ $(document).ready(function() {
 
         svg.append("g")
             .attr("class", "fakeXY")
-            .append("line").attr({"x1":"0","x2":"0","y1":"0","y2":height}).style("stroke","#2b2b2b");
+            .append("line").attr({
+                "x1": "0",
+                "x2": "0",
+                "y1": "0",
+                "y2": height
+            }).style("stroke", "#2b2b2b");
 
         svg.select(".fakeXY")
-            .append("line").attr({"x1":"0","x2":"580","y1":height,"y2":height}).style("stroke","#2b2b2b");
+            .append("line").attr({
+                "x1": "0",
+                "x2": "580",
+                "y1": height,
+                "y2": height
+            }).style("stroke", "#2b2b2b");
 
         svg.append("g")
             .attr("class", "y axis")
             .call(yAxis);
-         
-        // affiche les bars  
+
+        // affiche les bars
         svg.selectAll(".bar")
             .data(data)
             .enter().append("rect")
@@ -589,14 +657,20 @@ $(document).ready(function() {
             .attr("height", function(d) {
                 return height - y(d.nb);
             })
-            .style("fill", function(d){
-                var step = valMax/4;
+            .style("fill", function(d) {
+                var step = valMax / 4;
 
-                if(d.nb == valMax){ return "#22352c"; }
-                else if(d.nb < step*4 && d.nb >= step*3){ return "#295741"; }
-                else if(d.nb < step*3 && d.nb >= step*2){ return "#286d4c"; }
-                else if(d.nb < step*2 && d.nb >= step){ return "#278759"; }
-                else{ return "#219e62"; }
+                if (parseInt(d.nb) == valMax) {
+                    return "#22352c";
+                } else if (parseInt(d.nb) < step * 4 && parseInt(d.nb) >= step * 3) {
+                    return "#295741";
+                } else if (parseInt(d.nb) < step * 3 && parseInt(d.nb) >= step * 2) {
+                    return "#286d4c";
+                } else if (parseInt(d.nb) < step * 2 && parseInt(d.nb) >= step) {
+                    return "#278759";
+                } else {
+                    return "#219e62";
+                }
 
             })
             .on('mouseover', tip.show)
@@ -605,16 +679,18 @@ $(document).ready(function() {
         // ajout les triangles sous chaque bar
         svg.selectAll(".triangle")
             .data(data)
-            .enter()    
+            .enter()
             .append("svg:path")
-            .attr("transform", function(d) { return "translate(" + ( x( d.legende )+x.rangeBand()/2 ) + ", "+ (height+6) +")"; })
+            .attr("transform", function(d) {
+                return "translate(" + (x(d.legende) + x.rangeBand() / 2) + ", " + (height + 6) + ")";
+            })
             .attr("d", d3.svg.symbol().type("triangle-down"))
             .style("fill", "#2b2b2b");
 
         // remplace les tirets par des ronds
         var ticks = svg.selectAll(".y.axis .tick");
         ticks.each(function() {
-            d3.select(this).append("circle").attr("r", 4).attr("fill","#4c4c4c");
+            d3.select(this).append("circle").attr("r", 4).attr("fill", "#4c4c4c");
             d3.select(this).selectAll("text").attr("x", -16);
         });
         ticks.selectAll("line").remove();
@@ -630,18 +706,28 @@ $(document).ready(function() {
             .data(data)
             .enter().append("rect")
             .attr("class", "barTop")
-            .attr("x", function(d) {return x(d.legende);})
+            .attr("x", function(d) {
+                return x(d.legende);
+            })
             .attr("width", x.rangeBand())
-            .attr("y", function(d) {return y(d.nb)-3;})
-            .attr("height", function(d) {return 5;})
+            .attr("y", function(d) {
+                return y(d.nb) - 3;
+            })
+            .attr("height", function(d) {
+                return 5;
+            })
 
         // ajoute le cercle blanc en haut & au centre de chaque Bar
         svg.selectAll(".circleTop")
             .data(data)
             .enter().append("circle")
             .attr("class", "circleTop")
-            .attr("cx", function(d) {return x(d.legende)+x.rangeBand()/2;})
-            .attr("cy", function(d) {return y(d.nb)-1;})
+            .attr("cx", function(d) {
+                return x(d.legende) + x.rangeBand() / 2;
+            })
+            .attr("cy", function(d) {
+                return y(d.nb) - 1;
+            })
             .attr("r", 8);
 
         // ajoute le cercle blanc transparent en haut & au centre de chaque Bar
@@ -649,12 +735,70 @@ $(document).ready(function() {
             .data(data)
             .enter().append("circle")
             .attr("class", "circleTopTransparent")
-            .attr("cx", function(d) {return x(d.legende)+x.rangeBand()/2;})
-            .attr("cy", function(d) {return y(d.nb)-1;})
+            .attr("cx", function(d) {
+                return x(d.legende) + x.rangeBand() / 2;
+            })
+            .attr("cy", function(d) {
+                return y(d.nb) - 1;
+            })
             .attr("r", 12);
 
     }
 
+    App.displayPieChart = function(data) {
+
+        // Initialisation des variales
+        var width = 280,
+            height = 280,
+            radius = Math.min(width, height) / 2,
+            arc = d3.svg.arc().innerRadius(radius - 10).outerRadius(radius - 55),
+            pie = d3.layout.pie(),
+            color = ["#264359", "#22313b"];
+
+        console.log(data[0].nb);
+
+        // Création du SVG
+        var svg = d3.select("#graph").append("svg")
+            .attr("class", "pieChart")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        // Cercle intérieur
+        var circle = svg.append("circle")
+            .attr("cx", 0)
+            .attr("cy", 0)
+            .attr("r", 60)
+            .style("fill", "#282828");
+
+        // On dessine les arcs
+        var path = svg.selectAll("path")
+            .data(pie(data))
+            .enter().append("path")
+            .attr("fill", function(d, i) {
+                return color[i];
+            })
+            .attr("data-nb", function(d) {
+                return d.nb;
+            })
+            .attr("d", arc)
+            .style("stroke", "#1f1e1e")
+            .style("stroke-width", 15)
+            .on('mouseover', function(d, i) {
+                console.log(d.value);
+                var text = svg.append("svg:text")
+                    .attr("class", "pieCenterText")
+                    .attr("fill", "#fff")
+                    .attr("dy", width - 265)
+                    .attr("dx", width - 330)
+                    .text(d.value + "%");
+            })
+            .on('mouseleave', function(d, i) {
+                $('.pieChart g .pieCenterText').remove();
+            })
+
+    }
 
     /* ********************************************************
     /   D3.JS -- GAUGE CHART
@@ -663,18 +807,18 @@ $(document).ready(function() {
 
     // Source initiale : http://bl.ocks.org/mbostock/5100636
 
-    // Fonction avec 2 paramètres obligatoires : 
+    // Fonction avec 2 paramètres obligatoires :
     //      - 1 string  > selecteur CSS du conteneur
     //      - 1 number OU string entre 0 et 100 > pourcentage
-    App.displayGaugeChart = function( container, pourcentage ){
+    App.displayGaugeChart = function(container, pourcentage) {
         $('#chartGauge').show();
         var realPourcentage = parseFloat(pourcentage);
-        pourcentage = parseFloat(pourcentage)/100;
+        pourcentage = parseFloat(pourcentage) / 100;
         $(container).empty();
 
         var width = 240,
-        height = 240,
-        τ = 2 * Math.PI;
+            height = 240,
+            τ = 2 * Math.PI;
 
         var arc = d3.svg.arc()
             .innerRadius(85)
@@ -684,7 +828,7 @@ $(document).ready(function() {
         var svg = d3.select(container).append("svg")
             .attr("width", width)
             .attr("height", height)
-          .append("g")
+            .append("g")
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
 
         svg.append("circle")
@@ -692,29 +836,34 @@ $(document).ready(function() {
             .attr("cy", 0)
             .attr("r", 96.5)
             .style({
-                "fill":"transparent","stroke":"#383838","stroke-dasharray":"1, 15",
-                "stroke-width":"3px","stroke-linecap":"round"
+                "fill": "transparent",
+                "stroke": "#383838",
+                "stroke-dasharray": "1, 15",
+                "stroke-width": "3px",
+                "stroke-linecap": "round"
             });
 
         svg.append("circle")
             .attr("cx", 0)
             .attr("cy", 0)
             .attr("r", 52)
-            .style("fill","#282828");
+            .style("fill", "#282828");
 
         var foreground = svg.append("path")
-            .attr("class","progressionPourcentage")
-            .datum({endAngle: pourcentage * τ})
+            .attr("class", "progressionPourcentage")
+            .datum({
+                endAngle: pourcentage * τ
+            })
             .style("fill", "#ff3636")
-            .style("opacity",".5")
+            .style("opacity", ".5")
             .attr("d", arc);
 
         var rectangle = svg.append("rect")
-            .attr("x",0)
-            .attr("y",-109)
+            .attr("x", 0)
+            .attr("y", -109)
             .attr("width", 4)
             .attr("height", 24)
-            .style("fill","#FFF");
+            .style("fill", "#FFF");
 
         // update des pourcentages
         $(container).append("<div class=\"pourcentage\">");
@@ -725,9 +874,9 @@ $(document).ready(function() {
             to: realPourcentage,
             speed: 800,
             refreshInterval: 50,
-            decimals:1,
-            formatter: function (value, options) {
-                return value.toFixed(options.decimals)+"<span>%</span>";
+            decimals: 1,
+            formatter: function(value, options) {
+                return value.toFixed(options.decimals) + "<span>%</span>";
             }
         });
 
@@ -735,15 +884,15 @@ $(document).ready(function() {
     }
 
     // Fonction avec 2 paramètres obligatoires (cf plus haut > App.displayGaugeChart)
-    App.updateGaugeChart = function( container, pourcentage ){
+    App.updateGaugeChart = function(container, pourcentage) {
         $('#chartGauge').show();
         var realPourcentage = parseFloat(pourcentage);
         var containerPourcentage = $(container).find(".pourcentage");
-        pourcentage = parseFloat(pourcentage)/100;
-        
+        pourcentage = parseFloat(pourcentage) / 100;
 
-        if($(container).length == 0){
-            console.log("/!\ Ce container ("+container+") n'existe pas dans le DOM..");
+
+        if ($(container).length == 0) {
+            console.log("/!\ Ce container (" + container + ") n'existe pas dans le DOM..");
             return false;
         }
 
@@ -752,7 +901,7 @@ $(document).ready(function() {
             .outerRadius(110)
             .startAngle(0);
 
-        d3.select(container+" .progressionPourcentage").transition()
+        d3.select(container + " .progressionPourcentage").transition()
             .duration(750)
             .call(arcTween, pourcentage * 2 * Math.PI);
 
@@ -760,8 +909,8 @@ $(document).ready(function() {
             transition.attrTween("d", function(d) {
                 var interpolate = d3.interpolate(d.endAngle, newAngle);
                 return function(t) {
-                  d.endAngle = interpolate(t);
-                  return arc(d);
+                    d.endAngle = interpolate(t);
+                    return arc(d);
                 };
             });
         }
@@ -772,22 +921,236 @@ $(document).ready(function() {
             to: realPourcentage,
             speed: 800,
             refreshInterval: 50,
-            decimals:1,
-            formatter: function (value, options) {
-                return value.toFixed(options.decimals)+"<span>%</span>";
+            decimals: 1,
+            formatter: function(value, options) {
+                return value.toFixed(options.decimals) + "<span>%</span>";
             }
         });
 
     }
 
-    App.hideGaugeChart = function(){
+    App.hideGaugeChart = function() {
         $('#chartGauge').hide();
     }
 
     // FIN  D3.js -- GAUGE CHART
 
 
-    App.checkHash();
+    /* ********************************************************
+    /   D3.JS -- GAUGE CHART MULTIPLE
+    / ********************************************************* */
+
+
+    // Fonction avec 2 paramètres obligatoires :
+    //      - 1 string  > selecteur CSS du conteneur
+    //      - 1 number OU string entre 0 et 100 > pourcentage
+    App.displayGaugeChartMultiple = function(container, data) {
+        $('#chartGaugeMultiple').show();
+        $(container).empty();
+
+        var width = 620,
+        height = 450,
+        τ = 2 * Math.PI,
+        cercleMarge = 35;
+
+        var arc = d3.svg.arc()
+            .innerRadius(85)
+            .outerRadius(110)
+            .startAngle(0);
+
+        var svg = d3.select(container).append("svg")
+            .attr("width", width)
+            .attr("height", height);
+            
+
+        var graphContainer = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");;
+
+        for (var i = 0; i < data.length; i++) {
+            var pourcentage = data[i]['nb'] / 100;
+
+            var arc = d3.svg.arc()
+                .innerRadius(65 + (cercleMarge * i))
+                .outerRadius(82 + (cercleMarge * i))
+                .startAngle(0);
+
+            graphContainer.append("circle")
+                .attr("cx", 0)
+                .attr("cy", 0)
+                .attr("r", 74 + (cercleMarge * i))
+                .style({
+                    "fill": "transparent",
+                    "stroke": "#383838",
+                    "stroke-dasharray": "1, 15",
+                    "stroke-width": "3px",
+                    "stroke-linecap": "round"
+                });
+
+            var foreground = graphContainer.append("path")
+                .attr("class","progressionPourcentage-"+i)
+                .datum({endAngle: pourcentage * τ})           
+                .style("fill", "#ff3636")
+                .style("opacity", ".5")
+                .attr("d", arc);
+
+            var rectangle = graphContainer.append("rect")
+                .attr("x",0)
+                .attr("y", -(81+(cercleMarge*i)) )
+                .attr("width", 4)
+                .attr("height", 16)
+                .style("fill", "#FFF");
+
+        }
+
+        graphContainer.append("circle")
+            .attr("cx", 0)
+            .attr("cy", 0)
+            .attr("r", 43)
+            .style("fill", "#282828");
+
+        var legendMargin = {"left":5,"bottom":40};
+        var legendColor = ["#792828","#622325","#4c2323"];
+        var legend = svg.selectAll(".legend")
+                        .data(data)
+                        .enter()
+                        .append("g")
+                        .attr("transform", function(d,i){ 
+                            return "translate( 0," + (height / 3 + i*20)  + ")" ;
+                        })
+                        .attr("class",function(d,i){
+                            return "gaugeLegende"+i;
+                        })
+                        //.on("mouseover",);
+
+
+        legend.append('rect')
+                .attr("x",legendMargin.left )
+                .attr("y", function(d,i){
+                    return i*legendMargin['bottom'];
+                })
+                .attr("width","20")
+                .attr("height","20")
+                .style({
+                    "fill":"#792828",
+                    "stroke":"#1f1e1e",
+                    "stroke-width":"5"
+                });
+
+        legend.append('line')
+                .attr("x1",legendMargin.left+30)
+                .attr("x2",70)
+                .attr("y1", function(d,i){
+                    return i*legendMargin['bottom']+10;
+                })
+                .attr("y2", function(d,i){
+                    return i*legendMargin['bottom']+10;
+                })
+                .style({
+                    "stroke-dasharray":"2,4",
+                    "stroke-linecap":"round",
+                    "stroke":"#383838"
+                });
+
+        var texte = legend.append('text')
+                .attr("x",legendMargin.left+50)
+                .attr("y", function(d,i){
+                    return i*legendMargin['bottom']+15;
+                })
+                .text(function(d){
+                    return d.legende
+                })
+                .style({
+                    "fill":"#8d8d8d",
+                    "font-size":"12px",
+                    "text-transform":"uppercase"
+                });
+
+
+
+
+        // update des pourcentages
+        // $(container).append("<div class=\"pourcentage\">");
+        // var containerPourcentage = $(container).find(".pourcentage");
+
+        // containerPourcentage.countTo({
+        //     from: 0,
+        //     to: realPourcentage,
+        //     speed: 800,
+        //     refreshInterval: 50,
+        //     decimals:1,
+        //     formatter: function (value, options) {
+        //         return value.toFixed(options.decimals)+"<span>%</span>";
+        //     }
+        // });
+
+
+    }
+
+
+    App.updateGaugeChartMultiple = function(container, data) {
+
+        $('#chartGaugeMultiple').show();
+
+        if ($(container).length == 0) {
+            console.log("/!\ Ce container (" + container + ") n'existe pas dans le DOM..");
+            return false;
+        }
+
+        var cercleMarge = 35;
+
+        for (var i = 0; i < data.length; i++) {
+            var pourcentage = data[i]['nb'] / 100;
+
+            var arc = d3.svg.arc()
+                .innerRadius(65 + (cercleMarge * i))
+                .outerRadius(82 + (cercleMarge * i))
+                .startAngle(0);
+
+            d3.select(container + " .progressionPourcentage-" + i).transition()
+                .duration(750)
+                .call(arcTween, pourcentage * 2 * Math.PI,i);
+        }
+
+        function arcTween(transition, newAngle,i) {
+            transition.attrTween("d", function(d) {
+                var interpolate = d3.interpolate(d.endAngle, newAngle);
+                return function(t) {
+                  d.endAngle = interpolate(t);
+                  arc.innerRadius(65+(cercleMarge*i));
+                  arc.outerRadius(82+(cercleMarge*i));
+                  return arc(d);
+                };
+            });
+        }
+
+
+
+        // update des pourcentages
+        // containerPourcentage.countTo({
+        //     from: parseFloat(containerPourcentage.text()),
+        //     to: realPourcentage,
+        //     speed: 800,
+        //     refreshInterval: 50,
+        //     decimals:1,
+        //     formatter: function (value, options) {
+        //         return value.toFixed(options.decimals)+"<span>%</span>";
+        //     }
+        // });
+
+    }
+
+    // update des pourcentages
+    // containerPourcentage.countTo({
+    //     from: parseFloat(containerPourcentage.text()),
+    //     to: realPourcentage,
+    //     speed: 800,
+    //     refreshInterval: 50,
+    //     decimals:1,
+    //     formatter: function (value, options) {
+    //         return value.toFixed(options.decimals)+"<span>%</span>";
+    //     }
+    // });
+
+
 
 
     /* ********************************************************
