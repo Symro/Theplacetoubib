@@ -366,7 +366,14 @@ $(document).ready(function() {
             if (App.filtre == "Temps_acces_medecin") {
                 var legendes = ["Gynécologue", "Ophtalmologiste", "Dentiste", "Infirmier"];
                 dataGraph = ArrayToJSON(dataGraph, legendes);
+                console.log(dataGraph);
                 App.displayBarChart(dataGraph);
+            } else if (App.filtre == "Nb_medecin") {
+
+                var legendes = ["Libéraux", "Salariés"];
+
+                App.displayPieChart(dataGraph);
+
             }
 
 
@@ -402,14 +409,32 @@ $(document).ready(function() {
 
         var scale = App.dataInfo[activeFilter][7];
         scale = JSON.parse(scale);
-        console.log(scale);
 
         for (i = 95; i > -1; i--) {
 
             var data = App.data[i][activeFilter];
             var numDept = App.data[i].Num_dpt;
 
-            if (data <= scale[0]) {
+            console.log(data);
+
+
+            if (data == "NC") {
+
+                d3.selectAll("#france path.departement")
+                    .filter(function(d) {
+                        return d.properties.CODE_DEPT == numDept;
+                    })
+                    .transition().duration(500)
+                    .attr("fill", "#fff");
+
+                d3.selectAll("#paris path.departement")
+                    .filter(function(d) {
+                        return d.properties.CODE_DEPT == numDept;
+                    })
+                    .transition().duration(500)
+                    .attr("fill", "#fff");
+
+            } else if (data <= scale[0]) {
 
                 d3.selectAll("#france path.departement")
                     .filter(function(d) {
@@ -531,7 +556,7 @@ $(document).ready(function() {
             return d.nb;
         })]);
 
-        var valMax = d3.max(data, function(d){
+        var valMax = d3.max(data, function(d) {
             return d.nb;
         });
 
@@ -542,16 +567,26 @@ $(document).ready(function() {
 
         svg.append("g")
             .attr("class", "fakeXY")
-            .append("line").attr({"x1":"0","x2":"0","y1":"0","y2":height}).style("stroke","#2b2b2b");
+            .append("line").attr({
+                "x1": "0",
+                "x2": "0",
+                "y1": "0",
+                "y2": height
+            }).style("stroke", "#2b2b2b");
 
         svg.select(".fakeXY")
-            .append("line").attr({"x1":"0","x2":"580","y1":height,"y2":height}).style("stroke","#2b2b2b");
+            .append("line").attr({
+                "x1": "0",
+                "x2": "580",
+                "y1": height,
+                "y2": height
+            }).style("stroke", "#2b2b2b");
 
         svg.append("g")
             .attr("class", "y axis")
             .call(yAxis);
-         
-        // affiche les bars  
+
+        // affiche les bars
         svg.selectAll(".bar")
             .data(data)
             .enter().append("rect")
@@ -566,14 +601,20 @@ $(document).ready(function() {
             .attr("height", function(d) {
                 return height - y(d.nb);
             })
-            .style("fill", function(d){
-                var step = valMax/4;
+            .style("fill", function(d) {
+                var step = valMax / 4;
 
-                if(d.nb == valMax){ return "#22352c"; }
-                else if(d.nb < step*4 && d.nb >= step*3){ return "#295741"; }
-                else if(d.nb < step*3 && d.nb >= step*2){ return "#286d4c"; }
-                else if(d.nb < step*2 && d.nb >= step){ return "#278759"; }
-                else{ return "#219e62"; }
+                if (d.nb == valMax) {
+                    return "#22352c";
+                } else if (d.nb < step * 4 && d.nb >= step * 3) {
+                    return "#295741";
+                } else if (d.nb < step * 3 && d.nb >= step * 2) {
+                    return "#286d4c";
+                } else if (d.nb < step * 2 && d.nb >= step) {
+                    return "#278759";
+                } else {
+                    return "#219e62";
+                }
 
             })
             .on('mouseover', tip.show)
@@ -582,16 +623,18 @@ $(document).ready(function() {
         // ajout les triangles sous chaque bar
         svg.selectAll(".triangle")
             .data(data)
-            .enter()    
+            .enter()
             .append("svg:path")
-            .attr("transform", function(d) { return "translate(" + ( x( d.legende )+x.rangeBand()/2 ) + ", "+ (height+6) +")"; })
+            .attr("transform", function(d) {
+                return "translate(" + (x(d.legende) + x.rangeBand() / 2) + ", " + (height + 6) + ")";
+            })
             .attr("d", d3.svg.symbol().type("triangle-down"))
             .style("fill", "#2b2b2b");
 
         // remplace les tirets par des ronds
         var ticks = svg.selectAll(".y.axis .tick");
         ticks.each(function() {
-            d3.select(this).append("circle").attr("r", 4).attr("fill","#4c4c4c");
+            d3.select(this).append("circle").attr("r", 4).attr("fill", "#4c4c4c");
             d3.select(this).selectAll("text").attr("x", -16);
         });
         ticks.selectAll("line").remove();
@@ -607,18 +650,28 @@ $(document).ready(function() {
             .data(data)
             .enter().append("rect")
             .attr("class", "barTop")
-            .attr("x", function(d) {return x(d.legende);})
+            .attr("x", function(d) {
+                return x(d.legende);
+            })
             .attr("width", x.rangeBand())
-            .attr("y", function(d) {return y(d.nb)-3;})
-            .attr("height", function(d) {return 5;})
+            .attr("y", function(d) {
+                return y(d.nb) - 3;
+            })
+            .attr("height", function(d) {
+                return 5;
+            })
 
         // ajoute le cercle blanc en haut & au centre de chaque Bar
         svg.selectAll(".circleTop")
             .data(data)
             .enter().append("circle")
             .attr("class", "circleTop")
-            .attr("cx", function(d) {return x(d.legende)+x.rangeBand()/2;})
-            .attr("cy", function(d) {return y(d.nb)-1;})
+            .attr("cx", function(d) {
+                return x(d.legende) + x.rangeBand() / 2;
+            })
+            .attr("cy", function(d) {
+                return y(d.nb) - 1;
+            })
             .attr("r", 8);
 
         // ajoute le cercle blanc transparent en haut & au centre de chaque Bar
@@ -626,9 +679,68 @@ $(document).ready(function() {
             .data(data)
             .enter().append("circle")
             .attr("class", "circleTopTransparent")
-            .attr("cx", function(d) {return x(d.legende)+x.rangeBand()/2;})
-            .attr("cy", function(d) {return y(d.nb)-1;})
+            .attr("cx", function(d) {
+                return x(d.legende) + x.rangeBand() / 2;
+            })
+            .attr("cy", function(d) {
+                return y(d.nb) - 1;
+            })
             .attr("r", 12);
+
+    }
+
+    App.displayPieChart = function(data) {
+
+        // Initialisation des variales
+        var width = 280,
+            height = 280,
+            radius = Math.min(width, height) / 2,
+            arc = d3.svg.arc().innerRadius(radius - 10).outerRadius(radius - 55),
+            pie = d3.layout.pie(),
+            color = ["#264359", "#22313b"];
+
+        console.log(data[0].nb);
+
+        // Création du SVG
+        var svg = d3.select("#graph").append("svg")
+            .attr("class", "pieChart")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        // Cercle intérieur
+        var circle = svg.append("circle")
+            .attr("cx", 0)
+            .attr("cy", 0)
+            .attr("r", 60)
+            .style("fill", "#282828");
+
+        // On dessine les arcs
+        var path = svg.selectAll("path")
+            .data(pie(data))
+            .enter().append("path")
+            .attr("fill", function(d, i) {
+                return color[i];
+            })
+            .attr("data-nb", function(d) {
+                return d.nb;
+            })
+            .attr("d", arc)
+            .style("stroke", "#1f1e1e")
+            .style("stroke-width", 15)
+            .on('mouseover', function(d, i) {
+                console.log(d.value);
+                var text = svg.append("svg:text")
+                    .attr("class", "pieCenterText")
+                    .attr("fill", "#fff")
+                    .attr("dy", width - 265)
+                    .attr("dx", width - 330)
+                    .text(d.value + "%");
+            })
+            .on('mouseleave', function(d, i) {
+                $('.pieChart g .pieCenterText').remove();
+            })
 
     }
 
