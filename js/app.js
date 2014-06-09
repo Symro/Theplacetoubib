@@ -827,7 +827,7 @@ $(document).ready(function() {
         $('#chartGaugeMultiple').show();
         $(container).empty();
 
-        var width = 450,
+        var width = 620,
         height = 450,
         τ = 2 * Math.PI,
         cercleMarge = 35;
@@ -839,9 +839,10 @@ $(document).ready(function() {
 
         var svg = d3.select(container).append("svg")
             .attr("width", width)
-            .attr("height", height)
-          .append("g")
-            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+            .attr("height", height);
+            
+
+        var graphContainer = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");;
 
         for(var i=0; i<data.length; i++){
             var pourcentage = data[i]['nb']/100;
@@ -851,7 +852,7 @@ $(document).ready(function() {
                 .outerRadius(82+(cercleMarge*i))
                 .startAngle(0);
 
-            svg.append("circle")
+            graphContainer.append("circle")
                 .attr("cx", 0)
                 .attr("cy", 0)
                 .attr("r", 74+(cercleMarge*i) )
@@ -860,14 +861,14 @@ $(document).ready(function() {
                     "stroke-width":"3px","stroke-linecap":"round"
                 });
 
-            var foreground = svg.append("path")
+            var foreground = graphContainer.append("path")
                 .attr("class","progressionPourcentage-"+i)
                 .datum({endAngle: pourcentage * τ})           
                 .style("fill", "#ff3636")
                 .style("opacity",".5")
                 .attr("d", arc);
 
-            var rectangle = svg.append("rect")
+            var rectangle = graphContainer.append("rect")
                 .attr("x",0)
                 .attr("y", -(81+(cercleMarge*i)) )
                 .attr("width", 4)
@@ -876,11 +877,70 @@ $(document).ready(function() {
 
         }
 
-        svg.append("circle")
+        graphContainer.append("circle")
             .attr("cx", 0)
             .attr("cy", 0)
             .attr("r", 43)
             .style("fill","#282828");
+
+        var legendMargin = {"left":5,"bottom":40};
+        var legendColor = ["#792828","#622325","#4c2323"];
+        var legend = svg.selectAll(".legend")
+                        .data(data)
+                        .enter()
+                        .append("g")
+                        .attr("transform", function(d,i){ 
+                            return "translate( 0," + (height / 3 + i*20)  + ")" ;
+                        })
+                        .attr("class",function(d,i){
+                            return "gaugeLegende"+i;
+                        })
+                        //.on("mouseover",);
+
+
+        legend.append('rect')
+                .attr("x",legendMargin.left )
+                .attr("y", function(d,i){
+                    return i*legendMargin['bottom'];
+                })
+                .attr("width","20")
+                .attr("height","20")
+                .style({
+                    "fill":"#792828",
+                    "stroke":"#1f1e1e",
+                    "stroke-width":"5"
+                });
+
+        legend.append('line')
+                .attr("x1",legendMargin.left+30)
+                .attr("x2",70)
+                .attr("y1", function(d,i){
+                    return i*legendMargin['bottom']+10;
+                })
+                .attr("y2", function(d,i){
+                    return i*legendMargin['bottom']+10;
+                })
+                .style({
+                    "stroke-dasharray":"2,4",
+                    "stroke-linecap":"round",
+                    "stroke":"#383838"
+                });
+
+        var texte = legend.append('text')
+                .attr("x",legendMargin.left+50)
+                .attr("y", function(d,i){
+                    return i*legendMargin['bottom']+15;
+                })
+                .text(function(d){
+                    return d.legende
+                })
+                .style({
+                    "fill":"#8d8d8d",
+                    "font-size":"12px",
+                    "text-transform":"uppercase"
+                });
+
+
 
 
         // update des pourcentages
@@ -921,19 +981,22 @@ $(document).ready(function() {
 
             d3.select(container+" .progressionPourcentage-"+i).transition()
                 .duration(750)
-                .call(arcTween, pourcentage * 2 * Math.PI);
-
+                .call(arcTween, pourcentage * 2 * Math.PI,i);
         }
 
-        function arcTween(transition, newAngle) {
+        function arcTween(transition, newAngle,i) {
             transition.attrTween("d", function(d) {
                 var interpolate = d3.interpolate(d.endAngle, newAngle);
                 return function(t) {
                   d.endAngle = interpolate(t);
+                  arc.innerRadius(65+(cercleMarge*i));
+                  arc.outerRadius(82+(cercleMarge*i));
                   return arc(d);
                 };
             });
         }
+
+
 
         // update des pourcentages
         // containerPourcentage.countTo({
