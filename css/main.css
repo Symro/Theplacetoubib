@@ -240,7 +240,7 @@ section.splashscreen a{
     color:#6f9298;
     z-index: 40;
     cursor: url(../img/cursor.png), auto;
-    
+
 }
 .credits{
 
@@ -286,7 +286,7 @@ section.splashscreen a{
     display: block;
     left: 22%;
     top: 50%;
-    
+
 }
 .credits p,
 .credits ul.role_credits li,
@@ -446,7 +446,7 @@ display: block;
     display: block;
     width: 100%;
     width: calc(100% - 70px);
-    height: 100%; 
+    height: 100%;
     left:70px;
     background-color: rgba(0,0,0, 0.9);
 }
@@ -589,19 +589,19 @@ display: block;
 .dico a:hover{
     color:#f4f2f2;
 }
-.dico .icon-source:before { 
+.dico .icon-source:before {
     color:#525151;
-    font-size: 13px; 
+    font-size: 13px;
 }
-.dico a:hover .icon-source:before { 
-    color:#f4f2f2; 
+.dico a:hover .icon-source:before {
+    color:#f4f2f2;
 }
-.dico .icon-close:before { 
+.dico .icon-close:before {
     color:#525151;
-    font-size: 13px; 
+    font-size: 13px;
 }
-.dico a:hover .icon-close:before { 
-    color:#f4f2f2; 
+.dico a:hover .icon-close:before {
+    color:#f4f2f2;
 }
 .dico .content{
     width:98%;
@@ -616,20 +616,20 @@ display: block;
     hyphens: auto;
 }
 
-.dico .content::-webkit-scrollbar { 
+.dico .content::-webkit-scrollbar {
     padding-left: 20px;
     border-right-width: 8px;
-    width: 10px; 
-    height: 5px; 
+    width: 10px;
+    height: 5px;
     background-color: #000000;}
 
-.dico .content::-webkit-scrollbar-track { 
+.dico .content::-webkit-scrollbar-track {
     background-color: #302f2f;
-    border-radius: 10px; 
+    border-radius: 10px;
 }
 
-.dico .content::-webkit-scrollbar-thumb { 
-    background-color: #464545; 
+.dico .content::-webkit-scrollbar-thumb {
+    background-color: #464545;
     border-radius: 10px;
 }
 .dicoClose{
@@ -656,7 +656,7 @@ display: block;
     stroke-width: 1px;
 }
 .departement.active{
-    fill:#fff;
+    fill:#34626a;
     stroke: #64888f;
     stroke-width: 1px;
 }
@@ -780,8 +780,8 @@ menu, ol, ul{
     position:relative;
     height:100%;
     padding:60px;
-    -webkit-box-sizing: border-box; 
-    -moz-box-sizing: border-box; 
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
 
 }
@@ -834,7 +834,7 @@ section#leftSide{
     position: relative;
     left:0px;
     background-color: #dff0f2;
-    border-radius:10px 0px 0px 10px; 
+    border-radius:10px 0px 0px 10px;
 }
 #echelle span{
     position: relative;
@@ -859,7 +859,7 @@ margin: auto;
     height:10px;
     margin: auto;
     background-color: #63b1be;
-    border-radius:0px 10px 10px 0px; 
+    border-radius:0px 10px 10px 0px;
 }
 /* ==========================================================================
    Right Side
@@ -880,12 +880,12 @@ margin: auto;
 #rightSide::before{
     display: block;
     content: '';
-    position: absolute;   
-    width: 0; 
-    height: 0; 
+    position: absolute;
+    width: 0;
+    height: 0;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    
+
     border-left: 10px solid #e7f0f3;
     left: 0px;
     top:87px;
@@ -956,7 +956,7 @@ margin: auto;
     font-size: 16px;
 }
 #rightSide footer i:hover:before{
-    color:#fff;   
+    color:#fff;
 }
 footer .partage{
     text-align: center;
@@ -1314,13 +1314,19 @@ svg.barChart .circleTopTransparent{
     opacity:0.5;
 }
 
+/* PIE CHART */
+.pieChart g .pieCenterText{
+    font-size: 40px;
+    font-weight: bold;
+    font-size: 50px;
+}
 
-/* GAUGE CHART ou Arc Tween */ 
+/* GAUGE CHART ou Arc Tween */
 
 #chartGauge{
   width: 520px;
-  margin: 50px auto; 
-} 
+  margin: 50px auto;
+}
 #chartGauge div:first-child{
     clear:left;
     font-size:13px;
@@ -1374,9 +1380,6 @@ svg.barChart .circleTopTransparent{
     font-size:15px;
     font-weight:normal;
 }
-
-
-
 /* ==========================================================================
    Media Queries
    ========================================================================== */
@@ -1520,5 +1523,3 @@ svg.barChart .circleTopTransparent{
         page-break-after: avoid;
     }
 }
-
-
