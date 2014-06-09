@@ -104,7 +104,7 @@ La majorité des données utilisées proviennent du site ecosante.fr et datent d
                             </li>
                             <li>
                                 <span title="Revenu moyen / habitants" class="right">
-                                    <a href="#/filtre/revenu_moyen_par_habitant<%= dept == null ? "" : "/dept_"+dept %>" data-chart-type="loader" data-info-json="Revenus_moyen_nets_par_mois" data-counter-decimal="0"><i class="icon-niv2_revenumoyen"></i></a>
+                                    <a href="#/filtre/revenu_moyen_par_habitant<%= dept == null ? "" : "/dept_"+dept %>" data-chart-type="gauge" data-info-json="Revenus_moyen_nets_par_mois" data-counter-decimal="0"><i class="icon-niv2_revenumoyen"></i></a>
                                 </span>
                             </li>
                             <li>
@@ -225,8 +225,19 @@ La majorité des données utilisées proviennent du site ecosante.fr et datent d
                     
                 </div>
                 <div id="chart"></div>
-                
-                <div class="chart-gauge"></div>
+
+                <div id="chartGauge" style="display:none">
+                    <div>
+                        <p>Moyenne département</p>
+                        <p>Moyenne Française</p>
+                    </div>
+                    <div class="gaugeLeft">
+
+                    </div>
+                    <div class="gaugeRight">
+
+                    </div>
+                </div>
 
                 <footer>
                     <div class="partage">

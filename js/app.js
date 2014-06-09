@@ -233,8 +233,6 @@ $(document).ready(function() {
         var graph_data = (App.dataInfo[App.filtre][6] != "NC") ? JSON.parse(App.dataInfo[App.filtre][6]) : false;
         App.displayGraph(graph_data);
 
-        // Affichage GaugeChart
-        // App.displayGaugeChart(".chart-gauge", 40);
 
         // Update ToolTip Graph
         if (graph_data) {
@@ -361,7 +359,7 @@ $(document).ready(function() {
             $.each(data, function(index, value) {
                 //App.dom.graph.append("Index : " + index + " Value : " + value + " <br/> ");
                 console.log("Index : " + index + " Value : " + value + " <br/> ");
-                dataGraph.push(parseInt(App.getInfoFiltre(App.dept, value)));
+                dataGraph.push(parseFloat(App.getInfoFiltre(App.dept, value)));
             });
 
             App.dom.graph.append("<br/> dataGraph : " + dataGraph);
@@ -371,6 +369,22 @@ $(document).ready(function() {
                 dataGraph = ArrayToJSON(dataGraph, legendes);
                 App.displayBarChart(dataGraph);
             }
+
+            // Gestion du Gauge Chart
+            if(App.filtre == "Revenus_moyen_nets_par_mois"){
+
+                var leftGauge = ".gaugeLeft";
+                if( $(leftGauge).html().trim().length == 0 ){
+                      App.displayGaugeChart(leftGauge, dataGraph[0]); }
+                else{ App.updateGaugeChart(leftGauge, dataGraph[0]); }
+
+                var rightGauge = ".gaugeRight";
+                if( $(rightGauge).html().trim().length == 0 ){
+                    App.displayGaugeChart(rightGauge, App.getInfoFiltre(100, "Taux_chomage")); }
+                else{ App.updateGaugeChart(rightGauge, App.getInfoFiltre(100, "Taux_chomage")); }
+                
+            }
+            else{   App.hideGaugeChart();  }
 
 
 
@@ -482,6 +496,12 @@ $(document).ready(function() {
         }
 
     }
+
+
+    /* ********************************************************
+    /   D3.JS -- BAR CHART
+    / ********************************************************* */
+
 
     App.displayBarChart = function(data) {
 
@@ -636,6 +656,10 @@ $(document).ready(function() {
     }
 
 
+    /* ********************************************************
+    /   D3.JS -- GAUGE CHART
+    / ********************************************************* */
+
 
     // Source initiale : http://bl.ocks.org/mbostock/5100636
 
@@ -643,7 +667,8 @@ $(document).ready(function() {
     //      - 1 string  > selecteur CSS du conteneur
     //      - 1 number OU string entre 0 et 100 > pourcentage
     App.displayGaugeChart = function( container, pourcentage ){
-
+        $('#chartGauge').show();
+        var realPourcentage = parseFloat(pourcentage);
         pourcentage = parseFloat(pourcentage)/100;
         $(container).empty();
 
@@ -691,11 +716,31 @@ $(document).ready(function() {
             .attr("height", 24)
             .style("fill","#FFF");
 
+        // update des pourcentages
+        $(container).append("<div class=\"pourcentage\">");
+        var containerPourcentage = $(container).find(".pourcentage");
+
+        containerPourcentage.countTo({
+            from: 0,
+            to: realPourcentage,
+            speed: 800,
+            refreshInterval: 50,
+            decimals:1,
+            formatter: function (value, options) {
+                return value.toFixed(options.decimals)+"<span>%</span>";
+            }
+        });
+
+
     }
 
     // Fonction avec 2 paramètres obligatoires (cf plus haut > App.displayGaugeChart)
     App.updateGaugeChart = function( container, pourcentage ){
+        $('#chartGauge').show();
+        var realPourcentage = parseFloat(pourcentage);
+        var containerPourcentage = $(container).find(".pourcentage");
         pourcentage = parseFloat(pourcentage)/100;
+        
 
         if($(container).length == 0){
             console.log("/!\ Ce container ("+container+") n'existe pas dans le DOM..");
@@ -721,8 +766,25 @@ $(document).ready(function() {
             });
         }
 
+        // update des pourcentages
+        containerPourcentage.countTo({
+            from: parseFloat(containerPourcentage.text()),
+            to: realPourcentage,
+            speed: 800,
+            refreshInterval: 50,
+            decimals:1,
+            formatter: function (value, options) {
+                return value.toFixed(options.decimals)+"<span>%</span>";
+            }
+        });
+
     }
 
+    App.hideGaugeChart = function(){
+        $('#chartGauge').hide();
+    }
+
+    // FIN  D3.js -- GAUGE CHART
 
 
     App.checkHash();
