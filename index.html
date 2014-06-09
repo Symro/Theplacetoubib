@@ -104,7 +104,7 @@ La majorité des données utilisées proviennent du site ecosante.fr et datent d
                             </li>
                             <li>
                                 <span title="Revenu moyen / habitants" class="right">
-                                    <a href="#/filtre/revenu_moyen_par_habitant<%= dept == null ? "" : "/dept_"+dept %>" data-chart-type="loader" data-info-json="Revenus_moyen_nets_par_mois" data-counter-decimal="0"><i class="icon-niv2_revenumoyen"></i></a>
+                                    <a href="#/filtre/revenu_moyen_par_habitant<%= dept == null ? "" : "/dept_"+dept %>" data-chart-type="gauge" data-info-json="Revenus_moyen_nets_par_mois" data-counter-decimal="0"><i class="icon-niv2_revenumoyen"></i></a>
                                 </span>
                             </li>
                             <li>
@@ -158,6 +158,22 @@ La majorité des données utilisées proviennent du site ecosante.fr et datent d
                 <h2 class="text-center">Nombre de médecins généraliste</h2>
                 <div id="map"></div>
                 <div id="info-dep"></div>
+
+                <div id="echelle">
+                    <div class="firstPart">
+                        <span>20</span>
+                    </div>
+                    <div class="secondPart">
+                        <span>35</span>
+                    </div>
+                    <div class="thirdPart">
+                        <span>55</span>
+                    </div>
+                    <div class="fourthPart">
+                        <span>200</span>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -210,19 +226,37 @@ La majorité des données utilisées proviennent du site ecosante.fr et datent d
                 </div>
                 <div id="chart"></div>
 
+                <div id="chartGauge" style="display:none">
+                    <div>
+                        <p>Moyenne département</p>
+                        <p>Moyenne Française</p>
+                    </div>
+                    <div class="gaugeLeft">
+
+                    </div>
+                    <div class="gaugeRight">
+
+                    </div>
+                </div>
+
+                <div id="chartGaugeMultiple" style="display:none">
+                    
+
+                </div>
+
                 <footer>
                     <div class="partage">
                         <a href="#">Partager ce résultat</a>
                         <div class="buttonShare">
+                            <a target="_blank" href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=http://www.theplacetoubib.fr/&amp;p[images][0]=http://www.theplacetoubib.fr/img/logoSplash.png&amp;p[title]=ThePlaceToubib&amp;p[summary]=Venez découvrir theplacetoubib, une dataviz ayant pour but de mettre en avant les déserts médicaux en France www.theplacetoutbib.fr" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=no,scrollbars=no,height=400,width=600');return false;"><i class="icon-facebook"></i></a>
                             <a href="#"><i class="icon-twitter"></i></a>
-                            <a href="#"><i class="icon-facebook"></i></a>
                             <span class="triangle"></span>
 
                         </div>
 
 
                     </div>
-                    <a id="dicoLink" href="#"><i class="icon-twitter"></i></a>
+                      <a href="https://twitter.com/intent/tweet?&text=Venez découvrir theplacetoubib, une dataviz ayant pour but de mettre en avant les déserts médicaux en France&via=theplacetoubib" target="_Blank" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=no,scrollbars=no,height=400,width=600');return false;"><i class="icon-twitter"></i></a>
                     <a id="dicoLink" href="#"><i class="icon-dico"></i></a>
                     <a id="helpLink" href="#">?</a>
                     <a id="creditLink" href="#">Le projet</a>
@@ -277,18 +311,22 @@ La majorité des données utilisées proviennent du site ecosante.fr et datent d
         <div>
             <h1>01.</h1>
             <p>Données affichées sur la carte</p>
+            <span class="helpCircle"></span>
         </div>
         <div>
             <h1>02.</h1>
-            <P>Département séléctioné</P>
+            <P>Département sélectionné</P>
+            <span class="helpCircle"></span>
         </div>
         <div >
             <h1>03.</h1>
             <P>Chiffres moyen du département & chiffre moyen français selon la donnée choisie</P>
+            <span class="helpCircle"></span>
         </div>
         <div >
             <h1>04.</h1>
             <P>Graphique complémentaire selon la donnée choisie</P>
+            <span class="helpCircle"></span>
         </div>
     </section>
 

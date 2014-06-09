@@ -233,6 +233,7 @@ $(document).ready(function() {
         var graph_data = (App.dataInfo[App.filtre][6] != "NC") ? JSON.parse(App.dataInfo[App.filtre][6]) : false;
         App.displayGraph(graph_data);
 
+
         // Update ToolTip Graph
         if (graph_data) {
             var graph_data_info = [];
@@ -333,17 +334,32 @@ $(document).ready(function() {
     App.displayGraph = function(data) {
         App.dom.graph.empty();
 
-        function ArrayToJSON(ArrayNumbers, ArrayLegends) {
+        // Permet d'assembler 2 tableaux de même longueur ensemble
+        // et éventuellement de convertir le premier (les chiffres) en %
+        function ArrayToJSON(ArrayNumbers, ArrayLegends, ConvertInPourcent) {
             if (!_.isArray(ArrayNumbers) || !_.isArray(ArrayLegends) || ArrayNumbers.length != ArrayLegends.length) {
                 alert("Problème avec les array ou leurs contenus");
             }
 
             var tab = [];
+            var total = 0;
+            $.each(ArrayNumbers, function() {
+                total += this;
+            });
+
             for (var i = 0; i < ArrayNumbers.length; i++) {
-                tab.push({
-                    "nb": ArrayNumbers[i],
-                    "legende": ArrayLegends[i]
-                });
+                if (ConvertInPourcent === true) {
+                    var nb2pourc = ArrayNumbers[i] * 100 / total;
+                    tab.push({
+                        "nb": nb2pourc.toFixed(2),
+                        "legende": ArrayLegends[i]
+                    });
+                } else {
+                    tab.push({
+                        "nb": ArrayNumbers[i],
+                        "legende": ArrayLegends[i]
+                    });
+                }
             }
             return tab;
         }
@@ -358,7 +374,7 @@ $(document).ready(function() {
             $.each(data, function(index, value) {
                 //App.dom.graph.append("Index : " + index + " Value : " + value + " <br/> ");
                 console.log("Index : " + index + " Value : " + value + " <br/> ");
-                dataGraph.push(parseInt(App.getInfoFiltre(App.dept, value)));
+                dataGraph.push(parseFloat(App.getInfoFiltre(App.dept, value)));
             });
 
             App.dom.graph.append("<br/> dataGraph : " + dataGraph);
@@ -373,6 +389,40 @@ $(document).ready(function() {
                 var legendes = ["Libéraux", "Salariés"];
 
                 App.displayPieChart(dataGraph);
+
+            }
+
+            // Gestion du Gauge Chart
+            if (App.filtre == "Revenus_moyen_nets_par_mois") {
+
+                var leftGauge = ".gaugeLeft";
+                if ($(leftGauge).html().trim().length == 0) {
+                    App.displayGaugeChart(leftGauge, dataGraph[0]);
+                } else {
+                    App.updateGaugeChart(leftGauge, dataGraph[0]);
+                }
+
+                var rightGauge = ".gaugeRight";
+                if ($(rightGauge).html().trim().length == 0) {
+                    App.displayGaugeChart(rightGauge, App.getInfoFiltre(100, "Taux_chomage"));
+                } else {
+                    App.updateGaugeChart(rightGauge, App.getInfoFiltre(100, "Taux_chomage"));
+                }
+
+            } else {
+                App.hideGaugeChart();
+            }
+
+            // /!\      // condition à remplacer ultérieurement par un regExp
+            if (App.filtre == "Age_moyen_medecin" || App.filtre == "Age_moyen_gyneco") {
+                var legendes = ["moins de 40 ans", "de 41 à 54 ans", "plus de 55 ans"];
+                dataGraph = ArrayToJSON(dataGraph, legendes, true);
+
+                if ($("#chartGaugeMultiple").html().trim().length == 0) {
+                    App.displayGaugeChartMultiple("#chartGaugeMultiple", dataGraph);
+                } else {
+                    App.updateGaugeChartMultiple("#chartGaugeMultiple", dataGraph);
+                }
 
             }
 
@@ -505,6 +555,12 @@ $(document).ready(function() {
 
     }
 
+
+    /* ********************************************************
+    /   D3.JS -- BAR CHART
+    / ********************************************************* */
+
+
     App.displayBarChart = function(data) {
 
         $('.d3-tip').remove();
@@ -537,7 +593,7 @@ $(document).ready(function() {
             .attr('class', 'd3-tip')
             .offset([-25, 0])
             .html(function(d) {
-                return "<strong>" + d.nb + " " + App.dataInfo[App.filtre][5] + "</strong>";
+                return "<strong>" + parseInt(d.nb) + " " + App.dataInfo[App.filtre][5] + "</strong>";
             })
 
         var svg = d3.select("#graph").append("svg")
@@ -553,11 +609,11 @@ $(document).ready(function() {
             return d.legende;
         }));
         y.domain([0, d3.max(data, function(d) {
-            return d.nb;
+            return parseInt(d.nb);
         })]);
 
         var valMax = d3.max(data, function(d) {
-            return d.nb;
+            return parseInt(d.nb);
         });
 
         svg.append("g")
@@ -604,13 +660,13 @@ $(document).ready(function() {
             .style("fill", function(d) {
                 var step = valMax / 4;
 
-                if (d.nb == valMax) {
+                if (parseInt(d.nb) == valMax) {
                     return "#22352c";
-                } else if (d.nb < step * 4 && d.nb >= step * 3) {
+                } else if (parseInt(d.nb) < step * 4 && parseInt(d.nb) >= step * 3) {
                     return "#295741";
-                } else if (d.nb < step * 3 && d.nb >= step * 2) {
+                } else if (parseInt(d.nb) < step * 3 && parseInt(d.nb) >= step * 2) {
                     return "#286d4c";
-                } else if (d.nb < step * 2 && d.nb >= step) {
+                } else if (parseInt(d.nb) < step * 2 && parseInt(d.nb) >= step) {
                     return "#278759";
                 } else {
                     return "#219e62";
@@ -744,7 +800,283 @@ $(document).ready(function() {
 
     }
 
-    App.checkHash();
+    /* ********************************************************
+    /   D3.JS -- GAUGE CHART
+    / ********************************************************* */
+
+
+    // Source initiale : http://bl.ocks.org/mbostock/5100636
+
+    // Fonction avec 2 paramètres obligatoires :
+    //      - 1 string  > selecteur CSS du conteneur
+    //      - 1 number OU string entre 0 et 100 > pourcentage
+    App.displayGaugeChart = function(container, pourcentage) {
+        $('#chartGauge').show();
+        var realPourcentage = parseFloat(pourcentage);
+        pourcentage = parseFloat(pourcentage) / 100;
+        $(container).empty();
+
+        var width = 240,
+            height = 240,
+            τ = 2 * Math.PI;
+
+        var arc = d3.svg.arc()
+            .innerRadius(85)
+            .outerRadius(110)
+            .startAngle(0);
+
+        var svg = d3.select(container).append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+
+        svg.append("circle")
+            .attr("cx", 0)
+            .attr("cy", 0)
+            .attr("r", 96.5)
+            .style({
+                "fill": "transparent",
+                "stroke": "#383838",
+                "stroke-dasharray": "1, 15",
+                "stroke-width": "3px",
+                "stroke-linecap": "round"
+            });
+
+        svg.append("circle")
+            .attr("cx", 0)
+            .attr("cy", 0)
+            .attr("r", 52)
+            .style("fill", "#282828");
+
+        var foreground = svg.append("path")
+            .attr("class", "progressionPourcentage")
+            .datum({
+                endAngle: pourcentage * τ
+            })
+            .style("fill", "#ff3636")
+            .style("opacity", ".5")
+            .attr("d", arc);
+
+        var rectangle = svg.append("rect")
+            .attr("x", 0)
+            .attr("y", -109)
+            .attr("width", 4)
+            .attr("height", 24)
+            .style("fill", "#FFF");
+
+        // update des pourcentages
+        $(container).append("<div class=\"pourcentage\">");
+        var containerPourcentage = $(container).find(".pourcentage");
+
+        containerPourcentage.countTo({
+            from: 0,
+            to: realPourcentage,
+            speed: 800,
+            refreshInterval: 50,
+            decimals: 1,
+            formatter: function(value, options) {
+                return value.toFixed(options.decimals) + "<span>%</span>";
+            }
+        });
+
+
+    }
+
+    // Fonction avec 2 paramètres obligatoires (cf plus haut > App.displayGaugeChart)
+    App.updateGaugeChart = function(container, pourcentage) {
+        $('#chartGauge').show();
+        var realPourcentage = parseFloat(pourcentage);
+        var containerPourcentage = $(container).find(".pourcentage");
+        pourcentage = parseFloat(pourcentage) / 100;
+
+
+        if ($(container).length == 0) {
+            console.log("/!\ Ce container (" + container + ") n'existe pas dans le DOM..");
+            return false;
+        }
+
+        var arc = d3.svg.arc()
+            .innerRadius(85)
+            .outerRadius(110)
+            .startAngle(0);
+
+        d3.select(container + " .progressionPourcentage").transition()
+            .duration(750)
+            .call(arcTween, pourcentage * 2 * Math.PI);
+
+        function arcTween(transition, newAngle) {
+            transition.attrTween("d", function(d) {
+                var interpolate = d3.interpolate(d.endAngle, newAngle);
+                return function(t) {
+                    d.endAngle = interpolate(t);
+                    return arc(d);
+                };
+            });
+        }
+
+        // update des pourcentages
+        containerPourcentage.countTo({
+            from: parseFloat(containerPourcentage.text()),
+            to: realPourcentage,
+            speed: 800,
+            refreshInterval: 50,
+            decimals: 1,
+            formatter: function(value, options) {
+                return value.toFixed(options.decimals) + "<span>%</span>";
+            }
+        });
+
+    }
+
+    App.hideGaugeChart = function() {
+        $('#chartGauge').hide();
+    }
+
+    // FIN  D3.js -- GAUGE CHART
+
+
+    /* ********************************************************
+    /   D3.JS -- GAUGE CHART MULTIPLE
+    / ********************************************************* */
+
+
+    // Fonction avec 2 paramètres obligatoires :
+    //      - 1 string  > selecteur CSS du conteneur
+    //      - 1 number OU string entre 0 et 100 > pourcentage
+    App.displayGaugeChartMultiple = function(container, data) {
+        $('#chartGaugeMultiple').show();
+        $(container).empty();
+
+        var width = 450,
+            height = 450,
+            τ = 2 * Math.PI,
+            cercleMarge = 35;
+
+        var arc = d3.svg.arc()
+            .innerRadius(85)
+            .outerRadius(110)
+            .startAngle(0);
+
+        var svg = d3.select(container).append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+
+        for (var i = 0; i < data.length; i++) {
+            var pourcentage = data[i]['nb'] / 100;
+
+            var arc = d3.svg.arc()
+                .innerRadius(65 + (cercleMarge * i))
+                .outerRadius(82 + (cercleMarge * i))
+                .startAngle(0);
+
+            svg.append("circle")
+                .attr("cx", 0)
+                .attr("cy", 0)
+                .attr("r", 74 + (cercleMarge * i))
+                .style({
+                    "fill": "transparent",
+                    "stroke": "#383838",
+                    "stroke-dasharray": "1, 15",
+                    "stroke-width": "3px",
+                    "stroke-linecap": "round"
+                });
+
+            var foreground = svg.append("path")
+                .attr("class", "progressionPourcentage-" + i)
+                .datum({
+                    endAngle: pourcentage * τ
+                })
+                .style("fill", "#ff3636")
+                .style("opacity", ".5")
+                .attr("d", arc);
+
+            var rectangle = svg.append("rect")
+                .attr("x", 0)
+                .attr("y", -(81 + (cercleMarge * i)))
+                .attr("width", 4)
+                .attr("height", 16)
+                .style("fill", "#FFF");
+
+        }
+
+        svg.append("circle")
+            .attr("cx", 0)
+            .attr("cy", 0)
+            .attr("r", 43)
+            .style("fill", "#282828");
+
+
+        // update des pourcentages
+        // $(container).append("<div class=\"pourcentage\">");
+        // var containerPourcentage = $(container).find(".pourcentage");
+
+        // containerPourcentage.countTo({
+        //     from: 0,
+        //     to: realPourcentage,
+        //     speed: 800,
+        //     refreshInterval: 50,
+        //     decimals:1,
+        //     formatter: function (value, options) {
+        //         return value.toFixed(options.decimals)+"<span>%</span>";
+        //     }
+        // });
+
+
+    }
+
+
+    App.updateGaugeChartMultiple = function(container, data) {
+
+        $('#chartGaugeMultiple').show();
+
+        if ($(container).length == 0) {
+            console.log("/!\ Ce container (" + container + ") n'existe pas dans le DOM..");
+            return false;
+        }
+
+        var cercleMarge = 35;
+
+        for (var i = 0; i < data.length; i++) {
+            var pourcentage = data[i]['nb'] / 100;
+
+            var arc = d3.svg.arc()
+                .innerRadius(65 + (cercleMarge * i))
+                .outerRadius(82 + (cercleMarge * i))
+                .startAngle(0);
+
+            d3.select(container + " .progressionPourcentage-" + i).transition()
+                .duration(750)
+                .call(arcTween, pourcentage * 2 * Math.PI);
+
+        }
+
+        function arcTween(transition, newAngle) {
+            transition.attrTween("d", function(d) {
+                var interpolate = d3.interpolate(d.endAngle, newAngle);
+                return function(t) {
+                    d.endAngle = interpolate(t);
+                    return arc(d);
+                };
+            });
+        }
+    }
+
+    // update des pourcentages
+    // containerPourcentage.countTo({
+    //     from: parseFloat(containerPourcentage.text()),
+    //     to: realPourcentage,
+    //     speed: 800,
+    //     refreshInterval: 50,
+    //     decimals:1,
+    //     formatter: function (value, options) {
+    //         return value.toFixed(options.decimals)+"<span>%</span>";
+    //     }
+    // });
+
+
 
 
     /* ********************************************************
