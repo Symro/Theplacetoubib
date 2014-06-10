@@ -1355,6 +1355,32 @@ svg.barChart .circleTopTransparent{
     font-size:15px;
     font-weight:normal;
 }
+
+
+#chartGaugeMultiple{
+
+}
+#chartGaugeMultiple .gaugeLegende0 rect+rect{
+    fill-opacity:0.7;
+}
+#chartGaugeMultiple .gaugeLegende1 rect+rect{
+    fill-opacity:0.5;
+}
+#chartGaugeMultiple .gaugeLegende2 rect+rect{
+    fill-opacity:0.3;
+}
+
+#chartGaugeMultiple .pourcentageTexte{
+    fill:#FFF;
+    font-weight:bold;
+    font-size:30px;
+    text-anchor:end;
+}
+#chartGaugeMultiple .pourcentageSymbole{
+    fill:#FFF;
+    font-size:15px;
+}
+
 /* ==========================================================================
    Media Queries
    ========================================================================== */
