@@ -369,7 +369,8 @@ $(document).ready(function() {
         }
 
         if (data) {
-
+            App.hideLineChart();
+            
             App.dom.graph.append("__ OK on va jouer avec les datas suivantes  : <br/> ");
 
             var dataGraph = [];
@@ -448,6 +449,7 @@ $(document).ready(function() {
             // FIN -- if(data)
         } else {
 
+            App.hideLineChart();
             App.hideGaugeChart();
             App.hideGaugeChartMultiple();
 
@@ -1458,6 +1460,7 @@ $(document).ready(function() {
 
     }
     App.updateLineChart = function(data, dataMin, dataMax) {
+        $('#chartLine').fadeIn();
 
         App.lineChart.load({
             columns: [
@@ -1470,6 +1473,9 @@ $(document).ready(function() {
 
     }
 
+    App.hideLineChart = function() {
+        $('#chartLine').hide();
+    }
 
 
     /* ********************************************************
