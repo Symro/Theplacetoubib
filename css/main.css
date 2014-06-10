@@ -595,7 +595,7 @@ display: block;
 }
 .dico .dicoContent{
     width: 90%;
-    margin: 0 8%; 
+    margin: 0 8%;
     height: 70%;
     overflow: auto;
     text-align: justify;
@@ -613,12 +613,12 @@ display: block;
     right: 30px;
     font-size: 10px;
 }
-.dico .icon-close:before { 
+.dico .icon-close:before {
     color:#525151;
-    font-size: 13px; 
+    font-size: 13px;
 }
-.dico a:hover .icon-close:before { 
-    color:#f4f2f2; 
+.dico a:hover .icon-close:before {
+    color:#f4f2f2;
 
 }
 .dico .icon-close:before, .dico a:hover .icon-close:before {
@@ -1294,6 +1294,10 @@ svg.barChart .circleTopTransparent{
     position: relative;
     width: 520px;
 }
+.pieChartLegend {
+    float: left;
+    margin-top: 90px;
+}
 #pieChart ul{
     float: left;
     margin-top: 110px;
@@ -1367,7 +1371,7 @@ svg.barChart .circleTopTransparent{
 }
 #pieChart .text{
     position:absolute;
-    left:240px;
+    left:340px;
     top:120px;
     width:80px;
     text-align:center;
