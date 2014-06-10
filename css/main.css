@@ -1010,11 +1010,19 @@ footer .partage:hover .buttonShare{
 }
 
 
- #rightSide #chiffreDept span,
- #rightSide #chiffreFrance span{
+#rightSide #chiffreDept span,
+#rightSide #chiffreFrance span{
     font-size:0.55em;
  }
-
+#rightSide #chiffreDept p{
+    position:relative;
+ }
+#rightSide #chiffreDept p.chiffreNC:after{
+    content:"données manquantes";
+    position:absolute;
+    left:0;right:0;top:0;
+    font-size:22px;line-height:68px;
+ }
 
 
 
@@ -1463,6 +1471,31 @@ svg.barChart .circleTopTransparent{
     fill:#FFF;
     font-size:15px;
 }
+
+
+#chartLine{
+
+}
+#chartLine .tick text{
+    fill:#898989;
+    font-family:'Arimo',sans-serif;
+    font-size:14px;
+}
+#chartLine .c3-axis-y .domain,
+#chartLine .c3-axis-x .domain{
+    stroke:#2b2b2b;
+    stroke-opacity:0.5;
+}
+#chartLine path.c3-line-data{
+    stroke:#338c5b;
+    stroke-width:4;
+}
+#chartLine circle.c3-circle{
+    stroke:#338c5b;
+    stroke-width:6;
+}
+
+
 
 /* ==========================================================================
    Media Queries

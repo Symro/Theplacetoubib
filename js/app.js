@@ -46,6 +46,7 @@ $(document).ready(function() {
 
     App.data = getJson("data/data.json");
     App.dataInfo = getJson("data/data_info.json");
+    App.dataEvolution = getJson("data/data_evolution.json");
 
 
     /* ********************************************************
@@ -171,6 +172,7 @@ $(document).ready(function() {
 
     // Affiche les infos d'un departement
     App.displayInfoDept = function(num_Departement) {
+        console.log("_-_-_-_-_-_- App.displayInfoDept _-_-_-_-_-_- ");
         num_Departement = (num_Departement == "2A" || num_Departement == "2B") ? num_Departement : parseInt(num_Departement);
 
         var info_dept = App.getInfo(num_Departement);
@@ -187,22 +189,29 @@ $(document).ready(function() {
         nom_dept_container.addClass('animated fadeOutDown', 600, function() {
             $(this).text(nom_dept).removeClass('fadeOutDown').addClass('fadeInUp');
         });
+        
 
         // Update Chiffre Dept.
         var chiffre_dept = App.getInfoFiltre(num_Departement, App.filtre);
         var chiffre_dept_container = $('#chiffreDept p');
         var suffixe = App.dataInfo[App.filtre][5] != "NC" ? App.dataInfo[App.filtre][5] : "";
 
-        chiffre_dept_container.countTo({
-            from: parseInt(chiffre_dept_container.text()),
-            to: chiffre_dept,
-            speed: 800,
-            refreshInterval: 50,
-            decimals: App.counterDecimal,
-            formatter: function(value, options) {
-                return value.toFixed(options.decimals) + " <span>" + suffixe + "</span>";
-            }
-        });
+        if(isNaN(chiffre_dept)){
+            chiffre_dept_container.empty().addClass("chiffreNC");
+        }
+        else{
+            chiffre_dept_container.removeClass("chiffreNC");
+            chiffre_dept_container.countTo({
+                from: parseInt(chiffre_dept_container.text()) || 0,
+                to: chiffre_dept,
+                speed: 800,
+                refreshInterval: 50,
+                decimals: App.counterDecimal,
+                formatter: function(value, options) {
+                    return value.toFixed(options.decimals) + " <span>" + suffixe + "</span>";
+                }
+            });
+        }
 
         // Update Chiffre Dept.
         var chiffre_fra = App.getInfoFiltre(100, App.filtre);
@@ -226,7 +235,7 @@ $(document).ready(function() {
 
 
         // Affichage du/des Graph
-        var graph_data = (App.dataInfo[App.filtre][6] != "NC") ? JSON.parse(App.dataInfo[App.filtre][6]) : false;
+        var graph_data = (App.dataInfo[App.filtre][6] != "NC" && App.dataInfo[App.filtre][6].length > 0) ? JSON.parse(App.dataInfo[App.filtre][6]) : false;
         App.displayGraph(graph_data);
 
 
@@ -422,7 +431,7 @@ $(document).ready(function() {
                 App.hideGaugeChart();
             }
 
-            // /!\      // condition à remplacer ultérieurement par un regExp
+            // Gestion du Gauge Chart Multiple
             if ( App.filtre.match(/^Age_moyen_/) ) {
                 var legendes = ["moins de 40 ans", "de 41 à 54 ans", "plus de 55 ans"];
                 dataGraph = ArrayToJSON(dataGraph, legendes, true);
@@ -438,9 +447,37 @@ $(document).ready(function() {
             }
 
 
-
         // FIN -- if(data)
         } else {
+
+            App.hideGaugeChart();
+            App.hideGaugeChartMultiple();
+
+            // Gestion Line Chart -- Exception car JSON à lire différent donc n'est pas dans la condition if(data)
+            if (App.filtre == "Nb_hab_par_medecin") {
+
+                var dataDept = _.findWhere(App.dataEvolution, {
+                    Num_dpt: App.dept
+                });
+                var data = [
+                    "data",
+                    parseInt(dataDept["Nb_generaliste_2014"]),
+                    parseInt(dataDept["Nb_generaliste_2015"]),
+                    parseInt(dataDept["Nb_generaliste_2016"]),
+                    parseInt(dataDept["Nb_generaliste_2017"]),
+                    parseInt(dataDept["Nb_generaliste_2018"])
+                ];
+                var dataMin = _.min(data);
+                var dataMax = _.max(data);
+
+                
+                if ($("#chartLine").html().trim().length == 0) {
+                    App.displayLineChart(data, dataMin, dataMax);
+                } else {
+                    App.updateLineChart(data, dataMin, dataMax);
+                }
+
+            }
 
             App.dom.graph.append("__ ARGGGHH on n'a pas les datas ! :'( <br/> ");
 
@@ -1241,6 +1278,80 @@ $(document).ready(function() {
     }
 
 
+
+    /* ********************************************************
+    /   D3.JS -- LINE CHART
+    / ********************************************************* */
+
+
+    // Fonction avec 2 paramètres obligatoires :
+    //      - 1 string  > selecteur CSS du conteneur
+    //      - 1 number OU string entre 0 et 100 > pourcentage
+    App.displayLineChart = function(data, dataMin, dataMax) {
+        $('#chartLine').fadeIn();
+        console.log(dataMin, dataMax);
+
+        App.lineChart = c3.generate({
+            bindto: '#chartLine',
+            size: {
+                height: 340,
+                width: 620
+            },
+            padding: {
+                top: 80,
+                right: 40,
+                bottom: 40,
+                left: 80,
+            },
+            data: {
+                x: 'x',
+                columns: [
+                    ['x', 2014, 2015, 2016, 2017, 2018],
+                    data
+                ],
+                types: {
+                    data: 'spline'
+                },
+                axes: {
+                    data: 'y'
+                },
+                colors: {
+                    data:"#338c5b"
+                }
+            },
+            legend: {
+                show: false
+            }
+
+        });
+
+        var ticks = d3.selectAll("#chartLine .c3-axis-x .tick");
+        ticks.each(function() {
+            d3.select(this).append("circle").attr("r", 4).attr("fill", "#4c4c4c");
+        });
+        ticks.selectAll("line").remove();
+
+        //chart.axis.max(parseInt(dataMax));
+        //chart.axis.min(parseInt(dataMin));
+
+        // chart.axis.range({
+        //     max: {y: dataMin}, 
+        //     min: {y: dataMax}
+        // });
+
+    }
+    App.updateLineChart = function(data, dataMin, dataMax) {
+
+        App.lineChart.load({
+            columns:[
+                data
+            ]
+        })
+        App.lineChart.axis.max(parseInt(dataMax));
+        App.lineChart.axis.min(parseInt(dataMin));
+
+
+    }
 
 
 

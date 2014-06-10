@@ -5293,7 +5293,7 @@
     // 1. category axis
     // 2. ceil values of translate/x/y to int for half pixel antialiasing
     function c3_axis(d3, isCategory) {
-        var scale = d3.scale.linear(), orient = "bottom", innerTickSize = 6, outerTickSize = 6, tickPadding = 3, tickValues = null, tickFormat, tickArguments;
+        var scale = d3.scale.linear(), orient = "bottom", innerTickSize = 6, outerTickSize = 6, tickPadding = 10, tickValues = null, tickFormat, tickArguments;
 
         var tickOffset = 0, tickCulling = true, tickCentered;
 
