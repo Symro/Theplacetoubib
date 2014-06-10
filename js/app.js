@@ -370,7 +370,7 @@ $(document).ready(function() {
 
         if (data) {
             App.hideLineChart();
-            
+
             App.dom.graph.append("__ OK on va jouer avec les datas suivantes  : <br/> ");
 
             var dataGraph = [];
