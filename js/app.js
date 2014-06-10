@@ -368,7 +368,6 @@ $(document).ready(function() {
 
             // On produit un tableau des valeurs de chaque filtre
             $.each(data, function(index, value) {
-                //App.dom.graph.append("Index : " + index + " Value : " + value + " <br/> ");
                 console.log("Index : " + index + " Value : " + value + " <br/> ");
                 dataGraph.push(parseFloat(App.getInfoFiltre(App.dept, value)));
             });
@@ -410,7 +409,7 @@ $(document).ready(function() {
             }
 
             // /!\      // condition à remplacer ultérieurement par un regExp
-            if (App.filtre == "Age_moyen_medecin" || App.filtre == "Age_moyen_gyneco") {
+            if ( App.filtre.match(/^Age_moyen_/) ) {
                 var legendes = ["moins de 40 ans", "de 41 à 54 ans", "plus de 55 ans"];
                 dataGraph = ArrayToJSON(dataGraph, legendes, true);
 
@@ -420,28 +419,13 @@ $(document).ready(function() {
                     App.updateGaugeChartMultiple("#chartGaugeMultiple", dataGraph);
                 }
 
+            } else{
+                    App.hideGaugeChartMultiple();
             }
 
 
 
-
-            // var chart = c3.generate({
-            //     bindto: '#chart',
-            //     data: {
-            //         columns: [
-            //             ['data1', 30, 200, 100, 400, 150, 250]
-            //         ],
-            //         type: 'bar'
-            //     },
-            //     bar: {
-            //         width: {
-            //             ratio: 0.5 // this makes bar width 50% of length between ticks
-            //         }
-            //         // or
-            //         //width: 100 // this makes bar width 100px
-            //     }
-            // });
-
+        // FIN -- if(data)
         } else {
 
             App.dom.graph.append("__ ARGGGHH on n'a pas les datas ! :'( <br/> ");
@@ -461,7 +445,7 @@ $(document).ready(function() {
             var data = App.data[i][activeFilter];
             var numDept = App.data[i].Num_dpt;
 
-            console.log(data);
+            //console.log(data);
 
 
             if (data == "NC") {
@@ -1182,6 +1166,10 @@ $(document).ready(function() {
             });
 
 
+    }
+
+    App.hideGaugeChartMultiple = function(container, data) {
+        $('#chartGaugeMultiple').hide();
     }
 
 
