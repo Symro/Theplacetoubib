@@ -379,17 +379,31 @@ $(document).ready(function() {
 
             App.dom.graph.append("<br/> dataGraph : " + dataGraph);
 
+            // Pie Chart
             if (App.filtre == "Temps_acces_medecin") {
                 var legendes = ["Gynécologue", "Ophtalmologiste", "Dentiste", "Infirmier"];
                 dataGraph = ArrayToJSON(dataGraph, legendes);
                 console.log(dataGraph);
                 App.displayBarChart(dataGraph);
-            } else if (App.filtre == "Nb_medecin") {
+            }
+
+            if (App.filtre == "Nb_medecin" || App.filtre == "Nb_gyneco" || App.filtre == "Nb_dentiste" || App.filtre == "Nb_ophtalmo" || "Nb_infirmier") {
 
                 var legendes = ["Libéraux", "Salariés"];
+                var pieChart = "#pieChart .pie";
 
-                App.displayPieChart(dataGraph);
+                if ($(pieChart).html().trim().length == 0) {
 
+                    App.displayPieChart(dataGraph);
+
+                } else {
+
+                    App.updatePieChart(dataGraph);
+
+                }
+
+            } else {
+                $('#pieChart').hide();
             }
 
             // Gestion du Gauge Chart
@@ -465,7 +479,7 @@ $(document).ready(function() {
             var data = App.data[i][activeFilter];
             var numDept = App.data[i].Num_dpt;
 
-            console.log(data);
+            // console. log(data);
 
 
             if (data == "NC") {
@@ -745,20 +759,24 @@ $(document).ready(function() {
 
     }
 
+    /* ********************************************************
+    /   D3.JS -- PIE CHART
+    / ********************************************************* */
+
     App.displayPieChart = function(data) {
+
+        $("#pieChart").show();
 
         // Initialisation des variales
         var width = 280,
             height = 280,
             radius = Math.min(width, height) / 2,
-            arc = d3.svg.arc().innerRadius(radius - 10).outerRadius(radius - 55),
+            arc = d3.svg.arc().innerRadius(radius - 10).outerRadius(radius - 45),
             pie = d3.layout.pie(),
             color = ["#264359", "#22313b"];
 
-        console.log(data[0].nb);
-
         // Création du SVG
-        var svg = d3.select("#graph").append("svg")
+        var svg = d3.select("#pieChart .pie").append("svg")
             .attr("class", "pieChart")
             .attr("width", width)
             .attr("height", height)
@@ -773,10 +791,11 @@ $(document).ready(function() {
             .style("fill", "#282828");
 
         // On dessine les arcs
-        var path = svg.selectAll("path")
+        var pathPie = svg.selectAll("path")
             .data(pie(data))
             .enter().append("path")
             .attr("fill", function(d, i) {
+                console.log('je suis couleur');
                 return color[i];
             })
             .attr("data-nb", function(d) {
@@ -784,19 +803,62 @@ $(document).ready(function() {
             })
             .attr("d", arc)
             .style("stroke", "#1f1e1e")
-            .style("stroke-width", 15)
+            .style("stroke-width", 5)
             .on('mouseover', function(d, i) {
-                console.log(d.value);
-                var text = svg.append("svg:text")
-                    .attr("class", "pieCenterText")
-                    .attr("fill", "#fff")
-                    .attr("dy", width - 265)
-                    .attr("dx", width - 330)
-                    .text(d.value + "%");
+
+                // console.log(d.value);
+
+                var item = $("<div class='text'>" + parseFloat(d.value) + "<span>%</span></div>").hide().fadeIn(500);
+                $("#pieChart").append(item);
+
+                // var item = $('<li><img src="/photos/t/'+data.filename+'"/></li>').hide().fadeIn(2000);
+                // $('#thumbnails').append(item);
+
             })
             .on('mouseleave', function(d, i) {
-                $('.pieChart g .pieCenterText').remove();
+
+                $('#pieChart .text').fadeOut(500, function() {
+                    $(this).remove();
+                });
+
             })
+            .each(function(d) {
+                this._current = d;
+            });
+
+    }
+
+    App.updatePieChart = function(data) {
+
+        $("#pieChart").show();
+
+        console.log(data);
+
+        var width = 280,
+            height = 280,
+            radius = Math.min(width, height) / 2,
+            arc = d3.svg.arc().innerRadius(radius - 10).outerRadius(radius - 45),
+            pie = d3.layout.pie(),
+            color = ["#264359", "#22313b"];
+
+        var path = d3.selectAll("#pieChart .pie path").data(pie(data));
+        // .transition().duration(500)
+
+        path.attr("d", arc)
+            .each(function(d) {
+                $this._current = d;
+            });
+
+        path.transition().duration(750).attrTween("d", arcTween);
+
+        function arcTween(d) {
+            var i = d3.interpolate(this._current, d);
+            console.log(i(0));
+            this._current = i(0);
+            return function(t) {
+                return arc(i(t));
+            };
+        }
 
     }
 
@@ -900,6 +962,8 @@ $(document).ready(function() {
             .innerRadius(85)
             .outerRadius(110)
             .startAngle(0);
+
+        console.log(pourcentage);
 
         d3.select(container + " .progressionPourcentage").transition()
             .duration(750)
