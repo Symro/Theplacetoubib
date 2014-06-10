@@ -489,6 +489,12 @@ $(document).ready(function() {
         var scale = App.dataInfo[activeFilter][7];
         scale = JSON.parse(scale);
 
+        console.log(scale);
+        $("#echelle span").each(function(i, item) {
+            console.log(scale[i]);
+            $(this).text(scale[i]);
+        });
+
         for (i = 95; i > -1; i--) {
 
             var data = App.data[i][activeFilter];
@@ -827,7 +833,7 @@ $(document).ready(function() {
 
                 var select = String("#pieChart .rectData" + i);
 
-                var item = $("<div class='text'>" + parseFloat(d.value) + "<span>%</span></div>").hide().fadeIn(500);
+                var item = $("<div class='text'>" + parseInt(d.value) + "<span>%</span></div>").hide().fadeIn(500);
                 $("#pieChart").append(item);
 
                 $(select).animate({
@@ -870,6 +876,7 @@ $(document).ready(function() {
                 this._current = d;
             });
 
+        // Affichage légende
         legend.append("rect")
             .attr('class', 'rectData1')
             .attr("x", 10)
