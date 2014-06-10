@@ -369,7 +369,8 @@ $(document).ready(function() {
         }
 
         if (data) {
-
+            App.hideLineChart();
+            
             App.dom.graph.append("__ OK on va jouer avec les datas suivantes  : <br/> ");
 
             var dataGraph = [];
@@ -448,6 +449,7 @@ $(document).ready(function() {
             // FIN -- if(data)
         } else {
 
+            App.hideLineChart();
             App.hideGaugeChart();
             App.hideGaugeChartMultiple();
 
@@ -1244,9 +1246,11 @@ $(document).ready(function() {
             })
             .on("mouseover", function(d, i) {
                 var nb = d.nb;
+                var that = d3.select(this);
 
-                d3.select(this).style("cursor", "pointer");
-                d3.select(this).select("rect+rect").transition().duration(250).style("fill-opacity", "1");
+                that.style("cursor", "pointer");
+                that.select("rect+rect").transition().duration(250).style("fill-opacity", "1");
+                that.select("text").transition().duration(250).style("fill", "#FFF");
 
                 graphContainer.select(".progressionPourcentage-" + i)
                     .transition().duration(250)
@@ -1266,8 +1270,10 @@ $(document).ready(function() {
 
             })
             .on("mouseout", function(d, i) {
-                d3.select(this).style("cursor", "initial");
-                d3.select(this).select("rect+rect").transition().duration(250).style("fill-opacity", "");
+                var that = d3.select(this);
+                that.style("cursor", "initial");
+                that.select("rect+rect").transition().duration(250).style("fill-opacity", "");
+                that.select("text").transition().duration(250).style("fill", "#8D8D8D");
 
                 graphContainer.select(".progressionPourcentage-" + i)
                     .transition().duration(250)
@@ -1308,8 +1314,8 @@ $(document).ready(function() {
             });
 
         legend.append('line')
-            .attr("x1", legendMargin.left + 30)
-            .attr("x2", 70)
+            .attr("x1", 34)
+            .attr("x2", 50)
             .attr("y1", function(d, i) {
                 return i * legendMargin['bottom'] + 10;
             })
@@ -1325,7 +1331,7 @@ $(document).ready(function() {
         legend.append('text')
             .attr("x", legendMargin.left + 50)
             .attr("y", function(d, i) {
-                return i * legendMargin['bottom'] + 15;
+                return i * legendMargin['bottom'] + 14;
             })
             .text(function(d) {
                 return d.legende
@@ -1414,7 +1420,7 @@ $(document).ready(function() {
         App.lineChart = c3.generate({
             bindto: '#chartLine',
             size: {
-                height: 340,
+                height: 400,
                 width: 620
             },
             padding: {
@@ -1461,6 +1467,7 @@ $(document).ready(function() {
 
     }
     App.updateLineChart = function(data, dataMin, dataMax) {
+        $('#chartLine').fadeIn();
 
         App.lineChart.load({
             columns: [
@@ -1473,6 +1480,9 @@ $(document).ready(function() {
 
     }
 
+    App.hideLineChart = function() {
+        $('#chartLine').hide();
+    }
 
 
     /* ********************************************************

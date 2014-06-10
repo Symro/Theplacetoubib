@@ -1443,6 +1443,9 @@ svg.barChart .circleTopTransparent{
     stroke:#338c5b;
     stroke-width:6;
 }
+#chartLine .c3-zoom-rect{
+    cursor:inherit !important;
+}
 
 
 

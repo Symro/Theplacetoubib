@@ -135,19 +135,27 @@
 /*-- Tooltip --*/
 
 .c3-tooltip {
+  position:relative;
   border-collapse:collapse;
   border-spacing:0;
-  background-color:#fff;
-  empty-cells:show;
-  -webkit-box-shadow: 7px 7px 12px -9px rgb(119,119,119);
-     -moz-box-shadow: 7px 7px 12px -9px rgb(119,119,119);
-          box-shadow: 7px 7px 12px -9px rgb(119,119,119);
+  background-color:#2b2b2b;
   opacity: 0.9;
+  border-radius:5px;
 }
-.c3-tooltip tr {
-  border:1px solid #CCC;
+.c3-tooltip:after{
+  content:"";
+  position:absolute;
+  left:29px;
+  bottom:-6px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 6px 0 6px;
+  border-color: #2b2b2b transparent transparent transparent;
 }
+
 .c3-tooltip th {
+  display:none;
   background-color: #aaa;
   font-size:14px;
   padding:2px 5px;
@@ -155,10 +163,14 @@
   color:#FFF;
 }
 .c3-tooltip td {
-  font-size:13px;
-  padding: 3px 6px;
-  background-color:#fff;
-  border-left:1px dotted #999;
+  color:#FFF;
+  font-size:20px;
+  font-weight:bold;
+  padding: 6px 18px;
+  background-color:#2b2b2b;
+}
+.c3-tooltip td.name{
+  display:none;
 }
 .c3-tooltip td > span {
   display: inline-block;
@@ -167,7 +179,7 @@
   margin-right: 6px;
 }
 .c3-tooltip td.value{
-  text-align: right;
+  text-align: center;
 }
 
 .c3-area {
