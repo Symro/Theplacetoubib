@@ -175,7 +175,6 @@ $(document).ready(function() {
 
         var info_dept = App.getInfo(num_Departement);
         var info_france = App.getInfo(100);
-        var container = $('#info-dep');
 
         // Affichage Right Side - Content
         $('#rightSide .tutoDepartement').fadeOut(1000, function() {
@@ -225,9 +224,6 @@ $(document).ready(function() {
         tooltip_url.attr("href", App.dataInfo[App.filtre][4]).attr("title", App.dataInfo[App.filtre][3]).text(App.dataInfo[App.filtre][3]);
         tooltip_annee.text(App.dataInfo[App.filtre][2]);
 
-        //App.dom.nom_filtre.text( App.dataInfo[HrefActive.data('info-json')][0] );
-
-        container.html(JSON.stringify(info_dept, null, "\t"));
 
         // Affichage du/des Graph
         var graph_data = (App.dataInfo[App.filtre][6] != "NC") ? JSON.parse(App.dataInfo[App.filtre][6]) : false;
@@ -387,7 +383,7 @@ $(document).ready(function() {
                 App.displayBarChart(dataGraph);
             }
 
-            if (App.filtre == "Nb_medecin" || App.filtre == "Nb_gyneco" || App.filtre == "Nb_dentiste" || App.filtre == "Nb_ophtalmo" || "Nb_infirmier") {
+            if (App.filtre == "Nb_medecin" || App.filtre == "Nb_gyneco" || App.filtre == "Nb_dentiste" || App.filtre == "Nb_ophtalmo" || App.filtre == "Nb_infirmier") {
 
                 var legendes = ["Libéraux", "Salariés"];
                 var pieChart = "#pieChart .pie";
@@ -1012,10 +1008,11 @@ $(document).ready(function() {
         $('#chartGaugeMultiple').show();
         $(container).empty();
 
-        var width = 450,
+        var width = 620,
             height = 450,
             τ = 2 * Math.PI,
-            cercleMarge = 35;
+            cercleMarge = 35,
+            color = ["rgba(255,54,54,0.7)", "rgba(255,54,54,0.5)", "rgba(255,54,54,0.3)"];
 
         var arc = d3.svg.arc()
             .innerRadius(85)
@@ -1024,19 +1021,21 @@ $(document).ready(function() {
 
         var svg = d3.select(container).append("svg")
             .attr("width", width)
-            .attr("height", height)
-            .append("g")
-            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+            .attr("height", height);
+
+
+        var graphContainer = svg.append("g").attr("transform", "translate(450,225)");
 
         for (var i = 0; i < data.length; i++) {
             var pourcentage = data[i]['nb'] / 100;
+            var nb = data[i]['nb'];
 
             var arc = d3.svg.arc()
                 .innerRadius(65 + (cercleMarge * i))
                 .outerRadius(82 + (cercleMarge * i))
                 .startAngle(0);
 
-            svg.append("circle")
+            graphContainer.append("circle")
                 .attr("cx", 0)
                 .attr("cy", 0)
                 .attr("r", 74 + (cercleMarge * i))
@@ -1048,45 +1047,155 @@ $(document).ready(function() {
                     "stroke-linecap": "round"
                 });
 
-            var foreground = svg.append("path")
-                .attr("class", "progressionPourcentage-" + i)
+            graphContainer.append("path")
+                .attr("class", "progressionPourcentage progressionPourcentage-" + i)
                 .datum({
                     endAngle: pourcentage * τ
                 })
-                .style("fill", "#ff3636")
-                .style("opacity", ".5")
+                .style("fill", color[i])
                 .attr("d", arc);
+            //.attr("data-pourcentage", data[i]['nb'] );
 
-            var rectangle = svg.append("rect")
+            var rectangle = graphContainer.append("rect")
                 .attr("x", 0)
                 .attr("y", -(81 + (cercleMarge * i)))
                 .attr("width", 4)
                 .attr("height", 16)
                 .style("fill", "#FFF");
-
         }
 
-        svg.append("circle")
+        graphContainer.append("circle")
             .attr("cx", 0)
             .attr("cy", 0)
             .attr("r", 43)
             .style("fill", "#282828");
 
+        graphContainer.append("text")
+            .attr("class", "pourcentageTexte")
+            .attr("x", 10)
+            .attr("y", 8)
+            .text(function(d) {
+                return "00";
+            })
+            .style("opacity", "0");
 
-        // update des pourcentages
-        // $(container).append("<div class=\"pourcentage\">");
-        // var containerPourcentage = $(container).find(".pourcentage");
+        graphContainer.append("text")
+            .attr("class", "pourcentageSymbole")
+            .attr("x", 13)
+            .attr("y", 8)
+            .text(function(d) {
+                return "%";
+            })
+            .style("opacity", "0");
 
-        // containerPourcentage.countTo({
-        //     from: 0,
-        //     to: realPourcentage,
-        //     speed: 800,
-        //     refreshInterval: 50,
-        //     decimals:1,
-        //     formatter: function (value, options) {
-        //         return value.toFixed(options.decimals)+"<span>%</span>";
-        //     }
-        // });
+        var legendMargin = {
+            "left": 5,
+            "bottom": 40
+        };
+        var legend = svg.selectAll(".legend")
+            .data(data)
+            .enter()
+            .append("g")
+            .attr("transform", function(d, i) {
+                return "translate( 40," + (height / 3 + i * 20) + ")";
+            })
+            .attr("class", function(d, i) {
+                return "gaugeLegende gaugeLegende" + i;
+            })
+            .on("mouseover", function(d, i) {
+                var nb = d.nb;
+
+                d3.select(this).style("cursor", "pointer");
+                d3.select(this).select("rect+rect").transition().duration(250).style("fill-opacity", "1");
+
+                graphContainer.select(".progressionPourcentage-" + i)
+                    .transition().duration(250)
+                    .style("fill", "rgba(255,54,54,1)");
+
+                graphContainer.select(".pourcentageTexte")
+                    .transition().duration(250)
+                    .style("opacity", "1")
+                    .text(function(d) {
+                        var nbFinal = (nb < 10) ? "0" + Math.round(nb) : Math.round(nb);
+                        return nbFinal;
+                    });
+
+                graphContainer.select(".pourcentageSymbole")
+                    .transition().duration(250)
+                    .style("opacity", "1");
+
+            })
+            .on("mouseout", function(d, i) {
+                d3.select(this).style("cursor", "initial");
+                d3.select(this).select("rect+rect").transition().duration(250).style("fill-opacity", "");
+
+                graphContainer.select(".progressionPourcentage-" + i)
+                    .transition().duration(250)
+                    .style("fill", color[i])
+
+                graphContainer.select(".pourcentageTexte")
+                    .transition().duration(250)
+                    .style("opacity", "0");
+
+                graphContainer.select(".pourcentageSymbole")
+                    .transition().duration(250)
+                    .style("opacity", "0");
+            });
+
+        legend.append("rect")
+            .attr("x", -5)
+            .attr("y", function(d, i) {
+                return i * legendMargin['bottom'] - 7.5;
+            })
+            .attr("width", "200")
+            .attr("height", "35")
+            .style({
+                "fill": "#282828",
+                "fill-opacity": "0.4"
+            });
+
+        legend.append('rect')
+            .attr("x", legendMargin.left)
+            .attr("y", function(d, i) {
+                return i * legendMargin['bottom'];
+            })
+            .attr("width", "20")
+            .attr("height", "20")
+            .style({
+                "fill": "#FF3636",
+                "stroke": "#1f1e1e",
+                "stroke-width": "5"
+            });
+
+        legend.append('line')
+            .attr("x1", legendMargin.left + 30)
+            .attr("x2", 70)
+            .attr("y1", function(d, i) {
+                return i * legendMargin['bottom'] + 10;
+            })
+            .attr("y2", function(d, i) {
+                return i * legendMargin['bottom'] + 10;
+            })
+            .style({
+                "stroke-dasharray": "2,4",
+                "stroke-linecap": "round",
+                "stroke": "#383838"
+            });
+
+        legend.append('text')
+            .attr("x", legendMargin.left + 50)
+            .attr("y", function(d, i) {
+                return i * legendMargin['bottom'] + 15;
+            })
+            .text(function(d) {
+                return d.legende
+            })
+            .style({
+                "fill": "#8d8d8d",
+                "font-size": "12px",
+                "text-transform": "uppercase"
+            });
+
 
 
     }
@@ -1113,32 +1222,37 @@ $(document).ready(function() {
 
             d3.select(container + " .progressionPourcentage-" + i).transition()
                 .duration(750)
-                .call(arcTween, pourcentage * 2 * Math.PI);
-
+                .call(arcTween, pourcentage * 2 * Math.PI, i);
         }
 
-        function arcTween(transition, newAngle) {
+        function arcTween(transition, newAngle, i) {
             transition.attrTween("d", function(d) {
                 var interpolate = d3.interpolate(d.endAngle, newAngle);
                 return function(t) {
                     d.endAngle = interpolate(t);
+                    arc.innerRadius(65 + (cercleMarge * i));
+                    arc.outerRadius(82 + (cercleMarge * i));
                     return arc(d);
                 };
             });
         }
+
+        d3.selectAll(".gaugeLegende")
+            .data(data)
+            .enter()
+            .append("g")
+            .on("mouseover", function(d, i) {
+
+                d3.select("#chartGaugeMultiple .pourcentageTexte")
+                    .transition().duration(250)
+                    .style("opacity", "1")
+                    .text(Math.round(d.nb));
+
+            });
+
+
     }
 
-    // update des pourcentages
-    // containerPourcentage.countTo({
-    //     from: parseFloat(containerPourcentage.text()),
-    //     to: realPourcentage,
-    //     speed: 800,
-    //     refreshInterval: 50,
-    //     decimals:1,
-    //     formatter: function (value, options) {
-    //         return value.toFixed(options.decimals)+"<span>%</span>";
-    //     }
-    // });
 
 
 
@@ -1324,6 +1438,9 @@ $(document).ready(function() {
             next();
         });
     });
+
+    $(".dicoContent").mCustomScrollbar();
+
 
     /* ********************************************************
     /   Help
