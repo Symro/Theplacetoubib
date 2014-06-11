@@ -369,6 +369,7 @@ $(document).ready(function() {
         }
 
         if (data) {
+            App.hideInfoNeeded();
             App.hideLineChart();
 
             App.dom.graph.append("__ OK on va jouer avec les datas suivantes  : <br/> ");
@@ -482,6 +483,12 @@ $(document).ready(function() {
                     App.updateLineChart(data, dataMin, dataMax);
                 }
 
+            }
+            if (App.filtre.match(/^Nb_hab_par_/) && App.filtre != "Nb_hab_par_medecin") {
+                App.displayInfoNeeded();
+            }
+            else{
+                App.hideInfoNeeded();
             }
 
             App.dom.graph.append("__ ARGGGHH on n'a pas les datas ! :'( <br/> ");
@@ -792,6 +799,8 @@ $(document).ready(function() {
     }
 
     App.updateBarChart = function(data) {
+        $('#chartBar').show();
+
         var margin = {
             top: 40,
             right: 20,
@@ -1566,6 +1575,18 @@ $(document).ready(function() {
         $('#chartLine').hide();
     }
 
+    /* ********************************************************
+    /   MANQUE DE DONNÉES
+    / ********************************************************* */
+
+    App.displayInfoNeeded = function() {
+        $('#infoNeeded').show();
+        App.dom.info_graph.text("")
+    }
+
+    App.hideInfoNeeded = function() {
+        $('#infoNeeded').hide();
+    }
 
     /* ********************************************************
     /   MENU NAVIGATON
