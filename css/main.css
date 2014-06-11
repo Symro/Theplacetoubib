@@ -575,7 +575,7 @@ section.splashscreen a{
 }
 .dico .dicoContent{
     width: 90%;
-    margin: 0 8%; 
+    margin: 0 8%;
     height: 70%;
     overflow: auto;
     text-align: justify;
@@ -593,12 +593,12 @@ section.splashscreen a{
     right: 30px;
     font-size: 10px;
 }
-.dico .icon-close:before { 
+.dico .icon-close:before {
     color:#525151;
-    font-size: 13px; 
+    font-size: 13px;
 }
-.dico a:hover .icon-close:before { 
-    color:#f4f2f2; 
+.dico a:hover .icon-close:before {
+    color:#f4f2f2;
 
 }
 .dico .icon-close:before, .dico a:hover .icon-close:before {
@@ -990,11 +990,19 @@ footer .partage:hover .buttonShare{
 }
 
 
- #rightSide #chiffreDept span,
- #rightSide #chiffreFrance span{
+#rightSide #chiffreDept span,
+#rightSide #chiffreFrance span{
     font-size:0.55em;
  }
-
+#rightSide #chiffreDept p{
+    position:relative;
+ }
+#rightSide #chiffreDept p.chiffreNC:after{
+    content:"données manquantes";
+    position:absolute;
+    left:0;right:0;top:0;
+    font-size:22px;line-height:68px;
+ }
 
 
 
@@ -1270,10 +1278,42 @@ svg.barChart .circleTopTransparent{
 }
 
 /* PIE CHART */
-.pieChart g .pieCenterText{
-    font-size: 40px;
+#pieChart{
+    position: relative;
+    width: 520px;
+}
+.pieChartLegend {
+    float: left;
+    margin-top: 90px;
+}
+#pieChart hr {
+    background: transparent;
+    color: transparent;
+    border-left:  none;
+    border-right: none;
+    border-top:   none;
+    border-bottom: 1px dashed #282828;
+    width: 50px;
+    margin: 5px 0 0 15px;
+}
+#pieChart .pie {
+    width: 250px;
+    height: 250px;
+    float: left;
+    margin-left: 40px;
+}
+#pieChart .text{
+    position:absolute;
+    left:340px;
+    top:120px;
+    width:80px;
+    text-align:center;
+    font-size:30px;
+    font-weight:bold;
+}
+#pieChart .text span{
+    font-size: 16px;
     font-weight: bold;
-    font-size: 50px;
 }
 
 /* GAUGE CHART ou Arc Tween */
@@ -1335,6 +1375,60 @@ svg.barChart .circleTopTransparent{
     font-size:15px;
     font-weight:normal;
 }
+
+
+#chartGaugeMultiple{
+
+}
+#chartGaugeMultiple .gaugeLegende0 rect+rect{
+    fill-opacity:0.7;
+}
+#chartGaugeMultiple .gaugeLegende1 rect+rect{
+    fill-opacity:0.5;
+}
+#chartGaugeMultiple .gaugeLegende2 rect+rect{
+    fill-opacity:0.3;
+}
+
+#chartGaugeMultiple .pourcentageTexte{
+    fill:#FFF;
+    font-weight:bold;
+    font-size:30px;
+    text-anchor:end;
+}
+#chartGaugeMultiple .pourcentageSymbole{
+    fill:#FFF;
+    font-size:15px;
+}
+
+
+#chartLine{
+
+}
+#chartLine .tick text{
+    fill:#898989;
+    font-family:'Arimo',sans-serif;
+    font-size:14px;
+}
+#chartLine .c3-axis-y .domain,
+#chartLine .c3-axis-x .domain{
+    stroke:#2b2b2b;
+    stroke-opacity:0.5;
+}
+#chartLine path.c3-line-data{
+    stroke:#338c5b;
+    stroke-width:4;
+}
+#chartLine circle.c3-circle{
+    stroke:#338c5b;
+    stroke-width:6;
+}
+#chartLine .c3-zoom-rect{
+    cursor:inherit !important;
+}
+
+
+
 /* ==========================================================================
    Media Queries
    ========================================================================== */

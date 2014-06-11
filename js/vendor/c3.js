@@ -2014,17 +2014,23 @@
                     tooltipTop = x(dataToShow[0].x) + 20;
                 } else {
                     svgLeft = getSvgLeft();
-                    tooltipLeft = svgLeft + getCurrentPaddingLeft() + x(dataToShow[0].x) + 20;
+                    tooltipLeft = svgLeft + getCurrentPaddingLeft() + x(dataToShow[0].x) - 43;
                     tooltipRight = tooltipLeft + tWidth;
                     chartRight = svgLeft + getCurrentWidth() - getCurrentPaddingRight();
-                    tooltipTop = mouse[1] + 15;
+                    /* CUSTOM */
+                    var myToolTipTop = getCircles(dataToShow[0].index, dataToShow[0].id).attr("cy");
+                    console.log(myToolTipTop);
+                    tooltipTop = (Math.round(myToolTipTop)+20);
+                    console.log(tooltipTop);
                 }
 
                 if (tooltipRight > chartRight) {
-                    tooltipLeft -= tooltipRight - chartRight;
+                    /* CUSTOM */
+                    //tooltipLeft -= tooltipRight - chartRight;
                 }
                 if (tooltipTop + tHeight > getCurrentHeight()) {
-                    tooltipTop -= tHeight + 30;
+                    /* CUSTOM */
+                    //tooltipTop -= tHeight + 30;
                 }
             }
             // Set tooltip
@@ -5293,7 +5299,7 @@
     // 1. category axis
     // 2. ceil values of translate/x/y to int for half pixel antialiasing
     function c3_axis(d3, isCategory) {
-        var scale = d3.scale.linear(), orient = "bottom", innerTickSize = 6, outerTickSize = 6, tickPadding = 3, tickValues = null, tickFormat, tickArguments;
+        var scale = d3.scale.linear(), orient = "bottom", innerTickSize = 4, outerTickSize = 6, tickPadding = 10, tickValues = null, tickFormat, tickArguments;
 
         var tickOffset = 0, tickCulling = true, tickCentered;
 
@@ -5351,10 +5357,11 @@
                 var range = scale.rangeExtent ? scale.rangeExtent() : scaleExtent(scale.range()),
                     path = g.selectAll(".domain").data([ 0 ]),
                     pathUpdate = (path.enter().append("path").attr("class", "domain"), d3.transition(path));
-                tickEnter.append("line");
+                tickEnter.append("circle");
                 tickEnter.append("text");
 
-                var lineEnter = tickEnter.select("line"),
+
+                var lineEnter = tickEnter.select("circle"), /* CUSTOM */
                     lineUpdate = tickUpdate.select("line"),
                     text = tick.select("text").text(textFormatted),
                     textEnter = tickEnter.select("text"),
@@ -5396,14 +5403,14 @@
                         break;
                     }
                 case "left":
-                    {
+                    {   
                         tickTransform = axisY;
-                        lineEnter.attr("x2", -innerTickSize);
+                        lineEnter.attr("cx", 5).attr("cy", 0).attr("r","4").style("fill","#4c4c4c"); /* CUSTOM */
                         textEnter.attr("x", -(Math.max(innerTickSize, 0) + tickPadding));
                         lineUpdate.attr("x2", -innerTickSize).attr("y2", 0);
                         textUpdate.attr("x", -(Math.max(innerTickSize, 0) + tickPadding)).attr("y", tickOffset);
                         text.attr("dy", ".32em").style("text-anchor", "end");
-                        pathUpdate.attr("d", "M" + -outerTickSize + "," + range[0] + "H0V" + range[1] + "H" + -outerTickSize);
+                        pathUpdate.attr("d", "M" + -outerTickSize + "," + range[0] + "H5V" + range[1] + "H" + -outerTickSize );  /* CUSTOM */
                         break;
                     }
                 case "right":

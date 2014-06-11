@@ -23,7 +23,7 @@ $(document).ready(function() {
             info_graph: $('#infoGraph > p:first'),
             tooltip_graph: $('#infoGraph .tooltipCSS'),
             tuto: $('section.tuto'),
-            graph: $('#rightSide #graph')
+            graph: $('#leftSide #graph')
         }
     }
 
@@ -46,6 +46,7 @@ $(document).ready(function() {
 
     App.data = getJson("data/data.json");
     App.dataInfo = getJson("data/data_info.json");
+    App.dataEvolution = getJson("data/data_evolution.json");
 
 
     /* ********************************************************
@@ -171,11 +172,11 @@ $(document).ready(function() {
 
     // Affiche les infos d'un departement
     App.displayInfoDept = function(num_Departement) {
+        console.log("_-_-_-_-_-_- App.displayInfoDept _-_-_-_-_-_- ");
         num_Departement = (num_Departement == "2A" || num_Departement == "2B") ? num_Departement : parseInt(num_Departement);
 
         var info_dept = App.getInfo(num_Departement);
         var info_france = App.getInfo(100);
-        var container = $('#info-dep');
 
         // Affichage Right Side - Content
         $('#rightSide .tutoDepartement').fadeOut(1000, function() {
@@ -189,21 +190,27 @@ $(document).ready(function() {
             $(this).text(nom_dept).removeClass('fadeOutDown').addClass('fadeInUp');
         });
 
+
         // Update Chiffre Dept.
         var chiffre_dept = App.getInfoFiltre(num_Departement, App.filtre);
         var chiffre_dept_container = $('#chiffreDept p');
         var suffixe = App.dataInfo[App.filtre][5] != "NC" ? App.dataInfo[App.filtre][5] : "";
 
-        chiffre_dept_container.countTo({
-            from: parseInt(chiffre_dept_container.text()),
-            to: chiffre_dept,
-            speed: 800,
-            refreshInterval: 50,
-            decimals: App.counterDecimal,
-            formatter: function(value, options) {
-                return value.toFixed(options.decimals) + " <span>" + suffixe + "</span>";
-            }
-        });
+        if (isNaN(chiffre_dept)) {
+            chiffre_dept_container.empty().addClass("chiffreNC");
+        } else {
+            chiffre_dept_container.removeClass("chiffreNC");
+            chiffre_dept_container.countTo({
+                from: parseInt(chiffre_dept_container.text()) || 0,
+                to: chiffre_dept,
+                speed: 800,
+                refreshInterval: 50,
+                decimals: App.counterDecimal,
+                formatter: function(value, options) {
+                    return value.toFixed(options.decimals) + " <span>" + suffixe + "</span>";
+                }
+            });
+        }
 
         // Update Chiffre Dept.
         var chiffre_fra = App.getInfoFiltre(100, App.filtre);
@@ -225,12 +232,9 @@ $(document).ready(function() {
         tooltip_url.attr("href", App.dataInfo[App.filtre][4]).attr("title", App.dataInfo[App.filtre][3]).text(App.dataInfo[App.filtre][3]);
         tooltip_annee.text(App.dataInfo[App.filtre][2]);
 
-        //App.dom.nom_filtre.text( App.dataInfo[HrefActive.data('info-json')][0] );
-
-        container.html(JSON.stringify(info_dept, null, "\t"));
 
         // Affichage du/des Graph
-        var graph_data = (App.dataInfo[App.filtre][6] != "NC") ? JSON.parse(App.dataInfo[App.filtre][6]) : false;
+        var graph_data = (App.dataInfo[App.filtre][6] != "NC" && App.dataInfo[App.filtre][6].length > 0) ? JSON.parse(App.dataInfo[App.filtre][6]) : false;
         App.displayGraph(graph_data);
 
 
@@ -365,6 +369,7 @@ $(document).ready(function() {
         }
 
         if (data) {
+            App.hideLineChart();
 
             App.dom.graph.append("__ OK on va jouer avec les datas suivantes  : <br/> ");
 
@@ -372,24 +377,37 @@ $(document).ready(function() {
 
             // On produit un tableau des valeurs de chaque filtre
             $.each(data, function(index, value) {
-                //App.dom.graph.append("Index : " + index + " Value : " + value + " <br/> ");
                 console.log("Index : " + index + " Value : " + value + " <br/> ");
                 dataGraph.push(parseFloat(App.getInfoFiltre(App.dept, value)));
             });
 
             App.dom.graph.append("<br/> dataGraph : " + dataGraph);
 
+            // Pie Chart
             if (App.filtre == "Temps_acces_medecin") {
                 var legendes = ["Gynécologue", "Ophtalmologiste", "Dentiste", "Infirmier"];
                 dataGraph = ArrayToJSON(dataGraph, legendes);
                 console.log(dataGraph);
                 App.displayBarChart(dataGraph);
-            } else if (App.filtre == "Nb_medecin") {
+            }
+
+            if (App.filtre == "Nb_medecin" || App.filtre == "Nb_gyneco" || App.filtre == "Nb_dentiste" || App.filtre == "Nb_ophtalmo" || App.filtre == "Nb_infirmier") {
 
                 var legendes = ["Libéraux", "Salariés"];
+                var pieChart = "#pieChart .pie";
 
-                App.displayPieChart(dataGraph);
+                if ($(pieChart).html().trim().length == 0) {
 
+                    App.displayPieChart(dataGraph);
+
+                } else {
+
+                    App.updatePieChart(dataGraph);
+
+                }
+
+            } else {
+                $('#pieChart').hide();
             }
 
             // Gestion du Gauge Chart
@@ -413,8 +431,8 @@ $(document).ready(function() {
                 App.hideGaugeChart();
             }
 
-            // /!\      // condition à remplacer ultérieurement par un regExp
-            if (App.filtre == "Age_moyen_medecin" || App.filtre == "Age_moyen_gyneco") {
+            // Gestion du Gauge Chart Multiple
+            if (App.filtre.match(/^Age_moyen_/)) {
                 var legendes = ["moins de 40 ans", "de 41 à 54 ans", "plus de 55 ans"];
                 dataGraph = ArrayToJSON(dataGraph, legendes, true);
 
@@ -424,29 +442,42 @@ $(document).ready(function() {
                     App.updateGaugeChartMultiple("#chartGaugeMultiple", dataGraph);
                 }
 
+            } else {
+                App.hideGaugeChartMultiple();
             }
 
-
-
-
-            // var chart = c3.generate({
-            //     bindto: '#chart',
-            //     data: {
-            //         columns: [
-            //             ['data1', 30, 200, 100, 400, 150, 250]
-            //         ],
-            //         type: 'bar'
-            //     },
-            //     bar: {
-            //         width: {
-            //             ratio: 0.5 // this makes bar width 50% of length between ticks
-            //         }
-            //         // or
-            //         //width: 100 // this makes bar width 100px
-            //     }
-            // });
-
+            // FIN -- if(data)
         } else {
+
+            App.hideLineChart();
+            App.hideGaugeChart();
+            App.hideGaugeChartMultiple();
+
+            // Gestion Line Chart -- Exception car JSON à lire différent donc n'est pas dans la condition if(data)
+            if (App.filtre == "Nb_hab_par_medecin") {
+
+                var dataDept = _.findWhere(App.dataEvolution, {
+                    Num_dpt: App.dept
+                });
+                var data = [
+                    "data",
+                    parseInt(dataDept["Nb_generaliste_2014"]),
+                    parseInt(dataDept["Nb_generaliste_2015"]),
+                    parseInt(dataDept["Nb_generaliste_2016"]),
+                    parseInt(dataDept["Nb_generaliste_2017"]),
+                    parseInt(dataDept["Nb_generaliste_2018"])
+                ];
+                var dataMin = _.min(data);
+                var dataMax = _.max(data);
+
+
+                if ($("#chartLine").html().trim().length == 0) {
+                    App.displayLineChart(data, dataMin, dataMax);
+                } else {
+                    App.updateLineChart(data, dataMin, dataMax);
+                }
+
+            }
 
             App.dom.graph.append("__ ARGGGHH on n'a pas les datas ! :'( <br/> ");
 
@@ -460,13 +491,18 @@ $(document).ready(function() {
         var scale = App.dataInfo[activeFilter][7];
         scale = JSON.parse(scale);
 
+        console.log(scale);
+        $("#echelle span").each(function(i, item) {
+            console.log(scale[i]);
+            $(this).text(scale[i]);
+        });
+
         for (i = 95; i > -1; i--) {
 
             var data = App.data[i][activeFilter];
             var numDept = App.data[i].Num_dpt;
 
-            console.log(data);
-
+            //console.log(data);
 
             if (data == "NC") {
 
@@ -745,25 +781,35 @@ $(document).ready(function() {
 
     }
 
+    /* ********************************************************
+    /   D3.JS -- PIE CHART
+    / ********************************************************* */
+
     App.displayPieChart = function(data) {
+
+        $("#pieChart").show();
 
         // Initialisation des variales
         var width = 280,
             height = 280,
             radius = Math.min(width, height) / 2,
-            arc = d3.svg.arc().innerRadius(radius - 10).outerRadius(radius - 55),
+            arc = d3.svg.arc().innerRadius(radius - 10).outerRadius(radius - 45),
             pie = d3.layout.pie(),
             color = ["#264359", "#22313b"];
 
-        console.log(data[0].nb);
-
         // Création du SVG
-        var svg = d3.select("#graph").append("svg")
+        var svg = d3.select("#pieChart .pie").append("svg")
             .attr("class", "pieChart")
             .attr("width", width)
             .attr("height", height)
             .append("g")
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        // Création du SVG pour la légende
+        var legend = d3.select("#pieChart .pieChartLegend").append("svg")
+            .attr('width', 200)
+            .attr('height', 100)
+            .append("g");
 
         // Cercle intérieur
         var circle = svg.append("circle")
@@ -773,7 +819,7 @@ $(document).ready(function() {
             .style("fill", "#282828");
 
         // On dessine les arcs
-        var path = svg.selectAll("path")
+        var pathPie = svg.selectAll("path")
             .data(pie(data))
             .enter().append("path")
             .attr("fill", function(d, i) {
@@ -784,19 +830,173 @@ $(document).ready(function() {
             })
             .attr("d", arc)
             .style("stroke", "#1f1e1e")
-            .style("stroke-width", 15)
+            .style("stroke-width", 5)
             .on('mouseover', function(d, i) {
-                console.log(d.value);
-                var text = svg.append("svg:text")
-                    .attr("class", "pieCenterText")
-                    .attr("fill", "#fff")
-                    .attr("dy", width - 265)
-                    .attr("dx", width - 330)
-                    .text(d.value + "%");
+
+                var select = String("#pieChart .rectData" + i);
+
+                var item = $("<div class='text'>" + parseInt(d.value) + "<span>%</span></div>").hide().fadeIn(500);
+                $("#pieChart").append(item);
+
+                $(select).animate({
+                    opacity: 1
+                }, 500);
+
+                if (i == 1) {
+                    d3.select(this)
+                        .transition().duration(500)
+                        .attr('fill', '#295677');
+                } else {
+                    d3.select(this)
+                        .transition().duration(500)
+                        .attr('fill', '#307BB2');
+                }
             })
             .on('mouseleave', function(d, i) {
-                $('.pieChart g .pieCenterText').remove();
+
+                $('#pieChart .text').fadeOut(500, function() {
+                    $(this).remove();
+                });
+
+                var select = String("#pieChart .rectData" + i);
+
+                $(select).animate({
+                    opacity: 0
+                }, 500);
+
+                if (i == 1) {
+                    d3.select(this)
+                        .transition().duration(500)
+                        .attr('fill', '#22313b');
+                } else {
+                    d3.select(this)
+                        .transition().duration(500)
+                        .attr('fill', '#264359');
+                }
+
+            }).each(function(d) {
+                this._current = d;
+            });
+
+        // Affichage légende
+        legend.append("rect")
+            .attr('class', 'rectData1')
+            .attr("x", 10)
+            .attr("y", 10)
+            .attr("width", "200")
+            .attr("height", "45")
+            .style({
+                "fill": "#282828",
+                "opacity": "0"
+            });
+        legend.append("rect")
+            .attr('class', 'rectData0')
+            .attr("x", 10)
+            .attr("y", 60)
+            .attr("width", "200")
+            .attr("height", "45")
+            .style({
+                "fill": "#282828",
+                "opacity": "0"
+            });
+        legend.append("rect")
+            .attr("x", 20)
+            .attr("y", 25)
+            .attr("width", "20")
+            .attr("height", "20")
+            .style({
+                "fill": "#22313b",
+                "stroke": "#1f1e1e",
+                "stroke-width": "5"
+            });
+        legend.append("rect")
+            .attr("x", 20)
+            .attr("y", 70)
+            .attr("width", "20")
+            .attr("height", "20")
+            .style({
+                "fill": "#264359",
+                "stroke": "#1f1e1e",
+                "stroke-width": "5"
+            });
+
+        legend.append('line')
+            .attr("x1", 50)
+            .attr("x2", 100)
+            .attr("y1", 35)
+            .attr("y2", 35)
+            .style({
+                "stroke-dasharray": "3.3",
+                "stroke-linecap": "round",
+                "stroke": "#888888",
+                "stroke-width": "1"
+            });
+        legend.append('line')
+            .attr("x1", 50)
+            .attr("x2", 100)
+            .attr("y1", 80)
+            .attr("y2", 80)
+            .style({
+                "stroke-dasharray": "3.3",
+                "stroke-linecap": "round",
+                "stroke": "#888888",
+                "stroke-width": "1"
+            });
+        legend.append("text")
+            .attr("x", 110)
+            .attr("y", 40)
+            .text(function(d) {
+                return "Salariés";
             })
+            .style({
+                "fill": "#888888",
+                "text-transform": "uppercase",
+                "opacity": "1"
+            });
+        legend.append("text")
+            .attr("x", 110)
+            .attr("y", 85)
+            .text(function(d) {
+                return "Libéraux";
+            })
+            .style({
+                "fill": "#888888",
+                "text-transform": "uppercase",
+                "opacity": "1"
+            });
+
+    }
+
+    App.updatePieChart = function(data) {
+
+        $("#pieChart").show();
+
+        console.log(data);
+
+        var width = 280,
+            height = 280,
+            radius = Math.min(width, height) / 2,
+            arc = d3.svg.arc().innerRadius(radius - 10).outerRadius(radius - 45),
+            pie = d3.layout.pie(),
+            color = ["#264359", "#22313b"];
+
+        var path = d3.selectAll("#pieChart .pie path")
+            .data(pie(data))
+            .attr("d", arc)
+            .each(function(d) {
+                $this._current = d;
+            })
+            .transition().duration(750)
+            .attrTween("d", arcTween);
+
+        function arcTween(d) {
+            var i = d3.interpolate(this._current, d);
+            console.log(i(0));
+            this._current = i(0);
+            return function(t) {
+                return arc(i(t));
+            };
+        }
 
     }
 
@@ -901,6 +1101,8 @@ $(document).ready(function() {
             .outerRadius(110)
             .startAngle(0);
 
+        console.log(pourcentage);
+
         d3.select(container + " .progressionPourcentage").transition()
             .duration(750)
             .call(arcTween, pourcentage * 2 * Math.PI);
@@ -949,9 +1151,10 @@ $(document).ready(function() {
         $(container).empty();
 
         var width = 620,
-        height = 450,
-        τ = 2 * Math.PI,
-        cercleMarge = 35;
+            height = 450,
+            τ = 2 * Math.PI,
+            cercleMarge = 35,
+            color = ["rgba(255,54,54,0.7)", "rgba(255,54,54,0.5)", "rgba(255,54,54,0.3)"];
 
         var arc = d3.svg.arc()
             .innerRadius(85)
@@ -961,12 +1164,13 @@ $(document).ready(function() {
         var svg = d3.select(container).append("svg")
             .attr("width", width)
             .attr("height", height);
-            
 
-        var graphContainer = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");;
+
+        var graphContainer = svg.append("g").attr("transform", "translate(450,225)");
 
         for (var i = 0; i < data.length; i++) {
             var pourcentage = data[i]['nb'] / 100;
+            var nb = data[i]['nb'];
 
             var arc = d3.svg.arc()
                 .innerRadius(65 + (cercleMarge * i))
@@ -985,20 +1189,21 @@ $(document).ready(function() {
                     "stroke-linecap": "round"
                 });
 
-            var foreground = graphContainer.append("path")
-                .attr("class","progressionPourcentage-"+i)
-                .datum({endAngle: pourcentage * τ})           
-                .style("fill", "#ff3636")
-                .style("opacity", ".5")
+            graphContainer.append("path")
+                .attr("class", "progressionPourcentage progressionPourcentage-" + i)
+                .datum({
+                    endAngle: pourcentage * τ
+                })
+                .style("fill", color[i])
                 .attr("d", arc);
+            //.attr("data-pourcentage", data[i]['nb'] );
 
             var rectangle = graphContainer.append("rect")
-                .attr("x",0)
-                .attr("y", -(81+(cercleMarge*i)) )
+                .attr("x", 0)
+                .attr("y", -(81 + (cercleMarge * i)))
                 .attr("width", 4)
                 .attr("height", 16)
                 .style("fill", "#FFF");
-
         }
 
         graphContainer.append("circle")
@@ -1007,80 +1212,136 @@ $(document).ready(function() {
             .attr("r", 43)
             .style("fill", "#282828");
 
-        var legendMargin = {"left":5,"bottom":40};
-        var legendColor = ["#792828","#622325","#4c2323"];
-        var legend = svg.selectAll(".legend")
-                        .data(data)
-                        .enter()
-                        .append("g")
-                        .attr("transform", function(d,i){ 
-                            return "translate( 0," + (height / 3 + i*20)  + ")" ;
-                        })
-                        .attr("class",function(d,i){
-                            return "gaugeLegende"+i;
-                        })
-                        //.on("mouseover",);
+        graphContainer.append("text")
+            .attr("class", "pourcentageTexte")
+            .attr("x", 10)
+            .attr("y", 8)
+            .text(function(d) {
+                return "00";
+            })
+            .style("opacity", "0");
 
+        graphContainer.append("text")
+            .attr("class", "pourcentageSymbole")
+            .attr("x", 13)
+            .attr("y", 8)
+            .text(function(d) {
+                return "%";
+            })
+            .style("opacity", "0");
+
+        var legendMargin = {
+            "left": 5,
+            "bottom": 40
+        };
+        var legend = svg.selectAll(".legend")
+            .data(data)
+            .enter()
+            .append("g")
+            .attr("transform", function(d, i) {
+                return "translate( 40," + (height / 3 + i * 20) + ")";
+            })
+            .attr("class", function(d, i) {
+                return "gaugeLegende gaugeLegende" + i;
+            })
+            .on("mouseover", function(d, i) {
+                var nb = d.nb;
+                var that = d3.select(this);
+
+                that.style("cursor", "pointer");
+                that.select("rect+rect").transition().duration(250).style("fill-opacity", "1");
+                that.select("text").transition().duration(250).style("fill", "#FFF");
+
+                graphContainer.select(".progressionPourcentage-" + i)
+                    .transition().duration(250)
+                    .style("fill", "rgba(255,54,54,1)");
+
+                graphContainer.select(".pourcentageTexte")
+                    .transition().duration(250)
+                    .style("opacity", "1")
+                    .text(function(d) {
+                        var nbFinal = (nb < 10) ? "0" + Math.round(nb) : Math.round(nb);
+                        return nbFinal;
+                    });
+
+                graphContainer.select(".pourcentageSymbole")
+                    .transition().duration(250)
+                    .style("opacity", "1");
+
+            })
+            .on("mouseout", function(d, i) {
+                var that = d3.select(this);
+                that.style("cursor", "initial");
+                that.select("rect+rect").transition().duration(250).style("fill-opacity", "");
+                that.select("text").transition().duration(250).style("fill", "#8D8D8D");
+
+                graphContainer.select(".progressionPourcentage-" + i)
+                    .transition().duration(250)
+                    .style("fill", color[i])
+
+                graphContainer.select(".pourcentageTexte")
+                    .transition().duration(250)
+                    .style("opacity", "0");
+
+                graphContainer.select(".pourcentageSymbole")
+                    .transition().duration(250)
+                    .style("opacity", "0");
+            });
+
+        legend.append("rect")
+            .attr("x", -5)
+            .attr("y", function(d, i) {
+                return i * legendMargin['bottom'] - 7.5;
+            })
+            .attr("width", "200")
+            .attr("height", "35")
+            .style({
+                "fill": "#282828",
+                "fill-opacity": "0.4"
+            });
 
         legend.append('rect')
-                .attr("x",legendMargin.left )
-                .attr("y", function(d,i){
-                    return i*legendMargin['bottom'];
-                })
-                .attr("width","20")
-                .attr("height","20")
-                .style({
-                    "fill":"#792828",
-                    "stroke":"#1f1e1e",
-                    "stroke-width":"5"
-                });
+            .attr("x", legendMargin.left)
+            .attr("y", function(d, i) {
+                return i * legendMargin['bottom'];
+            })
+            .attr("width", "20")
+            .attr("height", "20")
+            .style({
+                "fill": "#FF3636",
+                "stroke": "#1f1e1e",
+                "stroke-width": "5"
+            });
 
         legend.append('line')
-                .attr("x1",legendMargin.left+30)
-                .attr("x2",70)
-                .attr("y1", function(d,i){
-                    return i*legendMargin['bottom']+10;
-                })
-                .attr("y2", function(d,i){
-                    return i*legendMargin['bottom']+10;
-                })
-                .style({
-                    "stroke-dasharray":"2,4",
-                    "stroke-linecap":"round",
-                    "stroke":"#383838"
-                });
+            .attr("x1", 34)
+            .attr("x2", 50)
+            .attr("y1", function(d, i) {
+                return i * legendMargin['bottom'] + 10;
+            })
+            .attr("y2", function(d, i) {
+                return i * legendMargin['bottom'] + 10;
+            })
+            .style({
+                "stroke-dasharray": "2,4",
+                "stroke-linecap": "round",
+                "stroke": "#383838"
+            });
 
-        var texte = legend.append('text')
-                .attr("x",legendMargin.left+50)
-                .attr("y", function(d,i){
-                    return i*legendMargin['bottom']+15;
-                })
-                .text(function(d){
-                    return d.legende
-                })
-                .style({
-                    "fill":"#8d8d8d",
-                    "font-size":"12px",
-                    "text-transform":"uppercase"
-                });
+        legend.append('text')
+            .attr("x", legendMargin.left + 50)
+            .attr("y", function(d, i) {
+                return i * legendMargin['bottom'] + 14;
+            })
+            .text(function(d) {
+                return d.legende
+            })
+            .style({
+                "fill": "#8d8d8d",
+                "font-size": "12px",
+                "text-transform": "uppercase"
+            });
 
-
-
-
-        // update des pourcentages
-        // $(container).append("<div class=\"pourcentage\">");
-        // var containerPourcentage = $(container).find(".pourcentage");
-
-        // containerPourcentage.countTo({
-        //     from: 0,
-        //     to: realPourcentage,
-        //     speed: 800,
-        //     refreshInterval: 50,
-        //     decimals:1,
-        //     formatter: function (value, options) {
-        //         return value.toFixed(options.decimals)+"<span>%</span>";
-        //     }
-        // });
 
 
     }
@@ -1107,50 +1368,121 @@ $(document).ready(function() {
 
             d3.select(container + " .progressionPourcentage-" + i).transition()
                 .duration(750)
-                .call(arcTween, pourcentage * 2 * Math.PI,i);
+                .call(arcTween, pourcentage * 2 * Math.PI, i);
         }
 
-        function arcTween(transition, newAngle,i) {
+        function arcTween(transition, newAngle, i) {
             transition.attrTween("d", function(d) {
                 var interpolate = d3.interpolate(d.endAngle, newAngle);
                 return function(t) {
-                  d.endAngle = interpolate(t);
-                  arc.innerRadius(65+(cercleMarge*i));
-                  arc.outerRadius(82+(cercleMarge*i));
-                  return arc(d);
+                    d.endAngle = interpolate(t);
+                    arc.innerRadius(65 + (cercleMarge * i));
+                    arc.outerRadius(82 + (cercleMarge * i));
+                    return arc(d);
                 };
             });
         }
 
+        d3.selectAll(".gaugeLegende")
+            .data(data)
+            .enter()
+            .append("g")
+            .on("mouseover", function(d, i) {
 
+                d3.select("#chartGaugeMultiple .pourcentageTexte")
+                    .transition().duration(250)
+                    .style("opacity", "1")
+                    .text(Math.round(d.nb));
 
-        // update des pourcentages
-        // containerPourcentage.countTo({
-        //     from: parseFloat(containerPourcentage.text()),
-        //     to: realPourcentage,
-        //     speed: 800,
-        //     refreshInterval: 50,
-        //     decimals:1,
-        //     formatter: function (value, options) {
-        //         return value.toFixed(options.decimals)+"<span>%</span>";
-        //     }
-        // });
+            });
+
 
     }
 
-    // update des pourcentages
-    // containerPourcentage.countTo({
-    //     from: parseFloat(containerPourcentage.text()),
-    //     to: realPourcentage,
-    //     speed: 800,
-    //     refreshInterval: 50,
-    //     decimals:1,
-    //     formatter: function (value, options) {
-    //         return value.toFixed(options.decimals)+"<span>%</span>";
-    //     }
-    // });
+    App.hideGaugeChartMultiple = function(container, data) {
+        $('#chartGaugeMultiple').hide();
+    }
 
 
+
+    /* ********************************************************
+    /   D3.JS -- LINE CHART
+    / ********************************************************* */
+
+
+    // Fonction avec 2 paramètres obligatoires :
+    //      - 1 string  > selecteur CSS du conteneur
+    //      - 1 number OU string entre 0 et 100 > pourcentage
+    App.displayLineChart = function(data, dataMin, dataMax) {
+        $('#chartLine').fadeIn();
+        console.log(dataMin, dataMax);
+
+        App.lineChart = c3.generate({
+            bindto: '#chartLine',
+            size: {
+                height: 400,
+                width: 620
+            },
+            padding: {
+                top: 80,
+                right: 40,
+                bottom: 40,
+                left: 80,
+            },
+            data: {
+                x: 'x',
+                columns: [
+                    ['x', 2014, 2015, 2016, 2017, 2018],
+                    data
+                ],
+                types: {
+                    data: 'spline'
+                },
+                axes: {
+                    data: 'y'
+                },
+                colors: {
+                    data: "#338c5b"
+                }
+            },
+            legend: {
+                show: false
+            }
+
+        });
+
+        var ticks = d3.selectAll("#chartLine .c3-axis-x .tick");
+        ticks.each(function() {
+            d3.select(this).append("circle").attr("r", 4).attr("fill", "#4c4c4c");
+        });
+        ticks.selectAll("line").remove();
+
+        //chart.axis.max(parseInt(dataMax));
+        //chart.axis.min(parseInt(dataMin));
+
+        // chart.axis.range({
+        //     max: {y: dataMin},
+        //     min: {y: dataMax}
+        // });
+
+    }
+    App.updateLineChart = function(data, dataMin, dataMax) {
+        $('#chartLine').fadeIn();
+
+        App.lineChart.load({
+            columns: [
+                data
+            ]
+        })
+        App.lineChart.axis.max(parseInt(dataMax));
+        App.lineChart.axis.min(parseInt(dataMin));
+
+
+    }
+
+    App.hideLineChart = function() {
+        $('#chartLine').hide();
+    }
 
 
     /* ********************************************************
