@@ -243,7 +243,6 @@ section.splashscreen a{
 
 }
 .credits{
-
     height: 100%;
     text-align: center;
     position: relative;
@@ -264,18 +263,16 @@ section.splashscreen a{
     color:#fff;
     text-transform: uppercase;
 }
-    .credits h2.title_credits::after{
-            display: block;
-            content: '';
-            background: #e13144;
-
-            width: 40px;
-            height: 3px;
-
-            left: 48%;
-            position: absolute;
-            margin-top: 20px;
-        }
+.credits h2.title_credits::after{
+        display: block;
+        content: '';
+        background: #e13144;
+        width: 40px;
+        height: 3px;
+        left: 48%;
+        position: absolute;
+        margin-top: 20px;
+    }
 .credits h2,
 .credits p,
 .credits ul.role_credits{
@@ -419,23 +416,6 @@ section.splashscreen a{
     left:-60px;
 }
 
-.helpCircle{
-display: block;
-  width: 17px;
-  height: 17px;
-    background-color: rgba(255,255,255,0.255);
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -o-border-radius: 50%;
-    border-radius: 50%;
-    position: absolute;
-    top:-15px;
-    left: -63px;
-}
-.help div:nth-child(2) .helpCircle{
-    top:24px;
-    left: -64px;
-}
 /* ==========================================================================
    Tuto
    ========================================================================== */
@@ -675,9 +655,9 @@ nav li:hover{
     background-color: #82c1cb;
     }
 
-nav span{
+/*nav span{
     margin-top: 22px;
-}
+}*/
 nav a{
     line-height:65px;
     margin:0;
@@ -1138,70 +1118,68 @@ background-position: right center;
     margin-top:8px;
 }
 
-
-.tooltipNav{
-    display: inline;
-    position: relative;
-
+.tooltipNav {
+  position: relative;
+  display: inline-block;
 }
-
-.tooltipNav:hover:after{
-
-background:#282828;
-border-radius: 5px;
-top: -53px;
-color: #fff;
-content: attr(title);
-left: 80px;
-padding: 9px 19px;
-position: absolute;
-z-index: 98;
-width: auto;
-       -webkit-transition: .5s all;
-    -moz-transition: .5s all;
-    -o-transition: .5s all;
-    transition: .5s all;
-}
-.tooltipNav:hover:before{
-    width:15px;
-    height:15px;
-    background:#282828;
-    -webkit-transform:rotate(45deg) translateX(-50%);
-    -moz-transform:rotate(45deg) translateX(-50%);
-    -ms-transform:rotate(45deg) translateX(-50%);
-    transform:rotate(45deg) translateX(-50%);
-    bottom: -45px;
-    content: "";
-    left: 80px;
+.tooltipNav:before, .tooltipNav:after{
     position: absolute;
-    z-index: 99;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 100;
+    pointer-events: none;
+    left: 100%;
+    bottom: 25%;
+    font-size: 16px;
+    -webkit-transition: 0.3s ease;
+    -moz-transition: 0.3s ease;
+    transition: 0.3s ease;
+
+    -webkit-transition-delay: 0ms;
+    -moz-transition-delay: 0ms;
+    transition-delay: 0ms; 
+
+    -webkit-transform: translateX(16px);
+    -moz-transform: translateX(16px);
+    transform: translateX(16px);
+}
+.tooltipNav:hover:before, .tooltipNav:hover:after{
+    visibility: visible;
+    opacity: 1;
+ }
+.tooltipNav:hover:before, .tooltipNav:hover:after {
+    -webkit-transition-delay: 100ms;
+    -moz-transition-delay: 100ms;
+    transition-delay: 100ms; }
+.tooltipNav:before{
+    content: '';
+    position: absolute;
+    background: transparent;
+    border: 8px solid transparent;
+    z-index: 101; 
+    margin-left: 0px;
+    margin-bottom: 9px;
+    border-bottom-color: #282828;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    }
+.tooltipNav:after {
+    content: attr(title);
+    background: #282828;
+    color: white;
+    padding: 11px 14px;
+    font-size: 12px;
+    line-height: 12px;
+    white-space: nowrap;
+    border-radius: 2px;
+    font-size: 16px;
 }
 
-.tips span.tooltipNav:hover:after,
-nav ul li:nth-of-type(4) span.tooltipNav:hover:after{
-    top: -54px;
-    left: 83px;
-    width: auto ;
+.thirdLevel span.tooltipNav:before,.thirdLevel span.tooltipNav:after{
+    bottom:-10%;
 }
-.tips span.tooltipNav:hover:before,
-nav ul li:nth-of-type(4)  span.tooltipNav:hover:before{
-    bottom: 22px;
-    left: 82px;
-}
-
-.thirdLevel span.tooltipNav:hover:after{
-top: -13px;
-left: 40px;
-width: auto;
-}
-.thirdLevel span.tooltipNav:hover:before{
-bottom: -1px;
-left: 40px;
-
-}
-
-
-
 .tutoDepartement{
     position:absolute;
     left:0;right:0;
