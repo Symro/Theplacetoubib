@@ -797,11 +797,6 @@ section#leftSide{
     text-shadow:1px 1px 1px white;
 }
 
-#leftSide #map svg{
-    position:absolute;
-    top:0;
-}
-
 
 #echelle{
     width:50%;
@@ -1058,7 +1053,7 @@ footer .partage:hover .buttonShare{
 #infoNeeded div{
     font-weight: 400;
     margin-top: 20%;
-    color: #707070;  
+    color: #707070;
 }
 #infoNeeded a{
     position: absolute;
@@ -1172,7 +1167,7 @@ footer .partage:hover .buttonShare{
 
     -webkit-transition-delay: 0ms;
     -moz-transition-delay: 0ms;
-    transition-delay: 0ms; 
+    transition-delay: 0ms;
 
     -webkit-transform: translateX(16px);
     -moz-transform: translateX(16px);
@@ -1191,7 +1186,7 @@ footer .partage:hover .buttonShare{
     position: absolute;
     background: transparent;
     border: 8px solid transparent;
-    z-index: 101; 
+    z-index: 101;
     margin-left: 0px;
     margin-bottom: 9px;
     border-bottom-color: #282828;
