@@ -81,7 +81,7 @@ textarea {
   width: 1em;
   margin-right: .2em;
   text-align: center;
-  color:#FFF;
+  color:#447a82;
   /* opacity: .8; */
 
   /* For safety - reset parent styles, that can break glyph codes*/
@@ -148,7 +148,7 @@ body,html{
     background-color: #e7f1f3;
     color:#6f9298;
     font:69.5%;
-    z-index: 30;
+    z-index: 60;
 
 }
 section.splashscreen{
@@ -434,7 +434,7 @@ section.splashscreen a{
    ========================================================================== */
 
 .tuto{
-    z-index: 9;
+    z-index: 50;
     position:absolute;
     display: block;
     width: 100%;
@@ -674,7 +674,7 @@ nav ul.open{
 nav li{
     height: 65px;
     float: left;
-    border-bottom: 1px solid #51919b;
+    border-bottom: 1px solid #4c8790;
 }
 nav li:hover{
     background-color: #82c1cb;
@@ -828,7 +828,7 @@ section#leftSide{
     position: relative;
     color:#34626a;
     top:15px;
-    left:90%;
+    float: right;
 }
 .secondPart{
     width: 25%;
@@ -875,7 +875,7 @@ margin: auto;
     border-bottom: 10px solid transparent;
     border-left: 10px solid #e7f0f3;
     left: 0px;
-    top:65px;
+    top:67px;
     z-index: 35;
 }
 
@@ -1029,9 +1029,10 @@ footer .partage:hover .buttonShare{
     position:relative;
  }
 #rightSide #chiffreDept p.chiffreNC:after{
-    content:"données manquantes";
+    content:"Donnée manquante";
+    text-transform: none;
     position:absolute;
-    left:0;right:0;top:0;
+    left:0;right:0;top:20px;
     font-size:22px;/*line-height:68px;*/
  }
 

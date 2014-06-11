@@ -1811,9 +1811,13 @@ $(document).ready(function() {
 
     $('body').on("click", ".credits", function(e) {
         e.preventDefault();
+        console.log(e);
 
-        if(e.target.className == "name_credits"){ window.open(e.target.parentElement.href, '_blank');  }
-        else{
+        if(e.target.className == "name_credits"){ 
+            window.open(e.target.parentElement.href, '_blank');  
+        // }else if(event.target.is("a")){
+        //      window.open(e.target.href, '_blank');
+        }else{
             $(this).parent('#credits').addClass('animated fadeOut').delay(700).queue(function(next) {
                 $(this).addClass('hidden');
                 next();
