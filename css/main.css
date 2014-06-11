@@ -243,7 +243,6 @@ section.splashscreen a{
 
 }
 .credits{
-
     height: 100%;
     text-align: center;
     position: relative;
@@ -264,18 +263,16 @@ section.splashscreen a{
     color:#fff;
     text-transform: uppercase;
 }
-    .credits h2.title_credits::after{
-            display: block;
-            content: '';
-            background: #e13144;
-
-            width: 40px;
-            height: 3px;
-
-            left: 48%;
-            position: absolute;
-            margin-top: 20px;
-        }
+.credits h2.title_credits::after{
+        display: block;
+        content: '';
+        background: #e13144;
+        width: 40px;
+        height: 3px;
+        left: 48%;
+        position: absolute;
+        margin-top: 20px;
+    }
 .credits h2,
 .credits p,
 .credits ul.role_credits{
@@ -419,23 +416,6 @@ section.splashscreen a{
     left:-60px;
 }
 
-.helpCircle{
-display: block;
-  width: 17px;
-  height: 17px;
-    background-color: rgba(255,255,255,0.255);
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -o-border-radius: 50%;
-    border-radius: 50%;
-    position: absolute;
-    top:-15px;
-    left: -63px;
-}
-.help div:nth-child(2) .helpCircle{
-    top:24px;
-    left: -64px;
-}
 /* ==========================================================================
    Tuto
    ========================================================================== */
