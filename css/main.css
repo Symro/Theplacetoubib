@@ -553,7 +553,7 @@ section.splashscreen a{
     color: #f4f2f2;
     font-weight: 400;
     text-transform: uppercase;
-    letter-spacing : 0.1em;
+    letter-spacing : 0.05em;
     font-size : 1em;
 }
 .dico a{
@@ -739,7 +739,7 @@ menu, ol, ul{
     background-color: black;
     background-image: url(../img/logoNav.png);
     background-repeat: no-repeat;
-    background-size: 55%;
+    background-size: 45%;
     background-position: 50% 50%;
 }
 
@@ -1018,7 +1018,7 @@ footer .partage:hover .buttonShare{
     content:"données manquantes";
     position:absolute;
     left:0;right:0;top:0;
-    font-size:22px;line-height:68px;
+    font-size:22px;/*line-height:68px;*/
  }
 
 #chiffreDept, #chiffreFrance h3{
@@ -1033,6 +1033,12 @@ footer .partage:hover .buttonShare{
 #infoGraph{
     position:relative;
     clear:both;
+}
+
+#infoNeeded{
+    background: url('../img/graphMedecins.png') no-repeat;
+    width:438px;
+    height:227px;
 }
 
 #infoNeeded div{
