@@ -236,9 +236,28 @@ $(document).ready(function() {
         var graph_data = (App.dataInfo[App.filtre][6] != "NC" && App.dataInfo[App.filtre][6].length > 0) ? JSON.parse(App.dataInfo[App.filtre][6]) : false;
         App.displayGraph(graph_data);
 
-
         // Update ToolTip Graph
-        if (graph_data) {
+        var tooltip_graph_container = $('#infoGraph .tooltipCSS');
+
+        if(App.filtre.match(/^Nb_hab_par_/)){
+            tooltip_graph_container.addClass('disabled');
+
+            if(App.filtre == "Nb_hab_par_medecin"){
+                tooltip_graph_container.removeClass('disabled');
+                tooltip_graph_container
+                    .find("div p:first a")
+                        .attr("href", App.dataInfo["Evo_nombre_medecins"][4]).attr("title", App.dataInfo["Evo_nombre_medecins"][3]).text(App.dataInfo["Evo_nombre_medecins"][3])
+                    .end()
+                    .find("div p+p span+span").text(App.dataInfo["Evo_nombre_medecins"][2])
+                    .end()
+                    .find("div div:first").siblings("div").remove();
+            }
+        }
+        else{
+            tooltip_graph_container.removeClass('disabled');
+        }
+
+        if (graph_data && graph_data.length != 0) {
             var graph_data_info = [];
             var graph_data_tooltip_source = [];
             var graph_data_tooltip_url = [];
@@ -1792,10 +1811,15 @@ $(document).ready(function() {
 
     $('body').on("click", ".credits", function(e) {
         e.preventDefault();
-        $(this).parent('#credits').addClass('animated fadeOut').delay(700).queue(function(next) {
-            $(this).addClass('hidden');
-            next();
-        });
+
+        if(e.target.className == "name_credits"){ window.open(e.target.parentElement.href, '_blank');  }
+        else{
+            $(this).parent('#credits').addClass('animated fadeOut').delay(700).queue(function(next) {
+                $(this).addClass('hidden');
+                next();
+            }); 
+        }
+
     });
 
 
