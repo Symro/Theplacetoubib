@@ -279,7 +279,7 @@ $(document).ready(function() {
 
             // affichage des datas dans la tooltip
             var tooltip_container = App.dom.tooltip_graph.find("div:first");
-            tooltip_container.empty().append("<h5>Provenance des datas</h5>");
+            tooltip_container.empty().append("<h5>Provenance des données</h5>");
             for (var i = 0; i < graph_data_tooltip.length; i++) {
                 if (graph_data_tooltip[i][1] != "NC") {
                     tooltip_container.append("<div><p><span>Source : </span><a href=\"" + graph_data_tooltip[i][1] + "\" title=\"" + graph_data_tooltip[i][0] + "\" target=\"_blank\">" + graph_data_tooltip[i][0] + "</a></p> <p><span>Année : </span><span>" + graph_data_tooltip[i][2] + "</span></p></div>");
@@ -1779,7 +1779,7 @@ $(document).ready(function() {
                 firstLevel.next(".secondLevel").removeClass('open');
                 firstLevel.next(".secondLevel").slideUp();
             }
-            
+
             var thirdLevel = $(".thirdLevel");
             thirdLevel.addClass('hidden').find("ul").addClass('animated fadeOutLeft');
             App.menuEtat = ["", "", ""];

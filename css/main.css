@@ -1029,7 +1029,7 @@ footer .partage:hover .buttonShare{
     position:relative;
  }
 #rightSide #chiffreDept p.chiffreNC:after{
-    content:"données manquantes";
+    content:"donnée manquante";
     position:absolute;
     left:0;right:0;top:0;
     font-size:22px;/*line-height:68px;*/
