@@ -1024,7 +1024,11 @@ footer .partage:hover .buttonShare{
 #rightSide #chiffreDept span,
 #rightSide #chiffreFrance span{
     font-size:0.55em;
- }
+}
+#rightSide #chiffreDept b,
+#rightSide #chiffreFrance b{
+    font-size:0.85em;
+}
 #rightSide #chiffreDept p{
     position:relative;
  }

@@ -206,7 +206,7 @@ $(document).ready(function() {
                 refreshInterval: 50,
                 decimals: App.counterDecimal,
                 formatter: function(value, options) {
-                    return value.toFixed(options.decimals) + " <span>" + suffixe + "</span>";
+                    return value.toFixed(options.decimals).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace(".", "<b>,</b>") + " <span>" + suffixe + "</span>";
                 }
             });
         }
@@ -221,7 +221,7 @@ $(document).ready(function() {
             refreshInterval: 50,
             decimals: App.counterDecimal,
             formatter: function(value, options) {
-                return value.toFixed(options.decimals) + " <span>" + suffixe + "</span>";
+                return value.toFixed(options.decimals).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace(".", "<b>,</b>") + " <span>" + suffixe + "</span>";
             }
         });
 
