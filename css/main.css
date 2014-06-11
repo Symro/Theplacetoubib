@@ -559,6 +559,12 @@ section.splashscreen a{
 .dico a{
     color: #525151;
     text-decoration: none;
+
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
 }
 .dico article{
     padding-bottom: 25px;
@@ -569,6 +575,12 @@ section.splashscreen a{
 .dico .icon-source:before {
     color:#525151;
     font-size: 13px;
+
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
 }
 .dico a:hover .icon-source:before {
     color:#f4f2f2;
