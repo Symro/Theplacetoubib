@@ -200,7 +200,7 @@ $(document).ready(function() {
         } else {
             chiffre_dept_container.removeClass("chiffreNC");
             chiffre_dept_container.countTo({
-                from: parseInt(chiffre_dept_container.text()) || 0,
+                from: parseFloat(chiffre_dept_container.text().replace(/[^,.0-9]/g,'')) || 0,
                 to: chiffre_dept,
                 speed: 800,
                 refreshInterval: 50,
@@ -215,7 +215,7 @@ $(document).ready(function() {
         var chiffre_fra = App.getInfoFiltre(100, App.filtre);
         var chiffre_fra_container = $('#chiffreFrance p');
         chiffre_fra_container.countTo({
-            from: parseInt(chiffre_fra_container.text()),
+            from: parseFloat(chiffre_fra_container.text().replace(/[^,.0-9]/g,'')),
             to: chiffre_fra,
             speed: 800,
             refreshInterval: 50,
