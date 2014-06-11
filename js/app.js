@@ -46,7 +46,6 @@ $(document).ready(function() {
 
     App.data = getJson("data/data.json");
     App.dataInfo = getJson("data/data_info.json");
-    App.dataEvolution = getJson("data/data_evolution.json");
 
 
     /* ********************************************************
@@ -462,9 +461,8 @@ $(document).ready(function() {
             // Gestion Line Chart -- Exception car JSON à lire différent donc n'est pas dans la condition if(data)
             if (App.filtre == "Nb_hab_par_medecin") {
 
-                var dataDept = _.findWhere(App.dataEvolution, {
-                    Num_dpt: App.dept
-                });
+                var dataDept = App.getInfo(App.dept);
+                
                 var data = [
                     "data",
                     parseInt(dataDept["Nb_generaliste_2014"]),

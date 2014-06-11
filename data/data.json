@@ -72,7 +72,12 @@
     "Nombre_hopitaux":11,
     "Nb_hopital_public":"11",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"9"
+    "Nb_clinique_prive_but_lucratif":"9",
+    "Nb_generaliste_2014":"630",
+    "Nb_generaliste_2015":"633",
+    "Nb_generaliste_2016":"637",
+    "Nb_generaliste_2017":"640",
+    "Nb_generaliste_2018":"644"
   },
   {
     "Num_dpt":"2",
@@ -147,7 +152,12 @@
     "Nombre_hopitaux":10,
     "Nb_hopital_public":"10",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"4"
+    "Nb_clinique_prive_but_lucratif":"4",
+    "Nb_generaliste_2014":"579",
+    "Nb_generaliste_2015":"555",
+    "Nb_generaliste_2016":"542",
+    "Nb_generaliste_2017":"529",
+    "Nb_generaliste_2018":"517"
   },
   {
     "Num_dpt":"3",
@@ -222,7 +232,12 @@
     "Nombre_hopitaux":11,
     "Nb_hopital_public":"11",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"6"
+    "Nb_clinique_prive_but_lucratif":"6",
+    "Nb_generaliste_2014":"440",
+    "Nb_generaliste_2015":"434",
+    "Nb_generaliste_2016":"429",
+    "Nb_generaliste_2017":"423",
+    "Nb_generaliste_2018":"NC"
   },
   {
     "Num_dpt":"4",
@@ -297,7 +312,12 @@
     "Nombre_hopitaux":12,
     "Nb_hopital_public":"12",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"6"
+    "Nb_clinique_prive_but_lucratif":"6",
+    "Nb_generaliste_2014":"269",
+    "Nb_generaliste_2015":"268",
+    "Nb_generaliste_2016":"267",
+    "Nb_generaliste_2017":"266",
+    "Nb_generaliste_2018":"265"
   },
   {
     "Num_dpt":"5",
@@ -372,7 +392,12 @@
     "Nombre_hopitaux":6,
     "Nb_hopital_public":"6",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"12"
+    "Nb_clinique_prive_but_lucratif":"12",
+    "Nb_generaliste_2014":"285",
+    "Nb_generaliste_2015":"284",
+    "Nb_generaliste_2016":"284",
+    "Nb_generaliste_2017":"283",
+    "Nb_generaliste_2018":"283"
   },
   {
     "Num_dpt":"6",
@@ -447,11 +472,16 @@
     "Nombre_hopitaux":25,
     "Nb_hopital_public":"20",
     "Nb_hopital_prive_but_non_lucratif":"5",
-    "Nb_clinique_prive_but_lucratif":"19"
+    "Nb_clinique_prive_but_lucratif":"19",
+    "Nb_generaliste_2014":"1730",
+    "Nb_generaliste_2015":"1710",
+    "Nb_generaliste_2016":"1690",
+    "Nb_generaliste_2017":"1670",
+    "Nb_generaliste_2018":"NC"
   },
   {
     "Num_dpt":"7",
-    "Nom_dpt":"Ardéche",
+    "Nom_dpt":"Ardèche",
     "Nb_hab_age_de_0_a_19_ans":"73495",
     "Nb_hab_age_de_20_a_39_ans":"64605",
     "Nb_hab_age_de_40_a_59_ans":"89888",
@@ -522,7 +552,12 @@
     "Nombre_hopitaux":21,
     "Nb_hopital_public":"18",
     "Nb_hopital_prive_but_non_lucratif":"3",
-    "Nb_clinique_prive_but_lucratif":"5"
+    "Nb_clinique_prive_but_lucratif":"5",
+    "Nb_generaliste_2014":"381",
+    "Nb_generaliste_2015":"378",
+    "Nb_generaliste_2016":"376",
+    "Nb_generaliste_2017":"373",
+    "Nb_generaliste_2018":"370"
   },
   {
     "Num_dpt":"8",
@@ -597,11 +632,16 @@
     "Nombre_hopitaux":11,
     "Nb_hopital_public":"11",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"3"
+    "Nb_clinique_prive_but_lucratif":"3",
+    "Nb_generaliste_2014":"366",
+    "Nb_generaliste_2015":"359",
+    "Nb_generaliste_2016":"352",
+    "Nb_generaliste_2017":"345",
+    "Nb_generaliste_2018":"338"
   },
   {
     "Num_dpt":"9",
-    "Nom_dpt":"Ariége",
+    "Nom_dpt":"Ariège",
     "Nb_hab_age_de_0_a_19_ans":"33169",
     "Nb_hab_age_de_20_a_39_ans":"30101",
     "Nb_hab_age_de_40_a_59_ans":"43307",
@@ -672,7 +712,12 @@
     "Nombre_hopitaux":7,
     "Nb_hopital_public":"5",
     "Nb_hopital_prive_but_non_lucratif":"2",
-    "Nb_clinique_prive_but_lucratif":"2"
+    "Nb_clinique_prive_but_lucratif":"2",
+    "Nb_generaliste_2014":"233",
+    "Nb_generaliste_2015":"231",
+    "Nb_generaliste_2016":"229",
+    "Nb_generaliste_2017":"227",
+    "Nb_generaliste_2018":"225"
   },
   {
     "Num_dpt":"10",
@@ -747,7 +792,12 @@
     "Nombre_hopitaux":7,
     "Nb_hopital_public":"7",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"6"
+    "Nb_clinique_prive_but_lucratif":"6",
+    "Nb_generaliste_2014":"343",
+    "Nb_generaliste_2015":"341",
+    "Nb_generaliste_2016":"339",
+    "Nb_generaliste_2017":"337",
+    "Nb_generaliste_2018":"335"
   },
   {
     "Num_dpt":"11",
@@ -822,7 +872,12 @@
     "Nombre_hopitaux":7,
     "Nb_hopital_public":"7",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"10"
+    "Nb_clinique_prive_but_lucratif":"10",
+    "Nb_generaliste_2014":"512",
+    "Nb_generaliste_2015":"508",
+    "Nb_generaliste_2016":"504",
+    "Nb_generaliste_2017":"500",
+    "Nb_generaliste_2018":"496"
   },
   {
     "Num_dpt":"12",
@@ -897,7 +952,12 @@
     "Nombre_hopitaux":12,
     "Nb_hopital_public":"11",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"3"
+    "Nb_clinique_prive_but_lucratif":"3",
+    "Nb_generaliste_2014":"374",
+    "Nb_generaliste_2015":"371",
+    "Nb_generaliste_2016":"367",
+    "Nb_generaliste_2017":"363",
+    "Nb_generaliste_2018":"360"
   },
   {
     "Num_dpt":"13",
@@ -972,7 +1032,12 @@
     "Nombre_hopitaux":39,
     "Nb_hopital_public":"22",
     "Nb_hopital_prive_but_non_lucratif":"17",
-    "Nb_clinique_prive_but_lucratif":"89"
+    "Nb_clinique_prive_but_lucratif":"89",
+    "Nb_generaliste_2014":"3330",
+    "Nb_generaliste_2015":"3293",
+    "Nb_generaliste_2016":"3257",
+    "Nb_generaliste_2017":"3221",
+    "Nb_generaliste_2018":"3185"
   },
   {
     "Num_dpt":"14",
@@ -1047,7 +1112,12 @@
     "Nombre_hopitaux":16,
     "Nb_hopital_public":"14",
     "Nb_hopital_prive_but_non_lucratif":"2",
-    "Nb_clinique_prive_but_lucratif":"10"
+    "Nb_clinique_prive_but_lucratif":"10",
+    "Nb_generaliste_2014":"987",
+    "Nb_generaliste_2015":"988",
+    "Nb_generaliste_2016":"990",
+    "Nb_generaliste_2017":"992",
+    "Nb_generaliste_2018":"994"
   },
   {
     "Num_dpt":"15",
@@ -1122,7 +1192,12 @@
     "Nombre_hopitaux":8,
     "Nb_hopital_public":"7",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"6"
+    "Nb_clinique_prive_but_lucratif":"6",
+    "Nb_generaliste_2014":"150",
+    "Nb_generaliste_2015":"151",
+    "Nb_generaliste_2016":"153",
+    "Nb_generaliste_2017":"155",
+    "Nb_generaliste_2018":"156"
   },
   {
     "Num_dpt":"16",
@@ -1197,7 +1272,12 @@
     "Nombre_hopitaux":13,
     "Nb_hopital_public":"11",
     "Nb_hopital_prive_but_non_lucratif":"2",
-    "Nb_clinique_prive_but_lucratif":"9"
+    "Nb_clinique_prive_but_lucratif":"9",
+    "Nb_generaliste_2014":"450",
+    "Nb_generaliste_2015":"444",
+    "Nb_generaliste_2016":"439",
+    "Nb_generaliste_2017":"434",
+    "Nb_generaliste_2018":"428"
   },
   {
     "Num_dpt":"17",
@@ -1272,7 +1352,12 @@
     "Nombre_hopitaux":15,
     "Nb_hopital_public":"14",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"12"
+    "Nb_clinique_prive_but_lucratif":"12",
+    "Nb_generaliste_2014":"958",
+    "Nb_generaliste_2015":"965",
+    "Nb_generaliste_2016":"973",
+    "Nb_generaliste_2017":"980",
+    "Nb_generaliste_2018":"988"
   },
   {
     "Num_dpt":"18",
@@ -1347,11 +1432,16 @@
     "Nombre_hopitaux":5,
     "Nb_hopital_public":"5",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"6"
+    "Nb_clinique_prive_but_lucratif":"6",
+    "Nb_generaliste_2014":"329",
+    "Nb_generaliste_2015":"323",
+    "Nb_generaliste_2016":"318",
+    "Nb_generaliste_2017":"313",
+    "Nb_generaliste_2018":"307"
   },
   {
     "Num_dpt":"19",
-    "Nom_dpt":"Corréze",
+    "Nom_dpt":"Corrèze",
     "Nb_hab_age_de_0_a_19_ans":"48966",
     "Nb_hab_age_de_20_a_39_ans":"48503",
     "Nb_hab_age_de_40_a_59_ans":"66516",
@@ -1422,7 +1512,12 @@
     "Nombre_hopitaux":6,
     "Nb_hopital_public":"5",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"3"
+    "Nb_clinique_prive_but_lucratif":"3",
+    "Nb_generaliste_2014":"335",
+    "Nb_generaliste_2015":"332",
+    "Nb_generaliste_2016":"330",
+    "Nb_generaliste_2017":"328",
+    "Nb_generaliste_2018":"325"
   },
   {
     "Num_dpt":"21",
@@ -1497,7 +1592,12 @@
     "Nombre_hopitaux":20,
     "Nb_hopital_public":"20",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"10"
+    "Nb_clinique_prive_but_lucratif":"10",
+    "Nb_generaliste_2014":"778",
+    "Nb_generaliste_2015":"775",
+    "Nb_generaliste_2016":"773",
+    "Nb_generaliste_2017":"771",
+    "Nb_generaliste_2018":"769"
   },
   {
     "Num_dpt":"22",
@@ -1572,7 +1672,12 @@
     "Nombre_hopitaux":18,
     "Nb_hopital_public":"13",
     "Nb_hopital_prive_but_non_lucratif":"5",
-    "Nb_clinique_prive_but_lucratif":"11"
+    "Nb_clinique_prive_but_lucratif":"11",
+    "Nb_generaliste_2014":"762",
+    "Nb_generaliste_2015":"759",
+    "Nb_generaliste_2016":"756",
+    "Nb_generaliste_2017":"752",
+    "Nb_generaliste_2018":"749"
   },
   {
     "Num_dpt":"23",
@@ -1647,7 +1752,12 @@
     "Nombre_hopitaux":7,
     "Nb_hopital_public":"6",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"2"
+    "Nb_clinique_prive_but_lucratif":"2",
+    "Nb_generaliste_2014":"172",
+    "Nb_generaliste_2015":"169",
+    "Nb_generaliste_2016":"167",
+    "Nb_generaliste_2017":"165",
+    "Nb_generaliste_2018":"163"
   },
   {
     "Num_dpt":"24",
@@ -1722,7 +1832,12 @@
     "Nombre_hopitaux":13,
     "Nb_hopital_public":"13",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"4"
+    "Nb_clinique_prive_but_lucratif":"4",
+    "Nb_generaliste_2014":"519",
+    "Nb_generaliste_2015":"511",
+    "Nb_generaliste_2016":"504",
+    "Nb_generaliste_2017":"496",
+    "Nb_generaliste_2018":"489"
   },
   {
     "Num_dpt":"25",
@@ -1797,7 +1912,12 @@
     "Nombre_hopitaux":16,
     "Nb_hopital_public":"16",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"8"
+    "Nb_clinique_prive_but_lucratif":"8",
+    "Nb_generaliste_2014":"860",
+    "Nb_generaliste_2015":"864",
+    "Nb_generaliste_2016":"868",
+    "Nb_generaliste_2017":"872",
+    "Nb_generaliste_2018":"876"
   },
   {
     "Num_dpt":"26",
@@ -1872,7 +1992,12 @@
     "Nombre_hopitaux":11,
     "Nb_hopital_public":"11",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"4"
+    "Nb_clinique_prive_but_lucratif":"4",
+    "Nb_generaliste_2014":"674",
+    "Nb_generaliste_2015":"676",
+    "Nb_generaliste_2016":"679",
+    "Nb_generaliste_2017":"681",
+    "Nb_generaliste_2018":"683"
   },
   {
     "Num_dpt":"27",
@@ -1947,7 +2072,12 @@
     "Nombre_hopitaux":15,
     "Nb_hopital_public":"14",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"6"
+    "Nb_clinique_prive_but_lucratif":"6",
+    "Nb_generaliste_2014":"595",
+    "Nb_generaliste_2015":"592",
+    "Nb_generaliste_2016":"588",
+    "Nb_generaliste_2017":"585",
+    "Nb_generaliste_2018":"582"
   },
   {
     "Num_dpt":"28",
@@ -2022,11 +2152,16 @@
     "Nombre_hopitaux":9,
     "Nb_hopital_public":"9",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"9"
+    "Nb_clinique_prive_but_lucratif":"9",
+    "Nb_generaliste_2014":"446",
+    "Nb_generaliste_2015":"438",
+    "Nb_generaliste_2016":"430",
+    "Nb_generaliste_2017":"423",
+    "Nb_generaliste_2018":"414"
   },
   {
     "Num_dpt":"29",
-    "Nom_dpt":"Finistére",
+    "Nom_dpt":"Finistère",
     "Nb_hab_age_de_0_a_19_ans":"211367",
     "Nb_hab_age_de_20_a_39_ans":"200851",
     "Nb_hab_age_de_40_a_59_ans":"249088",
@@ -2097,7 +2232,12 @@
     "Nombre_hopitaux":18,
     "Nb_hopital_public":"17",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"18"
+    "Nb_clinique_prive_but_lucratif":"18",
+    "Nb_generaliste_2014":"1346",
+    "Nb_generaliste_2015":"1352",
+    "Nb_generaliste_2016":"1357",
+    "Nb_generaliste_2017":"1363",
+    "Nb_generaliste_2018":"1368"
   },
   {
     "Num_dpt":"30",
@@ -2172,7 +2312,12 @@
     "Nombre_hopitaux":13,
     "Nb_hopital_public":"12",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"15"
+    "Nb_clinique_prive_but_lucratif":"15",
+    "Nb_generaliste_2014":"1007",
+    "Nb_generaliste_2015":"1000",
+    "Nb_generaliste_2016":"994",
+    "Nb_generaliste_2017":"988",
+    "Nb_generaliste_2018":"982"
   },
   {
     "Num_dpt":"31",
@@ -2247,7 +2392,12 @@
     "Nombre_hopitaux":19,
     "Nb_hopital_public":"18",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"32"
+    "Nb_clinique_prive_but_lucratif":"32",
+    "Nb_generaliste_2014":"1898",
+    "Nb_generaliste_2015":"1885",
+    "Nb_generaliste_2016":"1872",
+    "Nb_generaliste_2017":"1859",
+    "Nb_generaliste_2018":"1846"
   },
   {
     "Num_dpt":"32",
@@ -2322,7 +2472,12 @@
     "Nombre_hopitaux":8,
     "Nb_hopital_public":"8",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"3"
+    "Nb_clinique_prive_but_lucratif":"3",
+    "Nb_generaliste_2014":"249",
+    "Nb_generaliste_2015":"244",
+    "Nb_generaliste_2016":"238",
+    "Nb_generaliste_2017":"233",
+    "Nb_generaliste_2018":"228"
   },
   {
     "Num_dpt":"33",
@@ -2397,7 +2552,12 @@
     "Nombre_hopitaux":22,
     "Nb_hopital_public":"18",
     "Nb_hopital_prive_but_non_lucratif":"4",
-    "Nb_clinique_prive_but_lucratif":"37"
+    "Nb_clinique_prive_but_lucratif":"37",
+    "Nb_generaliste_2014":"2326",
+    "Nb_generaliste_2015":"2306",
+    "Nb_generaliste_2016":"2286",
+    "Nb_generaliste_2017":"2266",
+    "Nb_generaliste_2018":"2246"
   },
   {
     "Num_dpt":"34",
@@ -2472,7 +2632,12 @@
     "Nombre_hopitaux":18,
     "Nb_hopital_public":"17",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"32"
+    "Nb_clinique_prive_but_lucratif":"32",
+    "Nb_generaliste_2014":"1744",
+    "Nb_generaliste_2015":"1738",
+    "Nb_generaliste_2016":"1732",
+    "Nb_generaliste_2017":"1726",
+    "Nb_generaliste_2018":"1721"
   },
   {
     "Num_dpt":"35",
@@ -2547,7 +2712,12 @@
     "Nombre_hopitaux":26,
     "Nb_hopital_public":"21",
     "Nb_hopital_prive_but_non_lucratif":"5",
-    "Nb_clinique_prive_but_lucratif":"9"
+    "Nb_clinique_prive_but_lucratif":"9",
+    "Nb_generaliste_2014":"1364",
+    "Nb_generaliste_2015":"1363",
+    "Nb_generaliste_2016":"1362",
+    "Nb_generaliste_2017":"1361",
+    "Nb_generaliste_2018":"1360"
   },
   {
     "Num_dpt":"36",
@@ -2622,7 +2792,12 @@
     "Nombre_hopitaux":9,
     "Nb_hopital_public":"9",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"7"
+    "Nb_clinique_prive_but_lucratif":"7",
+    "Nb_generaliste_2014":"244",
+    "Nb_generaliste_2015":"239",
+    "Nb_generaliste_2016":"234",
+    "Nb_generaliste_2017":"229",
+    "Nb_generaliste_2018":"224"
   },
   {
     "Num_dpt":"37",
@@ -2697,11 +2872,16 @@
     "Nombre_hopitaux":16,
     "Nb_hopital_public":"16",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"14"
+    "Nb_clinique_prive_but_lucratif":"14",
+    "Nb_generaliste_2014":"849",
+    "Nb_generaliste_2015":"847",
+    "Nb_generaliste_2016":"846",
+    "Nb_generaliste_2017":"845",
+    "Nb_generaliste_2018":"844"
   },
   {
     "Num_dpt":"38",
-    "Nom_dpt":"Isére",
+    "Nom_dpt":"Isère",
     "Nb_hab_age_de_0_a_19_ans":"319719",
     "Nb_hab_age_de_20_a_39_ans":"309865",
     "Nb_hab_age_de_40_a_59_ans":"330646",
@@ -2772,7 +2952,12 @@
     "Nombre_hopitaux":21,
     "Nb_hopital_public":"19",
     "Nb_hopital_prive_but_non_lucratif":"2",
-    "Nb_clinique_prive_but_lucratif":"9"
+    "Nb_clinique_prive_but_lucratif":"9",
+    "Nb_generaliste_2014":"1771",
+    "Nb_generaliste_2015":"1768",
+    "Nb_generaliste_2016":"1764",
+    "Nb_generaliste_2017":"1761",
+    "Nb_generaliste_2018":"1757"
   },
   {
     "Num_dpt":"39",
@@ -2847,7 +3032,12 @@
     "Nombre_hopitaux":11,
     "Nb_hopital_public":"11",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"2"
+    "Nb_clinique_prive_but_lucratif":"2",
+    "Nb_generaliste_2014":"349",
+    "Nb_generaliste_2015":"346",
+    "Nb_generaliste_2016":"342",
+    "Nb_generaliste_2017":"338",
+    "Nb_generaliste_2018":"335"
   },
   {
     "Num_dpt":"40",
@@ -2922,7 +3112,12 @@
     "Nombre_hopitaux":9,
     "Nb_hopital_public":"8",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"12"
+    "Nb_clinique_prive_but_lucratif":"12",
+    "Nb_generaliste_2014":"572",
+    "Nb_generaliste_2015":"574",
+    "Nb_generaliste_2016":"577",
+    "Nb_generaliste_2017":"579",
+    "Nb_generaliste_2018":"581"
   },
   {
     "Num_dpt":"41",
@@ -2997,7 +3192,12 @@
     "Nombre_hopitaux":13,
     "Nb_hopital_public":"13",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"12"
+    "Nb_clinique_prive_but_lucratif":"12",
+    "Nb_generaliste_2014":"398",
+    "Nb_generaliste_2015":"396",
+    "Nb_generaliste_2016":"394",
+    "Nb_generaliste_2017":"392",
+    "Nb_generaliste_2018":"390"
   },
   {
     "Num_dpt":"42",
@@ -3072,7 +3272,12 @@
     "Nombre_hopitaux":23,
     "Nb_hopital_public":"22",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"19"
+    "Nb_clinique_prive_but_lucratif":"19",
+    "Nb_generaliste_2014":"1113",
+    "Nb_generaliste_2015":"1112",
+    "Nb_generaliste_2016":"1112",
+    "Nb_generaliste_2017":"1111",
+    "Nb_generaliste_2018":"1111"
   },
   {
     "Num_dpt":"43",
@@ -3147,7 +3352,12 @@
     "Nombre_hopitaux":6,
     "Nb_hopital_public":"5",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"4"
+    "Nb_clinique_prive_but_lucratif":"4",
+    "Nb_generaliste_2014":"287",
+    "Nb_generaliste_2015":"286",
+    "Nb_generaliste_2016":"286",
+    "Nb_generaliste_2017":"286",
+    "Nb_generaliste_2018":"286"
   },
   {
     "Num_dpt":"44",
@@ -3222,7 +3432,12 @@
     "Nombre_hopitaux":41,
     "Nb_hopital_public":"31",
     "Nb_hopital_prive_but_non_lucratif":"10",
-    "Nb_clinique_prive_but_lucratif":"27"
+    "Nb_clinique_prive_but_lucratif":"27",
+    "Nb_generaliste_2014":"1852",
+    "Nb_generaliste_2015":"1869",
+    "Nb_generaliste_2016":"1885",
+    "Nb_generaliste_2017":"1902",
+    "Nb_generaliste_2018":"1919"
   },
   {
     "Num_dpt":"45",
@@ -3297,7 +3512,12 @@
     "Nombre_hopitaux":14,
     "Nb_hopital_public":"13",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"15"
+    "Nb_clinique_prive_but_lucratif":"15",
+    "Nb_generaliste_2014":"688",
+    "Nb_generaliste_2015":"676",
+    "Nb_generaliste_2016":"663",
+    "Nb_generaliste_2017":"651",
+    "Nb_generaliste_2018":"639"
   },
   {
     "Num_dpt":"46",
@@ -3372,7 +3592,12 @@
     "Nombre_hopitaux":6,
     "Nb_hopital_public":"5",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"4"
+    "Nb_clinique_prive_but_lucratif":"4",
+    "Nb_generaliste_2014":"255",
+    "Nb_generaliste_2015":"253",
+    "Nb_generaliste_2016":"251",
+    "Nb_generaliste_2017":"249",
+    "Nb_generaliste_2018":"247"
   },
   {
     "Num_dpt":"47",
@@ -3447,11 +3672,16 @@
     "Nombre_hopitaux":10,
     "Nb_hopital_public":"10",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"7"
+    "Nb_clinique_prive_but_lucratif":"7",
+    "Nb_generaliste_2014":"386",
+    "Nb_generaliste_2015":"381",
+    "Nb_generaliste_2016":"375",
+    "Nb_generaliste_2017":"369",
+    "Nb_generaliste_2018":"364"
   },
   {
     "Num_dpt":"48",
-    "Nom_dpt":"Lozére",
+    "Nom_dpt":"Lozère",
     "Nb_hab_age_de_0_a_19_ans":"16367",
     "Nb_hab_age_de_20_a_39_ans":"15699",
     "Nb_hab_age_de_40_a_59_ans":"21884",
@@ -3522,7 +3752,12 @@
     "Nombre_hopitaux":6,
     "Nb_hopital_public":"6",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"1"
+    "Nb_clinique_prive_but_lucratif":"1",
+    "Nb_generaliste_2014":"97",
+    "Nb_generaliste_2015":"96",
+    "Nb_generaliste_2016":"94",
+    "Nb_generaliste_2017":"92",
+    "Nb_generaliste_2018":"91"
   },
   {
     "Num_dpt":"49",
@@ -3597,7 +3832,12 @@
     "Nombre_hopitaux":20,
     "Nb_hopital_public":"19",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"14"
+    "Nb_clinique_prive_but_lucratif":"14",
+    "Nb_generaliste_2014":"1055",
+    "Nb_generaliste_2015":"1056",
+    "Nb_generaliste_2016":"1057",
+    "Nb_generaliste_2017":"1058",
+    "Nb_generaliste_2018":"1059"
   },
   {
     "Num_dpt":"50",
@@ -3672,7 +3912,12 @@
     "Nombre_hopitaux":14,
     "Nb_hopital_public":"14",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"8"
+    "Nb_clinique_prive_but_lucratif":"8",
+    "Nb_generaliste_2014":"628",
+    "Nb_generaliste_2015":"625",
+    "Nb_generaliste_2016":"623",
+    "Nb_generaliste_2017":"620",
+    "Nb_generaliste_2018":"617"
   },
   {
     "Num_dpt":"51",
@@ -3747,7 +3992,12 @@
     "Nombre_hopitaux":15,
     "Nb_hopital_public":"14",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"8"
+    "Nb_clinique_prive_but_lucratif":"8",
+    "Nb_generaliste_2014":"776",
+    "Nb_generaliste_2015":"767",
+    "Nb_generaliste_2016":"759",
+    "Nb_generaliste_2017":"751",
+    "Nb_generaliste_2018":"743"
   },
   {
     "Num_dpt":"52",
@@ -3822,7 +4072,12 @@
     "Nombre_hopitaux":18,
     "Nb_hopital_public":"18",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"3"
+    "Nb_clinique_prive_but_lucratif":"3",
+    "Nb_generaliste_2014":"238",
+    "Nb_generaliste_2015":"234",
+    "Nb_generaliste_2016":"229",
+    "Nb_generaliste_2017":"225",
+    "Nb_generaliste_2018":"221"
   },
   {
     "Num_dpt":"53",
@@ -3897,7 +4152,12 @@
     "Nombre_hopitaux":11,
     "Nb_hopital_public":"11",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"4"
+    "Nb_clinique_prive_but_lucratif":"4",
+    "Nb_generaliste_2014":"321",
+    "Nb_generaliste_2015":"319",
+    "Nb_generaliste_2016":"317",
+    "Nb_generaliste_2017":"315",
+    "Nb_generaliste_2018":"313"
   },
   {
     "Num_dpt":"54",
@@ -3972,7 +4232,12 @@
     "Nombre_hopitaux":23,
     "Nb_hopital_public":"15",
     "Nb_hopital_prive_but_non_lucratif":"8",
-    "Nb_clinique_prive_but_lucratif":"13"
+    "Nb_clinique_prive_but_lucratif":"13",
+    "Nb_generaliste_2014":"1077",
+    "Nb_generaliste_2015":"1059",
+    "Nb_generaliste_2016":"1041",
+    "Nb_generaliste_2017":"1024",
+    "Nb_generaliste_2018":"1007"
   },
   {
     "Num_dpt":"55",
@@ -4047,7 +4312,12 @@
     "Nombre_hopitaux":6,
     "Nb_hopital_public":"6",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"2"
+    "Nb_clinique_prive_but_lucratif":"2",
+    "Nb_generaliste_2014":"242",
+    "Nb_generaliste_2015":"241",
+    "Nb_generaliste_2016":"241",
+    "Nb_generaliste_2017":"241",
+    "Nb_generaliste_2018":"241"
   },
   {
     "Num_dpt":"56",
@@ -4122,7 +4392,12 @@
     "Nombre_hopitaux":24,
     "Nb_hopital_public":"22",
     "Nb_hopital_prive_but_non_lucratif":"2",
-    "Nb_clinique_prive_but_lucratif":"6"
+    "Nb_clinique_prive_but_lucratif":"6",
+    "Nb_generaliste_2014":"990",
+    "Nb_generaliste_2015":"991",
+    "Nb_generaliste_2016":"992",
+    "Nb_generaliste_2017":"993",
+    "Nb_generaliste_2018":"994"
   },
   {
     "Num_dpt":"57",
@@ -4197,7 +4472,12 @@
     "Nombre_hopitaux":32,
     "Nb_hopital_public":"22",
     "Nb_hopital_prive_but_non_lucratif":"10",
-    "Nb_clinique_prive_but_lucratif":"12"
+    "Nb_clinique_prive_but_lucratif":"12",
+    "Nb_generaliste_2014":"1363",
+    "Nb_generaliste_2015":"1379",
+    "Nb_generaliste_2016":"1396",
+    "Nb_generaliste_2017":"1412",
+    "Nb_generaliste_2018":"1429"
   },
   {
     "Num_dpt":"58",
@@ -4272,7 +4552,12 @@
     "Nombre_hopitaux":11,
     "Nb_hopital_public":"11",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"10"
+    "Nb_clinique_prive_but_lucratif":"10",
+    "Nb_generaliste_2014":"239",
+    "Nb_generaliste_2015":"232",
+    "Nb_generaliste_2016":"226",
+    "Nb_generaliste_2017":"219",
+    "Nb_generaliste_2018":"213"
   },
   {
     "Num_dpt":"59",
@@ -4347,7 +4632,12 @@
     "Nombre_hopitaux":58,
     "Nb_hopital_public":"50",
     "Nb_hopital_prive_but_non_lucratif":"8",
-    "Nb_clinique_prive_but_lucratif":"52"
+    "Nb_clinique_prive_but_lucratif":"52",
+    "Nb_generaliste_2014":"3759",
+    "Nb_generaliste_2015":"3726",
+    "Nb_generaliste_2016":"3694",
+    "Nb_generaliste_2017":"3661",
+    "Nb_generaliste_2018":"3629"
   },
   {
     "Num_dpt":"60",
@@ -4422,7 +4712,12 @@
     "Nombre_hopitaux":14,
     "Nb_hopital_public":"14",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"10"
+    "Nb_clinique_prive_but_lucratif":"10",
+    "Nb_generaliste_2014":"902",
+    "Nb_generaliste_2015":"894",
+    "Nb_generaliste_2016":"885",
+    "Nb_generaliste_2017":"877",
+    "Nb_generaliste_2018":"869"
   },
   {
     "Num_dpt":"61",
@@ -4497,7 +4792,12 @@
     "Nombre_hopitaux":15,
     "Nb_hopital_public":"14",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"4"
+    "Nb_clinique_prive_but_lucratif":"4",
+    "Nb_generaliste_2014":"347",
+    "Nb_generaliste_2015":"344",
+    "Nb_generaliste_2016":"340",
+    "Nb_generaliste_2017":"337",
+    "Nb_generaliste_2018":"334"
   },
   {
     "Num_dpt":"62",
@@ -4572,7 +4872,12 @@
     "Nombre_hopitaux":23,
     "Nb_hopital_public":"20",
     "Nb_hopital_prive_but_non_lucratif":"3",
-    "Nb_clinique_prive_but_lucratif":"23"
+    "Nb_clinique_prive_but_lucratif":"23",
+    "Nb_generaliste_2014":"1860",
+    "Nb_generaliste_2015":"1838",
+    "Nb_generaliste_2016":"1816",
+    "Nb_generaliste_2017":"1794",
+    "Nb_generaliste_2018":"1773"
   },
   {
     "Num_dpt":"63",
@@ -4647,7 +4952,12 @@
     "Nombre_hopitaux":19,
     "Nb_hopital_public":"14",
     "Nb_hopital_prive_but_non_lucratif":"5",
-    "Nb_clinique_prive_but_lucratif":"17"
+    "Nb_clinique_prive_but_lucratif":"17",
+    "Nb_generaliste_2014":"931",
+    "Nb_generaliste_2015":"926",
+    "Nb_generaliste_2016":"921",
+    "Nb_generaliste_2017":"915",
+    "Nb_generaliste_2018":"910"
   },
   {
     "Num_dpt":"64",
@@ -4722,7 +5032,12 @@
     "Nombre_hopitaux":9,
     "Nb_hopital_public":"9",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"37"
+    "Nb_clinique_prive_but_lucratif":"37",
+    "Nb_generaliste_2014":"1080",
+    "Nb_generaliste_2015":"1087",
+    "Nb_generaliste_2016":"1094",
+    "Nb_generaliste_2017":"1101",
+    "Nb_generaliste_2018":"1108"
   },
   {
     "Num_dpt":"65",
@@ -4797,7 +5112,12 @@
     "Nombre_hopitaux":9,
     "Nb_hopital_public":"9",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"7"
+    "Nb_clinique_prive_but_lucratif":"7",
+    "Nb_generaliste_2014":"426",
+    "Nb_generaliste_2015":"420",
+    "Nb_generaliste_2016":"414",
+    "Nb_generaliste_2017":"409",
+    "Nb_generaliste_2018":"403"
   },
   {
     "Num_dpt":"66",
@@ -4872,7 +5192,12 @@
     "Nombre_hopitaux":7,
     "Nb_hopital_public":"4",
     "Nb_hopital_prive_but_non_lucratif":"3",
-    "Nb_clinique_prive_but_lucratif":"24"
+    "Nb_clinique_prive_but_lucratif":"24",
+    "Nb_generaliste_2014":"746",
+    "Nb_generaliste_2015":"747",
+    "Nb_generaliste_2016":"749",
+    "Nb_generaliste_2017":"751",
+    "Nb_generaliste_2018":"753"
   },
   {
     "Num_dpt":"67",
@@ -4947,7 +5272,12 @@
     "Nombre_hopitaux":33,
     "Nb_hopital_public":"21",
     "Nb_hopital_prive_but_non_lucratif":"12",
-    "Nb_clinique_prive_but_lucratif":"18"
+    "Nb_clinique_prive_but_lucratif":"18",
+    "Nb_generaliste_2014":"1642",
+    "Nb_generaliste_2015":"1636",
+    "Nb_generaliste_2016":"1631",
+    "Nb_generaliste_2017":"1625",
+    "Nb_generaliste_2018":"1619"
   },
   {
     "Num_dpt":"68",
@@ -5022,7 +5352,12 @@
     "Nombre_hopitaux":25,
     "Nb_hopital_public":"19",
     "Nb_hopital_prive_but_non_lucratif":"6",
-    "Nb_clinique_prive_but_lucratif":"9"
+    "Nb_clinique_prive_but_lucratif":"9",
+    "Nb_generaliste_2014":"990",
+    "Nb_generaliste_2015":"986",
+    "Nb_generaliste_2016":"983",
+    "Nb_generaliste_2017":"980",
+    "Nb_generaliste_2018":"976"
   },
   {
     "Num_dpt":"69",
@@ -5097,7 +5432,12 @@
     "Nombre_hopitaux":47,
     "Nb_hopital_public":"39",
     "Nb_hopital_prive_but_non_lucratif":"8",
-    "Nb_clinique_prive_but_lucratif":"43"
+    "Nb_clinique_prive_but_lucratif":"43",
+    "Nb_generaliste_2014":"2729",
+    "Nb_generaliste_2015":"2709",
+    "Nb_generaliste_2016":"2689",
+    "Nb_generaliste_2017":"2669",
+    "Nb_generaliste_2018":"2649"
   },
   {
     "Num_dpt":"70",
@@ -5172,7 +5512,12 @@
     "Nombre_hopitaux":9,
     "Nb_hopital_public":"5",
     "Nb_hopital_prive_but_non_lucratif":"4",
-    "Nb_clinique_prive_but_lucratif":"1"
+    "Nb_clinique_prive_but_lucratif":"1",
+    "Nb_generaliste_2014":"307",
+    "Nb_generaliste_2015":"305",
+    "Nb_generaliste_2016":"302",
+    "Nb_generaliste_2017":"300",
+    "Nb_generaliste_2018":"298"
   },
   {
     "Num_dpt":"71",
@@ -5247,7 +5592,12 @@
     "Nombre_hopitaux":20,
     "Nb_hopital_public":"18",
     "Nb_hopital_prive_but_non_lucratif":"2",
-    "Nb_clinique_prive_but_lucratif":"14"
+    "Nb_clinique_prive_but_lucratif":"14",
+    "Nb_generaliste_2014":"651",
+    "Nb_generaliste_2015":"644",
+    "Nb_generaliste_2016":"637",
+    "Nb_generaliste_2017":"629",
+    "Nb_generaliste_2018":"622"
   },
   {
     "Num_dpt":"72",
@@ -5322,7 +5672,12 @@
     "Nombre_hopitaux":14,
     "Nb_hopital_public":"12",
     "Nb_hopital_prive_but_non_lucratif":"2",
-    "Nb_clinique_prive_but_lucratif":"14"
+    "Nb_clinique_prive_but_lucratif":"14",
+    "Nb_generaliste_2014":"628",
+    "Nb_generaliste_2015":"625",
+    "Nb_generaliste_2016":"623",
+    "Nb_generaliste_2017":"620",
+    "Nb_generaliste_2018":"617"
   },
   {
     "Num_dpt":"73",
@@ -5397,7 +5752,12 @@
     "Nombre_hopitaux":11,
     "Nb_hopital_public":"11",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"7"
+    "Nb_clinique_prive_but_lucratif":"7",
+    "Nb_generaliste_2014":"703",
+    "Nb_generaliste_2015":"711",
+    "Nb_generaliste_2016":"719",
+    "Nb_generaliste_2017":"727",
+    "Nb_generaliste_2018":"736"
   },
   {
     "Num_dpt":"74",
@@ -5472,7 +5832,12 @@
     "Nombre_hopitaux":14,
     "Nb_hopital_public":"14",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"17"
+    "Nb_clinique_prive_but_lucratif":"17",
+    "Nb_generaliste_2014":"1008",
+    "Nb_generaliste_2015":"1006",
+    "Nb_generaliste_2016":"1005",
+    "Nb_generaliste_2017":"1003",
+    "Nb_generaliste_2018":"1002"
   },
   {
     "Num_dpt":"75",
@@ -5547,7 +5912,12 @@
     "Nombre_hopitaux":60,
     "Nb_hopital_public":"40",
     "Nb_hopital_prive_but_non_lucratif":"20",
-    "Nb_clinique_prive_but_lucratif":"57"
+    "Nb_clinique_prive_but_lucratif":"57",
+    "Nb_generaliste_2014":"4554",
+    "Nb_generaliste_2015":"4419",
+    "Nb_generaliste_2016":"4288",
+    "Nb_generaliste_2017":"4160",
+    "Nb_generaliste_2018":"4037"
   },
   {
     "Num_dpt":"76",
@@ -5622,7 +5992,12 @@
     "Nombre_hopitaux":34,
     "Nb_hopital_public":"34",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"21"
+    "Nb_clinique_prive_but_lucratif":"21",
+    "Nb_generaliste_2014":"1653",
+    "Nb_generaliste_2015":"1634",
+    "Nb_generaliste_2016":"1615",
+    "Nb_generaliste_2017":"1596",
+    "Nb_generaliste_2018":"1577"
   },
   {
     "Num_dpt":"77",
@@ -5697,7 +6072,12 @@
     "Nombre_hopitaux":12,
     "Nb_hopital_public":"12",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"24"
+    "Nb_clinique_prive_but_lucratif":"24",
+    "Nb_generaliste_2014":"1376",
+    "Nb_generaliste_2015":"1358",
+    "Nb_generaliste_2016":"1340",
+    "Nb_generaliste_2017":"1322",
+    "Nb_generaliste_2018":"1304"
   },
   {
     "Num_dpt":"78",
@@ -5772,7 +6152,12 @@
     "Nombre_hopitaux":23,
     "Nb_hopital_public":"18",
     "Nb_hopital_prive_but_non_lucratif":"5",
-    "Nb_clinique_prive_but_lucratif":"26"
+    "Nb_clinique_prive_but_lucratif":"26",
+    "Nb_generaliste_2014":"1639",
+    "Nb_generaliste_2015":"1607",
+    "Nb_generaliste_2016":"1575",
+    "Nb_generaliste_2017":"1544",
+    "Nb_generaliste_2018":"1514"
   },
   {
     "Num_dpt":"79",
@@ -5847,7 +6232,12 @@
     "Nombre_hopitaux":9,
     "Nb_hopital_public":"8",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"3"
+    "Nb_clinique_prive_but_lucratif":"3",
+    "Nb_generaliste_2014":"495",
+    "Nb_generaliste_2015":"492",
+    "Nb_generaliste_2016":"489",
+    "Nb_generaliste_2017":"486",
+    "Nb_generaliste_2018":"484"
   },
   {
     "Num_dpt":"80",
@@ -5922,7 +6312,12 @@
     "Nombre_hopitaux":18,
     "Nb_hopital_public":"17",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"8"
+    "Nb_clinique_prive_but_lucratif":"8",
+    "Nb_generaliste_2014":"859",
+    "Nb_generaliste_2015":"852",
+    "Nb_generaliste_2016":"846",
+    "Nb_generaliste_2017":"840",
+    "Nb_generaliste_2018":"834"
   },
   {
     "Num_dpt":"81",
@@ -5997,7 +6392,12 @@
     "Nombre_hopitaux":12,
     "Nb_hopital_public":"9",
     "Nb_hopital_prive_but_non_lucratif":"3",
-    "Nb_clinique_prive_but_lucratif":"6"
+    "Nb_clinique_prive_but_lucratif":"6",
+    "Nb_generaliste_2014":"525",
+    "Nb_generaliste_2015":"523",
+    "Nb_generaliste_2016":"520",
+    "Nb_generaliste_2017":"518",
+    "Nb_generaliste_2018":"516"
   },
   {
     "Num_dpt":"82",
@@ -6072,7 +6472,12 @@
     "Nombre_hopitaux":4,
     "Nb_hopital_public":"4",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"5"
+    "Nb_clinique_prive_but_lucratif":"5",
+    "Nb_generaliste_2014":"308",
+    "Nb_generaliste_2015":"307",
+    "Nb_generaliste_2016":"307",
+    "Nb_generaliste_2017":"307",
+    "Nb_generaliste_2018":"307"
   },
   {
     "Num_dpt":"83",
@@ -6147,7 +6552,12 @@
     "Nombre_hopitaux":18,
     "Nb_hopital_public":"15",
     "Nb_hopital_prive_but_non_lucratif":"3",
-    "Nb_clinique_prive_but_lucratif":"40"
+    "Nb_clinique_prive_but_lucratif":"40",
+    "Nb_generaliste_2014":"1482",
+    "Nb_generaliste_2015":"1477",
+    "Nb_generaliste_2016":"1471",
+    "Nb_generaliste_2017":"1466",
+    "Nb_generaliste_2018":"1460"
   },
   {
     "Num_dpt":"84",
@@ -6222,7 +6632,12 @@
     "Nombre_hopitaux":14,
     "Nb_hopital_public":"13",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"14"
+    "Nb_clinique_prive_but_lucratif":"14",
+    "Nb_generaliste_2014":"806",
+    "Nb_generaliste_2015":"799",
+    "Nb_generaliste_2016":"792",
+    "Nb_generaliste_2017":"784",
+    "Nb_generaliste_2018":"777"
   },
   {
     "Num_dpt":"85",
@@ -6297,7 +6712,12 @@
     "Nombre_hopitaux":18,
     "Nb_hopital_public":"16",
     "Nb_hopital_prive_but_non_lucratif":"2",
-    "Nb_clinique_prive_but_lucratif":"5"
+    "Nb_clinique_prive_but_lucratif":"5",
+    "Nb_generaliste_2014":"741",
+    "Nb_generaliste_2015":"739",
+    "Nb_generaliste_2016":"737",
+    "Nb_generaliste_2017":"735",
+    "Nb_generaliste_2018":"732"
   },
   {
     "Num_dpt":"86",
@@ -6372,7 +6792,12 @@
     "Nombre_hopitaux":6,
     "Nb_hopital_public":"6",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"8"
+    "Nb_clinique_prive_but_lucratif":"8",
+    "Nb_generaliste_2014":"616",
+    "Nb_generaliste_2015":"612",
+    "Nb_generaliste_2016":"609",
+    "Nb_generaliste_2017":"606",
+    "Nb_generaliste_2018":"602"
   },
   {
     "Num_dpt":"87",
@@ -6447,7 +6872,12 @@
     "Nombre_hopitaux":22,
     "Nb_hopital_public":"15",
     "Nb_hopital_prive_but_non_lucratif":"7",
-    "Nb_clinique_prive_but_lucratif":"5"
+    "Nb_clinique_prive_but_lucratif":"5",
+    "Nb_generaliste_2014":"664",
+    "Nb_generaliste_2015":"662",
+    "Nb_generaliste_2016":"660",
+    "Nb_generaliste_2017":"658",
+    "Nb_generaliste_2018":"656"
   },
   {
     "Num_dpt":"88",
@@ -6522,7 +6952,12 @@
     "Nombre_hopitaux":23,
     "Nb_hopital_public":"23",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"4"
+    "Nb_clinique_prive_but_lucratif":"4",
+    "Nb_generaliste_2014":"474",
+    "Nb_generaliste_2015":"469",
+    "Nb_generaliste_2016":"463",
+    "Nb_generaliste_2017":"458",
+    "Nb_generaliste_2018":"453"
   },
   {
     "Num_dpt":"89",
@@ -6597,7 +7032,12 @@
     "Nombre_hopitaux":7,
     "Nb_hopital_public":"7",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"5"
+    "Nb_clinique_prive_but_lucratif":"5",
+    "Nb_generaliste_2014":"419",
+    "Nb_generaliste_2015":"414",
+    "Nb_generaliste_2016":"408",
+    "Nb_generaliste_2017":"403",
+    "Nb_generaliste_2018":"397"
   },
   {
     "Num_dpt":"90",
@@ -6672,7 +7112,12 @@
     "Nombre_hopitaux":7,
     "Nb_hopital_public":"7",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"2"
+    "Nb_clinique_prive_but_lucratif":"2",
+    "Nb_generaliste_2014":"192",
+    "Nb_generaliste_2015":"191",
+    "Nb_generaliste_2016":"189",
+    "Nb_generaliste_2017":"188",
+    "Nb_generaliste_2018":"187"
   },
   {
     "Num_dpt":"91",
@@ -6747,7 +7192,12 @@
     "Nombre_hopitaux":26,
     "Nb_hopital_public":"17",
     "Nb_hopital_prive_but_non_lucratif":"9",
-    "Nb_clinique_prive_but_lucratif":"25"
+    "Nb_clinique_prive_but_lucratif":"25",
+    "Nb_generaliste_2014":"1417",
+    "Nb_generaliste_2015":"1394",
+    "Nb_generaliste_2016":"1372",
+    "Nb_generaliste_2017":"1349",
+    "Nb_generaliste_2018":"1327"
   },
   {
     "Num_dpt":"92",
@@ -6822,7 +7272,12 @@
     "Nombre_hopitaux":35,
     "Nb_hopital_public":"20",
     "Nb_hopital_prive_but_non_lucratif":"15",
-    "Nb_clinique_prive_but_lucratif":"39"
+    "Nb_clinique_prive_but_lucratif":"39",
+    "Nb_generaliste_2014":"2319",
+    "Nb_generaliste_2015":"2293",
+    "Nb_generaliste_2016":"2269",
+    "Nb_generaliste_2017":"2244",
+    "Nb_generaliste_2018":"2220"
   },
   {
     "Num_dpt":"93",
@@ -6897,7 +7352,12 @@
     "Nombre_hopitaux":15,
     "Nb_hopital_public":"13",
     "Nb_hopital_prive_but_non_lucratif":"2",
-    "Nb_clinique_prive_but_lucratif":"30"
+    "Nb_clinique_prive_but_lucratif":"30",
+    "Nb_generaliste_2014":"1701",
+    "Nb_generaliste_2015":"1677",
+    "Nb_generaliste_2016":"1653",
+    "Nb_generaliste_2017":"1630",
+    "Nb_generaliste_2018":"1607"
   },
   {
     "Num_dpt":"94",
@@ -6972,7 +7432,12 @@
     "Nombre_hopitaux":20,
     "Nb_hopital_public":"15",
     "Nb_hopital_prive_but_non_lucratif":"5",
-    "Nb_clinique_prive_but_lucratif":"29"
+    "Nb_clinique_prive_but_lucratif":"29",
+    "Nb_generaliste_2014":"1574",
+    "Nb_generaliste_2015":"1532",
+    "Nb_generaliste_2016":"1491",
+    "Nb_generaliste_2017":"1451",
+    "Nb_generaliste_2018":"1411"
   },
   {
     "Num_dpt":"95",
@@ -7047,7 +7512,12 @@
     "Nombre_hopitaux":19,
     "Nb_hopital_public":"16",
     "Nb_hopital_prive_but_non_lucratif":"3",
-    "Nb_clinique_prive_but_lucratif":"24"
+    "Nb_clinique_prive_but_lucratif":"24",
+    "Nb_generaliste_2014":"1308",
+    "Nb_generaliste_2015":"1292",
+    "Nb_generaliste_2016":"1276",
+    "Nb_generaliste_2017":"1260",
+    "Nb_generaliste_2018":"1244"
   },
   {
     "Num_dpt":"2A",
@@ -7122,7 +7592,12 @@
     "Nombre_hopitaux":3,
     "Nb_hopital_public":"3",
     "Nb_hopital_prive_but_non_lucratif":"0",
-    "Nb_clinique_prive_but_lucratif":"10"
+    "Nb_clinique_prive_but_lucratif":"10",
+    "Nb_generaliste_2014":"235",
+    "Nb_generaliste_2015":"236",
+    "Nb_generaliste_2016":"237",
+    "Nb_generaliste_2017":"237",
+    "Nb_generaliste_2018":"238"
   },
   {
     "Num_dpt":"2B",
@@ -7197,7 +7672,12 @@
     "Nombre_hopitaux":5,
     "Nb_hopital_public":"4",
     "Nb_hopital_prive_but_non_lucratif":"1",
-    "Nb_clinique_prive_but_lucratif":"7"
+    "Nb_clinique_prive_but_lucratif":"7",
+    "Nb_generaliste_2014":"222",
+    "Nb_generaliste_2015":"220",
+    "Nb_generaliste_2016":"219",
+    "Nb_generaliste_2017":"217",
+    "Nb_generaliste_2018":"216"
   },
   {
     "Num_dpt":"99",
@@ -7272,7 +7752,12 @@
     "Nombre_hopitaux":1571,
     "Nb_hopital_public":"1345",
     "Nb_hopital_prive_but_non_lucratif":"NC",
-    "Nb_clinique_prive_but_lucratif":"NC"
+    "Nb_clinique_prive_but_lucratif":"NC",
+    "Nb_generaliste_2014":"NC",
+    "Nb_generaliste_2015":"NC",
+    "Nb_generaliste_2016":"NC",
+    "Nb_generaliste_2017":"NC",
+    "Nb_generaliste_2018":"NC"
   },
   {
     "Num_dpt":"100",
@@ -7347,6 +7832,11 @@
     "Nombre_hopitaux":16.4,
     "Nb_hopital_public":"NC",
     "Nb_hopital_prive_but_non_lucratif":"NC",
-    "Nb_clinique_prive_but_lucratif":"NC"
+    "Nb_clinique_prive_but_lucratif":"NC",
+    "Nb_generaliste_2014":"NC",
+    "Nb_generaliste_2015":"NC",
+    "Nb_generaliste_2016":"NC",
+    "Nb_generaliste_2017":"NC",
+    "Nb_generaliste_2018":"NC"
   }
 ]
