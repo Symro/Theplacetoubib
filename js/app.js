@@ -1410,7 +1410,7 @@ $(document).ready(function() {
                     .transition().duration(250)
                     .style("opacity", "1")
                     .text(function(d) {
-                        var nbFinal = (nb < 10) ? "0" + Math.round(nb) : Math.round(nb);
+                        var nbFinal = (nb < 10) ? "0"+Math.round(nb) : Math.round(nb);
                         return nbFinal;
                     });
 
@@ -1539,11 +1539,14 @@ $(document).ready(function() {
             .enter()
             .append("g")
             .on("mouseover", function(d, i) {
-
+                var nb = d.nb;
                 d3.select(container+" .pourcentageTexte")
                     .transition().duration(250)
                     .style("opacity", "1")
-                    .text(Math.round(d.nb));
+                    .text(function(d){
+                        var nbFinal = (nb < 10) ? "0"+Math.round(nb) : Math.round(nb);
+                        return nbFinal;
+                    });
 
             });
 
@@ -1767,7 +1770,20 @@ $(document).ready(function() {
         // > seul filtre accessible en niveau 1
         if (info == "Nombre_hopitaux") {
             e.preventDefault();
+            var li = $('#menu nav li');
+            li.removeClass("active");
             $this.parents("li").addClass("active");
+
+            var firstLevel = li.filter(".firstLevel");
+            if (firstLevel.next(".secondLevel").hasClass('open')) {
+                firstLevel.next(".secondLevel").removeClass('open');
+                firstLevel.next(".secondLevel").slideUp();
+            }
+            
+            var thirdLevel = $(".thirdLevel");
+            thirdLevel.addClass('hidden').find("ul").addClass('animated fadeOutLeft');
+            App.menuEtat = ["", "", ""];
+
             App.counterDecimal = $this.data("counter-decimal");
             App.filtre = info;
             App.router.navigate($this.attr("href"), {
