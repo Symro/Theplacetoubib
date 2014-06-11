@@ -878,6 +878,9 @@ margin: auto;
     margin: 0 0 50px 0;
 }
 
+.icon-info:before{
+    color: #858585;
+}
 
 /* ==========================================================================
    Footer & Partage
@@ -1004,6 +1007,9 @@ footer .partage:hover .buttonShare{
     font-size:22px;line-height:68px;
  }
 
+#chiffreDept, #chiffreFrance h3{
+    text-transform: uppercase;
+}
 
 
 
