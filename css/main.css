@@ -734,6 +734,8 @@ menu, ol, ul{
 }
 
 #logo{
+    height:65px;
+    width:70px;
     background-color: black;
     background-image: url(../img/logoNav.png);
     background-repeat: no-repeat;
@@ -1383,23 +1385,26 @@ svg.barChart .circleTopTransparent{
 #chartGaugeMultiple{
 
 }
-#chartGaugeMultiple .gaugeLegende0 rect+rect{
+[id^=chartGaugeMultiple] .gaugeLegende0 rect+rect{
     fill-opacity:0.7;
 }
-#chartGaugeMultiple .gaugeLegende1 rect+rect{
+[id^=chartGaugeMultiple] .gaugeLegende1 rect+rect{
     fill-opacity:0.5;
 }
-#chartGaugeMultiple .gaugeLegende2 rect+rect{
+[id^=chartGaugeMultiple] .gaugeLegende2 rect+rect{
     fill-opacity:0.3;
 }
+[id^=chartGaugeMultiple] .gaugeLegende3 rect+rect{
+    fill-opacity:0.2;
+}
 
-#chartGaugeMultiple .pourcentageTexte{
+[id^=chartGaugeMultiple] .pourcentageTexte{
     fill:#FFF;
     font-weight:bold;
     font-size:30px;
     text-anchor:end;
 }
-#chartGaugeMultiple .pourcentageSymbole{
+[id^=chartGaugeMultiple] .pourcentageSymbole{
     fill:#FFF;
     font-size:15px;
 }
