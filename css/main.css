@@ -740,7 +740,7 @@ menu, ol, ul{
 .content{
     position:relative;
     height:100%;
-    padding:60px;
+    padding:40px 60px 60px 60px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -846,10 +846,10 @@ margin: auto;
     height: 0;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-
     border-left: 10px solid #e7f0f3;
     left: 0px;
-    top:87px;
+    top:65px;
+    z-index: 50;
 }
 
 #rightSide p{
@@ -1011,47 +1011,9 @@ footer .partage:hover .buttonShare{
     text-transform: uppercase;
 }
 
-
-
-
-/* Tooltip -Styles */
-/*.tooltip {
-    margin-top: 35px;
-    margin-left: 75px;
-    padding: 5px;
-    font-size: 14px;
-    opacity: 0.85;
-    filter: alpha(opacity=85);
-    background-repeat: no-repeat;
-    background-image: url(../img/tooltip.gif);
-}
-.tooltip-inner {
-    padding: 10px 15px;
-    width: auto;
-    pointer-events: none;
-    color: white;
-    text-align: center;
-    background-color: black;
-    border-radius: 3px;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
-}*/
-/*
-.tooltip-bottom {
-background-position: top center;
-}
-.tooltip-top {
-background-position: bottom center;
-}
-.tooltip-left {
-background-position: right center;
-}*/
-.tooltip-right {
-    background-position: left center;
-}
-
 #infoFiltre{
     position:absolute;
-    right:60px;top:157px;
+    right:60px;top:137px;
     clear:both;
 }
 #infoGraph{
@@ -1059,10 +1021,31 @@ background-position: right center;
     clear:both;
 }
 
-#infoNeeded{
-    
+#infoNeeded div{
+    font-weight: 400;
+    margin-top: 20%;
+    color: #707070;  
 }
-
+#infoNeeded a{
+    position: absolute;
+    text-decoration: none;
+    color: #63b1be;
+    border: 3px solid #63b1be;
+    margin-top: 30px;
+    padding: 9px 13px;
+    -webkit-transition: 1s all;
+    -moz-transition: 1s all;
+    -o-transition: 1s all;
+    transition: 1s all;
+}
+#infoNeeded a:hover{
+    -webkit-transition: .5s all ;
+    -moz-transition: .5s all ;
+    -o-transition: .5s all ;
+    transition: .5s all ;
+    background-color: #63b1be;
+    color:#fff;
+}
 /* ==========================================================================
    Tooltip
    ========================================================================== */
