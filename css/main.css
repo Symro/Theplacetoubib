@@ -1069,6 +1069,11 @@ footer .partage:hover .buttonShare{
     opacity:1;
     visibility:visible;
 }
+.tooltipCSS.disabled i+div:hover,
+.tooltipCSS.disabled i:hover+div{
+    opacity:0;
+    visibility:hidden;
+}
 .tooltipCSS > div{
     opacity:0;
     visibility:hidden;
