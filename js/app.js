@@ -23,7 +23,7 @@ $(document).ready(function() {
             info_graph: $('#infoGraph > p:first'),
             tooltip_graph: $('#infoGraph .tooltipCSS'),
             tuto: $('section.tuto'),
-            graph: $('#rightSide #graph')
+            graph: $('#leftSide #graph')
         }
     }
 
