@@ -385,14 +385,14 @@ $(document).ready(function() {
 
             // Pie Chart
             if (App.filtre == "Temps_acces_medecin") {
-                var legendes = ["Gynécologue", "Ophtalmologiste", "Dentiste", "Infirmier"];
+                var legendes = ["Gynécologue", "Ophtalmologue", "Dentiste", "Infirmier"];
                 dataGraph = ArrayToJSON(dataGraph, legendes);
                 if ($("#chartBar").html().trim().length == 0) {
                     App.displayBarChart(dataGraph);
                 } else {
                     App.updateBarChart(dataGraph);
                 }
-            } else{
+            } else {
                 App.hideBarChart();
             }
 
@@ -502,8 +502,7 @@ $(document).ready(function() {
 
             if (App.filtre.match(/^Nb_hab_par_/) && App.filtre != "Nb_hab_par_medecin") {
                 App.displayInfoNeeded();
-            }
-            else{
+            } else {
                 App.hideInfoNeeded();
             }
 
@@ -619,6 +618,16 @@ $(document).ready(function() {
 
     }
 
+    App.getActiveDept = function(dept) {
+
+        d3.selectAll("#paris path.departement")
+            .filter(function(d) {
+                return d.properties.CODE_DEPT == dept;
+            })
+            .transition().duration(500)
+            .classed("active", true);
+    }
+
 
     /* ********************************************************
     /   D3.JS -- BAR CHART
@@ -676,7 +685,7 @@ $(document).ready(function() {
 
         // y.domain([0, d3.max(data, function(d) {
         //     return parseInt(d.nb);
-        // })]);        
+        // })]);
         y.domain([0, 32]);
 
         var valMax = d3.max(data, function(d) {
@@ -782,7 +791,7 @@ $(document).ready(function() {
             })
             .attr("height", function(d) {
                 return 5;
-            })            
+            })
             .on('mouseover', tip.show)
             .on('mouseout', tip.hide);
 
@@ -823,8 +832,8 @@ $(document).ready(function() {
             bottom: 30,
             left: 40
         },
-        width = 640 - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom;
+            width = 640 - margin.left - margin.right,
+            height = 300 - margin.top - margin.bottom;
 
         var svg = d3.selectAll("#chartBar g");
 
@@ -840,12 +849,12 @@ $(document).ready(function() {
         y.domain([0, 32]);
 
         var bars = d3.select("#chartBar").selectAll("rect.bar");
-        
+
         // transition hauteur des Bar Chart
         bars.data(data)
             .transition()
             .duration(400)
-            .attr("height", function(d,i) {
+            .attr("height", function(d, i) {
                 return height - y(d.nb);
             })
             .attr("y", function(d) {
@@ -857,24 +866,36 @@ $(document).ready(function() {
             .data(data)
             .transition()
             .duration(400)
-            .attr("y", function(d) { return y(d.nb) - 3; })
-            .attr("height", function(d) { return 5; })
+            .attr("y", function(d) {
+                return y(d.nb) - 3;
+            })
+            .attr("height", function(d) {
+                return 5;
+            })
 
         // transition du cercle blanc en haut & au centre de chaque Bar
         svg.selectAll(".circleTop")
             .data(data)
             .transition()
             .duration(400)
-            .attr("cx", function(d) { return x(d.legende) + x.rangeBand() / 2; })
-            .attr("cy", function(d) { return y(d.nb) - 1; });
+            .attr("cx", function(d) {
+                return x(d.legende) + x.rangeBand() / 2;
+            })
+            .attr("cy", function(d) {
+                return y(d.nb) - 1;
+            });
 
         // transition du cercle blanc transparent en haut
         svg.selectAll(".circleTopTransparent")
             .data(data)
             .transition()
             .duration(400)
-            .attr("cx", function(d) { return x(d.legende) + x.rangeBand() / 2; })
-            .attr("cy", function(d) { return y(d.nb) - 1; });
+            .attr("cx", function(d) {
+                return x(d.legende) + x.rangeBand() / 2;
+            })
+            .attr("cy", function(d) {
+                return y(d.nb) - 1;
+            });
 
         // maintient la position de l'échelle en Y
         svg.selectAll(".y.axis .tick").each(function() {
@@ -1008,7 +1029,7 @@ $(document).ready(function() {
             });
         legend.append("rect")
             .attr("x", 20)
-            .attr("y", 25)
+            .attr("y", 24)
             .attr("width", "20")
             .attr("height", "20")
             .style({
