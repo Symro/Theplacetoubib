@@ -256,8 +256,18 @@ section.splashscreen a{
     text-decoration: none;
     text-transform: uppercase;
     line-height: 27px;
+        -webkit-transition: .5s all ;
+    -moz-transition: .5s all ;
+    -o-transition: .5s all ;
+    transition: .5s all ;
 }
-
+.credits a:hover{
+    color:white;
+        -webkit-transition: .5s all ;
+    -moz-transition: .5s all ;
+    -o-transition: .5s all ;
+    transition: .5s all ;
+}
 .credits h2.title_credits{
     font: 700 25px 'Arimo' sans-serif;
     color:#fff;
@@ -294,10 +304,13 @@ section.splashscreen a{
 }
 .credits ul.role_credits li span.name_credits{
     font-weight: 700;
-    text-transform: uppercase;
-}
+    }
 .credits .after_line{
     margin-top: 20px;
+
+}
+.credits .after_line a{
+    text-transform: none;
 }
 .credits h2{
     padding-bottom: 20px;
@@ -559,6 +572,12 @@ section.splashscreen a{
 .dico a{
     color: #525151;
     text-decoration: none;
+
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
 }
 .dico article{
     padding-bottom: 25px;
@@ -569,6 +588,12 @@ section.splashscreen a{
 .dico .icon-source:before {
     color:#525151;
     font-size: 13px;
+
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
 }
 .dico a:hover .icon-source:before {
     color:#f4f2f2;
@@ -851,7 +876,7 @@ margin: auto;
     border-left: 10px solid #e7f0f3;
     left: 0px;
     top:65px;
-    z-index: 50;
+    z-index: 35;
 }
 
 #rightSide p{
@@ -866,6 +891,7 @@ margin: auto;
 #rightSide h3 {
     font-weight: 400;
     color: #888888;
+    font-size: 1em;
 
 }
 .col2{
@@ -1015,7 +1041,7 @@ footer .partage:hover .buttonShare{
 
 #infoFiltre{
     position:absolute;
-    right:60px;top:137px;
+    right:60px;top:130px;
     clear:both;
 }
 #infoGraph{
