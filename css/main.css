@@ -572,6 +572,12 @@ section.splashscreen a{
 .dico a{
     color: #525151;
     text-decoration: none;
+
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
 }
 .dico article{
     padding-bottom: 25px;
@@ -582,6 +588,12 @@ section.splashscreen a{
 .dico .icon-source:before {
     color:#525151;
     font-size: 13px;
+
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
 }
 .dico a:hover .icon-source:before {
     color:#f4f2f2;
@@ -735,6 +747,8 @@ menu, ol, ul{
 }
 
 #logo{
+    height:65px;
+    width:70px;
     background-color: black;
     background-image: url(../img/logoNav.png);
     background-repeat: no-repeat;
@@ -1385,23 +1399,26 @@ svg.barChart .circleTopTransparent{
 #chartGaugeMultiple{
 
 }
-#chartGaugeMultiple .gaugeLegende0 rect+rect{
+[id^=chartGaugeMultiple] .gaugeLegende0 rect+rect{
     fill-opacity:0.7;
 }
-#chartGaugeMultiple .gaugeLegende1 rect+rect{
+[id^=chartGaugeMultiple] .gaugeLegende1 rect+rect{
     fill-opacity:0.5;
 }
-#chartGaugeMultiple .gaugeLegende2 rect+rect{
+[id^=chartGaugeMultiple] .gaugeLegende2 rect+rect{
     fill-opacity:0.3;
 }
+[id^=chartGaugeMultiple] .gaugeLegende3 rect+rect{
+    fill-opacity:0.2;
+}
 
-#chartGaugeMultiple .pourcentageTexte{
+[id^=chartGaugeMultiple] .pourcentageTexte{
     fill:#FFF;
     font-weight:bold;
     font-size:30px;
     text-anchor:end;
 }
-#chartGaugeMultiple .pourcentageSymbole{
+[id^=chartGaugeMultiple] .pourcentageSymbole{
     fill:#FFF;
     font-size:15px;
 }

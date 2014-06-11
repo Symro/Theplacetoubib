@@ -46,7 +46,6 @@ $(document).ready(function() {
 
     App.data = getJson("data/data.json");
     App.dataInfo = getJson("data/data_info.json");
-    App.dataEvolution = getJson("data/data_evolution.json");
 
 
     /* ********************************************************
@@ -372,7 +371,7 @@ $(document).ready(function() {
             App.hideInfoNeeded();
             App.hideLineChart();
 
-            App.dom.graph.append("__ OK on va jouer avec les datas suivantes  : <br/> ");
+//            App.dom.graph.append("__ OK on va jouer avec les datas suivantes  : <br/> ");
 
             var dataGraph = [];
 
@@ -382,18 +381,18 @@ $(document).ready(function() {
                 dataGraph.push(parseFloat(App.getInfoFiltre(App.dept, value)));
             });
 
-            App.dom.graph.append("<br/> dataGraph : " + dataGraph);
+//            App.dom.graph.append("<br/> dataGraph : " + dataGraph);
 
             // Pie Chart
             if (App.filtre == "Temps_acces_medecin") {
-                var legendes = ["Gynécologue", "Ophtalmologiste", "Dentiste", "Infirmier"];
+                var legendes = ["Gynécologue", "Ophtalmologue", "Dentiste", "Infirmier"];
                 dataGraph = ArrayToJSON(dataGraph, legendes);
                 if ($("#chartBar").html().trim().length == 0) {
                     App.displayBarChart(dataGraph);
                 } else {
                     App.updateBarChart(dataGraph);
                 }
-            } else{
+            } else {
                 App.hideBarChart();
             }
 
@@ -442,29 +441,41 @@ $(document).ready(function() {
                 var legendes = ["moins de 40 ans", "de 41 à 54 ans", "plus de 55 ans"];
                 dataGraph = ArrayToJSON(dataGraph, legendes, true);
 
-                if ($("#chartGaugeMultiple").html().trim().length == 0) {
-                    App.displayGaugeChartMultiple("#chartGaugeMultiple", dataGraph);
+                if ($("#chartGaugeMultiple1").html().trim().length == 0) {
+                    App.displayGaugeChartMultiple("#chartGaugeMultiple1", dataGraph);
                 } else {
-                    App.updateGaugeChartMultiple("#chartGaugeMultiple", dataGraph);
+                    App.updateGaugeChartMultiple("#chartGaugeMultiple1", dataGraph);
                 }
 
             } else {
-                App.hideGaugeChartMultiple();
+                App.hideGaugeChartMultiple(1);
             }
 
-            // FIN -- if(data)
-        } else {
+            if (App.filtre == "Nb_hab_plus_60_ans") {
+                var legendes = ["de 0 à 19 ans", "de 20 à 39 ans", "de 40 à 59 ans", "plus de 60 ans"];
+                dataGraph = ArrayToJSON(dataGraph, legendes, true);
 
-            App.hideLineChart();
+                if ($("#chartGaugeMultiple2").html().trim().length == 0) {
+                    App.displayGaugeChartMultiple("#chartGaugeMultiple2", dataGraph);
+                } else {
+                    App.updateGaugeChartMultiple("#chartGaugeMultiple2", dataGraph);
+                }
+
+            } else {
+                App.hideGaugeChartMultiple(2);
+            }
+
+        // FIN -- if(data)
+        } else {
+            App.hideBarChart();
             App.hideGaugeChart();
             App.hideGaugeChartMultiple();
 
             // Gestion Line Chart -- Exception car JSON à lire différent donc n'est pas dans la condition if(data)
             if (App.filtre == "Nb_hab_par_medecin") {
 
-                var dataDept = _.findWhere(App.dataEvolution, {
-                    Num_dpt: App.dept
-                });
+                var dataDept = App.getInfo(App.dept);
+
                 var data = [
                     "data",
                     parseInt(dataDept["Nb_generaliste_2014"]),
@@ -484,10 +495,14 @@ $(document).ready(function() {
                 }
 
             }
+            else{
+                App.hideLineChart();
+            }
+
+
             if (App.filtre.match(/^Nb_hab_par_/) && App.filtre != "Nb_hab_par_medecin") {
                 App.displayInfoNeeded();
-            }
-            else{
+            } else {
                 App.hideInfoNeeded();
             }
 
@@ -603,6 +618,16 @@ $(document).ready(function() {
 
     }
 
+    App.getActiveDept = function(dept) {
+
+        d3.selectAll("#paris path.departement")
+            .filter(function(d) {
+                return d.properties.CODE_DEPT == dept;
+            })
+            .transition().duration(500)
+            .classed("active", true);
+    }
+
 
     /* ********************************************************
     /   D3.JS -- BAR CHART
@@ -660,7 +685,7 @@ $(document).ready(function() {
 
         // y.domain([0, d3.max(data, function(d) {
         //     return parseInt(d.nb);
-        // })]);        
+        // })]);
         y.domain([0, 32]);
 
         var valMax = d3.max(data, function(d) {
@@ -766,7 +791,7 @@ $(document).ready(function() {
             })
             .attr("height", function(d) {
                 return 5;
-            })            
+            })
             .on('mouseover', tip.show)
             .on('mouseout', tip.hide);
 
@@ -807,8 +832,8 @@ $(document).ready(function() {
             bottom: 30,
             left: 40
         },
-        width = 640 - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom;
+            width = 640 - margin.left - margin.right,
+            height = 300 - margin.top - margin.bottom;
 
         var svg = d3.selectAll("#chartBar g");
 
@@ -824,12 +849,12 @@ $(document).ready(function() {
         y.domain([0, 32]);
 
         var bars = d3.select("#chartBar").selectAll("rect.bar");
-        
+
         // transition hauteur des Bar Chart
         bars.data(data)
             .transition()
             .duration(400)
-            .attr("height", function(d,i) {
+            .attr("height", function(d, i) {
                 return height - y(d.nb);
             })
             .attr("y", function(d) {
@@ -841,24 +866,36 @@ $(document).ready(function() {
             .data(data)
             .transition()
             .duration(400)
-            .attr("y", function(d) { return y(d.nb) - 3; })
-            .attr("height", function(d) { return 5; })
+            .attr("y", function(d) {
+                return y(d.nb) - 3;
+            })
+            .attr("height", function(d) {
+                return 5;
+            })
 
         // transition du cercle blanc en haut & au centre de chaque Bar
         svg.selectAll(".circleTop")
             .data(data)
             .transition()
             .duration(400)
-            .attr("cx", function(d) { return x(d.legende) + x.rangeBand() / 2; })
-            .attr("cy", function(d) { return y(d.nb) - 1; });
+            .attr("cx", function(d) {
+                return x(d.legende) + x.rangeBand() / 2;
+            })
+            .attr("cy", function(d) {
+                return y(d.nb) - 1;
+            });
 
         // transition du cercle blanc transparent en haut
         svg.selectAll(".circleTopTransparent")
             .data(data)
             .transition()
             .duration(400)
-            .attr("cx", function(d) { return x(d.legende) + x.rangeBand() / 2; })
-            .attr("cy", function(d) { return y(d.nb) - 1; });
+            .attr("cx", function(d) {
+                return x(d.legende) + x.rangeBand() / 2;
+            })
+            .attr("cy", function(d) {
+                return y(d.nb) - 1;
+            });
 
         // maintient la position de l'échelle en Y
         svg.selectAll(".y.axis .tick").each(function() {
@@ -992,7 +1029,7 @@ $(document).ready(function() {
             });
         legend.append("rect")
             .attr("x", 20)
-            .attr("y", 25)
+            .attr("y", 24)
             .attr("width", "20")
             .attr("height", "20")
             .style({
@@ -1238,14 +1275,17 @@ $(document).ready(function() {
     //      - 1 string  > selecteur CSS du conteneur
     //      - 1 number OU string entre 0 et 100 > pourcentage
     App.displayGaugeChartMultiple = function(container, data) {
-        $('#chartGaugeMultiple').show();
         $(container).empty();
+        $(container).fadeIn();
 
-        var width = 620,
+        var width = 650,
             height = 450,
             τ = 2 * Math.PI,
-            cercleMarge = 35,
-            color = ["rgba(255,54,54,0.7)", "rgba(255,54,54,0.5)", "rgba(255,54,54,0.3)"];
+            color = ["rgba(255,54,54,0.7)", "rgba(255,54,54,0.5)", "rgba(255,54,54,0.3)", "rgba(255,54,54,0.2)"];
+
+        var dataNombre = data.length;
+        var cercleMarge = (dataNombre > 3) ? 30 : 35 ;
+
 
         var arc = d3.svg.arc()
             .innerRadius(85)
@@ -1330,7 +1370,7 @@ $(document).ready(function() {
             .enter()
             .append("g")
             .attr("transform", function(d, i) {
-                return "translate( 40," + (height / 3 + i * 20) + ")";
+                return "translate( 40," + (height / dataNombre + i * 20) + ")";
             })
             .attr("class", function(d, i) {
                 return "gaugeLegende gaugeLegende" + i;
@@ -1440,14 +1480,15 @@ $(document).ready(function() {
 
     App.updateGaugeChartMultiple = function(container, data) {
 
-        $('#chartGaugeMultiple').show();
+        $(container).show();
 
         if ($(container).length == 0) {
             console.log("/!\ Ce container (" + container + ") n'existe pas dans le DOM..");
             return false;
         }
 
-        var cercleMarge = 35;
+        var dataNombre = data.length;
+        var cercleMarge = (dataNombre > 3) ? 30 : 35 ;
 
         for (var i = 0; i < data.length; i++) {
             var pourcentage = data[i]['nb'] / 100;
@@ -1480,18 +1521,23 @@ $(document).ready(function() {
             .append("g")
             .on("mouseover", function(d, i) {
 
-                d3.select("#chartGaugeMultiple .pourcentageTexte")
+                d3.select(container+" .pourcentageTexte")
                     .transition().duration(250)
                     .style("opacity", "1")
                     .text(Math.round(d.nb));
 
             });
 
-
     }
 
-    App.hideGaugeChartMultiple = function(container, data) {
-        $('#chartGaugeMultiple').hide();
+    App.hideGaugeChartMultiple = function(id) {
+        console.log("App.hideGaugeChartMultiple");
+        (id) ? $('#chartGaugeMultiple'+id).hide() : $('#chartGaugeMultiple1 , #chartGaugeMultiple2').hide();
+    }
+
+    App.destroyGaugeChartMultiple = function(id) {
+        console.log("App.destroyGaugeChartMultiple");
+        (id) ? $('#chartGaugeMultiple'+id).empty() : $('#chartGaugeMultiple1 , #chartGaugeMultiple2').empty();
     }
 
 

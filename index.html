@@ -7,7 +7,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>The Place Toubib - Datavizualisation sur l'accès aux soins en France</title>
-        <meta name="description" content="Dataviz sur la santé mettant en avant les déserts médicaux en France">
+        <meta name="description" content="Datavizualisation sur les déserts médicaux et les inégalités face à l'accès aux soins en France">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <meta property="og:title" content="The Place Toubib' - Datavizualisation sur l'accès aux soins en France" />
@@ -40,7 +40,7 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-<!-- 
+
    <div class="splashscreen">
         <section class="splashscreen">
             <div class="presentation">
@@ -74,7 +74,7 @@
         <div class="tutoRightSide">
         </div>
     </section>
- -->
+
 
     <section id="credits" class="hidden">
       <div class="credits">
@@ -86,10 +86,10 @@
             <li><a href="http://www.audreyturquand.fr/" target="_BLANK"><span class="name_credits">Audrey Turquand</span></a> - Chef de projet / UI Designer</li>
             <li><a href="http://www.augustinmenou.fr/" target="_BLANK"><span class="name_credits">Augustin Menou</span></a> - UX designer / UI designer</li>
             <li><a href="http://www.alexandreguerard.fr/" target="_BLANK"><span class="name_credits">Alexandre Guérard</span></a> - Statisticien / Front-end développeur</li>
-            <li><a href="https://www.linkedin.com/in/audreychauprade"><span class="name_credits" target="_BLANK">Audrey Chauprade</span></a> - Statisticien / Intégrateur</li>
-            <li><a href="http://www.florent-grandval.fr/" target="_BLANK"><span class="name_credits">Florent Grandval</span></a> - Back-end développeur</li>
+            <li><a href="#"><span class="name_credits" target="_BLANK">Audrey Chauprade</span></a> - Statisticien / Front-end développeur</li>
+            <li><a href="http://www.florent-grandval.fr/" target="_BLANK"><span class="name_credits">Florent Grandval</span></a> - Back-end développeur / D3.js, C3.js, Backbone, Underscore, JQuery</li>
             <li><a href="http://www.sylvainmroczko.fr/"><span class="name_credits">
-                Sylvain Mroczko</span></a> - Back-end développeur</li>
+                Sylvain Mroczko</span></a> - Back-end développeur / D3.js, C3.js, Backbone, Underscore, JQuery</li>
         </ul>
         <h2 class="title_credits">Nous contacter</h2>
         <p class="after_line"><a href="mailto:contact@theplacetoubib.fr">contact@theplacetoubib.fr</a></p>
@@ -104,7 +104,7 @@
         <script type="text/template" id="menu_niveau1_2_template">
             <nav>
                 <ul>
-                    <li id="logo"><a href="#/accueil"></a></li>
+                    <li id="logo"></li>
                     <li class="firstLevel">
                         <span title="Habitants" class="tooltipNav">
                             <a href="#" title="Habitants">
@@ -114,17 +114,17 @@
                     </li>
                         <ul class="secondLevel <%= menu[0] %>" data-has-sub-lvl="no">
                             <li>
-                                <span title="Nombre d’habitants de + de 60 ans" class="tooltipNav">
+                                <span title="Habitants de plus de 60 ans" class="tooltipNav">
                                     <a href="#/filtre/nb_habitants_plus_60_ans<%= dept == null ? "" : "/dept_"+dept %>" data-chart-type="pie" data-info-json="Nb_hab_plus_60_ans" data-counter-decimal="0"><i class="icon-niv2_plus60"></i></a>
                                 </span>
                             </li>
                             <li>
-                                <span title="Revenu moyen / habitants" class="tooltipNav">
+                                <span title="Revenu moyen par habitant" class="tooltipNav">
                                     <a href="#/filtre/revenu_moyen_par_habitant<%= dept == null ? "" : "/dept_"+dept %>" data-chart-type="gauge" data-info-json="Revenus_moyen_nets_par_mois" data-counter-decimal="0"><i class="icon-niv2_revenumoyen"></i></a>
                                 </span>
                             </li>
                             <li>
-                                <span title="Temps d’accès médecins généralistes" class="tooltipNav">
+                                <span title="Temps d’accès chez un médecin" class="tooltipNav">
                                     <a href="#/filtre/temps_acces_medecin_generaliste<%= dept == null ? "" : "/dept_"+dept %>" data-chart-type="bar" data-info-json="Temps_acces_medecin" data-counter-decimal="2"><i class="icon-niv2_tempsacces"></i></a>
                                 </span>
                             </li>
@@ -136,11 +136,11 @@
                     </li>
                         <ul class="secondLevel tips <%= menu[1] %>" data-has-sub-lvl="yes">
                             <li class="prefiltre <%= prefiltreEtat[0] != "" ? "active" : "" %>" data-prefiltre="nombre" data-prefixe="Nb_" data-counter-decimal="0"><span title="Nombres" class="tooltipNav"><a href="#"><i class="icon-niv2_nombre"></i></a></span></li>
-                            <li class="prefiltre <%= prefiltreEtat[1] != "" ? "active" : "" %>" data-prefiltre="age_moyen" data-prefixe="Age_moyen_" data-counter-decimal="0"><span title="Age moyen" class="tooltipNav"><a href="#"><i class="icon-niv2_agemoyen"></i></a></span></li>
-                            <li class="prefiltre <%= prefiltreEtat[2] != "" ? "active" : "" %>" data-prefiltre="prix_moyen_consultation" data-prefixe="Prix_moyen_consultation_" data-counter-decimal="2"><span title="Prix Moyen de la consultation" class="tooltipNav"><a href="#"><i class="icon-niv2_prixconsultation"></i></a></span></li>
-                            <li class="prefiltre <%= prefiltreEtat[3] != "" ? "active" : "" %>" data-prefiltre="nombre_patients_par" data-prefixe="Nb_hab_par_" data-counter-decimal="0"><span title="Nombre de patients par praticiens" class="tooltipNav"><a href="#"><i class="icon-niv2_nbpatients"></i></a></span></li>
+                            <li class="prefiltre <%= prefiltreEtat[1] != "" ? "active" : "" %>" data-prefiltre="age_moyen" data-prefixe="Age_moyen_" data-counter-decimal="0"><span title="Âge moyen" class="tooltipNav"><a href="#"><i class="icon-niv2_agemoyen"></i></a></span></li>
+                            <li class="prefiltre <%= prefiltreEtat[2] != "" ? "active" : "" %>" data-prefiltre="prix_moyen_consultation" data-prefixe="Prix_moyen_consultation_" data-counter-decimal="2"><span title="Prix moyen de la consultation" class="tooltipNav"><a href="#"><i class="icon-niv2_prixconsultation"></i></a></span></li>
+                            <li class="prefiltre <%= prefiltreEtat[3] != "" ? "active" : "" %>" data-prefiltre="nombre_patients_par" data-prefixe="Nb_hab_par_" data-counter-decimal="0"><span title="Nombre d'habitants par praticien" class="tooltipNav"><a href="#"><i class="icon-niv2_nbpatients"></i></a></span></li>
                         </ul>
-                    <li><span title="Hôpitaux" class="tooltipNav"><a href="#/filtre/hopitaux<%= dept == null ? "" : "/dept_"+dept %>" data-info-json="Nombre_hopitaux" data-counter-decimal="0"><i class="icon-niv1_hopitaux"></i></a></span>
+                    <li><span title="Nombre d'hôpitaux" class="tooltipNav"><a href="#/filtre/hopitaux<%= dept == null ? "" : "/dept_"+dept %>" data-info-json="Nombre_hopitaux" data-counter-decimal="0"><i class="icon-niv1_hopitaux"></i></a></span>
                     </li>
                 </ul>
             </nav>
@@ -220,7 +220,7 @@
                     <div class="tooltipCSS">
                         <i class="icon-info"></i>
                         <div>
-                            <h5>Provenance des datas</h5>
+                            <h5>Provenance des données</h5>
                             <p><span>Source : </span><a href="" title="" target="_blank"></a></p>
                             <p><span>Année : </span><span></span></p>
                         </div>
@@ -239,7 +239,7 @@
                     </div>
                 </div>
 
-                <div id="infoNeeded">
+                <div id="infoNeeded" style="display:none">
                     <div>
                         Les données disponibles pour afficher cette information sont malheureusement insuffisantes.<br>
                         <br>
@@ -273,7 +273,8 @@
                     </div>
                 </div>
 
-                <div id="chartGaugeMultiple" style="display:none"></div>
+                <div id="chartGaugeMultiple1" style="display:none"></div>
+                <div id="chartGaugeMultiple2" style="display:none"></div>
 
                 <footer>
                     <div class="partage">
@@ -303,37 +304,22 @@
         <div class="dicoContent">
 
             <article>
-            <h3>Hopital / clinique/ polyclinique </h3>
-            <p>L’hôpital est un établissement public de santé La clinique est un établissement privé de santé qui peut être soit une société commerciale (à but lucratif), soit une association (à but non lucratif). Une poly-clinique est une clinique qui pratique des soins divers dans plusieurs spécialités médicales (poly : plusieurs).</p>
-            <a href=""><i class="icon-source"></i>Source</a>
+            <h3>Hopital / Clinique/ Polyclinique </h3>
+            <p>L’hôpital est un établissement public de santé. <br/>La clinique est un établissement privé de santé qui peut être soit une société commerciale (à but lucratif), soit une association (à but non lucratif). <br/>Une poly-clinique est une clinique qui pratique des soins divers dans plusieurs spécialités médicales (poly : plusieurs).</p>
+            <a href="http://www.fhp-lr.com/Federation-Hospitalisation-Privee/Les-usagers/Questions-Reponses/Quelle-est-la-difference-entre-une-clinique-et-un-hopital-_54_623.html"><i class="icon-source"></i>Source</a>
             </article>
 
             <article>
-            <h3>gynécologue : médical / obstétricien</h3>
-            <p>La gynécologie médicale se préoccupe essentiellement des troubles fonctionnels du cycle de la contraception, de la ménopause et du dépistage des cancers génitaux. Une solide formation psychologique est demandée. (Les médecins généralistes ont également cette formation dans leur cursus.) L’obstétrique, qui comprend la surveillance de la grossesse, des maladies intercurrentes au cours de celle-ci et l’accouchement, et les suites de couches.
-            </p>
-            <a href=""><i class="icon-source"></i>Source</a>
+            <h3>Dentiste ou Chirurgien-dentiste / Orthodontiste</h3>
+            <p>Les dentistes et les orthodontistes se concentrent sur la correction des problèmes de bouche et le maintien de la santé bucco-dentaire. Les dentistes envoient souvent leurs patients chez les orthodontistes. <br/>Les orthodontistes sont des chirurgiens dentaires spécialistes qui se concentrent sur le redressement des dents avec l'application de la pression.</p>
+            <a href="http://www.commentfaiton.com/fiche/voir/54183/comment-connaitre-la-difference-entre-un-dentiste-et-un-orthodontiste"><i class="icon-source"></i>Source</a>
             </article>
 
             <article>
-            <h3>gynécologue : médical / obstétricien</h3>
+            <h3>Gynécologue : Médical / Obstétricien</h3>
             <p>La gynécologie médicale se préoccupe essentiellement des troubles fonctionnels du cycle de la contraception, de la ménopause et du dépistage des cancers génitaux. Une solide formation psychologique est demandée. (Les médecins généralistes ont également cette formation dans leur cursus.) L’obstétrique, qui comprend la surveillance de la grossesse, des maladies intercurrentes au cours de celle-ci et l’accouchement, et les suites de couches.
             </p>
-            <a href=""><i class="icon-source"></i>Source</a>
-            </article>
-
-            <article>
-            <h3>gynécologue : médical / obstétricien</h3>
-            <p>La gynécologie médicale se préoccupe essentiellement des troubles fonctionnels du cycle de la contraception, de la ménopause et du dépistage des cancers génitaux. Une solide formation psychologique est demandée. (Les médecins généralistes ont également cette formation dans leur cursus.) L’obstétrique, qui comprend la surveillance de la grossesse, des maladies intercurrentes au cours de celle-ci et l’accouchement, et les suites de couches.
-            </p>
-            <a href=""><i class="icon-source"></i>Source</a>
-            </article>
-
-            <article>
-            <h3>gynécologue : médical / obstétricien</h3>
-            <p>La gynécologie médicale se préoccupe essentiellement des troubles fonctionnels du cycle de la contraception, de la ménopause et du dépistage des cancers génitaux. Une solide formation psychologique est demandée. (Les médecins généralistes ont également cette formation dans leur cursus.) L’obstétrique, qui comprend la surveillance de la grossesse, des maladies intercurrentes au cours de celle-ci et l’accouchement, et les suites de couches.
-            </p>
-            <a href=""><i class="icon-source"></i>Source</a>
+            <a href="http://www.larousse.fr/encyclopedie/medical/gyn%C3%A9cologie-obst%C3%A9trique/13438"><i class="icon-source"></i>Source</a>
             </article>
         </div>
     </section>
@@ -351,7 +337,7 @@
         </div>
         <div >
             <h1>03.</h1>
-            <P>Chiffres moyen du département & chiffre moyen français selon la donnée choisie</P>
+            <P>Chiffres moyen du département & chiffre moyens français selon la donnée choisie</P>
             <span class="helpCircle"></span>
         </div>
         <div >
