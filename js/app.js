@@ -591,6 +591,16 @@ $(document).ready(function() {
 
     }
 
+    App.getActiveDept = function(dept) {
+
+        d3.selectAll("#paris path.departement")
+            .filter(function(d) {
+                return d.properties.CODE_DEPT == dept;
+            })
+            .transition().duration(500)
+            .classed("active", true);
+    }
+
 
     /* ********************************************************
     /   D3.JS -- BAR CHART
@@ -901,7 +911,7 @@ $(document).ready(function() {
             });
         legend.append("rect")
             .attr("x", 20)
-            .attr("y", 25)
+            .attr("y", 24)
             .attr("width", "20")
             .attr("height", "20")
             .style({
