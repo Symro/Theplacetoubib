@@ -387,8 +387,13 @@ $(document).ready(function() {
             if (App.filtre == "Temps_acces_medecin") {
                 var legendes = ["Gynécologue", "Ophtalmologiste", "Dentiste", "Infirmier"];
                 dataGraph = ArrayToJSON(dataGraph, legendes);
-                console.log(dataGraph);
-                App.displayBarChart(dataGraph);
+                if ($("#chartBar").html().trim().length == 0) {
+                    App.displayBarChart(dataGraph);
+                } else {
+                    App.updateBarChart(dataGraph);
+                }
+            } else{
+                App.hideBarChart();
             }
 
             if (App.filtre == "Nb_medecin" || App.filtre == "Nb_gyneco" || App.filtre == "Nb_dentiste" || App.filtre == "Nb_ophtalmo" || App.filtre == "Nb_infirmier") {
@@ -598,6 +603,7 @@ $(document).ready(function() {
 
 
     App.displayBarChart = function(data) {
+        $('#chartBar').show();
 
         $('.d3-tip').remove();
 
@@ -632,7 +638,7 @@ $(document).ready(function() {
                 return "<strong>" + parseInt(d.nb) + " " + App.dataInfo[App.filtre][5] + "</strong>";
             })
 
-        var svg = d3.select("#graph").append("svg")
+        var svg = d3.select("#chartBar").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .attr("class", "barChart")
@@ -644,9 +650,11 @@ $(document).ready(function() {
         x.domain(data.map(function(d) {
             return d.legende;
         }));
-        y.domain([0, d3.max(data, function(d) {
-            return parseInt(d.nb);
-        })]);
+
+        // y.domain([0, d3.max(data, function(d) {
+        //     return parseInt(d.nb);
+        // })]);        
+        y.domain([0, 28]);
 
         var valMax = d3.max(data, function(d) {
             return parseInt(d.nb);
@@ -751,7 +759,9 @@ $(document).ready(function() {
             })
             .attr("height", function(d) {
                 return 5;
-            })
+            })            
+            .on('mouseover', tip.show)
+            .on('mouseout', tip.hide);
 
         // ajoute le cercle blanc en haut & au centre de chaque Bar
         svg.selectAll(".circleTop")
@@ -779,6 +789,78 @@ $(document).ready(function() {
             })
             .attr("r", 12);
 
+    }
+
+    App.updateBarChart = function(data) {
+        var margin = {
+            top: 40,
+            right: 20,
+            bottom: 30,
+            left: 40
+        },
+        width = 640 - margin.left - margin.right,
+        height = 300 - margin.top - margin.bottom;
+
+        var svg = d3.selectAll("#chartBar g");
+
+        var x = d3.scale.ordinal()
+            .rangeRoundBands([0, width], .4);
+
+        var y = d3.scale.linear()
+            .range([height, 0]);
+
+        x.domain(data.map(function(d) {
+            return d.legende;
+        }));
+        y.domain([0, 28]);
+
+        var bars = d3.select("#chartBar").selectAll("rect.bar");
+        
+        // transition hauteur des Bar Chart
+        bars.data(data)
+            .transition()
+            .duration(400)
+            .attr("height", function(d,i) {
+                return height - y(d.nb);
+            })
+            .attr("y", function(d) {
+                return y(d.nb);
+            });
+
+        // transition du trait blanc au dessus de chaque Bar
+        svg.selectAll(".barTop")
+            .data(data)
+            .transition()
+            .duration(400)
+            .attr("y", function(d) { return y(d.nb) - 3; })
+            .attr("height", function(d) { return 5; })
+
+        // transition du cercle blanc en haut & au centre de chaque Bar
+        svg.selectAll(".circleTop")
+            .data(data)
+            .transition()
+            .duration(400)
+            .attr("cx", function(d) { return x(d.legende) + x.rangeBand() / 2; })
+            .attr("cy", function(d) { return y(d.nb) - 1; });
+
+        // transition du cercle blanc transparent en haut
+        svg.selectAll(".circleTopTransparent")
+            .data(data)
+            .transition()
+            .duration(400)
+            .attr("cx", function(d) { return x(d.legende) + x.rangeBand() / 2; })
+            .attr("cy", function(d) { return y(d.nb) - 1; });
+
+        // maintient la position de l'échelle en Y
+        svg.selectAll(".y.axis .tick").each(function() {
+            d3.select(this).selectAll("text").attr("x", -16);
+        });
+
+
+    }
+
+    App.hideBarChart = function(data) {
+        $("#chartBar").hide();
     }
 
     /* ********************************************************
