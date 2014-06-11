@@ -661,7 +661,7 @@ $(document).ready(function() {
         // y.domain([0, d3.max(data, function(d) {
         //     return parseInt(d.nb);
         // })]);        
-        y.domain([0, 28]);
+        y.domain([0, 32]);
 
         var valMax = d3.max(data, function(d) {
             return parseInt(d.nb);
@@ -821,7 +821,7 @@ $(document).ready(function() {
         x.domain(data.map(function(d) {
             return d.legende;
         }));
-        y.domain([0, 28]);
+        y.domain([0, 32]);
 
         var bars = d3.select("#chartBar").selectAll("rect.bar");
         

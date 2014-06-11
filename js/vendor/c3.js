@@ -2019,9 +2019,7 @@
                     chartRight = svgLeft + getCurrentWidth() - getCurrentPaddingRight();
                     /* CUSTOM */
                     var myToolTipTop = getCircles(dataToShow[0].index, dataToShow[0].id).attr("cy");
-                    console.log(myToolTipTop);
                     tooltipTop = (Math.round(myToolTipTop)+20);
-                    console.log(tooltipTop);
                 }
 
                 if (tooltipRight > chartRight) {
