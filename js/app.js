@@ -200,13 +200,13 @@ $(document).ready(function() {
         } else {
             chiffre_dept_container.removeClass("chiffreNC");
             chiffre_dept_container.countTo({
-                from: parseInt(chiffre_dept_container.text()) || 0,
+                from: parseFloat(chiffre_dept_container.text().replace(/[^,.0-9]/g, '')) || 0,
                 to: chiffre_dept,
                 speed: 800,
                 refreshInterval: 50,
                 decimals: App.counterDecimal,
                 formatter: function(value, options) {
-                    return value.toFixed(options.decimals) + " <span>" + suffixe + "</span>";
+                    return value.toFixed(options.decimals).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace(".", "<b>,</b>") + " <span>" + suffixe + "</span>";
                 }
             });
         }
@@ -215,13 +215,13 @@ $(document).ready(function() {
         var chiffre_fra = App.getInfoFiltre(100, App.filtre);
         var chiffre_fra_container = $('#chiffreFrance p');
         chiffre_fra_container.countTo({
-            from: parseInt(chiffre_fra_container.text()),
+            from: parseFloat(chiffre_fra_container.text().replace(/[^,.0-9]/g, '')),
             to: chiffre_fra,
             speed: 800,
             refreshInterval: 50,
             decimals: App.counterDecimal,
             formatter: function(value, options) {
-                return value.toFixed(options.decimals) + " <span>" + suffixe + "</span>";
+                return value.toFixed(options.decimals).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace(".", "<b>,</b>") + " <span>" + suffixe + "</span>";
             }
         });
 
@@ -239,21 +239,20 @@ $(document).ready(function() {
         // Update ToolTip Graph
         var tooltip_graph_container = $('#infoGraph .tooltipCSS');
 
-        if(App.filtre.match(/^Nb_hab_par_/)){
+        if (App.filtre.match(/^Nb_hab_par_/)) {
             tooltip_graph_container.addClass('disabled');
 
-            if(App.filtre == "Nb_hab_par_medecin"){
+            if (App.filtre == "Nb_hab_par_medecin") {
                 tooltip_graph_container.removeClass('disabled');
                 tooltip_graph_container
                     .find("div p:first a")
-                        .attr("href", App.dataInfo["Evo_nombre_medecins"][4]).attr("title", App.dataInfo["Evo_nombre_medecins"][3]).text(App.dataInfo["Evo_nombre_medecins"][3])
+                    .attr("href", App.dataInfo["Evo_nombre_medecins"][4]).attr("title", App.dataInfo["Evo_nombre_medecins"][3]).text(App.dataInfo["Evo_nombre_medecins"][3])
                     .end()
                     .find("div p+p span+span").text(App.dataInfo["Evo_nombre_medecins"][2])
                     .end()
                     .find("div div:first").siblings("div").remove();
             }
-        }
-        else{
+        } else {
             tooltip_graph_container.removeClass('disabled');
         }
 
@@ -279,7 +278,7 @@ $(document).ready(function() {
 
             // affichage des datas dans la tooltip
             var tooltip_container = App.dom.tooltip_graph.find("div:first");
-            tooltip_container.empty().append("<h5>Provenance des datas</h5>");
+            tooltip_container.empty().append("<h5>Provenance des données</h5>");
             for (var i = 0; i < graph_data_tooltip.length; i++) {
                 if (graph_data_tooltip[i][1] != "NC") {
                     tooltip_container.append("<div><p><span>Source : </span><a href=\"" + graph_data_tooltip[i][1] + "\" title=\"" + graph_data_tooltip[i][0] + "\" target=\"_blank\">" + graph_data_tooltip[i][0] + "</a></p> <p><span>Année : </span><span>" + graph_data_tooltip[i][2] + "</span></p></div>");
@@ -390,7 +389,7 @@ $(document).ready(function() {
             App.hideInfoNeeded();
             App.hideLineChart();
 
-//            App.dom.graph.append("__ OK on va jouer avec les datas suivantes  : <br/> ");
+            //            App.dom.graph.append("__ OK on va jouer avec les datas suivantes  : <br/> ");
 
             var dataGraph = [];
 
@@ -400,7 +399,7 @@ $(document).ready(function() {
                 dataGraph.push(parseFloat(App.getInfoFiltre(App.dept, value)));
             });
 
-//            App.dom.graph.append("<br/> dataGraph : " + dataGraph);
+            //            App.dom.graph.append("<br/> dataGraph : " + dataGraph);
 
             // Pie Chart
             if (App.filtre == "Temps_acces_medecin") {
@@ -484,7 +483,7 @@ $(document).ready(function() {
                 App.hideGaugeChartMultiple(2);
             }
 
-        // FIN -- if(data)
+            // FIN -- if(data)
         } else {
             App.hideBarChart();
             App.hideGaugeChart();
@@ -513,8 +512,7 @@ $(document).ready(function() {
                     App.updateLineChart(data, dataMin, dataMax);
                 }
 
-            }
-            else{
+            } else {
                 App.hideLineChart();
             }
 
@@ -1303,7 +1301,7 @@ $(document).ready(function() {
             color = ["rgba(255,54,54,0.7)", "rgba(255,54,54,0.5)", "rgba(255,54,54,0.3)", "rgba(255,54,54,0.2)"];
 
         var dataNombre = data.length;
-        var cercleMarge = (dataNombre > 3) ? 30 : 35 ;
+        var cercleMarge = (dataNombre > 3) ? 30 : 35;
 
 
         var arc = d3.svg.arc()
@@ -1507,7 +1505,7 @@ $(document).ready(function() {
         }
 
         var dataNombre = data.length;
-        var cercleMarge = (dataNombre > 3) ? 30 : 35 ;
+        var cercleMarge = (dataNombre > 3) ? 30 : 35;
 
         for (var i = 0; i < data.length; i++) {
             var pourcentage = data[i]['nb'] / 100;
@@ -1539,11 +1537,14 @@ $(document).ready(function() {
             .enter()
             .append("g")
             .on("mouseover", function(d, i) {
-
-                d3.select(container+" .pourcentageTexte")
+                var nb = d.nb;
+                d3.select(container + " .pourcentageTexte")
                     .transition().duration(250)
                     .style("opacity", "1")
-                    .text(Math.round(d.nb));
+                    .text(function(d) {
+                        var nbFinal = (nb < 10) ? "0" + Math.round(nb) : Math.round(nb);
+                        return nbFinal;
+                    });
 
             });
 
@@ -1551,12 +1552,12 @@ $(document).ready(function() {
 
     App.hideGaugeChartMultiple = function(id) {
         console.log("App.hideGaugeChartMultiple");
-        (id) ? $('#chartGaugeMultiple'+id).hide() : $('#chartGaugeMultiple1 , #chartGaugeMultiple2').hide();
+        (id) ? $('#chartGaugeMultiple' + id).hide() : $('#chartGaugeMultiple1 , #chartGaugeMultiple2').hide();
     }
 
     App.destroyGaugeChartMultiple = function(id) {
         console.log("App.destroyGaugeChartMultiple");
-        (id) ? $('#chartGaugeMultiple'+id).empty() : $('#chartGaugeMultiple1 , #chartGaugeMultiple2').empty();
+        (id) ? $('#chartGaugeMultiple' + id).empty() : $('#chartGaugeMultiple1 , #chartGaugeMultiple2').empty();
     }
 
 
@@ -1767,7 +1768,20 @@ $(document).ready(function() {
         // > seul filtre accessible en niveau 1
         if (info == "Nombre_hopitaux") {
             e.preventDefault();
+            var li = $('#menu nav li');
+            li.removeClass("active");
             $this.parents("li").addClass("active");
+
+            var firstLevel = li.filter(".firstLevel");
+            if (firstLevel.next(".secondLevel").hasClass('open')) {
+                firstLevel.next(".secondLevel").removeClass('open');
+                firstLevel.next(".secondLevel").slideUp();
+            }
+
+            var thirdLevel = $(".thirdLevel");
+            thirdLevel.addClass('hidden').find("ul").addClass('animated fadeOutLeft');
+            App.menuEtat = ["", "", ""];
+
             App.counterDecimal = $this.data("counter-decimal");
             App.filtre = info;
             App.router.navigate($this.attr("href"), {
@@ -1813,15 +1827,21 @@ $(document).ready(function() {
         e.preventDefault();
         console.log(e);
 
+<<<<<<< HEAD
         if(e.target.className == "name_credits"){ 
             window.open(e.target.parentElement.href, '_blank');  
         // }else if(event.target.is("a")){
         //      window.open(e.target.href, '_blank');
         }else{
+=======
+        if (e.target.className == "name_credits") {
+            window.open(e.target.parentElement.href, '_blank');
+        } else {
+>>>>>>> 0a7ccc5f21c15594a6149d3b436e614ceef91157
             $(this).parent('#credits').addClass('animated fadeOut').delay(700).queue(function(next) {
                 $(this).addClass('hidden');
                 next();
-            }); 
+            });
         }
 
     });
@@ -1876,16 +1896,16 @@ $(document).ready(function() {
             width: 800,
             height: 800,
             center: {
-                x: 2.454071,
-                y: 47.279229
+                x: 2,
+                y: 46
             },
             scale: 4000,
             color: '#e7f0f3',
             widthParis: 200,
             heightParis: 200,
             centerParis: {
-                x: 2.454071,
-                y: 47.279229
+                x: 2.4,
+                y: 47.1
             },
             scaleParis: 30000,
             translate: {
@@ -1893,8 +1913,8 @@ $(document).ready(function() {
                 y: 1040
             },
             circle: {
-                x: 400,
-                y: 300,
+                x: 420,
+                y: 220,
                 r: 100,
                 stroke: '#000',
                 fill: 'white',
@@ -1906,6 +1926,62 @@ $(document).ready(function() {
         init: function(options) {
 
             this.params = $.extend(this.defaults, options);
+
+            var screenWidth = $(window).width();
+
+            if (screenWidth < 1620) {
+
+                console.log('width inférieure a : ' + screenWidth);
+                this.params.width = 650;
+                this.params.height = 800;
+                this.params.center = {
+                    x: 4.5,
+                    y: 47
+                };
+                this.params.scale = 3800;
+                this.params.centerParis = {
+                    x: 2.7,
+                    y: 47.1
+                };
+                this.params.circle = {
+                    x: 320,
+                    y: 220,
+                    r: 100,
+                    stroke: '#000',
+                    fill: 'white',
+                    strokeWidth: '2',
+                    opacity: '.7'
+                };
+
+            }
+
+            if (screenWidth < 1380) {
+
+                console.log('width inférieure a : ' + screenWidth);
+
+
+                this.params.width = 580;
+                this.params.height = 500;
+                this.params.center = {
+                    x: 2,
+                    y: 45.5
+                };
+                this.params.scale = 3300;
+                this.params.centerParis = {
+                    x: 2.8,
+                    y: 46.9
+                };
+                this.params.circle = {
+                    x: 280,
+                    y: 120,
+                    r: 100,
+                    stroke: '#000',
+                    fill: 'white',
+                    strokeWidth: '2',
+                    opacity: '.7'
+                };
+
+            }
 
             // Création objet path pour manipuler les données geographiques
             $path = d3.geo.path();
@@ -2115,7 +2191,7 @@ $(document).ready(function() {
         },
 
         zoomed: function() {
-            console.log('Zoom sur paris');
+            // console.log('Zoom sur paris');
         }
 
     });

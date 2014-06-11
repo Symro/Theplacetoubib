@@ -149,18 +149,19 @@ body,html{
     color:#6f9298;
     font:69.5%;
     z-index: 60;
-
 }
 section.splashscreen{
     background-color: #e7f1f3;
     font:700 17px 'Arimo' sans-serif;
     -webkit-font-smoothing: antialiased;
     text-align: center;
+
+
 }
 section.splashscreen canvas{
     position:absolute;
     z-index:0;
-    left:22%;
+    left: 0;
 }
 section.splashscreen .presentation{
     z-index: 999999;
@@ -172,41 +173,42 @@ section.splashscreen .presentation{
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
     width: 55%;
-    background-color: transparent;
-
 
 
 }
 section.splashscreen h1{
     text-transform: uppercase;
     font-size: 31px;
-    background: url('../img/logoSplash.svg') no-repeat;
+    background: url('../img/logoSplash.png') no-repeat;
     background-size: 230px;
     background-position: 50%;
     padding-top: 245px;
+    margin-bottom: -35px;
+}
+section.splashscreen h2 {
+    background: url('../img/logoName.svg') no-repeat;
+    font-size: 31px;
+    background-size: 260px;
+    background-position: 50%;
+    padding-top: 32px;
     margin-bottom: 65px;
 }
-    section.splashscreen h1 span{
-        color: #e05161;
-    }
-    section.splashscreen h1::after{
+    section.splashscreen h2::after{
         display: block;
         content: '';
         background: #6f9298;
-
         width: 40px;
         height: 3px;
-
-        left: 50%;
+        left: 49%;
         position: absolute;
         margin-top: 25px;
     }
 
 section.splashscreen p{
     font-size: 16px;
-    font-weight: 400;
-    margin-bottom: 45px;
     line-height: 25px;
+    font-weight: 400;
+    margin-bottom: 25px;
 }
 
 section.splashscreen a{
@@ -568,6 +570,7 @@ section.splashscreen a{
     text-transform: uppercase;
     letter-spacing : 0.05em;
     font-size : 1em;
+    text-align: left;
 }
 .dico a{
     color: #525151;
@@ -797,11 +800,6 @@ section#leftSide{
     text-shadow:1px 1px 1px white;
 }
 
-#leftSide #map svg{
-    position:absolute;
-    top:0;
-}
-
 
 #echelle{
     width:50%;
@@ -1024,7 +1022,11 @@ footer .partage:hover .buttonShare{
 #rightSide #chiffreDept span,
 #rightSide #chiffreFrance span{
     font-size:0.55em;
- }
+}
+#rightSide #chiffreDept b,
+#rightSide #chiffreFrance b{
+    font-size:0.85em;
+}
 #rightSide #chiffreDept p{
     position:relative;
  }
@@ -1059,7 +1061,7 @@ footer .partage:hover .buttonShare{
 #infoNeeded div{
     font-weight: 400;
     margin-top: 20%;
-    color: #707070;  
+    color: #707070;
 }
 #infoNeeded a{
     position: absolute;
@@ -1173,7 +1175,7 @@ footer .partage:hover .buttonShare{
 
     -webkit-transition-delay: 0ms;
     -moz-transition-delay: 0ms;
-    transition-delay: 0ms; 
+    transition-delay: 0ms;
 
     -webkit-transform: translateX(16px);
     -moz-transform: translateX(16px);
@@ -1192,7 +1194,7 @@ footer .partage:hover .buttonShare{
     position: absolute;
     background: transparent;
     border: 8px solid transparent;
-    z-index: 101; 
+    z-index: 101;
     margin-left: 0px;
     margin-bottom: 9px;
     border-bottom-color: #282828;
