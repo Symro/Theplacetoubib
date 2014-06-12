@@ -566,7 +566,7 @@ section.splashscreen a{
     line-height: 26px;
 }
 .dico h2{
-    padding:40px 0 40px 0;
+    padding:20px 0 40px 0;
 }
 .dico h3{
     color: #f4f2f2;
@@ -774,7 +774,7 @@ menu, ol, ul{
 .content{
     position:relative;
     height:100%;
-    padding:40px 60px 60px 60px;
+    padding:20px 60px 60px 60px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -878,7 +878,7 @@ margin: auto;
     border-bottom: 10px solid transparent;
     border-left: 10px solid #e7f0f3;
     left: 0px;
-    top:67px;
+    top:49px;
     z-index: 35;
 }
 
@@ -1528,7 +1528,9 @@ svg.barChart .circleTopTransparent{
     #infoGraph .tooltipCSS{
         right:-30px;
     }
-
+    #echelle{
+        bottom: 5%;
+    }
 
 }
 
