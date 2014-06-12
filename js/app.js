@@ -389,31 +389,50 @@ $(document).ready(function() {
             App.hideInfoNeeded();
             App.hideLineChart();
 
-            //            App.dom.graph.append("__ OK on va jouer avec les datas suivantes  : <br/> ");
+            App.dom.graph.append("__ OK on va jouer avec les datas suivantes  : <br/> ");
 
             var dataGraph = [];
 
             // On produit un tableau des valeurs de chaque filtre
             $.each(data, function(index, value) {
-                console.log("Index : " + index + " Value : " + value + " <br/> ");
+                //console.log("Index : " + index + " Value : " + value + " <br/> ");
                 dataGraph.push(parseFloat(App.getInfoFiltre(App.dept, value)));
             });
 
-            //            App.dom.graph.append("<br/> dataGraph : " + dataGraph);
+            App.dom.graph.append("<br/> dataGraph : " + dataGraph);
 
-            // Pie Chart
+            // Gestion du Bar Chart
             if (App.filtre == "Temps_acces_medecin") {
                 var legendes = ["Gynécologue", "Ophtalmologue", "Dentiste", "Infirmier"];
                 dataGraph = ArrayToJSON(dataGraph, legendes);
-                if ($("#chartBar").html().trim().length == 0) {
-                    App.displayBarChart(dataGraph);
+                if ($("#chartBar1").html().trim().length == 0) {
+                    App.displayBarChart("#chartBar1", dataGraph);
                 } else {
-                    App.updateBarChart(dataGraph);
+                    App.updateBarChart("#chartBar1", dataGraph);
                 }
             } else {
-                App.hideBarChart();
+                App.hideBarChart(1);
             }
 
+            if (App.filtre.match(/^Prix_moyen_consultation_/) && App.filtre != "Prix_moyen_consultation_dentiste") {
+                var legendes = ["Prix moyen secteur 1", "Prix moyen secteur 2"];
+                var data = dataGraph;
+                var dataGraph = [data[0],data[1]];
+                var dataTooltip = new Array();
+                dataTooltip.push(data[2], data[3]);
+                dataGraph = ArrayToJSON(dataGraph, legendes);
+
+                if ($("#chartBar2").html().trim().length == 0) {
+                    App.displayBarChart("#chartBar2", dataGraph, dataTooltip);
+                } else {
+                    App.updateBarChart("#chartBar2", dataGraph, dataTooltip);
+                }
+
+            } else {
+                App.hideBarChart(2);
+            }
+
+            // Gestion du Pie Chart
             if (App.filtre == "Nb_medecin" || App.filtre == "Nb_gyneco" || App.filtre == "Nb_dentiste" || App.filtre == "Nb_ophtalmo" || App.filtre == "Nb_infirmier") {
 
                 var legendes = ["Libéraux", "Salariés"];
@@ -516,8 +535,8 @@ $(document).ready(function() {
                 App.hideLineChart();
             }
 
-
-            if (App.filtre.match(/^Nb_hab_par_/) && App.filtre != "Nb_hab_par_medecin") {
+            // Détermine quand afficher le texte "données manquantes"
+            if (App.filtre.match(/^Nb_hab_par_/) && App.filtre != "Nb_hab_par_medecin" || App.filtre == "Prix_moyen_consultation_dentiste") {
                 App.displayInfoNeeded();
             } else {
                 App.hideInfoNeeded();
@@ -535,9 +554,9 @@ $(document).ready(function() {
         var scale = App.dataInfo[activeFilter][7];
         scale = JSON.parse(scale);
 
-        console.log(scale);
+        //console.log(scale);
         $("#echelle span").each(function(i, item) {
-            console.log(scale[i]);
+            //console.log(scale[i]);
             $(this).text(scale[i]);
         });
 
@@ -651,16 +670,25 @@ $(document).ready(function() {
     / ********************************************************* */
 
 
-    App.displayBarChart = function(data) {
-        $('#chartBar').show();
+    App.displayBarChart = function(container, data, dataTooltip) {
+        dataTooltip = (typeof(dataTooltip) != "undefined") ? dataTooltip : false; 
+        $(container).show();
 
         $('.d3-tip').remove();
+
+        if(dataTooltip){
+            for (var i = 0; i < data.length; i++) {
+                data[i].info_comp = dataTooltip[i];
+            }
+        }
+
+        console.log("dataTooltip : "+dataTooltip[0], dataTooltip[1]);
 
         var margin = {
             top: 40,
             right: 20,
             bottom: 30,
-            left: 40
+            left: 50
         },
             width = 640 - margin.left - margin.right,
             height = 300 - margin.top - margin.bottom;
@@ -683,11 +711,33 @@ $(document).ready(function() {
         var tip = d3.tip()
             .attr('class', 'd3-tip')
             .offset([-25, 0])
-            .html(function(d) {
-                return "<strong>" + parseInt(d.nb) + " " + App.dataInfo[App.filtre][5] + "</strong>";
-            })
+            .html(function(d, i) {
+                if(dataTooltip){
+                    return "<strong class=\"bigger\">" + parseInt(d.nb) + " " + App.dataInfo[App.filtre][5] + "</strong> <hr/> <p> pour <b>"+d.info_comp+"% </b><br/> de praticiens <br/> dans ce secteur </p>";
+                }
+                else{
+                    return "<strong>" + parseInt(d.nb) + " " + App.dataInfo[App.filtre][5] + "</strong>";
+                }
+            });
 
-        var svg = d3.select("#chartBar").append("svg")
+        // Bar Chart version 2 barres
+        if(dataTooltip){
+            var x = d3.scale.ordinal()
+                .rangeRoundBands([0, width], .6);
+
+            var xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom");
+
+            var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left")
+                .ticks(7)
+                .tickFormat(function(d) { return d + "€"; });
+
+        }
+
+        var svg = d3.select(container).append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .attr("class", "barChart")
@@ -700,10 +750,8 @@ $(document).ready(function() {
             return d.legende;
         }));
 
-        // y.domain([0, d3.max(data, function(d) {
-        //     return parseInt(d.nb);
-        // })]);
-        y.domain([0, 32]);
+        (dataTooltip) ? y.domain([0, 60]) : y.domain([0, 32]);
+
 
         var valMax = d3.max(data, function(d) {
             return parseInt(d.nb);
@@ -750,19 +798,29 @@ $(document).ready(function() {
             .attr("height", function(d) {
                 return height - y(d.nb);
             })
-            .style("fill", function(d) {
+            .style("fill", function(d, i) {
                 var step = valMax / 4;
 
-                if (parseInt(d.nb) == valMax) {
-                    return "#22352c";
-                } else if (parseInt(d.nb) < step * 4 && parseInt(d.nb) >= step * 3) {
-                    return "#295741";
-                } else if (parseInt(d.nb) < step * 3 && parseInt(d.nb) >= step * 2) {
-                    return "#286d4c";
-                } else if (parseInt(d.nb) < step * 2 && parseInt(d.nb) >= step) {
-                    return "#278759";
-                } else {
-                    return "#219e62";
+                if(dataTooltip){
+                    if( i == 0 ){
+                        return "#e03540";
+                    }
+                    else if( i == 1 ){
+                        return "#219364";
+                    }
+                }
+                else{
+                    if (parseInt(d.nb) == valMax) {
+                        return "#22352c";
+                    } else if (parseInt(d.nb) < step * 4 && parseInt(d.nb) >= step * 3) {
+                        return "#295741";
+                    } else if (parseInt(d.nb) < step * 3 && parseInt(d.nb) >= step * 2) {
+                        return "#286d4c";
+                    } else if (parseInt(d.nb) < step * 2 && parseInt(d.nb) >= step) {
+                        return "#278759";
+                    } else {
+                        return "#219e62";
+                    }
                 }
 
             })
@@ -840,19 +898,26 @@ $(document).ready(function() {
 
     }
 
-    App.updateBarChart = function(data) {
-        $('#chartBar').show();
+    App.updateBarChart = function(container, data, dataTooltip) {
+        dataTooltip = (typeof(dataTooltip) != "undefined") ? dataTooltip : false; 
+        $(container).show();
+
+        if(dataTooltip){
+            for (var i = 0; i < data.length; i++) {
+                data[i].info_comp = dataTooltip[i];
+            }
+        }
 
         var margin = {
             top: 40,
             right: 20,
             bottom: 30,
-            left: 40
+            left: 50
         },
             width = 640 - margin.left - margin.right,
             height = 300 - margin.top - margin.bottom;
 
-        var svg = d3.selectAll("#chartBar g");
+        var svg = d3.selectAll(container+" g");
 
         var x = d3.scale.ordinal()
             .rangeRoundBands([0, width], .4);
@@ -860,12 +925,19 @@ $(document).ready(function() {
         var y = d3.scale.linear()
             .range([height, 0]);
 
+        if(dataTooltip){
+            var x = d3.scale.ordinal()
+                .rangeRoundBands([0, width], .6);
+
+        }
+
         x.domain(data.map(function(d) {
             return d.legende;
         }));
-        y.domain([0, 32]);
 
-        var bars = d3.select("#chartBar").selectAll("rect.bar");
+        (dataTooltip) ? y.domain([0, 60]) : y.domain([0, 32]);
+
+        var bars = d3.select(container).selectAll("rect.bar");
 
         // transition hauteur des Bar Chart
         bars.data(data)
@@ -922,8 +994,8 @@ $(document).ready(function() {
 
     }
 
-    App.hideBarChart = function(data) {
-        $("#chartBar").hide();
+    App.hideBarChart = function(id) {
+        (id) ? $('#chartBar' + id).hide().empty() : $('#chartBar1 , #chartBar2').hide();
     }
 
     /* ********************************************************
@@ -1551,12 +1623,10 @@ $(document).ready(function() {
     }
 
     App.hideGaugeChartMultiple = function(id) {
-        console.log("App.hideGaugeChartMultiple");
         (id) ? $('#chartGaugeMultiple' + id).hide() : $('#chartGaugeMultiple1 , #chartGaugeMultiple2').hide();
     }
 
     App.destroyGaugeChartMultiple = function(id) {
-        console.log("App.destroyGaugeChartMultiple");
         (id) ? $('#chartGaugeMultiple' + id).empty() : $('#chartGaugeMultiple1 , #chartGaugeMultiple2').empty();
     }
 
@@ -1664,14 +1734,10 @@ $(document).ready(function() {
 
         firstLevel.next(".secondLevel").toggle('400').toggleClass('open');
 
-        if((".secondLevel").hasClass('open')){
-
-        }
-
         $(".thirdLevel").addClass('hidden');
         $(".thirdLevel ul").addClass('animated fadeOutLeft');
 
-        //Affiche la deuxième étape du tuto
+        // Affiche la deuxième étape du tuto
         $(".tutoSecondStep").removeClass('hidden').addClass('animated fadeIn');
         $(".tutoFirstStep").addClass('hidden');
 
@@ -1680,14 +1746,6 @@ $(document).ready(function() {
             firstLevel.siblings().next(".secondLevel").removeClass('open');
             firstLevel.siblings().next(".secondLevel").slideUp();
         }
-
-        // if(firstLevel.next(".secondLevel").data('has-sub-lvl') == "yes"){
-
-        // }
-        // else{
-        //     $(".thirdLevel ul").removeClass('hidden');
-        //     $(".thirdLevel").addClass('animated fadeOutLeft');
-        // }
 
         // Récupère et actualise l'état du menu, pour savoir ce qui est ouvert ou non
         var status1 = ($('#menu .secondLevel').eq(0).hasClass('open')) ? "open" : "";
