@@ -1481,6 +1481,12 @@ svg.barChart .circleTopTransparent{
     font-size:15px;
 }
 
+#chartGaugeMultiple1{
+    position:absolute;
+    left:0px;
+    width:100%;
+}
+
 
 #chartLine{
 

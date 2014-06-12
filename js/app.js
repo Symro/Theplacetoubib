@@ -13,6 +13,8 @@ $(document).ready(function() {
         prefiltreEtat: ["", "", "", ""],
         tuto: false,
         counterDecimal: 0,
+        screenWidth : $(window).width(),
+        screenHeight :  $(window).height(),
         dom: {
             chiffre_dept: $('#chiffreDept p'),
             chiffre_france: $('#chiffreFrance p'),
@@ -1428,40 +1430,59 @@ $(document).ready(function() {
         $(container).empty();
         $(container).fadeIn();
 
-        var width = 650,
+        var width = $("#rightSide").width(),
             height = 450,
             τ = 2 * Math.PI,
-            color = ["rgba(255,54,54,0.7)", "rgba(255,54,54,0.5)", "rgba(255,54,54,0.3)", "rgba(255,54,54,0.2)"];
+            color = ["rgba(255,54,54,0.7)", "rgba(255,54,54,0.5)", "rgba(255,54,54,0.3)", "rgba(255,54,54,0.2)"],
+            legendLeft = 40,
+            circleInnerRadius = 65,
+            circleOuterRadius = 82,
+            circleCenter = 43,
+            cercleWidth = 310; // Diamètre externe du dernier cercle
+
+        if(App.screenWidth < 1600){
+            console.log("$(container).width() "+$("#rightSide").width());
+            height = 300;
+            cercleWidth = 250;
+        }
 
         var dataNombre = data.length;
         var cercleMarge = (dataNombre > 3) ? 30 : 35;
-
 
         var arc = d3.svg.arc()
             .innerRadius(85)
             .outerRadius(110)
             .startAngle(0);
 
+        if(App.screenWidth < 1600){
+            console.log("SCREEN : < 1600")
+            cercleMarge = (dataNombre > 3) ? 20 : 25;
+
+            circleInnerRadius = 55,
+            circleOuterRadius = 72;
+            circleCenter = 33;
+        }
+
         var svg = d3.select(container).append("svg")
             .attr("width", width)
             .attr("height", height);
 
-
-        var graphContainer = svg.append("g").attr("transform", "translate(450,225)");
+        // Translate X > Largeur total - rayon cercle max - marge
+        var graphContainer = svg.append("g").attr("transform", "translate("+(width-cercleWidth/2-legendLeft)+", "+(cercleWidth/2+30)+")");
 
         for (var i = 0; i < data.length; i++) {
             var pourcentage = data[i]['nb'] / 100;
             var nb = data[i]['nb'];
 
             var arc = d3.svg.arc()
-                .innerRadius(65 + (cercleMarge * i))
-                .outerRadius(82 + (cercleMarge * i))
+                .innerRadius(circleInnerRadius + (cercleMarge * i))
+                .outerRadius(circleOuterRadius + (cercleMarge * i))
                 .startAngle(0);
 
             graphContainer.append("circle")
                 .attr("cx", 0)
                 .attr("cy", 0)
-                .attr("r", 74 + (cercleMarge * i))
+                .attr("r", circleOuterRadius-8 + (cercleMarge * i))
                 .style({
                     "fill": "transparent",
                     "stroke": "#383838",
@@ -1481,7 +1502,7 @@ $(document).ready(function() {
 
             var rectangle = graphContainer.append("rect")
                 .attr("x", 0)
-                .attr("y", -(81 + (cercleMarge * i)))
+                .attr("y", -(circleOuterRadius-1 + (cercleMarge * i)))
                 .attr("width", 4)
                 .attr("height", 16)
                 .style("fill", "#FFF");
@@ -1490,7 +1511,7 @@ $(document).ready(function() {
         graphContainer.append("circle")
             .attr("cx", 0)
             .attr("cy", 0)
-            .attr("r", 43)
+            .attr("r", circleCenter)
             .style("fill", "#282828");
 
         graphContainer.append("text")
@@ -1520,7 +1541,7 @@ $(document).ready(function() {
             .enter()
             .append("g")
             .attr("transform", function(d, i) {
-                return "translate( 40," + (height / dataNombre + i * 20) + ")";
+                return "translate(  "+legendLeft+" ," + (cercleWidth/3 + i * 20) + ")";
             })
             .attr("class", function(d, i) {
                 return "gaugeLegende gaugeLegende" + i;
@@ -1636,16 +1657,28 @@ $(document).ready(function() {
             console.log("/!\ Ce container (" + container + ") n'existe pas dans le DOM..");
             return false;
         }
+        var circleInnerRadius = 65,
+            circleOuterRadius = 82,
+            circleCenter = 43,
+            dataNombre = data.length,
+            cercleMarge = (dataNombre > 3) ? 30 : 35,
+            cercleWidth = 310; // Diamètre externe du dernier cercle
 
-        var dataNombre = data.length;
-        var cercleMarge = (dataNombre > 3) ? 30 : 35;
+        if(App.screenWidth < 1600){
+            console.log("SCREEN : < 1600")
+            cercleMarge = (dataNombre > 3) ? 20 : 25;
+            circleInnerRadius = 55,
+            circleOuterRadius = 72;
+            circleCenter = 33;
+            cercleWidth = 250; // Diamètre externe du dernier cercle
+        }
 
         for (var i = 0; i < data.length; i++) {
             var pourcentage = data[i]['nb'] / 100;
 
             var arc = d3.svg.arc()
-                .innerRadius(65 + (cercleMarge * i))
-                .outerRadius(82 + (cercleMarge * i))
+                .innerRadius(circleInnerRadius + (cercleMarge * i))
+                .outerRadius(circleOuterRadius + (cercleMarge * i))
                 .startAngle(0);
 
             d3.select(container + " .progressionPourcentage-" + i).transition()
@@ -1658,8 +1691,8 @@ $(document).ready(function() {
                 var interpolate = d3.interpolate(d.endAngle, newAngle);
                 return function(t) {
                     d.endAngle = interpolate(t);
-                    arc.innerRadius(65 + (cercleMarge * i));
-                    arc.outerRadius(82 + (cercleMarge * i));
+                    arc.innerRadius(circleInnerRadius + (cercleMarge * i));
+                    arc.outerRadius(circleOuterRadius + (cercleMarge * i));
                     return arc(d);
                 };
             });
