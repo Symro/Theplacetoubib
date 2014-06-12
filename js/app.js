@@ -1734,6 +1734,10 @@ $(document).ready(function() {
 
         firstLevel.next(".secondLevel").toggle('400').toggleClass('open');
 
+        if((".secondLevel").hasClass('open')){
+
+        }
+
         $(".thirdLevel").addClass('hidden');
         $(".thirdLevel ul").addClass('animated fadeOutLeft');
 
