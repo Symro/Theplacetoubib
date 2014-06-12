@@ -452,8 +452,6 @@ $(document).ready(function() {
                     .style("cursor", "pointer")
                     .on("mouseover", function(d, i) {
 
-                        console.log(dataGraph);
-
                         if (i == 1) {
 
                             var item = $("<div class='text'>" + parseInt(dataGraph[0]) + "<span>%</span></div>").hide().fadeIn(250);
@@ -462,10 +460,6 @@ $(document).ready(function() {
                             d3.select(".pieChart g .arc0")
                                 .transition().duration(500)
                                 .attr('fill', '#307BB2');
-
-                            // $("#pieChart .rectData1").animate({
-                            //     opacity: 1
-                            // }, 500);
 
                             d3.select("#pieChart .rectData1")
                                 .transition().duration(500)
@@ -481,10 +475,6 @@ $(document).ready(function() {
                             d3.select(".pieChart g .arc1")
                                 .transition().duration(500)
                                 .attr('fill', '#307BB2');
-
-                            // $("#pieChart .rectData0").animate({
-                            //     opacity: 1
-                            // }, 500);
 
                             d3.select("#pieChart .rectData0")
                                 .transition().duration(500)
@@ -507,10 +497,6 @@ $(document).ready(function() {
                                 .transition().duration(500)
                                 .attr('fill', '#22313b');
 
-                            // $("#pieChart .rectData1").animate({
-                            //     opacity: 0
-                            // });
-
                             d3.select("#pieChart .rectData1")
                                 .transition().duration(500)
                                 .style({
@@ -522,10 +508,6 @@ $(document).ready(function() {
                             d3.select(".pieChart g .arc1")
                                 .transition().duration(500)
                                 .attr('fill', '#264359');
-
-                            // $("#pieChart .rectData0").animate({
-                            //     opacity: 0
-                            // });
 
                             d3.select("#pieChart .rectData0")
                                 .transition().duration(500)
@@ -1103,7 +1085,7 @@ $(document).ready(function() {
             color = ["#264359", "#22313b"];
 
         // Création du SVG
-        var svg = d3.select("#pieChart .pie").append("svg")
+        var $svgPie = d3.select("#pieChart .pie").append("svg")
             .attr("class", "pieChart")
             .attr("width", width)
             .attr("height", height)
@@ -1116,31 +1098,39 @@ $(document).ready(function() {
             .attr('height', 100);
 
         // Cercle intérieur
-        var circle = svg.append("circle")
+        var circle = $svgPie.append("circle")
             .attr("cx", 0)
             .attr("cy", 0)
             .attr("r", 60)
             .style("fill", "#282828");
 
-        // On dessine les arcs
-        var pathPie = svg.selectAll("path")
-            .data(pie(data))
-            .enter().append("path")
-            .attr("fill", function(d, i) {
-                return color[i];
-            })
-            .attr("data-nb", function(d, i) {
-                return parseInt(d.value);
-            })
-            .attr('class', function(d, i) {
-                return "arc" + i;
-            })
-            .attr("d", arc)
-            .style("stroke", "#1f1e1e")
-            .style("stroke-width", 5)
-            .each(function(d) {
-                this._current = d;
-            });
+        if (data[0] == 0 && data[1] == 0) {
+
+            console.log('ça va buguer');
+
+        } else {
+
+            // On dessine les arcs
+            var pathPie = $svgPie.selectAll("path")
+                .data(pie(data))
+                .enter().append("path")
+                .attr("fill", function(d, i) {
+                    return color[i];
+                })
+                .attr("data-nb", function(d, i) {
+                    return parseInt(d.value);
+                })
+                .attr('class', function(d, i) {
+                    return "arc" + i;
+                })
+                .attr("d", arc)
+                .style("stroke", "#1f1e1e")
+                .style("stroke-width", 5)
+                .each(function(d) {
+                    this._current = d;
+                });
+
+        }
 
         legend.selectAll(".legend")
             .data(data)
@@ -1245,35 +1235,78 @@ $(document).ready(function() {
 
         $("#pieChart").show();
 
-        console.log(data);
-        var thisData = data;
+        if (data[0] == 0 && data[1] == 0) {
 
-        var width = 280,
-            height = 280,
-            radius = Math.min(width, height) / 2,
-            arc = d3.svg.arc().innerRadius(radius - 10).outerRadius(radius - 45),
-            pie = d3.layout.pie(),
-            color = ["#264359", "#22313b"];
+            console.log('on va supprimer les arcs');
 
-        var path = d3.selectAll("#pieChart .pie path")
-            .data(pie(data))
-            .attr("d", arc)
-            .attr("data-nb", function(d, i) {
-                return parseInt(d.value);
-            })
-            .each(function(d) {
-                $this._current = d;
-            })
-            .transition().duration(750)
-            .attrTween("d", arcTween);
+            d3.selectAll("#pieChart g path")
+                .remove();
 
-        function arcTween(d) {
-            var i = d3.interpolate(this._current, d);
-            console.log(i(0));
-            this._current = i(0);
-            return function(t) {
-                return arc(i(t));
-            };
+        } else if ($("#pieChart .pie g path").size() > 1 == true) {
+
+            console.log(data);
+            var thisData = data;
+
+            var width = 280,
+                height = 280,
+                radius = Math.min(width, height) / 2,
+                arc = d3.svg.arc().innerRadius(radius - 10).outerRadius(radius - 45),
+                pie = d3.layout.pie(),
+                color = ["#264359", "#22313b"];
+
+            var path = d3.selectAll("#pieChart .pie path")
+                .data(pie(data))
+                .attr("d", arc)
+                .attr("data-nb", function(d, i) {
+                    return parseInt(d.value);
+                })
+                .each(function(d) {
+                    $this._current = d;
+                })
+                .transition().duration(750)
+                .attrTween("d", arcTween);
+
+            function arcTween(d) {
+                var i = d3.interpolate(this._current, d);
+                console.log(i(0));
+                this._current = i(0);
+                return function(t) {
+                    return arc(i(t));
+                };
+            }
+
+        } else if ($("#pieChart .pie g path").size() < 1 == true) {
+
+            console.log('il faut recréer les arcs' + data);
+
+            // Initialisation des variales
+            var width = 280,
+                height = 280,
+                radius = Math.min(width, height) / 2,
+                arc = d3.svg.arc().innerRadius(radius - 10).outerRadius(radius - 45),
+                pie = d3.layout.pie(),
+                color = ["#264359", "#22313b"];
+
+            // On dessine les arcs
+            var pathPie = d3.select("#pieChart .pie svg g").selectAll("path")
+                .data(pie(data))
+                .enter().append("path")
+                .attr("fill", function(d, i) {
+                    return color[i];
+                })
+                .attr("data-nb", function(d, i) {
+                    return parseInt(d.value);
+                })
+                .attr('class', function(d, i) {
+                    return "arc" + i;
+                })
+                .attr("d", arc)
+                .style("stroke", "#1f1e1e")
+                .style("stroke-width", 5)
+                .each(function(d) {
+                    this._current = d;
+                });
+
         }
 
     }
