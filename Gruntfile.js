@@ -13,15 +13,18 @@ module.exports = function(grunt) {
 
   var files2minified = [
 
-    'js/vendor/jquery.js',
-    'js/vendor/jquery-ui.min.js',
-    'js/vendor/jquery.tooltip.js',
-    'js/vendor/underscore.js',
-    'js/vendor/backbone.js',
-    'js/vendor/d3.js',
-    'js/vendor/d3.tip.js',
-    'js/vendor/c3.js',
-    'js/app.js'
+      'js/vendor/jquery.js',
+      'js/vendor/jquery-ui.min.js',
+      'js/vendor/jquery.tooltip.js',
+      'js/vendor/jquery.countTo.js',
+      'js/vendor/underscore.js',
+      'js/vendor/backbone.js',
+      'js/vendor/d3.js',
+      'js/vendor/d3.tip.js',
+      'js/vendor/c3.js',
+      'js/vendor/jquery.mCustomScrollbar.concat.min.js',
+      'js/particles.js',
+      'js/app.js'
 
   ];
 

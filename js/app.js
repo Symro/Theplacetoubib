@@ -1674,6 +1674,13 @@ $(document).ready(function() {
             },
             legend: {
                 show: false
+            },
+            axis: {
+                y: {
+                    tick: {
+                        format: d3.format(".0f")
+                    }
+                }
             }
 
         });
