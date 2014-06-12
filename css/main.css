@@ -422,7 +422,7 @@ section.splashscreen a{
 }
 .help div:nth-child(4){
     position:relative;
-    top:300px;
+    top:280px;
     left:75%;
 }
 .help div:nth-child(4) h1::after{
@@ -607,7 +607,7 @@ section.splashscreen a{
 }
 .dico .dicoContent{
     width: 90%;
-    margin: 0 8%;
+    margin: 0 10%;
     height: 70%;
     overflow: auto;
     text-align: justify;
@@ -1540,6 +1540,12 @@ svg.barChart .circleTopTransparent{
     #echelle{
         bottom: 5%;
     }
+    .credits{
+        top:0;
+    }
+    .credits h2{
+    padding-top: 13px;
+}
 
 }
 
