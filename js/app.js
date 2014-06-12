@@ -463,9 +463,15 @@ $(document).ready(function() {
                                 .transition().duration(500)
                                 .attr('fill', '#307BB2');
 
-                            $("#pieChart .rectData1").animate({
-                                opacity: 1
-                            }, 500);
+                            // $("#pieChart .rectData1").animate({
+                            //     opacity: 1
+                            // }, 500);
+
+                            d3.select("#pieChart .rectData1")
+                                .transition().duration(500)
+                                .style({
+                                    "opacity": "1"
+                                });
 
                         } else {
 
@@ -476,9 +482,15 @@ $(document).ready(function() {
                                 .transition().duration(500)
                                 .attr('fill', '#307BB2');
 
-                            $("#pieChart .rectData0").animate({
-                                opacity: 1
-                            }, 500);
+                            // $("#pieChart .rectData0").animate({
+                            //     opacity: 1
+                            // }, 500);
+
+                            d3.select("#pieChart .rectData0")
+                                .transition().duration(500)
+                                .style({
+                                    "opacity": "1"
+                                });
 
                         }
 
@@ -495,9 +507,15 @@ $(document).ready(function() {
                                 .transition().duration(500)
                                 .attr('fill', '#22313b');
 
-                            $("#pieChart .rectData1").animate({
-                                opacity: 0
-                            });
+                            // $("#pieChart .rectData1").animate({
+                            //     opacity: 0
+                            // });
+
+                            d3.select("#pieChart .rectData1")
+                                .transition().duration(500)
+                                .style({
+                                    "opacity": "0"
+                                });
 
                         } else {
 
@@ -505,9 +523,15 @@ $(document).ready(function() {
                                 .transition().duration(500)
                                 .attr('fill', '#264359');
 
-                            $("#pieChart .rectData0").animate({
-                                opacity: 0
-                            });
+                            // $("#pieChart .rectData0").animate({
+                            //     opacity: 0
+                            // });
+
+                            d3.select("#pieChart .rectData0")
+                                .transition().duration(500)
+                                .style({
+                                    "opacity": "0"
+                                });
 
                         }
 
