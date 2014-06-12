@@ -1397,7 +1397,7 @@ svg.barChart .circleTopTransparent{
 
 #chartGauge{
   width: 520px;
-  margin: 50px auto;
+  margin: 30px auto;
 }
 #chartGauge div:first-child{
     clear:left;

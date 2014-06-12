@@ -391,7 +391,7 @@ $(document).ready(function() {
             App.hideInfoNeeded();
             App.hideLineChart();
 
-            App.dom.graph.append("__ OK on va jouer avec les datas suivantes  : <br/> ");
+            //App.dom.graph.append("__ OK on va jouer avec les datas suivantes  : <br/> ");
 
             var dataGraph = [];
 
@@ -401,7 +401,7 @@ $(document).ready(function() {
                 dataGraph.push(parseFloat(App.getInfoFiltre(App.dept, value)));
             });
 
-            App.dom.graph.append("<br/> dataGraph : " + dataGraph);
+            //App.dom.graph.append("<br/> dataGraph : " + dataGraph);
 
             // Gestion du Bar Chart
             if (App.filtre == "Temps_acces_medecin") {
@@ -454,8 +454,6 @@ $(document).ready(function() {
                     .style("cursor", "pointer")
                     .on("mouseover", function(d, i) {
 
-                        console.log(dataGraph);
-
                         if (i == 1) {
 
                             var item = $("<div class='text'>" + parseInt(dataGraph[0]) + "<span>%</span></div>").hide().fadeIn(250);
@@ -464,10 +462,6 @@ $(document).ready(function() {
                             d3.select(".pieChart g .arc0")
                                 .transition().duration(500)
                                 .attr('fill', '#307BB2');
-
-                            // $("#pieChart .rectData1").animate({
-                            //     opacity: 1
-                            // }, 500);
 
                             d3.select("#pieChart .rectData1")
                                 .transition().duration(500)
@@ -483,10 +477,6 @@ $(document).ready(function() {
                             d3.select(".pieChart g .arc1")
                                 .transition().duration(500)
                                 .attr('fill', '#307BB2');
-
-                            // $("#pieChart .rectData0").animate({
-                            //     opacity: 1
-                            // }, 500);
 
                             d3.select("#pieChart .rectData0")
                                 .transition().duration(500)
@@ -509,10 +499,6 @@ $(document).ready(function() {
                                 .transition().duration(500)
                                 .attr('fill', '#22313b');
 
-                            // $("#pieChart .rectData1").animate({
-                            //     opacity: 0
-                            // });
-
                             d3.select("#pieChart .rectData1")
                                 .transition().duration(500)
                                 .style({
@@ -524,10 +510,6 @@ $(document).ready(function() {
                             d3.select(".pieChart g .arc1")
                                 .transition().duration(500)
                                 .attr('fill', '#264359');
-
-                            // $("#pieChart .rectData0").animate({
-                            //     opacity: 0
-                            // });
 
                             d3.select("#pieChart .rectData0")
                                 .transition().duration(500)
@@ -633,7 +615,7 @@ $(document).ready(function() {
                 App.hideInfoNeeded();
             }
 
-            App.dom.graph.append("__ ARGGGHH on n'a pas les datas ! :'( <br/> ");
+            //App.dom.graph.append("__ ARGGGHH on n'a pas les datas ! :'( <br/> ");
 
         }
     }
@@ -773,7 +755,12 @@ $(document).ready(function() {
             }
         }
 
-        console.log("dataTooltip : " + dataTooltip[0], dataTooltip[1]);
+        var customWidth  = $('.content').width();
+        var customHeight = 300;
+
+        if( App.screenHeight <= 900){
+            customHeight = 250;
+        }
 
         var margin = {
             top: 40,
@@ -781,8 +768,8 @@ $(document).ready(function() {
             bottom: 30,
             left: 50
         },
-            width = 640 - margin.left - margin.right,
-            height = 300 - margin.top - margin.bottom;
+            width = customWidth - margin.left - margin.right,
+            height = customHeight - margin.top - margin.bottom;
 
         var x = d3.scale.ordinal()
             .rangeRoundBands([0, width], .4);
@@ -830,7 +817,7 @@ $(document).ready(function() {
         }
 
         var svg = d3.select(container).append("svg")
-            .attr("width", width + margin.left + margin.right)
+            .attr("width", width + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .attr("class", "barChart")
             .append("g")
@@ -866,7 +853,7 @@ $(document).ready(function() {
         svg.select(".fakeXY")
             .append("line").attr({
                 "x1": "0",
-                "x2": "580",
+                "x2": width-20,
                 "y1": height,
                 "y2": height
             }).style("stroke", "#2b2b2b");
@@ -998,14 +985,21 @@ $(document).ready(function() {
             }
         }
 
+        var customWidth  = $('.content').width();
+        var customHeight = 300;
+
+        if( App.screenHeight <= 900){
+            customHeight = 250;
+        }
+
         var margin = {
             top: 40,
             right: 20,
             bottom: 30,
             left: 50
         },
-            width = 640 - margin.left - margin.right,
-            height = 300 - margin.top - margin.bottom;
+            width = customWidth - margin.left - margin.right,
+            height = customHeight - margin.top - margin.bottom;
 
         var svg = d3.selectAll(container + " g");
 
@@ -1105,7 +1099,7 @@ $(document).ready(function() {
             color = ["#264359", "#22313b"];
 
         // Création du SVG
-        var svg = d3.select("#pieChart .pie").append("svg")
+        var $svgPie = d3.select("#pieChart .pie").append("svg")
             .attr("class", "pieChart")
             .attr("width", width)
             .attr("height", height)
@@ -1118,31 +1112,39 @@ $(document).ready(function() {
             .attr('height', 100);
 
         // Cercle intérieur
-        var circle = svg.append("circle")
+        var circle = $svgPie.append("circle")
             .attr("cx", 0)
             .attr("cy", 0)
             .attr("r", 60)
             .style("fill", "#282828");
 
-        // On dessine les arcs
-        var pathPie = svg.selectAll("path")
-            .data(pie(data))
-            .enter().append("path")
-            .attr("fill", function(d, i) {
-                return color[i];
-            })
-            .attr("data-nb", function(d, i) {
-                return parseInt(d.value);
-            })
-            .attr('class', function(d, i) {
-                return "arc" + i;
-            })
-            .attr("d", arc)
-            .style("stroke", "#1f1e1e")
-            .style("stroke-width", 5)
-            .each(function(d) {
-                this._current = d;
-            });
+        if (data[0] == 0 && data[1] == 0) {
+
+            console.log('ça va buguer');
+
+        } else {
+
+            // On dessine les arcs
+            var pathPie = $svgPie.selectAll("path")
+                .data(pie(data))
+                .enter().append("path")
+                .attr("fill", function(d, i) {
+                    return color[i];
+                })
+                .attr("data-nb", function(d, i) {
+                    return parseInt(d.value);
+                })
+                .attr('class', function(d, i) {
+                    return "arc" + i;
+                })
+                .attr("d", arc)
+                .style("stroke", "#1f1e1e")
+                .style("stroke-width", 5)
+                .each(function(d) {
+                    this._current = d;
+                });
+
+        }
 
         legend.selectAll(".legend")
             .data(data)
@@ -1247,35 +1249,78 @@ $(document).ready(function() {
 
         $("#pieChart").show();
 
-        console.log(data);
-        var thisData = data;
+        if (data[0] == 0 && data[1] == 0) {
 
-        var width = 280,
-            height = 280,
-            radius = Math.min(width, height) / 2,
-            arc = d3.svg.arc().innerRadius(radius - 10).outerRadius(radius - 45),
-            pie = d3.layout.pie(),
-            color = ["#264359", "#22313b"];
+            console.log('on va supprimer les arcs');
 
-        var path = d3.selectAll("#pieChart .pie path")
-            .data(pie(data))
-            .attr("d", arc)
-            .attr("data-nb", function(d, i) {
-                return parseInt(d.value);
-            })
-            .each(function(d) {
-                $this._current = d;
-            })
-            .transition().duration(750)
-            .attrTween("d", arcTween);
+            d3.selectAll("#pieChart g path")
+                .remove();
 
-        function arcTween(d) {
-            var i = d3.interpolate(this._current, d);
-            console.log(i(0));
-            this._current = i(0);
-            return function(t) {
-                return arc(i(t));
-            };
+        } else if ($("#pieChart .pie g path").size() > 1 == true) {
+
+            console.log(data);
+            var thisData = data;
+
+            var width = 280,
+                height = 280,
+                radius = Math.min(width, height) / 2,
+                arc = d3.svg.arc().innerRadius(radius - 10).outerRadius(radius - 45),
+                pie = d3.layout.pie(),
+                color = ["#264359", "#22313b"];
+
+            var path = d3.selectAll("#pieChart .pie path")
+                .data(pie(data))
+                .attr("d", arc)
+                .attr("data-nb", function(d, i) {
+                    return parseInt(d.value);
+                })
+                .each(function(d) {
+                    $this._current = d;
+                })
+                .transition().duration(750)
+                .attrTween("d", arcTween);
+
+            function arcTween(d) {
+                var i = d3.interpolate(this._current, d);
+                console.log(i(0));
+                this._current = i(0);
+                return function(t) {
+                    return arc(i(t));
+                };
+            }
+
+        } else if ($("#pieChart .pie g path").size() < 1 == true) {
+
+            console.log('il faut recréer les arcs' + data);
+
+            // Initialisation des variales
+            var width = 280,
+                height = 280,
+                radius = Math.min(width, height) / 2,
+                arc = d3.svg.arc().innerRadius(radius - 10).outerRadius(radius - 45),
+                pie = d3.layout.pie(),
+                color = ["#264359", "#22313b"];
+
+            // On dessine les arcs
+            var pathPie = d3.select("#pieChart .pie svg g").selectAll("path")
+                .data(pie(data))
+                .enter().append("path")
+                .attr("fill", function(d, i) {
+                    return color[i];
+                })
+                .attr("data-nb", function(d, i) {
+                    return parseInt(d.value);
+                })
+                .attr('class', function(d, i) {
+                    return "arc" + i;
+                })
+                .attr("d", arc)
+                .style("stroke", "#1f1e1e")
+                .style("stroke-width", 5)
+                .each(function(d) {
+                    this._current = d;
+                });
+
         }
 
     }
@@ -1438,15 +1483,21 @@ $(document).ready(function() {
             circleInnerRadius = 65,
             circleOuterRadius = 82,
             circleCenter = 43,
-            cercleWidth = 310; // Diamètre externe du dernier cercle
+            cercleWidth = 310, // Diamètre externe du dernier cercle
+            cercleMarginLeft = 40,
+            dataNombre = data.length;
 
         if(App.screenWidth < 1600){
             console.log("$(container).width() "+$("#rightSide").width());
             height = 300;
             cercleWidth = 250;
         }
+        if(App.screenWidth < 1300 && dataNombre > 3){
+            legendLeft = 0;
+            cercleMarginLeft = 80;
+        }
 
-        var dataNombre = data.length;
+        
         var cercleMarge = (dataNombre > 3) ? 30 : 35;
 
         var arc = d3.svg.arc()
@@ -1468,7 +1519,7 @@ $(document).ready(function() {
             .attr("height", height);
 
         // Translate X > Largeur total - rayon cercle max - marge
-        var graphContainer = svg.append("g").attr("transform", "translate("+(width-cercleWidth/2-legendLeft)+", "+(cercleWidth/2+30)+")");
+        var graphContainer = svg.append("g").attr("transform", "translate("+(width-cercleWidth/2-cercleMarginLeft)+", "+(cercleWidth/2+30)+")");
 
         for (var i = 0; i < data.length; i++) {
             var pourcentage = data[i]['nb'] / 100;
@@ -1541,7 +1592,7 @@ $(document).ready(function() {
             .enter()
             .append("g")
             .attr("transform", function(d, i) {
-                return "translate(  "+legendLeft+" ," + (cercleWidth/3 + i * 20) + ")";
+                return "translate(  "+legendLeft+" ," + (cercleWidth/dataNombre + i * 20) + ")";
             })
             .attr("class", function(d, i) {
                 return "gaugeLegende gaugeLegende" + i;
@@ -1737,18 +1788,32 @@ $(document).ready(function() {
     App.displayLineChart = function(data, dataMin, dataMax) {
         $('#chartLine').fadeIn();
         console.log(dataMin, dataMax);
+        var width   = ($("#rightSide").width()-80);
+        var height  = 400;
+        var padding = {top: 80, right: 40, bottom: 40, left: 60};
+
+        if(height <= 900){
+            padding.top = 40;
+            height = 300;
+        }
+        if(height <= 800){
+            padding.top = 30;
+            height = 300;
+        }
+
+        console.log("LineChart Width : "+width);
 
         App.lineChart = c3.generate({
             bindto: '#chartLine',
             size: {
-                height: 400,
-                width: 620
+                height: height,
+                width: width
             },
             padding: {
-                top: 80,
-                right: 40,
-                bottom: 40,
-                left: 80,
+                top: padding.top,
+                right: padding.right,
+                bottom: padding.bottom,
+                left: padding.left,
             },
             data: {
                 x: 'x',
