@@ -208,7 +208,7 @@ section.splashscreen p{
     font-size: 16px;
     line-height: 25px;
     font-weight: 400;
-    margin-bottom: 25px;
+    margin-bottom: 28px;
 }
 
 section.splashscreen a{
@@ -230,6 +230,9 @@ section.splashscreen a{
         background-color: #6f9298;
         color:#fff;
     }
+.splashscreen img{
+    width: 35%;
+}
 
 /* ==========================================================================
    Crédits
@@ -468,7 +471,8 @@ section.splashscreen a{
     width: 45%;
     height: 100%;
     background-color: #030303;
-    background-image:url(../img/logoTuto.svg);
+    background-image:url(../img/LogoName.svg);
+    background-size: 50%;
     background-repeat:  no-repeat;
     background-position: 50% ;
 
@@ -827,6 +831,7 @@ section#leftSide{
     color:#34626a;
     top:15px;
     float: right;
+    font-size: 0.75em;
 }
 .secondPart{
     width: 25%;
@@ -1037,8 +1042,7 @@ footer .partage:hover .buttonShare{
     left:0;right:0;top:20px;
     font-size:22px;/*line-height:68px;*/
  }
-
-#chiffreDept, #chiffreFrance h3{
+#chiffreFrance h3, #chiffreDept h3{
     text-transform: uppercase;
 }
 
