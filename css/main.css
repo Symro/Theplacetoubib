@@ -243,7 +243,7 @@ section.splashscreen a{
     width: 100%;
     background-color: rgba(0,0,0,0.9);
     color:#6f9298;
-    z-index: 40;
+    z-index: 55;
     cursor: url(../img/cursor.png), auto;
 
 }
@@ -730,7 +730,7 @@ menu, ol, ul{
     width:70px;
     left: 90px;
     top:203px;
-    z-index: 30;
+    z-index: 50;
 }
 .thirdLevel li{
     list-style-type: none;
