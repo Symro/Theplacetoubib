@@ -1678,7 +1678,7 @@ $(document).ready(function() {
             axis: {
                 y: {
                     tick: {
-                      format: d3.format(".0f") // ADD
+                        format: d3.format(".0f")
                     }
                 }
             }
