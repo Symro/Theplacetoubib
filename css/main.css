@@ -566,7 +566,7 @@ section.splashscreen a{
     line-height: 26px;
 }
 .dico h2{
-    padding:40px 0 40px 0;
+    padding:20px 0 40px 0;
 }
 .dico h3{
     color: #f4f2f2;
@@ -729,7 +729,7 @@ menu, ol, ul{
     width:70px;
     left: 90px;
     top:203px;
-    z-index: 15;
+    z-index: 50;
 }
 .thirdLevel li{
     list-style-type: none;
@@ -774,7 +774,7 @@ menu, ol, ul{
 .content{
     position:relative;
     height:100%;
-    padding:40px 60px 60px 60px;
+    padding:20px 60px 60px 60px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -878,7 +878,7 @@ margin: auto;
     border-bottom: 10px solid transparent;
     border-left: 10px solid #e7f0f3;
     left: 0px;
-    top:67px;
+    top:49px;
     z-index: 35;
 }
 
@@ -1057,14 +1057,14 @@ footer .partage:hover .buttonShare{
 }
 
 #infoNeeded{
-    background: url('../img/graphMedecins.png') no-repeat;
-    width:438px;
-    height:227px;
 }
 
 #infoNeeded div{
+    background: url('../img/graphMedecins.png') no-repeat;
+    background-size: auto 100%;
+    background-position: 25%;
     font-weight: 400;
-    margin-top: 20%;
+    padding-top: 20%;
     color: #707070;
 }
 #infoNeeded a{
@@ -1271,6 +1271,36 @@ footer .partage:hover .buttonShare{
   color: #fff;
   border-radius: 2px;
 }
+.d3-tip strong{
+    display:block;
+    margin:5px;
+    text-align:center;
+}
+.d3-tip strong.bigger{
+    font-size:20px;
+}
+.d3-tip hr{
+    display:block;
+    width:35px;
+    margin:6px auto;
+    height:1px;
+    border:none;
+    background-color:#8b8b8b;
+    opacity:0.5;
+}
+.d3-tip p{
+    margin:0;
+    color:#8b8b8b;
+    font-size:10px;
+    line-height:15px;
+    text-transform:uppercase;
+    text-align:center;
+}
+.d3-tip b{
+    color:#FFF;
+    font-size:13px;
+    font-weight:bold;
+}
 
 /* Creates a small triangle extender for the tooltip */
 .d3-tip:after {
@@ -1315,6 +1345,10 @@ svg.barChart .circleTopTransparent{
 }
 svg.barChart .circleTopTransparent{
     opacity:0.5;
+}
+
+#chartBar2 svg.barChart .x.axis text{
+    font-size:12px;
 }
 
 /* PIE CHART */
@@ -1484,6 +1518,19 @@ svg.barChart .circleTopTransparent{
        (-o-min-device-pixel-ratio: 5/4),
        (-webkit-min-device-pixel-ratio: 1.25),
        (min-resolution: 120dpi) {
+
+}
+
+@media screen and (max-width: 1280px){
+    #infoFiltre{
+        right:30px;
+    }
+    #infoGraph .tooltipCSS{
+        right:-30px;
+    }
+    #echelle{
+        bottom: 5%;
+    }
 
 }
 
