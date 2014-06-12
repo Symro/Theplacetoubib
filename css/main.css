@@ -1267,6 +1267,36 @@ footer .partage:hover .buttonShare{
   color: #fff;
   border-radius: 2px;
 }
+.d3-tip strong{
+    display:block;
+    margin:5px;
+    text-align:center;
+}
+.d3-tip strong.bigger{
+    font-size:20px;
+}
+.d3-tip hr{
+    display:block;
+    width:35px;
+    margin:6px auto;
+    height:1px;
+    border:none;
+    background-color:#8b8b8b;
+    opacity:0.5;
+}
+.d3-tip p{
+    margin:0;
+    color:#8b8b8b;
+    font-size:10px;
+    line-height:15px;
+    text-transform:uppercase;
+    text-align:center;
+}
+.d3-tip b{
+    color:#FFF;
+    font-size:13px;
+    font-weight:bold;
+}
 
 /* Creates a small triangle extender for the tooltip */
 .d3-tip:after {
@@ -1311,6 +1341,10 @@ svg.barChart .circleTopTransparent{
 }
 svg.barChart .circleTopTransparent{
     opacity:0.5;
+}
+
+#chartBar2 svg.barChart .x.axis text{
+    font-size:12px;
 }
 
 /* PIE CHART */
