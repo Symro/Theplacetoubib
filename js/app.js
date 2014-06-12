@@ -773,7 +773,12 @@ $(document).ready(function() {
             }
         }
 
-        console.log("dataTooltip : " + dataTooltip[0], dataTooltip[1]);
+        var customWidth  = $('.content').width();
+        var customHeight = 300;
+
+        if( App.screenHeight <= 900){
+            customHeight = 250;
+        }
 
         var margin = {
             top: 40,
@@ -781,8 +786,8 @@ $(document).ready(function() {
             bottom: 30,
             left: 50
         },
-            width = 640 - margin.left - margin.right,
-            height = 300 - margin.top - margin.bottom;
+            width = customWidth - margin.left - margin.right,
+            height = customHeight - margin.top - margin.bottom;
 
         var x = d3.scale.ordinal()
             .rangeRoundBands([0, width], .4);
@@ -830,7 +835,7 @@ $(document).ready(function() {
         }
 
         var svg = d3.select(container).append("svg")
-            .attr("width", width + margin.left + margin.right)
+            .attr("width", width + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .attr("class", "barChart")
             .append("g")
@@ -866,7 +871,7 @@ $(document).ready(function() {
         svg.select(".fakeXY")
             .append("line").attr({
                 "x1": "0",
-                "x2": "580",
+                "x2": width-20,
                 "y1": height,
                 "y2": height
             }).style("stroke", "#2b2b2b");
@@ -998,14 +1003,21 @@ $(document).ready(function() {
             }
         }
 
+        var customWidth  = $('.content').width();
+        var customHeight = 300;
+
+        if( App.screenHeight <= 900){
+            customHeight = 250;
+        }
+
         var margin = {
             top: 40,
             right: 20,
             bottom: 30,
             left: 50
         },
-            width = 640 - margin.left - margin.right,
-            height = 300 - margin.top - margin.bottom;
+            width = customWidth - margin.left - margin.right,
+            height = customHeight - margin.top - margin.bottom;
 
         var svg = d3.selectAll(container + " g");
 
@@ -1737,18 +1749,32 @@ $(document).ready(function() {
     App.displayLineChart = function(data, dataMin, dataMax) {
         $('#chartLine').fadeIn();
         console.log(dataMin, dataMax);
+        var width   = ($("#rightSide").width()-80);
+        var height  = 400;
+        var padding = {top: 80, right: 40, bottom: 40, left: 60};
+
+        if(height <= 900){
+            padding.top = 40;
+            height = 300;
+        }
+        if(height <= 800){
+            padding.top = 30;
+            height = 300;
+        }
+
+        console.log("LineChart Width : "+width);
 
         App.lineChart = c3.generate({
             bindto: '#chartLine',
             size: {
-                height: 400,
-                width: 620
+                height: height,
+                width: width
             },
             padding: {
-                top: 80,
-                right: 40,
-                bottom: 40,
-                left: 80,
+                top: padding.top,
+                right: padding.right,
+                bottom: padding.bottom,
+                left: padding.left,
             },
             data: {
                 x: 'x',
