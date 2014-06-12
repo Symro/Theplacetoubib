@@ -1734,14 +1734,10 @@ $(document).ready(function() {
 
         firstLevel.next(".secondLevel").toggle('400').toggleClass('open');
 
-        if((".secondLevel").hasClass('open')){
-
-        }
-
         $(".thirdLevel").addClass('hidden');
         $(".thirdLevel ul").addClass('animated fadeOutLeft');
 
-        //Affiche la deuxième étape du tuto
+        // Affiche la deuxième étape du tuto
         $(".tutoSecondStep").removeClass('hidden').addClass('animated fadeIn');
         $(".tutoFirstStep").addClass('hidden');
 
@@ -1750,14 +1746,6 @@ $(document).ready(function() {
             firstLevel.siblings().next(".secondLevel").removeClass('open');
             firstLevel.siblings().next(".secondLevel").slideUp();
         }
-
-        // if(firstLevel.next(".secondLevel").data('has-sub-lvl') == "yes"){
-
-        // }
-        // else{
-        //     $(".thirdLevel ul").removeClass('hidden');
-        //     $(".thirdLevel").addClass('animated fadeOutLeft');
-        // }
 
         // Récupère et actualise l'état du menu, pour savoir ce qui est ouvert ou non
         var status1 = ($('#menu .secondLevel').eq(0).hasClass('open')) ? "open" : "";
