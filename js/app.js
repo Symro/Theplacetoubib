@@ -391,7 +391,7 @@ $(document).ready(function() {
             App.hideInfoNeeded();
             App.hideLineChart();
 
-            App.dom.graph.append("__ OK on va jouer avec les datas suivantes  : <br/> ");
+            //App.dom.graph.append("__ OK on va jouer avec les datas suivantes  : <br/> ");
 
             var dataGraph = [];
 
@@ -401,7 +401,7 @@ $(document).ready(function() {
                 dataGraph.push(parseFloat(App.getInfoFiltre(App.dept, value)));
             });
 
-            App.dom.graph.append("<br/> dataGraph : " + dataGraph);
+            //App.dom.graph.append("<br/> dataGraph : " + dataGraph);
 
             // Gestion du Bar Chart
             if (App.filtre == "Temps_acces_medecin") {
@@ -633,7 +633,7 @@ $(document).ready(function() {
                 App.hideInfoNeeded();
             }
 
-            App.dom.graph.append("__ ARGGGHH on n'a pas les datas ! :'( <br/> ");
+            //App.dom.graph.append("__ ARGGGHH on n'a pas les datas ! :'( <br/> ");
 
         }
     }
@@ -1450,15 +1450,21 @@ $(document).ready(function() {
             circleInnerRadius = 65,
             circleOuterRadius = 82,
             circleCenter = 43,
-            cercleWidth = 310; // Diamètre externe du dernier cercle
+            cercleWidth = 310, // Diamètre externe du dernier cercle
+            cercleMarginLeft = 40,
+            dataNombre = data.length;
 
         if(App.screenWidth < 1600){
             console.log("$(container).width() "+$("#rightSide").width());
             height = 300;
             cercleWidth = 250;
         }
+        if(App.screenWidth < 1300 && dataNombre > 3){
+            legendLeft = 0;
+            cercleMarginLeft = 80;
+        }
 
-        var dataNombre = data.length;
+        
         var cercleMarge = (dataNombre > 3) ? 30 : 35;
 
         var arc = d3.svg.arc()
@@ -1480,7 +1486,7 @@ $(document).ready(function() {
             .attr("height", height);
 
         // Translate X > Largeur total - rayon cercle max - marge
-        var graphContainer = svg.append("g").attr("transform", "translate("+(width-cercleWidth/2-legendLeft)+", "+(cercleWidth/2+30)+")");
+        var graphContainer = svg.append("g").attr("transform", "translate("+(width-cercleWidth/2-cercleMarginLeft)+", "+(cercleWidth/2+30)+")");
 
         for (var i = 0; i < data.length; i++) {
             var pourcentage = data[i]['nb'] / 100;
@@ -1553,7 +1559,7 @@ $(document).ready(function() {
             .enter()
             .append("g")
             .attr("transform", function(d, i) {
-                return "translate(  "+legendLeft+" ," + (cercleWidth/3 + i * 20) + ")";
+                return "translate(  "+legendLeft+" ," + (cercleWidth/dataNombre + i * 20) + ")";
             })
             .attr("class", function(d, i) {
                 return "gaugeLegende gaugeLegende" + i;
