@@ -1057,14 +1057,14 @@ footer .partage:hover .buttonShare{
 }
 
 #infoNeeded{
-    background: url('../img/graphMedecins.png') no-repeat;
-    width:438px;
-    height:227px;
 }
 
 #infoNeeded div{
+    background: url('../img/graphMedecins.png') no-repeat;
+    background-size: auto 100%;
+    background-position: 25%;
     font-weight: 400;
-    margin-top: 20%;
+    padding-top: 20%;
     color: #707070;
 }
 #infoNeeded a{
@@ -1518,6 +1518,17 @@ svg.barChart .circleTopTransparent{
        (-o-min-device-pixel-ratio: 5/4),
        (-webkit-min-device-pixel-ratio: 1.25),
        (min-resolution: 120dpi) {
+
+}
+
+@media screen and (max-width: 1280px){
+    #infoFiltre{
+        right:30px;
+    }
+    #infoGraph .tooltipCSS{
+        right:-30px;
+    }
+
 
 }
 
