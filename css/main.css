@@ -81,7 +81,7 @@ textarea {
   width: 1em;
   margin-right: .2em;
   text-align: center;
-  color:#447a82;
+  color:#FFF;
   /* opacity: .8; */
 
   /* For safety - reset parent styles, that can break glyph codes*/
@@ -336,7 +336,7 @@ section.splashscreen a{
     width: 100%;
     background-color: rgba(0,0,0,0.8);
     color:#fff;
-    z-index: 40;
+    z-index: 60;
     cursor: url(../img/cursor.png), auto;
 }
 
@@ -381,7 +381,7 @@ section.splashscreen a{
 }
 .help div:nth-child(1){
     position:relative;
-    top:125px;
+    top:80px;
     left:35%;
 }
 .help div:nth-child(1) h1::after{
@@ -402,7 +402,7 @@ section.splashscreen a{
 .help div:nth-child(2){
     position:relative;
     width:100px;
-    top:0px;
+    top:-40px;
     left:88%;
 }
 .help div:nth-child(2) h1::after{
@@ -410,7 +410,7 @@ section.splashscreen a{
 }
 .help div:nth-child(3){
     position:relative;
-    top:106px;
+    top:76px;
     left:72%;
 }
 .help div:nth-child(3) h1::after{
@@ -422,7 +422,7 @@ section.splashscreen a{
 }
 .help div:nth-child(4){
     position:relative;
-    top:330px;
+    top:300px;
     left:75%;
 }
 .help div:nth-child(4) h1::after{
@@ -709,6 +709,7 @@ nav ul ul li{
     background-color: #51919b;
 }
 
+
 menu, ol, ul{
     padding: 0;
 }
@@ -729,7 +730,7 @@ menu, ol, ul{
     width:70px;
     left: 90px;
     top:203px;
-    z-index: 50;
+    z-index: 30;
 }
 .thirdLevel li{
     list-style-type: none;
@@ -742,9 +743,11 @@ menu, ol, ul{
 
 
 .thirdLevel [class^="icon-"]:before, [class*=" icon-"]:before {
-    color:#858a8b;
+    color:#848889;
 }
-
+.thirdLevel li:hover [class^="icon-"]:before, [class*=" icon-"]:before {
+    color:#5aa8b4;
+}
 .color [class^="icon-"]:before, [class*=" icon-"]:before {
     color:#FFF;
 }
@@ -1048,7 +1051,7 @@ footer .partage:hover .buttonShare{
 
 #infoFiltre{
     position:absolute;
-    right:60px;top:130px;
+    right:60px;top:110px;
     clear:both;
 }
 #infoGraph{

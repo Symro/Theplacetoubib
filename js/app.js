@@ -419,7 +419,7 @@ $(document).ready(function() {
             if (App.filtre.match(/^Prix_moyen_consultation_/) && App.filtre != "Prix_moyen_consultation_dentiste") {
                 var legendes = ["Prix moyen secteur 1", "Prix moyen secteur 2"];
                 var data = dataGraph;
-                var dataGraph = [data[0],data[1]];
+                var dataGraph = [data[0], data[1]];
                 var dataTooltip = new Array();
                 dataTooltip.push(data[2], data[3]);
                 dataGraph = ArrayToJSON(dataGraph, legendes);
@@ -449,6 +449,95 @@ $(document).ready(function() {
                     App.updatePieChart(dataGraph);
 
                 }
+
+                d3.selectAll(".pieChartLegend g")
+                    .style("cursor", "pointer")
+                    .on("mouseover", function(d, i) {
+
+                        console.log(dataGraph);
+
+                        if (i == 1) {
+
+                            var item = $("<div class='text'>" + parseInt(dataGraph[0]) + "<span>%</span></div>").hide().fadeIn(250);
+                            $("#pieChart").append(item);
+
+                            d3.select(".pieChart g .arc0")
+                                .transition().duration(500)
+                                .attr('fill', '#307BB2');
+
+                            // $("#pieChart .rectData1").animate({
+                            //     opacity: 1
+                            // }, 500);
+
+                            d3.select("#pieChart .rectData1")
+                                .transition().duration(500)
+                                .style({
+                                    "opacity": "1"
+                                });
+
+                        } else {
+
+                            var item = $("<div class='text'>" + parseInt(dataGraph[1]) + "<span>%</span></div>").hide().fadeIn(250);
+                            $("#pieChart").append(item);
+
+                            d3.select(".pieChart g .arc1")
+                                .transition().duration(500)
+                                .attr('fill', '#307BB2');
+
+                            // $("#pieChart .rectData0").animate({
+                            //     opacity: 1
+                            // }, 500);
+
+                            d3.select("#pieChart .rectData0")
+                                .transition().duration(500)
+                                .style({
+                                    "opacity": "1"
+                                });
+
+                        }
+
+                    })
+                    .on("mouseleave", function(d, i) {
+
+                        $('#pieChart .text').fadeOut(250, function() {
+                            $(this).remove();
+                        });
+
+                        if (i == 1) {
+
+                            d3.select(".pieChart g .arc0")
+                                .transition().duration(500)
+                                .attr('fill', '#22313b');
+
+                            // $("#pieChart .rectData1").animate({
+                            //     opacity: 0
+                            // });
+
+                            d3.select("#pieChart .rectData1")
+                                .transition().duration(500)
+                                .style({
+                                    "opacity": "0"
+                                });
+
+                        } else {
+
+                            d3.select(".pieChart g .arc1")
+                                .transition().duration(500)
+                                .attr('fill', '#264359');
+
+                            // $("#pieChart .rectData0").animate({
+                            //     opacity: 0
+                            // });
+
+                            d3.select("#pieChart .rectData0")
+                                .transition().duration(500)
+                                .style({
+                                    "opacity": "0"
+                                });
+
+                        }
+
+                    });
 
             } else {
                 $('#pieChart').hide();
@@ -673,18 +762,18 @@ $(document).ready(function() {
 
 
     App.displayBarChart = function(container, data, dataTooltip) {
-        dataTooltip = (typeof(dataTooltip) != "undefined") ? dataTooltip : false; 
+        dataTooltip = (typeof(dataTooltip) != "undefined") ? dataTooltip : false;
         $(container).show();
 
         $('.d3-tip').remove();
 
-        if(dataTooltip){
+        if (dataTooltip) {
             for (var i = 0; i < data.length; i++) {
                 data[i].info_comp = dataTooltip[i];
             }
         }
 
-        console.log("dataTooltip : "+dataTooltip[0], dataTooltip[1]);
+        console.log("dataTooltip : " + dataTooltip[0], dataTooltip[1]);
 
         var margin = {
             top: 40,
@@ -714,16 +803,15 @@ $(document).ready(function() {
             .attr('class', 'd3-tip')
             .offset([-25, 0])
             .html(function(d, i) {
-                if(dataTooltip){
-                    return "<strong class=\"bigger\">" + parseInt(d.nb) + " " + App.dataInfo[App.filtre][5] + "</strong> <hr/> <p> pour <b>"+d.info_comp+"% </b><br/> de praticiens <br/> dans ce secteur </p>";
-                }
-                else{
+                if (dataTooltip) {
+                    return "<strong class=\"bigger\">" + parseInt(d.nb) + " " + App.dataInfo[App.filtre][5] + "</strong> <hr/> <p> pour <b>" + d.info_comp + "% </b><br/> de praticiens <br/> dans ce secteur </p>";
+                } else {
                     return "<strong>" + parseInt(d.nb) + " " + App.dataInfo[App.filtre][5] + "</strong>";
                 }
             });
 
         // Bar Chart version 2 barres
-        if(dataTooltip){
+        if (dataTooltip) {
             var x = d3.scale.ordinal()
                 .rangeRoundBands([0, width], .6);
 
@@ -735,7 +823,9 @@ $(document).ready(function() {
                 .scale(y)
                 .orient("left")
                 .ticks(7)
-                .tickFormat(function(d) { return d + "€"; });
+                .tickFormat(function(d) {
+                    return d + "€";
+                });
 
         }
 
@@ -803,15 +893,13 @@ $(document).ready(function() {
             .style("fill", function(d, i) {
                 var step = valMax / 4;
 
-                if(dataTooltip){
-                    if( i == 0 ){
+                if (dataTooltip) {
+                    if (i == 0) {
                         return "#e03540";
-                    }
-                    else if( i == 1 ){
+                    } else if (i == 1) {
                         return "#219364";
                     }
-                }
-                else{
+                } else {
                     if (parseInt(d.nb) == valMax) {
                         return "#22352c";
                     } else if (parseInt(d.nb) < step * 4 && parseInt(d.nb) >= step * 3) {
@@ -901,10 +989,10 @@ $(document).ready(function() {
     }
 
     App.updateBarChart = function(container, data, dataTooltip) {
-        dataTooltip = (typeof(dataTooltip) != "undefined") ? dataTooltip : false; 
+        dataTooltip = (typeof(dataTooltip) != "undefined") ? dataTooltip : false;
         $(container).show();
 
-        if(dataTooltip){
+        if (dataTooltip) {
             for (var i = 0; i < data.length; i++) {
                 data[i].info_comp = dataTooltip[i];
             }
@@ -919,7 +1007,7 @@ $(document).ready(function() {
             width = 640 - margin.left - margin.right,
             height = 300 - margin.top - margin.bottom;
 
-        var svg = d3.selectAll(container+" g");
+        var svg = d3.selectAll(container + " g");
 
         var x = d3.scale.ordinal()
             .rangeRoundBands([0, width], .4);
@@ -927,7 +1015,7 @@ $(document).ready(function() {
         var y = d3.scale.linear()
             .range([height, 0]);
 
-        if(dataTooltip){
+        if (dataTooltip) {
             var x = d3.scale.ordinal()
                 .rangeRoundBands([0, width], .6);
 
@@ -1027,8 +1115,7 @@ $(document).ready(function() {
         // Création du SVG pour la légende
         var legend = d3.select("#pieChart .pieChartLegend").append("svg")
             .attr('width', 200)
-            .attr('height', 100)
-            .append("g");
+            .attr('height', 100);
 
         // Cercle intérieur
         var circle = svg.append("circle")
@@ -1044,62 +1131,32 @@ $(document).ready(function() {
             .attr("fill", function(d, i) {
                 return color[i];
             })
-            .attr("data-nb", function(d) {
-                return d.nb;
+            .attr("data-nb", function(d, i) {
+                return parseInt(d.value);
+            })
+            .attr('class', function(d, i) {
+                return "arc" + i;
             })
             .attr("d", arc)
             .style("stroke", "#1f1e1e")
             .style("stroke-width", 5)
-            .on('mouseover', function(d, i) {
-
-                var select = String("#pieChart .rectData" + i);
-
-                var item = $("<div class='text'>" + parseInt(d.value) + "<span>%</span></div>").hide().fadeIn(500);
-                $("#pieChart").append(item);
-
-                $(select).animate({
-                    opacity: 1
-                }, 500);
-
-                if (i == 1) {
-                    d3.select(this)
-                        .transition().duration(500)
-                        .attr('fill', '#295677');
-                } else {
-                    d3.select(this)
-                        .transition().duration(500)
-                        .attr('fill', '#307BB2');
-                }
-            })
-            .on('mouseleave', function(d, i) {
-
-                $('#pieChart .text').fadeOut(500, function() {
-                    $(this).remove();
-                });
-
-                var select = String("#pieChart .rectData" + i);
-
-                $(select).animate({
-                    opacity: 0
-                }, 500);
-
-                if (i == 1) {
-                    d3.select(this)
-                        .transition().duration(500)
-                        .attr('fill', '#22313b');
-                } else {
-                    d3.select(this)
-                        .transition().duration(500)
-                        .attr('fill', '#264359');
-                }
-
-            }).each(function(d) {
+            .each(function(d) {
                 this._current = d;
             });
 
+        legend.selectAll(".legend")
+            .data(data)
+            .enter()
+            .append("g")
+            .attr('width', 200)
+            .attr('height', 45)
+            .attr('class', function(d, i) {
+                return "pieChartLegend" + i;
+            });
+
         // Affichage légende
-        legend.append("rect")
-            .attr('class', 'rectData1')
+        legend.select(".pieChartLegend0").append("rect")
+            .attr('class', 'rectData0')
             .attr("x", 10)
             .attr("y", 10)
             .attr("width", "200")
@@ -1108,8 +1165,8 @@ $(document).ready(function() {
                 "fill": "#282828",
                 "opacity": "0"
             });
-        legend.append("rect")
-            .attr('class', 'rectData0')
+        legend.select(".pieChartLegend1").append("rect")
+            .attr('class', 'rectData1')
             .attr("x", 10)
             .attr("y", 60)
             .attr("width", "200")
@@ -1118,7 +1175,7 @@ $(document).ready(function() {
                 "fill": "#282828",
                 "opacity": "0"
             });
-        legend.append("rect")
+        legend.select(".pieChartLegend0").append("rect")
             .attr("x", 20)
             .attr("y", 24)
             .attr("width", "20")
@@ -1128,7 +1185,7 @@ $(document).ready(function() {
                 "stroke": "#1f1e1e",
                 "stroke-width": "5"
             });
-        legend.append("rect")
+        legend.select(".pieChartLegend1").append("rect")
             .attr("x", 20)
             .attr("y", 70)
             .attr("width", "20")
@@ -1139,7 +1196,7 @@ $(document).ready(function() {
                 "stroke-width": "5"
             });
 
-        legend.append('line')
+        legend.select(".pieChartLegend0").append('line')
             .attr("x1", 50)
             .attr("x2", 100)
             .attr("y1", 35)
@@ -1150,7 +1207,7 @@ $(document).ready(function() {
                 "stroke": "#888888",
                 "stroke-width": "1"
             });
-        legend.append('line')
+        legend.select(".pieChartLegend1").append('line')
             .attr("x1", 50)
             .attr("x2", 100)
             .attr("y1", 80)
@@ -1161,7 +1218,7 @@ $(document).ready(function() {
                 "stroke": "#888888",
                 "stroke-width": "1"
             });
-        legend.append("text")
+        legend.select(".pieChartLegend0").append("text")
             .attr("x", 110)
             .attr("y", 40)
             .text(function(d) {
@@ -1172,7 +1229,7 @@ $(document).ready(function() {
                 "text-transform": "uppercase",
                 "opacity": "1"
             });
-        legend.append("text")
+        legend.select(".pieChartLegend1").append("text")
             .attr("x", 110)
             .attr("y", 85)
             .text(function(d) {
@@ -1191,6 +1248,7 @@ $(document).ready(function() {
         $("#pieChart").show();
 
         console.log(data);
+        var thisData = data;
 
         var width = 280,
             height = 280,
@@ -1202,6 +1260,9 @@ $(document).ready(function() {
         var path = d3.selectAll("#pieChart .pie path")
             .data(pie(data))
             .attr("d", arc)
+            .attr("data-nb", function(d, i) {
+                return parseInt(d.value);
+            })
             .each(function(d) {
                 $this._current = d;
             })
@@ -2296,5 +2357,4 @@ $(document).ready(function() {
     mapObject.render();
 
     Backbone.history.start();
-
 });
