@@ -13,6 +13,8 @@ $(document).ready(function() {
         prefiltreEtat: ["", "", "", ""],
         tuto: false,
         counterDecimal: 0,
+        screenWidth : $(window).width(),
+        screenHeight :  $(window).height(),
         dom: {
             chiffre_dept: $('#chiffreDept p'),
             chiffre_france: $('#chiffreFrance p'),
@@ -389,7 +391,7 @@ $(document).ready(function() {
             App.hideInfoNeeded();
             App.hideLineChart();
 
-            App.dom.graph.append("__ OK on va jouer avec les datas suivantes  : <br/> ");
+            //App.dom.graph.append("__ OK on va jouer avec les datas suivantes  : <br/> ");
 
             var dataGraph = [];
 
@@ -399,7 +401,7 @@ $(document).ready(function() {
                 dataGraph.push(parseFloat(App.getInfoFiltre(App.dept, value)));
             });
 
-            App.dom.graph.append("<br/> dataGraph : " + dataGraph);
+            //App.dom.graph.append("<br/> dataGraph : " + dataGraph);
 
             // Gestion du Bar Chart
             if (App.filtre == "Temps_acces_medecin") {
@@ -613,7 +615,7 @@ $(document).ready(function() {
                 App.hideInfoNeeded();
             }
 
-            App.dom.graph.append("__ ARGGGHH on n'a pas les datas ! :'( <br/> ");
+            //App.dom.graph.append("__ ARGGGHH on n'a pas les datas ! :'( <br/> ");
 
         }
     }
@@ -753,7 +755,12 @@ $(document).ready(function() {
             }
         }
 
-        console.log("dataTooltip : " + dataTooltip[0], dataTooltip[1]);
+        var customWidth  = $('.content').width();
+        var customHeight = 300;
+
+        if( App.screenHeight <= 900){
+            customHeight = 250;
+        }
 
         var margin = {
             top: 40,
@@ -761,8 +768,8 @@ $(document).ready(function() {
             bottom: 30,
             left: 50
         },
-            width = 640 - margin.left - margin.right,
-            height = 300 - margin.top - margin.bottom;
+            width = customWidth - margin.left - margin.right,
+            height = customHeight - margin.top - margin.bottom;
 
         var x = d3.scale.ordinal()
             .rangeRoundBands([0, width], .4);
@@ -810,7 +817,7 @@ $(document).ready(function() {
         }
 
         var svg = d3.select(container).append("svg")
-            .attr("width", width + margin.left + margin.right)
+            .attr("width", width + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .attr("class", "barChart")
             .append("g")
@@ -846,7 +853,7 @@ $(document).ready(function() {
         svg.select(".fakeXY")
             .append("line").attr({
                 "x1": "0",
-                "x2": "580",
+                "x2": width-20,
                 "y1": height,
                 "y2": height
             }).style("stroke", "#2b2b2b");
@@ -978,14 +985,21 @@ $(document).ready(function() {
             }
         }
 
+        var customWidth  = $('.content').width();
+        var customHeight = 300;
+
+        if( App.screenHeight <= 900){
+            customHeight = 250;
+        }
+
         var margin = {
             top: 40,
             right: 20,
             bottom: 30,
             left: 50
         },
-            width = 640 - margin.left - margin.right,
-            height = 300 - margin.top - margin.bottom;
+            width = customWidth - margin.left - margin.right,
+            height = customHeight - margin.top - margin.bottom;
 
         var svg = d3.selectAll(container + " g");
 
@@ -1461,40 +1475,65 @@ $(document).ready(function() {
         $(container).empty();
         $(container).fadeIn();
 
-        var width = 650,
+        var width = $("#rightSide").width(),
             height = 450,
             τ = 2 * Math.PI,
-            color = ["rgba(255,54,54,0.7)", "rgba(255,54,54,0.5)", "rgba(255,54,54,0.3)", "rgba(255,54,54,0.2)"];
+            color = ["rgba(255,54,54,0.7)", "rgba(255,54,54,0.5)", "rgba(255,54,54,0.3)", "rgba(255,54,54,0.2)"],
+            legendLeft = 40,
+            circleInnerRadius = 65,
+            circleOuterRadius = 82,
+            circleCenter = 43,
+            cercleWidth = 310, // Diamètre externe du dernier cercle
+            cercleMarginLeft = 40,
+            dataNombre = data.length;
 
-        var dataNombre = data.length;
+        if(App.screenWidth < 1600){
+            console.log("$(container).width() "+$("#rightSide").width());
+            height = 300;
+            cercleWidth = 250;
+        }
+        if(App.screenWidth < 1300 && dataNombre > 3){
+            legendLeft = 0;
+            cercleMarginLeft = 80;
+        }
+
+        
         var cercleMarge = (dataNombre > 3) ? 30 : 35;
-
 
         var arc = d3.svg.arc()
             .innerRadius(85)
             .outerRadius(110)
             .startAngle(0);
 
+        if(App.screenWidth < 1600){
+            console.log("SCREEN : < 1600")
+            cercleMarge = (dataNombre > 3) ? 20 : 25;
+
+            circleInnerRadius = 55,
+            circleOuterRadius = 72;
+            circleCenter = 33;
+        }
+
         var svg = d3.select(container).append("svg")
             .attr("width", width)
             .attr("height", height);
 
-
-        var graphContainer = svg.append("g").attr("transform", "translate(450,225)");
+        // Translate X > Largeur total - rayon cercle max - marge
+        var graphContainer = svg.append("g").attr("transform", "translate("+(width-cercleWidth/2-cercleMarginLeft)+", "+(cercleWidth/2+30)+")");
 
         for (var i = 0; i < data.length; i++) {
             var pourcentage = data[i]['nb'] / 100;
             var nb = data[i]['nb'];
 
             var arc = d3.svg.arc()
-                .innerRadius(65 + (cercleMarge * i))
-                .outerRadius(82 + (cercleMarge * i))
+                .innerRadius(circleInnerRadius + (cercleMarge * i))
+                .outerRadius(circleOuterRadius + (cercleMarge * i))
                 .startAngle(0);
 
             graphContainer.append("circle")
                 .attr("cx", 0)
                 .attr("cy", 0)
-                .attr("r", 74 + (cercleMarge * i))
+                .attr("r", circleOuterRadius-8 + (cercleMarge * i))
                 .style({
                     "fill": "transparent",
                     "stroke": "#383838",
@@ -1514,7 +1553,7 @@ $(document).ready(function() {
 
             var rectangle = graphContainer.append("rect")
                 .attr("x", 0)
-                .attr("y", -(81 + (cercleMarge * i)))
+                .attr("y", -(circleOuterRadius-1 + (cercleMarge * i)))
                 .attr("width", 4)
                 .attr("height", 16)
                 .style("fill", "#FFF");
@@ -1523,7 +1562,7 @@ $(document).ready(function() {
         graphContainer.append("circle")
             .attr("cx", 0)
             .attr("cy", 0)
-            .attr("r", 43)
+            .attr("r", circleCenter)
             .style("fill", "#282828");
 
         graphContainer.append("text")
@@ -1553,7 +1592,7 @@ $(document).ready(function() {
             .enter()
             .append("g")
             .attr("transform", function(d, i) {
-                return "translate( 40," + (height / dataNombre + i * 20) + ")";
+                return "translate(  "+legendLeft+" ," + (cercleWidth/dataNombre + i * 20) + ")";
             })
             .attr("class", function(d, i) {
                 return "gaugeLegende gaugeLegende" + i;
@@ -1669,16 +1708,28 @@ $(document).ready(function() {
             console.log("/!\ Ce container (" + container + ") n'existe pas dans le DOM..");
             return false;
         }
+        var circleInnerRadius = 65,
+            circleOuterRadius = 82,
+            circleCenter = 43,
+            dataNombre = data.length,
+            cercleMarge = (dataNombre > 3) ? 30 : 35,
+            cercleWidth = 310; // Diamètre externe du dernier cercle
 
-        var dataNombre = data.length;
-        var cercleMarge = (dataNombre > 3) ? 30 : 35;
+        if(App.screenWidth < 1600){
+            console.log("SCREEN : < 1600")
+            cercleMarge = (dataNombre > 3) ? 20 : 25;
+            circleInnerRadius = 55,
+            circleOuterRadius = 72;
+            circleCenter = 33;
+            cercleWidth = 250; // Diamètre externe du dernier cercle
+        }
 
         for (var i = 0; i < data.length; i++) {
             var pourcentage = data[i]['nb'] / 100;
 
             var arc = d3.svg.arc()
-                .innerRadius(65 + (cercleMarge * i))
-                .outerRadius(82 + (cercleMarge * i))
+                .innerRadius(circleInnerRadius + (cercleMarge * i))
+                .outerRadius(circleOuterRadius + (cercleMarge * i))
                 .startAngle(0);
 
             d3.select(container + " .progressionPourcentage-" + i).transition()
@@ -1691,8 +1742,8 @@ $(document).ready(function() {
                 var interpolate = d3.interpolate(d.endAngle, newAngle);
                 return function(t) {
                     d.endAngle = interpolate(t);
-                    arc.innerRadius(65 + (cercleMarge * i));
-                    arc.outerRadius(82 + (cercleMarge * i));
+                    arc.innerRadius(circleInnerRadius + (cercleMarge * i));
+                    arc.outerRadius(circleOuterRadius + (cercleMarge * i));
                     return arc(d);
                 };
             });
@@ -1737,18 +1788,32 @@ $(document).ready(function() {
     App.displayLineChart = function(data, dataMin, dataMax) {
         $('#chartLine').fadeIn();
         console.log(dataMin, dataMax);
+        var width   = ($("#rightSide").width()-80);
+        var height  = 400;
+        var padding = {top: 80, right: 40, bottom: 40, left: 60};
+
+        if(height <= 900){
+            padding.top = 40;
+            height = 300;
+        }
+        if(height <= 800){
+            padding.top = 30;
+            height = 300;
+        }
+
+        console.log("LineChart Width : "+width);
 
         App.lineChart = c3.generate({
             bindto: '#chartLine',
             size: {
-                height: 400,
-                width: 620
+                height: height,
+                width: width
             },
             padding: {
-                top: 80,
-                right: 40,
-                bottom: 40,
-                left: 80,
+                top: padding.top,
+                right: padding.right,
+                bottom: padding.bottom,
+                left: padding.left,
             },
             data: {
                 x: 'x',
