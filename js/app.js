@@ -1732,6 +1732,14 @@ $(document).ready(function() {
                 pie = d3.layout.pie(),
                 color = ["#264359", "#22313b"];
 
+            function arcTween(d) {
+                var i = d3.interpolate(this._current, d);
+                this._current = i(0);
+                return function(t) {
+                    return arc(i(t));
+                };
+            }
+
             var path = d3.selectAll("#pieChart .pie path")
                 .data(pie(data))
                 .attr("d", arc)
@@ -1743,14 +1751,6 @@ $(document).ready(function() {
                 })
                 .transition().duration(750)
                 .attrTween("d", arcTween);
-
-            function arcTween(d) {
-                var i = d3.interpolate(this._current, d);
-                this._current = i(0);
-                return function(t) {
-                    return arc(i(t));
-                };
-            }
 
         } else if ($("#pieChart .pie g path").size() < 1 == true && data.length == 2) {
 
