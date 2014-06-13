@@ -1319,6 +1319,8 @@ svg.barChart .circleTopTransparent{
 #pieChart{
     position: relative;
     width: 520px;
+    margin-top: 20%;
+    margin-left: 10%;
 }
 .pieChartLegend {
     float: left;
@@ -1514,6 +1516,10 @@ svg.barChart .circleTopTransparent{
     #infoNeeded div {
         padding-top: 8%;
     }
+    #pieChart{
+    margin-top: 20%;
+    margin-left: 0%;
+}
 }
 
 /* ==========================================================================
