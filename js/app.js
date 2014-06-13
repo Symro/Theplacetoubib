@@ -227,6 +227,23 @@ $(document).ready(function() {
             }
         });
 
+        // Affichage fleche
+
+        if (parseInt(chiffre_fra) > parseInt(chiffre_dept)) {
+
+            console.log('inférieur');
+            $("#chiffreDept h3 img").attr("src", "img/fleche_inf.png");
+
+        } else if (parseInt(chiffre_fra) < parseInt(chiffre_dept)) {
+
+            $("#chiffreDept h3 img").attr("src", "img/fleche_sup.png");
+
+        } else if (parseInt(chiffre_fra) == parseInt(chiffre_dept)) {
+
+            $("#chiffreDept h3 img").attr("src", "");
+
+        }
+
         // Update Info Tooltip Provenance Données
         var tooltip_url = App.dom.tooltip_filtre.find("a");
         var tooltip_annee = App.dom.tooltip_filtre.find('p+p span+span');
@@ -607,7 +624,7 @@ $(document).ready(function() {
                                 .transition().duration(500)
                                 .style('fill', '#307BB2');
 
-                                d3.select(".pieChartLegend2 text")
+                            d3.select(".pieChartLegend2 text")
                                 .transition().duration(500)
                                 .style('fill', '#fff');
 
@@ -632,7 +649,7 @@ $(document).ready(function() {
                                 .transition().duration(500)
                                 .style('fill', '#307BB2');
 
-                                d3.select(".pieChartLegend1 text")
+                            d3.select(".pieChartLegend1 text")
                                 .transition().duration(500)
                                 .style('fill', '#fff');
 
@@ -657,7 +674,7 @@ $(document).ready(function() {
                                 .transition().duration(500)
                                 .style('fill', '#307BB2');
 
-                        d3.select(".pieChartLegend0 text")
+                            d3.select(".pieChartLegend0 text")
                                 .transition().duration(500)
                                 .style('fill', '#fff');
 
@@ -686,7 +703,7 @@ $(document).ready(function() {
                                 .transition().duration(500)
                                 .style('fill', '#22313b');
 
-                                d3.select(".pieChartLegend2 text")
+                            d3.select(".pieChartLegend2 text")
                                 .transition().duration(500)
                                 .style('fill', '#888888');
 
@@ -706,7 +723,7 @@ $(document).ready(function() {
                                 .transition().duration(500)
                                 .style('fill', '#264359');
 
-                                d3.select(".pieChartLegend1 text")
+                            d3.select(".pieChartLegend1 text")
                                 .transition().duration(500)
                                 .style('fill', '#888888');
 
@@ -726,7 +743,7 @@ $(document).ready(function() {
                                 .transition().duration(500)
                                 .style('fill', '#285576');
 
-                        d3.select(".pieChartLegend0 text")
+                            d3.select(".pieChartLegend0 text")
                                 .transition().duration(500)
                                 .style('fill', '#888888');
 
