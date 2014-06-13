@@ -985,7 +985,9 @@ footer .partage:hover .buttonShare{
     -o-transition: .5s all;
     transition: .5s all;
 }
-
+#chiffreDept h3 img{
+    margin-left: 5px;
+}
 #rightSide #chiffreDept span,
 #rightSide #chiffreFrance span{
     font-size:0.55em;
@@ -1335,11 +1337,19 @@ svg.barChart .circleTopTransparent{
     width: 250px;
     height: 250px;
     float: left;
-    margin-left: 40px;
 }
 #pieChart .text{
     position:absolute;
-    left:340px;
+    left:305px;
+    top:120px;
+    width:80px;
+    text-align:center;
+    font-size:30px;
+    font-weight:bold;
+}
+#pieChart .text2{
+    position:absolute;
+    left:330px;
     top:120px;
     width:80px;
     text-align:center;
