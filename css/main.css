@@ -13,19 +13,16 @@ html {
     line-height: 1.4;
     cursor: auto;
 /*    background-color: #e7f0f3;*/
-
 }
 
 ::-moz-selection {
     background: #b3d4fc;
     text-shadow: none;
 }
-
 ::selection {
     background: #b3d4fc;
     text-shadow: none;
 }
-
 hr {
     display: block;
     height: 1px;
@@ -127,7 +124,6 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-
 body,html{
     height:100%;
     margin:0;
@@ -138,8 +134,6 @@ body,html{
 /* ==========================================================================
    Splashscreen
    ========================================================================== */
-
-
 
 .splashscreen{
     position: absolute;
@@ -155,8 +149,6 @@ section.splashscreen{
     font:700 17px 'Arimo' sans-serif;
     -webkit-font-smoothing: antialiased;
     text-align: center;
-
-
 }
 section.splashscreen canvas{
     position:absolute;
@@ -173,8 +165,6 @@ section.splashscreen .presentation{
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
     width: 55%;
-
-
 }
 section.splashscreen h1{
     text-transform: uppercase;
@@ -193,7 +183,7 @@ section.splashscreen h2 {
     padding-top: 32px;
     margin-bottom: 65px;
 }
-    section.splashscreen h2::after{
+section.splashscreen h2::after{
         display: block;
         content: '';
         background: #6f9298;
@@ -202,15 +192,13 @@ section.splashscreen h2 {
         left: 49%;
         position: absolute;
         margin-top: 25px;
-    }
-
+}
 section.splashscreen p{
     font-size: 16px;
     line-height: 25px;
     font-weight: 400;
     margin-bottom: 28px;
 }
-
 section.splashscreen a{
     text-decoration: none;
     text-transform: uppercase;
@@ -222,14 +210,14 @@ section.splashscreen a{
     -o-transition: 1s all ;
     transition: 1s all ;
 }
-    section.splashscreen a:hover{
+section.splashscreen a:hover{
     -webkit-transition: .5s all ;
     -moz-transition: .5s all ;
     -o-transition: .5s all ;
     transition: .5s all ;
-        background-color: #6f9298;
-        color:#fff;
-    }
+    background-color: #6f9298;
+    color:#fff;
+}
 .splashscreen img{
     width: 35%;
 }
@@ -245,30 +233,29 @@ section.splashscreen a{
     color:#6f9298;
     z-index: 55;
     cursor: url(../img/cursor.png), auto;
-
 }
 .credits{
     height: 100%;
     text-align: center;
     position: relative;
     top:5%;
--webkit-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
-        transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 .credits a{
     color:#6f9298;
     text-decoration: none;
     text-transform: uppercase;
     line-height: 27px;
-        -webkit-transition: .5s all ;
+    -webkit-transition: .5s all ;
     -moz-transition: .5s all ;
     -o-transition: .5s all ;
     transition: .5s all ;
 }
 .credits a:hover{
     color:white;
-        -webkit-transition: .5s all ;
+    -webkit-transition: .5s all ;
     -moz-transition: .5s all ;
     -o-transition: .5s all ;
     transition: .5s all ;
@@ -279,15 +266,15 @@ section.splashscreen a{
     text-transform: uppercase;
 }
 .credits h2.title_credits::after{
-        display: block;
-        content: '';
-        background: #e13144;
-        width: 40px;
-        height: 3px;
-        left: 48%;
-        position: absolute;
-        margin-top: 20px;
-    }
+    display: block;
+    content: '';
+    background: #e13144;
+    width: 40px;
+    height: 3px;
+    left: 48%;
+    position: absolute;
+    margin-top: 20px;
+}
 .credits h2,
 .credits p,
 .credits ul.role_credits{
@@ -305,13 +292,13 @@ section.splashscreen a{
 .credits a{
     font:15px 'Arimo' sans-serif;
     line-height: 25px;
-
 }
 .credits ul.role_credits li span.name_credits{
     font-weight: 700;
-    }
+}
 .credits .after_line{
     margin-top: 20px;
+    margin-bottom: 0;
 
 }
 .credits .after_line a{
@@ -329,7 +316,6 @@ section.splashscreen a{
    Help
    ========================================================================== */
 
-
 .help{
     position: absolute;
     height: 100%;
@@ -339,7 +325,6 @@ section.splashscreen a{
     z-index: 60;
     cursor: url(../img/cursor.png), auto;
 }
-
 .help div {
     width: 222px;
 }
@@ -422,7 +407,7 @@ section.splashscreen a{
 }
 .help div:nth-child(4){
     position:relative;
-    top:300px;
+    top:280px;
     left:75%;
 }
 .help div:nth-child(4) h1::after{
@@ -475,7 +460,6 @@ section.splashscreen a{
     background-size: 50%;
     background-repeat:  no-repeat;
     background-position: 50% ;
-
 }
 .tutoLeftSide{
     z-index: 10;
@@ -495,8 +479,6 @@ section.splashscreen a{
 .tutoLeftSide h1{
     position:relative;
 }
-
-
 .tutoLeftSide h1::after{
     display: block;
     content: '';
@@ -507,7 +489,6 @@ section.splashscreen a{
     bottom:0px;
     position: absolute;
 }
-
 .tutoLeftSide h1::before{
     display: block;
     content: '';
@@ -537,7 +518,6 @@ section.splashscreen a{
     -o-transition: 1s all;
     transition: 1s all;
 }
-
 .tutoLeftSide a:hover{
     -webkit-transition: .5s all ;
     -moz-transition: .5s all ;
@@ -595,7 +575,6 @@ section.splashscreen a{
 .dico .icon-source:before {
     color:#525151;
     font-size: 13px;
-
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
     -ms-transition: all 0.3s;
@@ -607,7 +586,7 @@ section.splashscreen a{
 }
 .dico .dicoContent{
     width: 90%;
-    margin: 0 8%;
+    margin: 0 10%;
     height: 70%;
     overflow: auto;
     text-align: justify;
@@ -631,7 +610,6 @@ section.splashscreen a{
 }
 .dico a:hover .icon-close:before {
     color:#f4f2f2;
-
 }
 .dico .icon-close:before, .dico a:hover .icon-close:before {
     -webkit-transition: .5s all ;
@@ -669,7 +647,6 @@ nav{
     list-style: none;
     float:left;
 }
-
 nav ul{
     list-style: none;
     margin:0;
@@ -686,10 +663,6 @@ nav li{
 nav li:hover{
     background-color: #82c1cb;
     }
-
-/*nav span{
-    margin-top: 22px;
-}*/
 nav a{
     line-height:65px;
     margin:0;
@@ -708,8 +681,6 @@ nav a:focus{
 nav ul ul li{
     background-color: #51919b;
 }
-
-
 menu, ol, ul{
     padding: 0;
 }
@@ -722,7 +693,6 @@ menu, ol, ul{
 #menu .thirdLevel li.active{
     background:none;
 }
-
 .thirdLevel{
     position:absolute;
     display: inline-block;
@@ -751,7 +721,6 @@ menu, ol, ul{
 .color [class^="icon-"]:before, [class*=" icon-"]:before {
     color:#FFF;
 }
-
 .thirdLevel li a.selected [class^="icon-"]:before, [class*=" icon-"]:before {
     color:#89c3cd;
 }
@@ -774,6 +743,7 @@ menu, ol, ul{
     background-color: #e7f0f3;
     background-image:url(../img/fondBoucle.svg);
 }
+
 .content{
     position:relative;
     height:100%;
@@ -781,9 +751,7 @@ menu, ol, ul{
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-
 }
-
 
 .text-center {
   text-align: center;
@@ -794,7 +762,6 @@ menu, ol, ul{
 
 section#leftSide{
     height: 100%;
-
 }
 #leftSide{
     float: left;
@@ -807,7 +774,6 @@ section#leftSide{
     text-shadow:1px 1px 1px white;
 }
 
-
 #echelle{
     width:50%;
     height: 10px;
@@ -818,7 +784,6 @@ section#leftSide{
     position: absolute;
     left:25%;
     bottom: 8%;
-
 }
 
 .firstPart{
@@ -845,7 +810,7 @@ section#leftSide{
 .thirdPart{
     width: 25%;
     height:10px;
-margin: auto;
+    margin: auto;
     background-color: #8ec9d0;
 }
 .fourthPart{
@@ -887,23 +852,19 @@ margin: auto;
 
 #rightSide p{
     color: white;
-
 }
 
 #rightSide h2 {
     font-weight: 400;
-
 }
 #rightSide h3 {
     font-weight: 400;
     color: #888888;
     font-size: 1em;
-
 }
 .col2{
     width:50%;
     float: left;
-
 }
 
 .col2 p{
@@ -970,9 +931,8 @@ footer .partage:hover{
     background-color:#586b71;
 }
 #rightSide footer .partage a:hover{
-        color:#fff;
+    color:#fff;
 }
-
 
 #rightSide footer a:nth-child(1){
     display: block;
@@ -1025,7 +985,6 @@ footer .partage:hover .buttonShare{
     -o-transition: .5s all;
     transition: .5s all;
 }
-
 
 #rightSide #chiffreDept span,
 #rightSide #chiffreFrance span{
@@ -1325,7 +1284,6 @@ footer .partage:hover .buttonShare{
   left: 0;
 }
 
-
 /* BAR CHART */
 
 svg.barChart{
@@ -1452,7 +1410,6 @@ svg.barChart .circleTopTransparent{
     font-weight:normal;
 }
 
-
 #chartGaugeMultiple{
 
 }
@@ -1486,9 +1443,7 @@ svg.barChart .circleTopTransparent{
     width:100%;
 }
 
-
 #chartLine{
-
 }
 #chartLine .tick text{
     fill:#898989;
@@ -1511,7 +1466,6 @@ svg.barChart .circleTopTransparent{
 #chartLine .c3-zoom-rect{
     cursor:inherit !important;
 }
-
 
 
 /* ==========================================================================
@@ -1539,7 +1493,15 @@ svg.barChart .circleTopTransparent{
     #echelle{
         bottom: 5%;
     }
-
+    .credits{
+        top:0;
+    }
+    .credits h2{
+        padding-top: 0px;
+    }
+    #infoNeeded div {
+        padding-top: 8%;
+    }
 }
 
 /* ==========================================================================
