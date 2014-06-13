@@ -457,7 +457,7 @@ section.splashscreen a:hover{
     width: 45%;
     height: 100%;
     background-color: #030303;
-    background-image:url(../img/logoName.svg);
+    background-image:url("../img/logoName.svg");
     background-size: 50%;
     background-repeat:  no-repeat;
     background-position: 50% ;
@@ -1483,6 +1483,15 @@ svg.barChart .circleTopTransparent{
 
 
 /* ==========================================================================
+   Mobile
+   ========================================================================== */
+
+#mobile{
+    display:none;
+}
+
+
+/* ==========================================================================
    Media Queries
    ========================================================================== */
 
@@ -1519,7 +1528,33 @@ svg.barChart .circleTopTransparent{
     #pieChart{
     margin-top: 10%;
     margin-left: 0%;
+    }
 }
+
+@media screen and (max-width: 1024px){
+
+    #mobile{
+        display:block;
+        position:absolute;
+        left:0;top:0;
+        z-index: 1000;
+        width:100%;
+        height:100%;
+        background-color:#e7f1f3;
+    }
+    #mobile img{
+        display:block;
+        width:200px;
+        height:auto;
+        margin:10% auto 10%;
+    }
+    #mobile p{
+        color:#6f9298;
+        text-align:center;
+        padding:0 15%;
+    }
+
+
 }
 
 /* ==========================================================================
