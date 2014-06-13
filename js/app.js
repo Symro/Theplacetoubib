@@ -810,6 +810,7 @@ $(document).ready(function() {
             App.hideBarChart();
             App.hideGaugeChart();
             App.hideGaugeChartMultiple();
+            $('#pieChart').hide();
 
             // Gestion Line Chart -- Exception car JSON à lire différent donc n'est pas dans la condition if(data)
             if (App.filtre == "Nb_hab_par_medecin") {
