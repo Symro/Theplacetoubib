@@ -450,12 +450,9 @@ $(document).ready(function() {
 
                 }
 
-                if ($(pieChart).html().trim().length == 0) {
+                if ($(pieChart).html().trim().length !== 0) {
 
                     // App.displayPieChart(dataGraph);
-
-                } else {
-
                     App.updatePieChart(dataGraph);
 
                 }
@@ -535,7 +532,7 @@ $(document).ready(function() {
 
                 var pieChart = "#pieChart .pie";
 
-                if ($(".pieChartLegend svg g").size() == 2) {
+                if ($(".pieChartLegend svg g").size() == 2 || $(pieChart).html().trim().length == 0) {
 
                     d3.selectAll("#pieChart .pie svg")
                         .remove();
@@ -546,12 +543,8 @@ $(document).ready(function() {
 
                 }
 
-                if ($(pieChart).html().trim().length == 0) {
-                    console.log(dataGraph);
-                    // App.displayPieChart(dataGraph);
+                if ($(pieChart).html().trim().length !== 3) {
 
-                } else {
-                    console.log(dataGraph);
                     App.updatePieChart(dataGraph);
 
                 }
@@ -1179,6 +1172,16 @@ $(document).ready(function() {
                     .each(function(d) {
                         this._current = d;
                     });
+
+            }
+
+            if (typeof legend === 'undefined') {
+
+                console.log("correction buuuuug");
+                // Création du SVG pour la légende
+                var legend = d3.select("#pieChart .pieChartLegend").append("svg")
+                    .attr('width', 200)
+                    .attr('height', 100);
 
             }
 
@@ -2329,11 +2332,11 @@ $(document).ready(function() {
     });
 
 
-    $('a.tweet').click(function(e){
-      e.preventDefault();
-      var loc = $(this).attr('href');
-      var title  = escape($(this).attr('title'));
-      window.open('http://twitter.com/share?url=' + loc + '&text=' + title + '&', 'twitterwindow', 'height=450, width=550, top='+($(window).height()/2 - 225) +', left='+$(window).width()/2 +', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+    $('a.tweet').click(function(e) {
+        e.preventDefault();
+        var loc = $(this).attr('href');
+        var title = escape($(this).attr('title'));
+        window.open('http://twitter.com/share?url=' + loc + '&text=' + title + '&', 'twitterwindow', 'height=450, width=550, top=' + ($(window).height() / 2 - 225) + ', left=' + $(window).width() / 2 + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
     });
 
     /* ********************************************************
