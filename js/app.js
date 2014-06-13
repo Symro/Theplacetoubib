@@ -1692,7 +1692,7 @@ $(document).ready(function() {
                 .attr("x", 95)
                 .attr("y", 138)
                 .text(function(d) {
-                    return "Privés lucratifs";
+                    return "Clinique";
                 })
                 .style({
                     "fill": "#888888",
