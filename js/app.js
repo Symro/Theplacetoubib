@@ -83,7 +83,7 @@ $(document).ready(function() {
             .find('.tutoFirstStep').removeClass('hidden').addClass('animated fadeIn').end()
             .fadeIn();
 
-        console.log("Affichage Tuto ");
+        // console.log("Affichage Tuto ");
     });
 
     App.router.on("route:filtre", function(filtre, dept) {
@@ -173,7 +173,7 @@ $(document).ready(function() {
 
     // Affiche les infos d'un departement
     App.displayInfoDept = function(num_Departement) {
-        console.log("_-_-_-_-_-_- App.displayInfoDept _-_-_-_-_-_- ");
+        // console.log("_-_-_-_-_-_- App.displayInfoDept _-_-_-_-_-_- ");
         num_Departement = (num_Departement == "2A" || num_Departement == "2B") ? num_Departement : parseInt(num_Departement);
 
         var info_dept = App.getInfo(num_Departement);
@@ -231,7 +231,7 @@ $(document).ready(function() {
 
         if (parseInt(chiffre_fra) > parseInt(chiffre_dept)) {
 
-            console.log('inférieur');
+            // console.log('inférieur');
             $("#chiffreDept h3 img").attr("src", "img/fleche_inf.png");
 
         } else if (parseInt(chiffre_fra) < parseInt(chiffre_dept)) {
@@ -314,7 +314,7 @@ $(document).ready(function() {
 
     App.checkHash = function() {
 
-        //console.log("HASH ACTUEL  : " + window.location.hash);
+        // console.log("HASH ACTUEL  : " + window.location.hash);
 
         var hash = window.location.hash;
         // analyse du hash actuel
@@ -331,7 +331,7 @@ $(document).ready(function() {
         //  > Affichage du filtre et dept de l'URL
 
         if (customRegExp) {
-            console.log('on a un filtre : ' + customRegExp[1]);
+            // console.log('on a un filtre : ' + customRegExp[1]);
 
             App.router.navigate("#/filtre/" + customRegExp[1] + "/dept_" + App.dept, {
                 trigger: true
@@ -352,7 +352,7 @@ $(document).ready(function() {
 
             if (customRegExp[3]) {
 
-                console.log(" on a un depart. : " + customRegExp[3]);
+                // console.log(" on a un depart. : " + customRegExp[3]);
                 //App.dept = customRegExp[3];
 
             }
@@ -1166,7 +1166,11 @@ $(document).ready(function() {
                 }
 
             })
-            .on('mouseover', tip.show)
+            .on('mouseover', function() {
+                tip.show;
+                // Analytics
+                ga('send', 'event', 'graph', 'mouseover', 'barchart');
+            })
             .on('mouseout', tip.hide);
 
         // ajout les triangles sous chaque bar
@@ -1420,7 +1424,7 @@ $(document).ready(function() {
 
             if (typeof legend === 'undefined') {
 
-                console.log("correction buuuuug");
+                // console.log("correction buuuuug");
                 // Création du SVG pour la légende
                 var legend = d3.select("#pieChart .pieChartLegend").append("svg")
                     .attr('width', 200)
@@ -1883,7 +1887,7 @@ $(document).ready(function() {
 
 
         if ($(container).length == 0) {
-            console.log("/!\ Ce container (" + container + ") n'existe pas dans le DOM..");
+            // console.log("/!\ Ce container (" + container + ") n'existe pas dans le DOM..");
             return false;
         }
 
@@ -1892,7 +1896,7 @@ $(document).ready(function() {
             .outerRadius(110)
             .startAngle(0);
 
-        console.log(pourcentage);
+        // console.log(pourcentage);
 
         d3.select(container + " .progressionPourcentage").transition()
             .duration(750)
@@ -1954,7 +1958,7 @@ $(document).ready(function() {
             dataNombre = data.length;
 
         if (App.screenWidth < 1600) {
-            console.log("$(container).width() " + $("#rightSide").width());
+            // console.log("$(container).width() " + $("#rightSide").width());
             height = 300;
             cercleWidth = 250;
         }
@@ -1972,7 +1976,7 @@ $(document).ready(function() {
             .startAngle(0);
 
         if (App.screenWidth < 1600) {
-            console.log("SCREEN : < 1600")
+            // console.log("SCREEN : < 1600")
             cercleMarge = (dataNombre > 3) ? 20 : 25;
 
             circleInnerRadius = 55,
@@ -2087,6 +2091,9 @@ $(document).ready(function() {
                     .transition().duration(250)
                     .style("opacity", "1");
 
+                // Analytics
+                ga('send', 'event', 'graph', 'mouseover', 'gaugechartmultiple', i);
+
             })
             .on("mouseout", function(d, i) {
                 var that = d3.select(this);
@@ -2171,7 +2178,7 @@ $(document).ready(function() {
         $(container).show();
 
         if ($(container).length == 0) {
-            console.log("/!\ Ce container (" + container + ") n'existe pas dans le DOM..");
+            // console.log("/!\ Ce container (" + container + ") n'existe pas dans le DOM..");
             return false;
         }
         var circleInnerRadius = 65,
@@ -2182,7 +2189,7 @@ $(document).ready(function() {
             cercleWidth = 310; // Diamètre externe du dernier cercle
 
         if (App.screenWidth < 1600) {
-            console.log("SCREEN : < 1600")
+            // console.log("SCREEN : < 1600")
             cercleMarge = (dataNombre > 3) ? 20 : 25;
             circleInnerRadius = 55,
             circleOuterRadius = 72;
@@ -2229,6 +2236,9 @@ $(document).ready(function() {
                         return nbFinal;
                     });
 
+                // Analytics
+                ga('send', 'event', 'graph', 'mouseover', 'gaugechartmultiple', i);
+
             });
 
     }
@@ -2253,7 +2263,7 @@ $(document).ready(function() {
     //      - 1 number OU string entre 0 et 100 > pourcentage
     App.displayLineChart = function(data, dataMin, dataMax) {
         $('#chartLine').fadeIn();
-        console.log(dataMin, dataMax);
+        // console.log(dataMin, dataMax);
         var width = ($("#rightSide").width() - 80);
         var height = 400;
         var padding = {
@@ -2272,7 +2282,7 @@ $(document).ready(function() {
             height = 300;
         }
 
-        console.log("LineChart Width : " + width);
+        // console.log("LineChart Width : " + width);
 
         App.lineChart = c3.generate({
             bindto: '#chartLine',
@@ -2428,6 +2438,8 @@ $(document).ready(function() {
             App.router.navigate(url, {
                 trigger: true
             });
+            // Analytics
+            ga('send', 'event', 'menu', 'click', 'filtre', App.filtre);
         }
 
     });
@@ -2450,6 +2462,8 @@ $(document).ready(function() {
         App.router.navigate(url, {
             trigger: true
         });
+        // Analytics
+        ga('send', 'event', 'menu', 'click', 'filtre', App.filtre);
 
     });
 
@@ -2524,13 +2538,12 @@ $(document).ready(function() {
 
     $('body').on("click", ".credits", function(e) {
         e.preventDefault();
-        console.log(e);
+        // console.log(e);
 
         if (e.target.className == "name_credits") {
             window.open(e.target.parentElement.href, '_blank');
             // }else if(event.target.is("a")){
-            //      window.open(e.target.href, '_blank');
-
+            //     window.open(e.target.href, '_blank');
         } else {
             $(this).parent('#credits').addClass('animated fadeOut').delay(700).queue(function(next) {
                 $(this).addClass('hidden');
@@ -2632,7 +2645,7 @@ $(document).ready(function() {
 
             if (screenWidth < 1620) {
 
-                console.log('width inférieure a : ' + screenWidth);
+                // console.log('width inférieure a : ' + screenWidth);
                 this.params.width = 650;
                 this.params.height = 800;
                 this.params.center = {
@@ -2658,7 +2671,7 @@ $(document).ready(function() {
 
             if (screenWidth < 1380) {
 
-                console.log('width inférieure a : ' + screenWidth);
+                // console.log('width inférieure a : ' + screenWidth);
 
 
                 this.params.width = 580;
@@ -2845,6 +2858,9 @@ $(document).ready(function() {
             });
             App.checkHash();
             /* _____________ FIN   AJOUT FLORENT - A GARDER _____________________________________ */
+            // Analytics
+            ga('send', 'event', 'map', 'click', 'dept', App.dept);
+
         },
 
         zoomParis: function() {
@@ -2873,7 +2889,7 @@ $(document).ready(function() {
 
         rendered: function() {
 
-            console.log('map rendered');
+            // console.log('map rendered');
 
             // var hash = window.location.hash;
             // // analyse du hash actuel
@@ -2892,7 +2908,7 @@ $(document).ready(function() {
         },
 
         zoomed: function() {
-            console.log('Zoom sur paris');
+            // console.log('Zoom sur paris');
         }
 
     });
