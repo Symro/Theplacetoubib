@@ -1,4 +1,5 @@
 {
+    "Titre":["Nom_de_la_donnee","Libelle","Annee","Nom_lien","Lien","Unite","DatasPourGraph","Echelle"],
     "Nb_hab_age_de_0_a_19_ans":["De 0 à 19 ans","Répartition du nombre d'habitants par tranche d'âge","2013","Eco-Sante","http://www.ecosante.fr","NC","NC","NC"],
     "Nb_hab_age_de_20_a_39_ans":["De 20 à 39 ans","Répartition du nombre d'habitants par tranche d'âge","2013","Eco-Sante","http://www.ecosante.fr","NC","NC","NC"],
     "Nb_hab_age_de_40_a_59_ans":["De 40 à 59 ans","Répartition du nombre d'habitants par tranche d'âge","2013","Eco-Sante","http://www.ecosante.fr","NC","NC","NC"],
@@ -66,9 +67,9 @@
     "Nb_infirmier_plus_ou_egal_55_ans":["Plus de 55 ans","Répartition du nombre d'infirmiers par tranche d'âge","2012","Eco-Sante","http://www.ecosante.fr","NC","NC","NC"],
     "Temps_acces_infirmier":["Temps d'accès moyen chez un infirmier","Temps moyen d'accès aux soins (en minutes)","2010","Eco-Sante","http://www.ecosante.fr","min","NC","NC"],
     "Nb_hab_par_infirmier":["Nombre d'habitants pour un infirmier","Évolution du nombre d'infirmiers jusqu’en 2018","2013","Calculs réalisés par nos soins","NC","NC","NC","[\"200\",\"400\",\"600\",\"800\"]"],
-    "Nombre_hopitaux":["Nombre d'hopitaux","Part des publics par rapport aux privés non lucratifs et privés lucratifs","2013","Calculs réalisés par nos soins","NC","NC","[\"Nb_hopital_public\",\"Nb_hopital_prive_but_non_lucratif\",\"Nb_clinique_prive_but_lucratif\"]","[\"10\",\"20\",\"40\",\"60\"]"],
-    "Nb_hopital_public":["Hopitaux publics","Part des publics par rapport aux privés non lucratifs et privés lucratifs","NC","Politi","politi.com","NC","NC","NC"],
-    "Nb_hopital_prive_but_non_lucratif":["Hopitaux privés à but non lucratif","Part des publics par rapport aux privés non lucratifs et privés lucratifs","NC","Politi","politi.com","NC","NC","NC"],
-    "Nb_clinique_prive_but_lucratif":["Cliniques privées à but lucratif","Part des publics par rapport aux privés non lucratifs et privés lucratifs","NC","Politi","politi.com","NC","NC","NC"],
+    "Nombre_hopitaux":["Nombre d'hopitaux et de cliniques","Part des hopitaux publics par rapport aux hopitaux privés non lucratifs et cliniques","2013","Calculs réalisés par nos soins","NC","NC","[\"Nb_hopital_public\",\"Nb_hopital_prive_but_non_lucratif\",\"Nb_clinique_prive_but_lucratif\"]","[\"10\",\"20\",\"40\",\"60\"]"],
+    "Nb_hopital_public":["Nombre d'hopitaux et de cliniques","Part des hopitaux publics par rapport aux hopitaux privés non lucratifs et cliniques","NC","Politi","politi.com","NC","NC","NC"],
+    "Nb_hopital_prive_but_non_lucratif":["Nombre d'hopitaux et de cliniques","Part des hopitaux publics par rapport aux hopitaux privés non lucratifs et cliniques","NC","Politi","politi.com","NC","NC","NC"],
+    "Nb_clinique_prive_but_lucratif":["Cliniques privées à but lucratif","Part des hopitaux publics par rapport aux hopitaux privés non lucratifs et cliniques","NC","Politi","politi.com","NC","NC","NC"],
     "Evo_nombre_medecins":["NC","Évolution du nombre de médecins jusqu'en 2018","2013","Conseil National de l'Ordre des Médecins","http://www.conseil-national.medecin.fr/node/1371","NC","NC","NC"]
 }
