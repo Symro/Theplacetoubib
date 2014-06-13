@@ -439,16 +439,16 @@ section.splashscreen a:hover{
 
 .tutoContent div:nth-child(1){
     position:relative;
-    top:130px;
+    top:150px;
 }
 .tutoContent div:nth-child(2){
     position:relative;
-    top:180px;
+    top:215px;
 
 }
 .tutoContent div:nth-child(3){
     position:relative;
-    top:255px;
+    top:280px;
 }
 .tutoRightSide{
     z-index: 10;
