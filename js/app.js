@@ -480,7 +480,15 @@ $(document).ready(function() {
 
                         if (i == 1) {
 
-                            var item = $("<div class='text'>" + parseInt(dataGraph[0]) + "<span>%</span></div>").hide().fadeIn(250);
+                            if (isNaN(dataGraph[0])) {
+                                var number = "NC";
+                                var percent = "";
+                            } else {
+                                var number = parseInt(dataGraph[0]);
+                                var percent = "%";
+                            }
+
+                            var item = $("<div class='text'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(250);
                             $("#pieChart").append(item);
 
                             d3.select(".pieChart g .arc0")
@@ -503,7 +511,15 @@ $(document).ready(function() {
 
                         } else {
 
-                            var item = $("<div class='text'>" + parseInt(dataGraph[1]) + "<span>%</span></div>").hide().fadeIn(250);
+                            if (isNaN(dataGraph[1])) {
+                                var number = "NC";
+                                var percent = "";
+                            } else {
+                                var number = parseInt(dataGraph[1]);
+                                var percent = "%";
+                            }
+
+                            var item = $("<div class='text'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(250);
                             $("#pieChart").append(item);
 
                             d3.select(".pieChart g .arc1")
@@ -605,9 +621,15 @@ $(document).ready(function() {
 
                         if (i == 2) {
 
-                            // console.log(i);
+                            if (isNaN(dataGraph[2])) {
+                                var number = "NC";
+                                var percent = "";
+                            } else {
+                                var number = parseInt(dataGraph[2]);
+                                var percent = "%";
+                            }
 
-                            var item = $("<div class='text2'>" + parseInt(dataGraph[2]) + "<span>%</span></div>").hide().fadeIn(250);
+                            var item = $("<div class='text2'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(250);
                             $("#pieChart").append(item);
 
                             d3.select(".pieChart g .arc2")
@@ -630,9 +652,15 @@ $(document).ready(function() {
 
                         } else if (i == 1) {
 
-                            // console.log(i);
+                            if (isNaN(dataGraph[1])) {
+                                var number = "NC";
+                                var percent = "";
+                            } else {
+                                var number = parseInt(dataGraph[1]);
+                                var percent = "%";
+                            }
 
-                            var item = $("<div class='text2'>" + parseInt(dataGraph[1]) + "<span>%</span></div>").hide().fadeIn(250);
+                            var item = $("<div class='text2'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(250);
                             $("#pieChart").append(item);
 
                             d3.select(".pieChart g .arc1")
@@ -655,9 +683,15 @@ $(document).ready(function() {
 
                         } else {
 
-                            // console.log(i);
+                            if (isNaN(dataGraph[0])) {
+                                var number = "NC";
+                                var percent = "";
+                            } else {
+                                var number = parseInt(dataGraph[0]);
+                                var percent = "%";
+                            }
 
-                            var item = $("<div class='text2'>" + parseInt(dataGraph[0]) + "<span>%</span></div>").hide().fadeIn(250);
+                            var item = $("<div class='text2'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(250);
                             $("#pieChart").append(item);
 
                             d3.select(".pieChart g .arc0")
@@ -1344,11 +1378,13 @@ $(document).ready(function() {
             .attr("r", 60)
             .style("fill", "#282828");
 
-        //console.log(data.length);
+        if (isNaN(data[1])) {
+            data[1] = 0;
+        }
 
         if (data.length == 2) {
 
-            if (data[0] !== 0 && data[1] !== 0) {
+            if (data[0] > 0 && data[1] > 0) {
 
                 // Création du SVG pour la légende
                 var legend = d3.select("#pieChart .pieChartLegend").append("svg")
@@ -1377,6 +1413,10 @@ $(document).ready(function() {
                     });
 
             }
+
+            // if (isNaN(parseInt(data[1])) || isNaN(parseInt(data[0]))) {
+            //     console.log('bug marne');
+            // }
 
             if (typeof legend === 'undefined') {
 
@@ -1648,7 +1688,7 @@ $(document).ready(function() {
                 .attr("x", 95)
                 .attr("y", 138)
                 .text(function(d) {
-                    return "Privés lucratifs";
+                    return "Clinique";
                 })
                 .style({
                     "fill": "#888888",
@@ -1664,6 +1704,10 @@ $(document).ready(function() {
     App.updatePieChart = function(data) {
 
         $("#pieChart").show();
+
+        if (isNaN(data[1])) {
+            data[1] = 0;
+        }
 
         if (data[0] == 0 && data[1] == 0) {
 
@@ -1684,6 +1728,14 @@ $(document).ready(function() {
                 pie = d3.layout.pie(),
                 color = ["#264359", "#22313b"];
 
+            function arcTween(d) {
+                var i = d3.interpolate(this._current, d);
+                this._current = i(0);
+                return function(t) {
+                    return arc(i(t));
+                };
+            }
+
             var path = d3.selectAll("#pieChart .pie path")
                 .data(pie(data))
                 .attr("d", arc)
@@ -1695,14 +1747,6 @@ $(document).ready(function() {
                 })
                 .transition().duration(750)
                 .attrTween("d", arcTween);
-
-            function arcTween(d) {
-                var i = d3.interpolate(this._current, d);
-                this._current = i(0);
-                return function(t) {
-                    return arc(i(t));
-                };
-            }
 
         } else if ($("#pieChart .pie g path").size() < 1 == true && data.length == 2) {
 
@@ -2044,7 +2088,7 @@ $(document).ready(function() {
                     .style("opacity", "1");
 
                 // Analytics
-                ga('send', 'event', 'graph', 'mouseover', 'gaugechartmultiple',  i);
+                ga('send', 'event', 'graph', 'mouseover', 'gaugechartmultiple', i);
 
             })
             .on("mouseout", function(d, i) {
@@ -2189,7 +2233,7 @@ $(document).ready(function() {
                     });
 
                 // Analytics
-                ga('send', 'event', 'graph', 'mouseover', 'gaugechartmultiple',  i);
+                ga('send', 'event', 'graph', 'mouseover', 'gaugechartmultiple', i);
 
             });
 
@@ -2391,7 +2435,7 @@ $(document).ready(function() {
                 trigger: true
             });
             // Analytics
-            ga('send', 'event', 'menu', 'click', 'filtre',  App.filtre);
+            ga('send', 'event', 'menu', 'click', 'filtre', App.filtre);
         }
 
     });
@@ -2415,7 +2459,7 @@ $(document).ready(function() {
             trigger: true
         });
         // Analytics
-        ga('send', 'event', 'menu', 'click', 'filtre',  App.filtre);
+        ga('send', 'event', 'menu', 'click', 'filtre', App.filtre);
 
     });
 
@@ -2495,8 +2539,7 @@ $(document).ready(function() {
         if (e.target.className == "name_credits") {
             window.open(e.target.parentElement.href, '_blank');
             // }else if(event.target.is("a")){
-            //      window.open(e.target.href, '_blank');
-
+            //     window.open(e.target.href, '_blank');
         } else {
             $(this).parent('#credits').addClass('animated fadeOut').delay(700).queue(function(next) {
                 $(this).addClass('hidden');
@@ -2811,7 +2854,7 @@ $(document).ready(function() {
             });
             App.checkHash();
             /* _____________ FIN   AJOUT FLORENT - A GARDER _____________________________________ */
-            // Analytics 
+            // Analytics
             ga('send', 'event', 'map', 'click', 'dept', App.dept);
 
         },
