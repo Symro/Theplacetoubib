@@ -13,8 +13,8 @@ $(document).ready(function() {
         prefiltreEtat: ["", "", "", ""],
         tuto: false,
         counterDecimal: 0,
-        screenWidth : $(window).width(),
-        screenHeight :  $(window).height(),
+        screenWidth: $(window).width(),
+        screenHeight: $(window).height(),
         dom: {
             chiffre_dept: $('#chiffreDept p'),
             chiffre_france: $('#chiffreFrance p'),
@@ -437,12 +437,22 @@ $(document).ready(function() {
             // Gestion du Pie Chart
             if (App.filtre == "Nb_medecin" || App.filtre == "Nb_gyneco" || App.filtre == "Nb_dentiste" || App.filtre == "Nb_ophtalmo" || App.filtre == "Nb_infirmier") {
 
-                var legendes = ["Libéraux", "Salariés"];
                 var pieChart = "#pieChart .pie";
+
+                if ($(".pieChartLegend svg g").size() == 3 || $(pieChart).html().trim().length == 0) {
+
+                    d3.selectAll("#pieChart .pie svg")
+                        .remove();
+                    d3.selectAll("#pieChart .pieChartLegend svg")
+                        .remove();
+
+                    App.displayPieChart(dataGraph);
+
+                }
 
                 if ($(pieChart).html().trim().length == 0) {
 
-                    App.displayPieChart(dataGraph);
+                    // App.displayPieChart(dataGraph);
 
                 } else {
 
@@ -520,6 +530,31 @@ $(document).ready(function() {
                         }
 
                     });
+
+            } else if (App.filtre == "Nombre_hopitaux") {
+
+                var pieChart = "#pieChart .pie";
+
+                if ($(".pieChartLegend svg g").size() == 2) {
+
+                    d3.selectAll("#pieChart .pie svg")
+                        .remove();
+                    d3.selectAll("#pieChart .pieChartLegend svg")
+                        .remove();
+
+                    App.displayPieChart(dataGraph);
+
+                }
+
+                if ($(pieChart).html().trim().length == 0) {
+                    console.log(dataGraph);
+                    // App.displayPieChart(dataGraph);
+
+                } else {
+                    console.log(dataGraph);
+                    App.updatePieChart(dataGraph);
+
+                }
 
             } else {
                 $('#pieChart').hide();
@@ -755,10 +790,10 @@ $(document).ready(function() {
             }
         }
 
-        var customWidth  = $('.content').width();
+        var customWidth = $('.content').width();
         var customHeight = 300;
 
-        if( App.screenHeight <= 900){
+        if (App.screenHeight <= 900) {
             customHeight = 250;
         }
 
@@ -853,7 +888,7 @@ $(document).ready(function() {
         svg.select(".fakeXY")
             .append("line").attr({
                 "x1": "0",
-                "x2": width-20,
+                "x2": width - 20,
                 "y1": height,
                 "y2": height
             }).style("stroke", "#2b2b2b");
@@ -985,10 +1020,10 @@ $(document).ready(function() {
             }
         }
 
-        var customWidth  = $('.content').width();
+        var customWidth = $('.content').width();
         var customHeight = 300;
 
-        if( App.screenHeight <= 900){
+        if (App.screenHeight <= 900) {
             customHeight = 250;
         }
 
@@ -1106,11 +1141,6 @@ $(document).ready(function() {
             .append("g")
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-        // Création du SVG pour la légende
-        var legend = d3.select("#pieChart .pieChartLegend").append("svg")
-            .attr('width', 200)
-            .attr('height', 100);
-
         // Cercle intérieur
         var circle = $svgPie.append("circle")
             .attr("cx", 0)
@@ -1118,11 +1148,146 @@ $(document).ready(function() {
             .attr("r", 60)
             .style("fill", "#282828");
 
-        if (data[0] == 0 && data[1] == 0) {
+        console.log(data.length);
 
-            console.log('ça va buguer');
+        if (data.length == 2) {
 
-        } else {
+            if (data[0] !== 0 && data[1] !== 0) {
+
+                // Création du SVG pour la légende
+                var legend = d3.select("#pieChart .pieChartLegend").append("svg")
+                    .attr('width', 200)
+                    .attr('height', 100);
+
+
+                // On dessine les arcs
+                var pathPie = $svgPie.selectAll("path")
+                    .data(pie(data))
+                    .enter().append("path")
+                    .attr("fill", function(d, i) {
+                        return color[i];
+                    })
+                    .attr("data-nb", function(d, i) {
+                        return parseInt(d.value);
+                    })
+                    .attr('class', function(d, i) {
+                        return "arc" + i;
+                    })
+                    .attr("d", arc)
+                    .style("stroke", "#1f1e1e")
+                    .style("stroke-width", 5)
+                    .each(function(d) {
+                        this._current = d;
+                    });
+
+            }
+
+            legend.selectAll(".legend")
+                .data(data)
+                .enter()
+                .append("g")
+                .attr('width', 200)
+                .attr('height', 45)
+                .attr('class', function(d, i) {
+                    return "pieChartLegend" + i;
+                });
+
+            // Affichage légende
+            legend.select(".pieChartLegend0").append("rect")
+                .attr('class', 'rectData0')
+                .attr("x", 10)
+                .attr("y", 10)
+                .attr("width", "200")
+                .attr("height", "45")
+                .style({
+                    "fill": "#282828",
+                    "opacity": "0"
+                });
+            legend.select(".pieChartLegend1").append("rect")
+                .attr('class', 'rectData1')
+                .attr("x", 10)
+                .attr("y", 60)
+                .attr("width", "200")
+                .attr("height", "45")
+                .style({
+                    "fill": "#282828",
+                    "opacity": "0"
+                });
+            legend.select(".pieChartLegend0").append("rect")
+                .attr("x", 20)
+                .attr("y", 24)
+                .attr("width", "20")
+                .attr("height", "20")
+                .style({
+                    "fill": "#22313b",
+                    "stroke": "#1f1e1e",
+                    "stroke-width": "5"
+                });
+            legend.select(".pieChartLegend1").append("rect")
+                .attr("x", 20)
+                .attr("y", 70)
+                .attr("width", "20")
+                .attr("height", "20")
+                .style({
+                    "fill": "#264359",
+                    "stroke": "#1f1e1e",
+                    "stroke-width": "5"
+                });
+
+            legend.select(".pieChartLegend0").append('line')
+                .attr("x1", 50)
+                .attr("x2", 100)
+                .attr("y1", 35)
+                .attr("y2", 35)
+                .style({
+                    "stroke-dasharray": "3.3",
+                    "stroke-linecap": "round",
+                    "stroke": "#888888",
+                    "stroke-width": "1"
+                });
+            legend.select(".pieChartLegend1").append('line')
+                .attr("x1", 50)
+                .attr("x2", 100)
+                .attr("y1", 80)
+                .attr("y2", 80)
+                .style({
+                    "stroke-dasharray": "3.3",
+                    "stroke-linecap": "round",
+                    "stroke": "#888888",
+                    "stroke-width": "1"
+                });
+            legend.select(".pieChartLegend0").append("text")
+                .attr("x", 110)
+                .attr("y", 40)
+                .text(function(d) {
+                    return "Salariés";
+                })
+                .style({
+                    "fill": "#888888",
+                    "text-transform": "uppercase",
+                    "opacity": "1"
+                });
+            legend.select(".pieChartLegend1").append("text")
+                .attr("x", 110)
+                .attr("y", 85)
+                .text(function(d) {
+                    return "Libéraux";
+                })
+                .style({
+                    "fill": "#888888",
+                    "text-transform": "uppercase",
+                    "opacity": "1"
+                });
+
+        } else if (data.length == 3) {
+
+            // Création du SVG pour la légende
+            var legend = d3.select("#pieChart .pieChartLegend").append("svg")
+                .attr('width', 230)
+                .attr('height', 300);
+
+
+            var color = ["#264359", "#22313b", "#285576"];
 
             // On dessine les arcs
             var pathPie = $svgPie.selectAll("path")
@@ -1144,104 +1309,149 @@ $(document).ready(function() {
                     this._current = d;
                 });
 
+            legend.selectAll(".legend")
+                .data(data)
+                .enter()
+                .append("g")
+                .attr('width', 200)
+                .attr('height', 85)
+                .attr('class', function(d, i) {
+                    return "pieChartLegend" + i;
+                });
+
+            // Affichage légende
+            legend.select(".pieChartLegend0").append("rect")
+                .attr('class', 'rectData0')
+                .attr("x", 10)
+                .attr("y", 10)
+                .attr("width", "210")
+                .attr("height", "45")
+                .style({
+                    "fill": "#282828",
+                    "opacity": "1"
+                });
+            legend.select(".pieChartLegend1").append("rect")
+                .attr('class', 'rectData1')
+                .attr("x", 10)
+                .attr("y", 60)
+                .attr("width", "210")
+                .attr("height", "45")
+                .style({
+                    "fill": "#282828",
+                    "opacity": "1"
+                });
+            legend.select(".pieChartLegend2").append("rect")
+                .attr('class', 'rectData1')
+                .attr("x", 10)
+                .attr("y", 110)
+                .attr("width", "210")
+                .attr("height", "45")
+                .style({
+                    "fill": "#282828",
+                    "opacity": "1"
+                });
+            legend.select(".pieChartLegend0").append("rect")
+                .attr("x", 20)
+                .attr("y", 24)
+                .attr("width", "20")
+                .attr("height", "20")
+                .style({
+                    "fill": "#22313b",
+                    "stroke": "#1f1e1e",
+                    "stroke-width": "5"
+                });
+            legend.select(".pieChartLegend1").append("rect")
+                .attr("x", 20)
+                .attr("y", 70)
+                .attr("width", "20")
+                .attr("height", "20")
+                .style({
+                    "fill": "#264359",
+                    "stroke": "#1f1e1e",
+                    "stroke-width": "5"
+                });
+            legend.select(".pieChartLegend2").append("rect")
+                .attr("x", 20)
+                .attr("y", 116)
+                .attr("width", "20")
+                .attr("height", "20")
+                .style({
+                    "fill": "#285576",
+                    "stroke": "#1f1e1e",
+                    "stroke-width": "5"
+                });
+
+            legend.select(".pieChartLegend0").append('line')
+                .attr("x1", 50)
+                .attr("x2", 89)
+                .attr("y1", 35)
+                .attr("y2", 35)
+                .style({
+                    "stroke-dasharray": "3.3",
+                    "stroke-linecap": "round",
+                    "stroke": "#888888",
+                    "stroke-width": "1"
+                });
+            legend.select(".pieChartLegend1").append('line')
+                .attr("x1", 50)
+                .attr("x2", 89)
+                .attr("y1", 80)
+                .attr("y2", 80)
+                .style({
+                    "stroke-dasharray": "3.3",
+                    "stroke-linecap": "round",
+                    "stroke": "#888888",
+                    "stroke-width": "1"
+                });
+            legend.select(".pieChartLegend2").append('line')
+                .attr("x1", 50)
+                .attr("x2", 89)
+                .attr("y1", 125)
+                .attr("y2", 125)
+                .style({
+                    "stroke-dasharray": "3.3",
+                    "stroke-linecap": "round",
+                    "stroke": "#888888",
+                    "stroke-width": "1"
+                });
+            legend.select(".pieChartLegend0").append("text")
+                .attr("x", 95)
+                .attr("y", 40)
+                .text(function(d) {
+                    return "Publics";
+                })
+                .style({
+                    "fill": "#888888",
+                    "text-transform": "uppercase",
+                    "font-size": "11px",
+                    "opacity": "1"
+                });
+            legend.select(".pieChartLegend1").append("text")
+                .attr("x", 95)
+                .attr("y", 85)
+                .text(function(d) {
+                    return "Privés non lucratif";
+                })
+                .style({
+                    "fill": "#888888",
+                    "text-transform": "uppercase",
+                    "font-size": "11px",
+                    "opacity": "1"
+                });
+            legend.select(".pieChartLegend2").append("text")
+                .attr("x", 95)
+                .attr("y", 130)
+                .text(function(d) {
+                    return "Privés lucratifs";
+                })
+                .style({
+                    "fill": "#888888",
+                    "text-transform": "uppercase",
+                    "font-size": "11px",
+                    "opacity": "1"
+                });
+
         }
-
-        legend.selectAll(".legend")
-            .data(data)
-            .enter()
-            .append("g")
-            .attr('width', 200)
-            .attr('height', 45)
-            .attr('class', function(d, i) {
-                return "pieChartLegend" + i;
-            });
-
-        // Affichage légende
-        legend.select(".pieChartLegend0").append("rect")
-            .attr('class', 'rectData0')
-            .attr("x", 10)
-            .attr("y", 10)
-            .attr("width", "200")
-            .attr("height", "45")
-            .style({
-                "fill": "#282828",
-                "opacity": "0"
-            });
-        legend.select(".pieChartLegend1").append("rect")
-            .attr('class', 'rectData1')
-            .attr("x", 10)
-            .attr("y", 60)
-            .attr("width", "200")
-            .attr("height", "45")
-            .style({
-                "fill": "#282828",
-                "opacity": "0"
-            });
-        legend.select(".pieChartLegend0").append("rect")
-            .attr("x", 20)
-            .attr("y", 24)
-            .attr("width", "20")
-            .attr("height", "20")
-            .style({
-                "fill": "#22313b",
-                "stroke": "#1f1e1e",
-                "stroke-width": "5"
-            });
-        legend.select(".pieChartLegend1").append("rect")
-            .attr("x", 20)
-            .attr("y", 70)
-            .attr("width", "20")
-            .attr("height", "20")
-            .style({
-                "fill": "#264359",
-                "stroke": "#1f1e1e",
-                "stroke-width": "5"
-            });
-
-        legend.select(".pieChartLegend0").append('line')
-            .attr("x1", 50)
-            .attr("x2", 100)
-            .attr("y1", 35)
-            .attr("y2", 35)
-            .style({
-                "stroke-dasharray": "3.3",
-                "stroke-linecap": "round",
-                "stroke": "#888888",
-                "stroke-width": "1"
-            });
-        legend.select(".pieChartLegend1").append('line')
-            .attr("x1", 50)
-            .attr("x2", 100)
-            .attr("y1", 80)
-            .attr("y2", 80)
-            .style({
-                "stroke-dasharray": "3.3",
-                "stroke-linecap": "round",
-                "stroke": "#888888",
-                "stroke-width": "1"
-            });
-        legend.select(".pieChartLegend0").append("text")
-            .attr("x", 110)
-            .attr("y", 40)
-            .text(function(d) {
-                return "Salariés";
-            })
-            .style({
-                "fill": "#888888",
-                "text-transform": "uppercase",
-                "opacity": "1"
-            });
-        legend.select(".pieChartLegend1").append("text")
-            .attr("x", 110)
-            .attr("y", 85)
-            .text(function(d) {
-                return "Libéraux";
-            })
-            .style({
-                "fill": "#888888",
-                "text-transform": "uppercase",
-                "opacity": "1"
-            });
 
     }
 
@@ -1251,14 +1461,14 @@ $(document).ready(function() {
 
         if (data[0] == 0 && data[1] == 0) {
 
-            console.log('on va supprimer les arcs');
+            // console.log('on va supprimer les arcs');
 
             d3.selectAll("#pieChart g path")
                 .remove();
 
-        } else if ($("#pieChart .pie g path").size() > 1 == true) {
+        } else if ($("#pieChart .pie g path").size() == 2 == true && data.length == 2 || $("#pieChart .pie g path").size() == 3 == true && data.length == 3) {
 
-            console.log(data);
+            // console.log(data);
             var thisData = data;
 
             var width = 280,
@@ -1282,16 +1492,15 @@ $(document).ready(function() {
 
             function arcTween(d) {
                 var i = d3.interpolate(this._current, d);
-                console.log(i(0));
                 this._current = i(0);
                 return function(t) {
                     return arc(i(t));
                 };
             }
 
-        } else if ($("#pieChart .pie g path").size() < 1 == true) {
+        } else if ($("#pieChart .pie g path").size() < 1 == true && data.length == 2) {
 
-            console.log('il faut recréer les arcs' + data);
+            // console.log('il faut recréer les arcs' + data);
 
             // Initialisation des variales
             var width = 280,
@@ -1320,6 +1529,13 @@ $(document).ready(function() {
                 .each(function(d) {
                     this._current = d;
                 });
+
+        } else if ($("#pieChart .pie g path").size() == 2 == true && data.length == 3) {
+
+            d3.selectAll("#pieChart g path")
+                .remove();
+
+            App.displayPieChart(data);
 
         }
 
@@ -1487,17 +1703,17 @@ $(document).ready(function() {
             cercleMarginLeft = 40,
             dataNombre = data.length;
 
-        if(App.screenWidth < 1600){
-            console.log("$(container).width() "+$("#rightSide").width());
+        if (App.screenWidth < 1600) {
+            console.log("$(container).width() " + $("#rightSide").width());
             height = 300;
             cercleWidth = 250;
         }
-        if(App.screenWidth < 1300 && dataNombre > 3){
+        if (App.screenWidth < 1300 && dataNombre > 3) {
             legendLeft = 0;
             cercleMarginLeft = 80;
         }
 
-        
+
         var cercleMarge = (dataNombre > 3) ? 30 : 35;
 
         var arc = d3.svg.arc()
@@ -1505,7 +1721,7 @@ $(document).ready(function() {
             .outerRadius(110)
             .startAngle(0);
 
-        if(App.screenWidth < 1600){
+        if (App.screenWidth < 1600) {
             console.log("SCREEN : < 1600")
             cercleMarge = (dataNombre > 3) ? 20 : 25;
 
@@ -1519,7 +1735,7 @@ $(document).ready(function() {
             .attr("height", height);
 
         // Translate X > Largeur total - rayon cercle max - marge
-        var graphContainer = svg.append("g").attr("transform", "translate("+(width-cercleWidth/2-cercleMarginLeft)+", "+(cercleWidth/2+30)+")");
+        var graphContainer = svg.append("g").attr("transform", "translate(" + (width - cercleWidth / 2 - cercleMarginLeft) + ", " + (cercleWidth / 2 + 30) + ")");
 
         for (var i = 0; i < data.length; i++) {
             var pourcentage = data[i]['nb'] / 100;
@@ -1533,7 +1749,7 @@ $(document).ready(function() {
             graphContainer.append("circle")
                 .attr("cx", 0)
                 .attr("cy", 0)
-                .attr("r", circleOuterRadius-8 + (cercleMarge * i))
+                .attr("r", circleOuterRadius - 8 + (cercleMarge * i))
                 .style({
                     "fill": "transparent",
                     "stroke": "#383838",
@@ -1553,7 +1769,7 @@ $(document).ready(function() {
 
             var rectangle = graphContainer.append("rect")
                 .attr("x", 0)
-                .attr("y", -(circleOuterRadius-1 + (cercleMarge * i)))
+                .attr("y", -(circleOuterRadius - 1 + (cercleMarge * i)))
                 .attr("width", 4)
                 .attr("height", 16)
                 .style("fill", "#FFF");
@@ -1592,7 +1808,7 @@ $(document).ready(function() {
             .enter()
             .append("g")
             .attr("transform", function(d, i) {
-                return "translate(  "+legendLeft+" ," + (cercleWidth/dataNombre + i * 20) + ")";
+                return "translate(  " + legendLeft + " ," + (cercleWidth / dataNombre + i * 20) + ")";
             })
             .attr("class", function(d, i) {
                 return "gaugeLegende gaugeLegende" + i;
@@ -1715,7 +1931,7 @@ $(document).ready(function() {
             cercleMarge = (dataNombre > 3) ? 30 : 35,
             cercleWidth = 310; // Diamètre externe du dernier cercle
 
-        if(App.screenWidth < 1600){
+        if (App.screenWidth < 1600) {
             console.log("SCREEN : < 1600")
             cercleMarge = (dataNombre > 3) ? 20 : 25;
             circleInnerRadius = 55,
@@ -1788,20 +2004,25 @@ $(document).ready(function() {
     App.displayLineChart = function(data, dataMin, dataMax) {
         $('#chartLine').fadeIn();
         console.log(dataMin, dataMax);
-        var width   = ($("#rightSide").width()-80);
-        var height  = 400;
-        var padding = {top: 80, right: 40, bottom: 40, left: 60};
+        var width = ($("#rightSide").width() - 80);
+        var height = 400;
+        var padding = {
+            top: 80,
+            right: 40,
+            bottom: 40,
+            left: 60
+        };
 
-        if(height <= 900){
+        if (height <= 900) {
             padding.top = 40;
             height = 300;
         }
-        if(height <= 800){
+        if (height <= 800) {
             padding.top = 30;
             height = 300;
         }
 
-        console.log("LineChart Width : "+width);
+        console.log("LineChart Width : " + width);
 
         App.lineChart = c3.generate({
             bindto: '#chartLine',
