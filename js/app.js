@@ -488,7 +488,7 @@ $(document).ready(function() {
                                 var percent = "%";
                             }
 
-                            var item = $("<div class='text'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(250);
+                            var item = $("<div class='text'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(100);
                             $("#pieChart").append(item);
 
                             d3.select(".pieChart g .arc0")
@@ -519,7 +519,7 @@ $(document).ready(function() {
                                 var percent = "%";
                             }
 
-                            var item = $("<div class='text'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(250);
+                            var item = $("<div class='text'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(100);
                             $("#pieChart").append(item);
 
                             d3.select(".pieChart g .arc1")
@@ -546,7 +546,7 @@ $(document).ready(function() {
                     })
                     .on("mouseleave", function(d, i) {
 
-                        $('#pieChart .text').fadeOut(250, function() {
+                        $('#pieChart .text').fadeOut(100, function() {
                             $(this).remove();
                         });
 
@@ -629,7 +629,7 @@ $(document).ready(function() {
                                 var percent = "%";
                             }
 
-                            var item = $("<div class='text2'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(250);
+                            var item = $("<div class='text2'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(100);
                             $("#pieChart").append(item);
 
                             d3.select(".pieChart g .arc2")
@@ -660,7 +660,7 @@ $(document).ready(function() {
                                 var percent = "%";
                             }
 
-                            var item = $("<div class='text2'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(250);
+                            var item = $("<div class='text2'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(100);
                             $("#pieChart").append(item);
 
                             d3.select(".pieChart g .arc1")
@@ -691,7 +691,7 @@ $(document).ready(function() {
                                 var percent = "%";
                             }
 
-                            var item = $("<div class='text2'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(250);
+                            var item = $("<div class='text2'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(100);
                             $("#pieChart").append(item);
 
                             d3.select(".pieChart g .arc0")
@@ -717,7 +717,7 @@ $(document).ready(function() {
                     })
                     .on("mouseleave", function(d, i) {
 
-                        $('#pieChart .text2').fadeOut(250, function() {
+                        $('#pieChart .text2').fadeOut(100, function() {
                             $(this).remove();
                         });
 
