@@ -12,7 +12,8 @@ html {
     font-size: 1em;
     line-height: 1.4;
     cursor: auto;
-/*    background-color: #e7f0f3;*/
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
 }
 
 ::-moz-selection {
