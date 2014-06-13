@@ -157,7 +157,7 @@ section.splashscreen canvas{
     left: 0;
 }
 section.splashscreen .presentation{
-    z-index: 999999;
+    z-index: 999;
     position: absolute;
     display: block;
     left: 22%;
@@ -1533,6 +1533,11 @@ svg.barChart .circleTopTransparent{
 
 @media screen and (max-width: 1024px){
 
+    .splashscreen,
+    #container{
+        display:none;
+    }
+    
     #mobile{
         display:block;
         position:absolute;
