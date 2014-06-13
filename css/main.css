@@ -1338,7 +1338,16 @@ svg.barChart .circleTopTransparent{
 }
 #pieChart .text{
     position:absolute;
-    left:340px;
+    left:305px;
+    top:120px;
+    width:80px;
+    text-align:center;
+    font-size:30px;
+    font-weight:bold;
+}
+#pieChart .text2{
+    position:absolute;
+    left:330px;
     top:120px;
     width:80px;
     text-align:center;

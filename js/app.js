@@ -476,6 +476,14 @@ $(document).ready(function() {
                                     "opacity": "1"
                                 });
 
+                            d3.select(".pieChartLegend1 text")
+                                .transition().duration(500)
+                                .style('fill', '#fff');
+
+                            d3.select(".pieChartLegend1 rect:nth-child(2)")
+                                .transition().duration(500)
+                                .style('fill', '#307BB2');
+
                         } else {
 
                             var item = $("<div class='text'>" + parseInt(dataGraph[1]) + "<span>%</span></div>").hide().fadeIn(250);
@@ -491,6 +499,15 @@ $(document).ready(function() {
                                     "opacity": "1"
                                 });
 
+                            d3.select(".pieChartLegend0 text")
+                                .transition().duration(500)
+                                .style('fill', '#fff');
+
+                            d3.select(".pieChartLegend0 rect:nth-child(2)")
+                                .transition().duration(500)
+                                .style('fill', '#307BB2');
+
+
                         }
 
                     })
@@ -504,7 +521,7 @@ $(document).ready(function() {
 
                             d3.select(".pieChart g .arc0")
                                 .transition().duration(500)
-                                .attr('fill', '#22313b');
+                                .attr('fill', '#264359');
 
                             d3.select("#pieChart .rectData1")
                                 .transition().duration(500)
@@ -512,17 +529,33 @@ $(document).ready(function() {
                                     "opacity": "0"
                                 });
 
+                            d3.select(".pieChartLegend1 text")
+                                .transition().duration(500)
+                                .style('fill', '#888888');
+
+                            d3.select(".pieChartLegend1 rect:nth-child(2)")
+                                .transition().duration(500)
+                                .style('fill', '#264359');
+
                         } else {
 
                             d3.select(".pieChart g .arc1")
                                 .transition().duration(500)
-                                .attr('fill', '#264359');
+                                .attr('fill', '#22313b');
 
                             d3.select("#pieChart .rectData0")
                                 .transition().duration(500)
                                 .style({
                                     "opacity": "0"
                                 });
+
+                            d3.select(".pieChartLegend0 text")
+                                .transition().duration(500)
+                                .style('fill', '#888888');
+
+                            d3.select(".pieChartLegend0 rect:nth-child(2)")
+                                .transition().duration(500)
+                                .style('fill', '#22313b');
 
                         }
 
@@ -548,6 +581,158 @@ $(document).ready(function() {
                     App.updatePieChart(dataGraph);
 
                 }
+
+                d3.selectAll(".pieChartLegend g")
+                    .style("cursor", "pointer")
+                    .on("mouseover", function(d, i) {
+
+                        if (i == 2) {
+
+                            console.log(i);
+
+                            var item = $("<div class='text2'>" + parseInt(dataGraph[2]) + "<span>%</span></div>").hide().fadeIn(250);
+                            $("#pieChart").append(item);
+
+                            d3.select(".pieChart g .arc2")
+                                .transition().duration(500)
+                                .attr('fill', '#307BB2');
+
+                            d3.select("#pieChart .rectData2")
+                                .transition().duration(500)
+                                .style({
+                                    "opacity": "1"
+                                });
+
+                            d3.select(".pieChartLegend2 rect:nth-child(2)")
+                                .transition().duration(500)
+                                .style('fill', '#307BB2');
+
+                                d3.select(".pieChartLegend2 text")
+                                .transition().duration(500)
+                                .style('fill', '#fff');
+
+                        } else if (i == 1) {
+
+                            console.log(i);
+
+                            var item = $("<div class='text2'>" + parseInt(dataGraph[1]) + "<span>%</span></div>").hide().fadeIn(250);
+                            $("#pieChart").append(item);
+
+                            d3.select(".pieChart g .arc1")
+                                .transition().duration(500)
+                                .attr('fill', '#307BB2');
+
+                            d3.select("#pieChart .rectData1")
+                                .transition().duration(500)
+                                .style({
+                                    "opacity": "1"
+                                });
+
+                            d3.select(".pieChartLegend1 rect:nth-child(2)")
+                                .transition().duration(500)
+                                .style('fill', '#307BB2');
+
+                                d3.select(".pieChartLegend1 text")
+                                .transition().duration(500)
+                                .style('fill', '#fff');
+
+                        } else {
+
+                            console.log(i);
+
+                            var item = $("<div class='text2'>" + parseInt(dataGraph[0]) + "<span>%</span></div>").hide().fadeIn(250);
+                            $("#pieChart").append(item);
+
+                            d3.select(".pieChart g .arc0")
+                                .transition().duration(500)
+                                .attr('fill', '#307BB2');
+
+                            d3.select("#pieChart .rectData0")
+                                .transition().duration(500)
+                                .style({
+                                    "opacity": "1"
+                                });
+
+                            d3.select(".pieChartLegend0 rect:nth-child(2)")
+                                .transition().duration(500)
+                                .style('fill', '#307BB2');
+
+                        d3.select(".pieChartLegend0 text")
+                                .transition().duration(500)
+                                .style('fill', '#fff');
+
+                        }
+
+                    })
+                    .on("mouseleave", function(d, i) {
+
+                        $('#pieChart .text2').fadeOut(250, function() {
+                            $(this).remove();
+                        });
+
+                        if (i == 2) {
+
+                            d3.select(".pieChart g .arc2")
+                                .transition().duration(500)
+                                .attr('fill', '#22313b');
+
+                            d3.select("#pieChart .rectData2")
+                                .transition().duration(500)
+                                .style({
+                                    "opacity": "0"
+                                });
+
+                            d3.select(".pieChartLegend2 rect:nth-child(2)")
+                                .transition().duration(500)
+                                .style('fill', '#22313b');
+
+                                d3.select(".pieChartLegend2 text")
+                                .transition().duration(500)
+                                .style('fill', '#888888');
+
+                        } else if (i == 1) {
+
+                            d3.select(".pieChart g .arc1")
+                                .transition().duration(500)
+                                .attr('fill', '#264359');
+
+                            d3.select("#pieChart .rectData1")
+                                .transition().duration(500)
+                                .style({
+                                    "opacity": "0"
+                                });
+
+                            d3.select(".pieChartLegend1 rect:nth-child(2)")
+                                .transition().duration(500)
+                                .style('fill', '#264359');
+
+                                d3.select(".pieChartLegend1 text")
+                                .transition().duration(500)
+                                .style('fill', '#888888');
+
+                        } else {
+
+                            d3.select(".pieChart g .arc0")
+                                .transition().duration(500)
+                                .attr('fill', '#285576');
+
+                            d3.select("#pieChart .rectData0")
+                                .transition().duration(500)
+                                .style({
+                                    "opacity": "0"
+                                });
+
+                            d3.select(".pieChartLegend0 rect:nth-child(2)")
+                                .transition().duration(500)
+                                .style('fill', '#285576');
+
+                        d3.select(".pieChartLegend0 text")
+                                .transition().duration(500)
+                                .style('fill', '#888888');
+
+                        }
+
+                    });
 
             } else {
                 $('#pieChart').hide();
@@ -1290,7 +1475,7 @@ $(document).ready(function() {
                 .attr('height', 300);
 
 
-            var color = ["#264359", "#22313b", "#285576"];
+            var color = ["#285576", "#264359", "#22313b"];
 
             // On dessine les arcs
             var pathPie = $svgPie.selectAll("path")
@@ -1331,7 +1516,7 @@ $(document).ready(function() {
                 .attr("height", "45")
                 .style({
                     "fill": "#282828",
-                    "opacity": "1"
+                    "opacity": "0"
                 });
             legend.select(".pieChartLegend1").append("rect")
                 .attr('class', 'rectData1')
@@ -1341,17 +1526,17 @@ $(document).ready(function() {
                 .attr("height", "45")
                 .style({
                     "fill": "#282828",
-                    "opacity": "1"
+                    "opacity": "0"
                 });
             legend.select(".pieChartLegend2").append("rect")
-                .attr('class', 'rectData1')
+                .attr('class', 'rectData2')
                 .attr("x", 10)
                 .attr("y", 110)
                 .attr("width", "210")
                 .attr("height", "45")
                 .style({
                     "fill": "#282828",
-                    "opacity": "1"
+                    "opacity": "0"
                 });
             legend.select(".pieChartLegend0").append("rect")
                 .attr("x", 20)
@@ -1359,13 +1544,13 @@ $(document).ready(function() {
                 .attr("width", "20")
                 .attr("height", "20")
                 .style({
-                    "fill": "#22313b",
+                    "fill": "#285576",
                     "stroke": "#1f1e1e",
                     "stroke-width": "5"
                 });
             legend.select(".pieChartLegend1").append("rect")
                 .attr("x", 20)
-                .attr("y", 70)
+                .attr("y", 74)
                 .attr("width", "20")
                 .attr("height", "20")
                 .style({
@@ -1375,11 +1560,11 @@ $(document).ready(function() {
                 });
             legend.select(".pieChartLegend2").append("rect")
                 .attr("x", 20)
-                .attr("y", 116)
+                .attr("y", 123)
                 .attr("width", "20")
                 .attr("height", "20")
                 .style({
-                    "fill": "#285576",
+                    "fill": "#22313b",
                     "stroke": "#1f1e1e",
                     "stroke-width": "5"
                 });
@@ -1387,8 +1572,8 @@ $(document).ready(function() {
             legend.select(".pieChartLegend0").append('line')
                 .attr("x1", 50)
                 .attr("x2", 89)
-                .attr("y1", 35)
-                .attr("y2", 35)
+                .attr("y1", 34)
+                .attr("y2", 34)
                 .style({
                     "stroke-dasharray": "3.3",
                     "stroke-linecap": "round",
@@ -1398,8 +1583,8 @@ $(document).ready(function() {
             legend.select(".pieChartLegend1").append('line')
                 .attr("x1", 50)
                 .attr("x2", 89)
-                .attr("y1", 80)
-                .attr("y2", 80)
+                .attr("y1", 84)
+                .attr("y2", 84)
                 .style({
                     "stroke-dasharray": "3.3",
                     "stroke-linecap": "round",
@@ -1409,8 +1594,8 @@ $(document).ready(function() {
             legend.select(".pieChartLegend2").append('line')
                 .attr("x1", 50)
                 .attr("x2", 89)
-                .attr("y1", 125)
-                .attr("y2", 125)
+                .attr("y1", 134)
+                .attr("y2", 134)
                 .style({
                     "stroke-dasharray": "3.3",
                     "stroke-linecap": "round",
@@ -1419,7 +1604,7 @@ $(document).ready(function() {
                 });
             legend.select(".pieChartLegend0").append("text")
                 .attr("x", 95)
-                .attr("y", 40)
+                .attr("y", 38)
                 .text(function(d) {
                     return "Publics";
                 })
@@ -1431,7 +1616,7 @@ $(document).ready(function() {
                 });
             legend.select(".pieChartLegend1").append("text")
                 .attr("x", 95)
-                .attr("y", 85)
+                .attr("y", 88)
                 .text(function(d) {
                     return "Privés non lucratif";
                 })
@@ -1443,7 +1628,7 @@ $(document).ready(function() {
                 });
             legend.select(".pieChartLegend2").append("text")
                 .attr("x", 95)
-                .attr("y", 130)
+                .attr("y", 138)
                 .text(function(d) {
                     return "Privés lucratifs";
                 })
