@@ -1132,11 +1132,7 @@ $(document).ready(function() {
                 }
 
             })
-            .on('mouseover', function(){
-                tip.show;
-                // Analytics
-                ga('send', 'event', 'graph', 'mouseover', 'barchart');
-            })
+            .on('mouseover', tip.show)
             .on('mouseout', tip.hide);
 
         // ajout les triangles sous chaque bar
