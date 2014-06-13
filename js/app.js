@@ -480,7 +480,15 @@ $(document).ready(function() {
 
                         if (i == 1) {
 
-                            var item = $("<div class='text'>" + parseInt(dataGraph[0]) + "<span>%</span></div>").hide().fadeIn(250);
+                            if (isNaN(dataGraph[0])) {
+                                var number = "NC";
+                                var percent = "";
+                            } else {
+                                var number = parseInt(dataGraph[0]);
+                                var percent = "%";
+                            }
+
+                            var item = $("<div class='text'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(250);
                             $("#pieChart").append(item);
 
                             d3.select(".pieChart g .arc0")
@@ -503,7 +511,15 @@ $(document).ready(function() {
 
                         } else {
 
-                            var item = $("<div class='text'>" + parseInt(dataGraph[1]) + "<span>%</span></div>").hide().fadeIn(250);
+                            if (isNaN(dataGraph[1])) {
+                                var number = "NC";
+                                var percent = "";
+                            } else {
+                                var number = parseInt(dataGraph[1]);
+                                var percent = "%";
+                            }
+
+                            var item = $("<div class='text'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(250);
                             $("#pieChart").append(item);
 
                             d3.select(".pieChart g .arc1")
@@ -605,9 +621,15 @@ $(document).ready(function() {
 
                         if (i == 2) {
 
-                            console.log(i);
+                            if (isNaN(dataGraph[2])) {
+                                var number = "NC";
+                                var percent = "";
+                            } else {
+                                var number = parseInt(dataGraph[2]);
+                                var percent = "%";
+                            }
 
-                            var item = $("<div class='text2'>" + parseInt(dataGraph[2]) + "<span>%</span></div>").hide().fadeIn(250);
+                            var item = $("<div class='text2'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(250);
                             $("#pieChart").append(item);
 
                             d3.select(".pieChart g .arc2")
@@ -630,9 +652,15 @@ $(document).ready(function() {
 
                         } else if (i == 1) {
 
-                            console.log(i);
+                            if (isNaN(dataGraph[1])) {
+                                var number = "NC";
+                                var percent = "";
+                            } else {
+                                var number = parseInt(dataGraph[1]);
+                                var percent = "%";
+                            }
 
-                            var item = $("<div class='text2'>" + parseInt(dataGraph[1]) + "<span>%</span></div>").hide().fadeIn(250);
+                            var item = $("<div class='text2'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(250);
                             $("#pieChart").append(item);
 
                             d3.select(".pieChart g .arc1")
@@ -655,9 +683,15 @@ $(document).ready(function() {
 
                         } else {
 
-                            console.log(i);
+                            if (isNaN(dataGraph[0])) {
+                                var number = "NC";
+                                var percent = "";
+                            } else {
+                                var number = parseInt(dataGraph[0]);
+                                var percent = "%";
+                            }
 
-                            var item = $("<div class='text2'>" + parseInt(dataGraph[0]) + "<span>%</span></div>").hide().fadeIn(250);
+                            var item = $("<div class='text2'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(250);
                             $("#pieChart").append(item);
 
                             d3.select(".pieChart g .arc0")
@@ -1344,11 +1378,13 @@ $(document).ready(function() {
             .attr("r", 60)
             .style("fill", "#282828");
 
-        console.log(data.length);
+        if (isNaN(data[1])) {
+            data[1] = 0;
+        }
 
         if (data.length == 2) {
 
-            if (data[0] !== 0 && data[1] !== 0) {
+            if (data[0] > 0 && data[1] > 0) {
 
                 // Création du SVG pour la légende
                 var legend = d3.select("#pieChart .pieChartLegend").append("svg")
@@ -1377,6 +1413,10 @@ $(document).ready(function() {
                     });
 
             }
+
+            // if (isNaN(parseInt(data[1])) || isNaN(parseInt(data[0]))) {
+            //     console.log('bug marne');
+            // }
 
             if (typeof legend === 'undefined') {
 
@@ -1664,6 +1704,10 @@ $(document).ready(function() {
     App.updatePieChart = function(data) {
 
         $("#pieChart").show();
+
+        if (isNaN(data[1])) {
+            data[1] = 0;
+        }
 
         if (data[0] == 0 && data[1] == 0) {
 
