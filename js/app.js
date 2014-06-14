@@ -2088,7 +2088,7 @@ $(document).ready(function() {
                     .style("opacity", "1");
 
                 // Analytics
-                ga('send', 'event', 'graph', 'mouseover', 'gaugechartmultiple', i);
+                ga('send', 'event', 'graph', 'mouseover', 'gaugechartmultiple '+i );
 
             })
             .on("mouseout", function(d, i) {
@@ -2233,7 +2233,7 @@ $(document).ready(function() {
                     });
 
                 // Analytics
-                ga('send', 'event', 'graph', 'mouseover', 'gaugechartmultiple', i);
+                ga('send', 'event', 'graph', 'mouseover', 'gaugechartmultiple '+i );
 
             });
 
@@ -2435,7 +2435,7 @@ $(document).ready(function() {
                 trigger: true
             });
             // Analytics
-            ga('send', 'event', 'menu', 'click', 'filtre', App.filtre);
+            ga('send', 'event', 'menu', 'click', 'filtre '+App.filtre );
         }
 
     });
@@ -2459,7 +2459,7 @@ $(document).ready(function() {
             trigger: true
         });
         // Analytics
-        ga('send', 'event', 'menu', 'click', 'filtre', App.filtre);
+        ga('send', 'event', 'menu', 'click', 'filtre '+App.filtre );
 
     });
 
@@ -2855,7 +2855,7 @@ $(document).ready(function() {
             App.checkHash();
             /* _____________ FIN   AJOUT FLORENT - A GARDER _____________________________________ */
             // Analytics
-            ga('send', 'event', 'map', 'click', 'dept', App.dept);
+            ga('send', 'event', 'map', 'click', 'departement '+App.dept );
 
         },
 
