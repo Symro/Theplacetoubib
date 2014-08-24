@@ -2867,7 +2867,7 @@ $(document).ready(function() {
             App.checkHash();
             /* _____________ FIN   AJOUT FLORENT - A GARDER _____________________________________ */
             // Analytics
-            //ga('send', 'event', 'map', 'click', 'departement '+App.dept );
+            ga('send', 'event', 'map', 'click', 'departement '+App.dept );
 
         },
 
