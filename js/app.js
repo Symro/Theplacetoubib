@@ -489,7 +489,7 @@ $(document).ready(function() {
                             }
 
                             var item = $("<div class='text'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(100);
-                            $("#pieChart").append(item);
+                            $("#pieChart .pie").append(item);
 
                             d3.select(".pieChart g .arc0")
                                 .transition().duration(500)
@@ -520,7 +520,7 @@ $(document).ready(function() {
                             }
 
                             var item = $("<div class='text'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(100);
-                            $("#pieChart").append(item);
+                            $("#pieChart .pie").append(item);
 
                             d3.select(".pieChart g .arc1")
                                 .transition().duration(500)
@@ -630,7 +630,7 @@ $(document).ready(function() {
                             }
 
                             var item = $("<div class='text2'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(100);
-                            $("#pieChart").append(item);
+                            $("#pieChart .pie").append(item);
 
                             d3.select(".pieChart g .arc2")
                                 .transition().duration(500)
@@ -661,7 +661,7 @@ $(document).ready(function() {
                             }
 
                             var item = $("<div class='text2'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(100);
-                            $("#pieChart").append(item);
+                            $("#pieChart .pie").append(item);
 
                             d3.select(".pieChart g .arc1")
                                 .transition().duration(500)
@@ -692,7 +692,7 @@ $(document).ready(function() {
                             }
 
                             var item = $("<div class='text2'>" + number + "<span>" + percent + "</span></div>").hide().fadeIn(100);
-                            $("#pieChart").append(item);
+                            $("#pieChart .pie").append(item);
 
                             d3.select(".pieChart g .arc0")
                                 .transition().duration(500)
@@ -1082,8 +1082,10 @@ $(document).ready(function() {
         }
 
         var svg = d3.select(container).append("svg")
-            .attr("width", width + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
+            // .attr("width", width + margin.right)
+            // .attr("height", height + margin.top + margin.bottom)
+            .attr("viewBox", "0 0 "+(width+margin.right)+" "+(height + margin.top + margin.bottom))
+            .attr("preserveAspectRatio", "xMinyMin meet")
             .attr("class", "barChart")
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -1366,8 +1368,10 @@ $(document).ready(function() {
         // Création du SVG
         var $svgPie = d3.select("#pieChart .pie").append("svg")
             .attr("class", "pieChart")
-            .attr("width", width)
-            .attr("height", height)
+            // .attr("width", width)
+            // .attr("height", height)
+            .attr("viewBox", "0 0 "+width+" "+height)
+            .attr("preserveAspectRatio", "xMinyMin meet")
             .append("g")
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
@@ -1529,8 +1533,10 @@ $(document).ready(function() {
 
             // Création du SVG pour la légende
             var legend = d3.select("#pieChart .pieChartLegend").append("svg")
-                .attr('width', 230)
-                .attr('height', 300);
+                .attr("viewBox", "0 0 230 300")
+                .attr("preserveAspectRatio", "xMinyMin meet");
+                // .attr('width', 230)
+                // .attr('height', 300);
 
 
             var color = ["#285576", "#264359", "#22313b"];
@@ -1817,8 +1823,10 @@ $(document).ready(function() {
             .startAngle(0);
 
         var svg = d3.select(container).append("svg")
-            .attr("width", width)
-            .attr("height", height)
+            // .attr("width", width)
+            // .attr("height", height)
+            .attr("viewBox", "0 0 "+width+" "+height)
+            .attr("preserveAspectRatio", "xMinyMin meet")
             .append("g")
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
 
@@ -1953,15 +1961,15 @@ $(document).ready(function() {
             cercleMarginLeft = 40,
             dataNombre = data.length;
 
-        if (App.screenWidth < 1600) {
-            // console.log("$(container).width() " + $("#rightSide").width());
-            height = 300;
-            cercleWidth = 250;
-        }
-        if (App.screenWidth < 1300 && dataNombre > 3) {
-            legendLeft = 0;
-            cercleMarginLeft = 80;
-        }
+        // if (App.screenWidth < 1600) {
+        //     // console.log("$(container).width() " + $("#rightSide").width());
+        //     height = 300;
+        //     cercleWidth = 250;
+        // }
+        // if (App.screenWidth < 1300 && dataNombre > 3) {
+        //     legendLeft = 0;
+        //     cercleMarginLeft = 80;
+        // }
 
 
         var cercleMarge = (dataNombre > 3) ? 30 : 35;
@@ -1971,18 +1979,20 @@ $(document).ready(function() {
             .outerRadius(110)
             .startAngle(0);
 
-        if (App.screenWidth < 1600) {
-            // console.log("SCREEN : < 1600")
-            cercleMarge = (dataNombre > 3) ? 20 : 25;
+        // if (App.screenWidth < 1600) {
+        //     // console.log("SCREEN : < 1600")
+        //     cercleMarge = (dataNombre > 3) ? 20 : 25;
 
-            circleInnerRadius = 55,
-            circleOuterRadius = 72;
-            circleCenter = 33;
-        }
+        //     circleInnerRadius = 55,
+        //     circleOuterRadius = 72;
+        //     circleCenter = 33;
+        // }
 
         var svg = d3.select(container).append("svg")
-            .attr("width", width)
-            .attr("height", height);
+            .attr("viewBox", "0 0 "+width+" "+height)
+            .attr("preserveAspectRatio", "xMinyMin meet");
+            // .attr("width", width)
+            // .attr("height", height);
 
         // Translate X > Largeur total - rayon cercle max - marge
         var graphContainer = svg.append("g").attr("transform", "translate(" + (width - cercleWidth / 2 - cercleMarginLeft) + ", " + (cercleWidth / 2 + 30) + ")");
@@ -2184,14 +2194,14 @@ $(document).ready(function() {
             cercleMarge = (dataNombre > 3) ? 30 : 35,
             cercleWidth = 310; // Diamètre externe du dernier cercle
 
-        if (App.screenWidth < 1600) {
-            // console.log("SCREEN : < 1600")
-            cercleMarge = (dataNombre > 3) ? 20 : 25;
-            circleInnerRadius = 55,
-            circleOuterRadius = 72;
-            circleCenter = 33;
-            cercleWidth = 250; // Diamètre externe du dernier cercle
-        }
+        // if (App.screenWidth < 1600) {
+        //     // console.log("SCREEN : < 1600")
+        //     cercleMarge = (dataNombre > 3) ? 20 : 25;
+        //     circleInnerRadius = 55,
+        //     circleOuterRadius = 72;
+        //     circleCenter = 33;
+        //     cercleWidth = 250; // Diamètre externe du dernier cercle
+        // }
 
         for (var i = 0; i < data.length; i++) {
             var pourcentage = data[i]['nb'] / 100;
@@ -2707,8 +2717,10 @@ $(document).ready(function() {
 
             // Création du svg
             $svg = d3.select(this.params.map).append("svg")
-                .attr("width", this.params.width)
-                .attr("height", this.params.height);
+                .attr("viewBox", "0 0 "+this.params.width+" "+this.params.height)
+                .attr("preserveAspectRatio", "xMinyMin meet");
+                // .attr("width", this.params.width)
+                // .attr("height", this.params.height);
 
             // Création d'un groupe qui réuni tous les départements
             $fra = $svg
@@ -2855,7 +2867,7 @@ $(document).ready(function() {
             App.checkHash();
             /* _____________ FIN   AJOUT FLORENT - A GARDER _____________________________________ */
             // Analytics
-            ga('send', 'event', 'map', 'click', 'departement '+App.dept );
+            //ga('send', 'event', 'map', 'click', 'departement '+App.dept );
 
         },
 

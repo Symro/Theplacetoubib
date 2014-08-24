@@ -776,6 +776,17 @@ section#leftSide{
     text-shadow:1px 1px 1px white;
 }
 
+/*#map{
+    position:relative;
+}*/
+
+/*
+#map > svg{
+    position:absolute;
+    left:0;
+    top:0;
+}*/
+
 #echelle{
     width:50%;
     height: 10px;
@@ -783,7 +794,8 @@ section#leftSide{
     display: flex;
     justify-content: flex-start;
     border:1px solid #86a3aa;
-    position: absolute;
+    position: relative;
+    /*position: absolute;*/
     left:25%;
     bottom: 8%;
 }
@@ -1319,13 +1331,21 @@ svg.barChart .circleTopTransparent{
 /* PIE CHART */
 #pieChart{
     position: relative;
-    width: 520px;
+    width: 100%;
     margin-top: 20%;
-    margin-left: 10%;
+    margin-left:0;
 }
 .pieChartLegend {
+/*    float: left;
+    margin-top: 90px;*/
+
     float: left;
-    margin-top: 90px;
+    height: 0;
+    margin-top: 40px;
+    margin-right:10%;
+    padding-bottom: 30%;
+    position: relative;
+    width: 40%;
 }
 #pieChart hr {
     background: transparent;
@@ -1338,24 +1358,30 @@ svg.barChart .circleTopTransparent{
     margin: 5px 0 0 15px;
 }
 #pieChart .pie {
-    width: 250px;
-    height: 250px;
+    position:relative;
     float: left;
+    height: 0;
+    padding-bottom: 50%;
+    width: 50%;
 }
 #pieChart .text{
     position:absolute;
-    left:305px;
-    top:120px;
+    left:50%;
+    margin-left:-40px;
     width:80px;
+    top:50%;
+    margin-top:-20px;
     text-align:center;
     font-size:30px;
     font-weight:bold;
 }
 #pieChart .text2{
     position:absolute;
-    left:330px;
-    top:120px;
+    left:50%;
+    margin-left:-40px;
     width:80px;
+    top:50%;
+    margin-top:-20px;
     text-align:center;
     font-size:30px;
     font-weight:bold;
@@ -1368,24 +1394,24 @@ svg.barChart .circleTopTransparent{
 /* GAUGE CHART ou Arc Tween */
 
 #chartGauge{
-  width: 520px;
+  width: 100%;
   margin: 30px auto;
+  overflow:hidden;
 }
 #chartGauge div:first-child{
     clear:left;
     font-size:13px;
     text-transform:uppercase;
+    overflow:hidden;
 }
-#chartGauge div:first-child p{
+#chartGauge div:first-child strong{
     position:relative;
-    display:table;
-    float:left;
+    display:inline-block;
     color:#8e8d8d;
     padding-bottom:4px;
     border-bottom:solid 1.5px #2b2b2b;
-    margin-left:33px;
 }
-#chartGauge div:first-child p:after{
+#chartGauge div:first-child strong:after{
     content:"";
     position:absolute;
     left:50%;
@@ -1396,8 +1422,17 @@ svg.barChart .circleTopTransparent{
     border-width: 5px 5px 0 5px;
     border-color: #2b2b2b transparent transparent transparent;
 }
+#chartGauge div:first-child p{
+    position:relative;
+    float:left;
+    width:39%;
+    margin-right:10%;
+    text-align:center;
+}
 #chartGauge div:first-child p+p{
-    margin-left:125px;
+    width:39%;
+    margin-right:0%;
+    margin-left:10%;   
 }
 .gaugeLeft{
     clear:left;
@@ -1405,16 +1440,21 @@ svg.barChart .circleTopTransparent{
 .gaugeRight,
 .gaugeLeft{
     position:relative;
-    width:240px;height:240px;
+    width:40%;
+    height:0;
+    padding-bottom:40%;
+    margin-right:10%;
     float:left;
 }
 .gaugeRight{
-    margin-left:40px;
+    margin-left:10%;
+    margin-right:0;
 }
 .gaugeRight .pourcentage,
 .gaugeLeft .pourcentage{
     position:absolute;
-    left:80px;top:98px;
+    left:50%;top:50%;
+    margin-left:-40px;margin-top:-20px;
     width:80px;text-align:center;
     font-size:30px;font-weight:bold;
 }
@@ -1453,8 +1493,10 @@ svg.barChart .circleTopTransparent{
 }
 
 #chartGaugeMultiple1{
-    position:absolute;
+/*    position:absolute;
     left:0px;
+    width:100%;*/
+    position:relative;
     width:100%;
 }
 
